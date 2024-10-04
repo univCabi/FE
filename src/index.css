@@ -1,5 +1,11 @@
 @tailwind base;
 
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
 @layer components {
   html,
   body,
