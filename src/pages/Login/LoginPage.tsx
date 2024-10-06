@@ -1,29 +1,29 @@
 import { useState } from "react";
 import axios from "axios";
+
+const LOGIN_URL = import.meta.env.VITE_LOGIN_URL; // VITE_LOGIN_URL 사용
+
 const LoginPage = () => {
-  const [stn, setStn] = useState<string>(""); //studentnumber의 약자로 stn을 사용하였습니다.
+  const [studentNumber, setStudentNumber] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [loginfalse, setLoginfalse] = useState<boolean>(false);
   const onSubmit = async (e: React.FormEvent) => {
     // async 와 React.FormEvent 조사
     e.preventDefault();
 
     const loginData = {
-      studentNumber: stn,
+      studentNumber: studentNumber,
       password: password,
     };
     try {
-      const response = await axios.post(
-        "https://e96fd938-e382-4189-9796-d66e716c5e54.mock.pstmn.io",
-        loginData
-      );
+      const response = await axios.post(`${LOGIN_URL}/login`, loginData);
       if (response.data.success) {
-        alert("로그인 성공");
+        setLoginfalse(false);
       } else {
-        alert("로그인 실패");
+        setLoginfalse(true);
       }
     } catch (error) {
-      console.log("에러 :", error);
-      alert("뭔가 잘못됬으니까 다시만드세요");
+      setLoginfalse(true);
     }
   };
   return (
@@ -35,9 +35,9 @@ const LoginPage = () => {
         <input
           className="w-[90%] px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300 mb-2"
           type="text"
-          value={stn}
+          value={studentNumber}
           onChange={(e) => {
-            setStn(e.target.value);
+            setStudentNumber(e.target.value);
           }}
           placeholder="학번을 입력하세요."
         />
@@ -51,6 +51,11 @@ const LoginPage = () => {
           }}
           placeholder="비밀번호를 입력하세요."
         />
+        {loginfalse && (
+          <div className="mb-4 text-red-600">
+            {"학번이나 비밀번호가 잘못되었습니다."}
+          </div>
+        )}
         <button
           onClick={onSubmit}
           type="submit"
