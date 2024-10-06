@@ -6,7 +6,7 @@ const LOGIN_URL = import.meta.env.VITE_LOGIN_URL; // VITE_LOGIN_URL 사용
 const LoginPage = () => {
   const [studentNumber, setStudentNumber] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [loginfalse, setLoginfalse] = useState<boolean>(false);
+  const [loginFalse, setLoginFalse] = useState<boolean>(false);
   const onSubmit = async (e: React.FormEvent) => {
     // async 와 React.FormEvent 조사
     e.preventDefault();
@@ -18,12 +18,12 @@ const LoginPage = () => {
     try {
       const response = await axios.post(`${LOGIN_URL}/login`, loginData);
       if (response.data.success) {
-        setLoginfalse(false);
+        setLoginFalse(false);
       } else {
-        setLoginfalse(true);
+        setLoginFalse(true);
       }
     } catch (error) {
-      setLoginfalse(true);
+      setLoginFalse(true);
     }
   };
   return (
@@ -51,7 +51,7 @@ const LoginPage = () => {
           }}
           placeholder="비밀번호를 입력하세요."
         />
-        {loginfalse && (
+        {loginFalse && (
           <div className="mb-4 text-red-600">
             {"학번이나 비밀번호가 잘못되었습니다."}
           </div>
