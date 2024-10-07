@@ -1,11 +1,20 @@
-const Nav = ({
+interface NavBuildingProps {
+  buildings: { name: string; floors: string[] }[]; // 건물 배열 (name과 floors 포함)
+  selectedBuilding: number | null; // 선택된 건물의 인덱스 또는 null
+  setSelectedBuilding: (index: number | null) => void; // 선택된 건물을 설정하는 함수
+  setSelectedFloor: (floor: number | null) => void; // 선택된 층을 설정하는 함수
+  isOpen: boolean; // 드롭다운 on/off 상태
+  setIsOpen: (isOpen: boolean) => void; // 드롭다운 상태를 설정하는 함수
+}
+
+const SideNavigationLayout = ({
   buildings,
   selectedBuilding,
   setSelectedBuilding,
   setSelectedFloor,
   isOpen,
   setIsOpen,
-}) => {
+}: NavBuildingProps) => {
   // 드롭다운 토글
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -53,7 +62,7 @@ const Nav = ({
         </div>
 
         {/* 우측 */}
-        {/* 개인 페이지 들어갈 수 있는 아이콘 */}
+        {/* 프로필 페이지로 들어갈 수 있는 아이콘 */}
         <button className="mr-2 p-2 bg-blue-600 hover:bg-blue-500/70 rounded-md focus:outline-none">
           My Page
         </button>
@@ -62,4 +71,4 @@ const Nav = ({
   );
 };
 
-export default Nav;
+export default SideNavigationLayout;

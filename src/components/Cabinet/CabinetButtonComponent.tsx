@@ -1,7 +1,15 @@
-const Cabinet = () => {
+// 사물함 버튼 컴포넌트 배열 관련
+
+interface CabinetButtonComponentProps {
+  rows: number;
+  columns: number;
+}
+
+const CabinetButtonComponent = ({
+  rows,
+  columns,
+}: CabinetButtonComponentProps) => {
   const cabinetButtons = () => {
-    const columns = 10; // 총 4개의 열
-    const rows = 6; // 각 열에 6개의 버튼
     const buttons = []; // 사물함 버튼 배열
 
     for (let i = 0; i < columns; i++) {
@@ -22,10 +30,10 @@ const Cabinet = () => {
   };
 
   return (
-    <div className="absoulte p-24 flex justify-center items-center">
+    <div className="absolute p-24 flex justify-center items-center w-full">
       {cabinetButtons()}
     </div>
   );
 };
 
-export default Cabinet;
+export default CabinetButtonComponent;
