@@ -1,11 +1,12 @@
-import { useBuildingState } from "../hooks/useBuildingState";
-import { useBuildingList } from "../hooks/useBuildingList";
-import SideNavigationLayout from "./SideNavigationLayout";
-import SelectedCabinetInformation from "../components/Cabinet/SelectedCabinetInformation";
-import BuildingSelectButton from "../components/BuildingSelectButton";
-import CabinetFooterMenuButton from "../components/CabinetFooterMenuButton";
-import CabinetButtonComponent from "../components/Cabinet/CabinetButtonComponent";
-import CabinetStatusInformation from "../components/Cabinet/CabinetStatusInformation";
+import { useBuildingState } from "@/hooks/useBuildingState";
+import { useBuildingList } from "@/hooks/useBuildingList";
+import { useCabinetState } from "@/hooks/useCabinetState";
+import SideNavigationLayout from "@/pages/SideNavigationLayout";
+import SelectedCabinetInformation from "@/components/Cabinet/SelectedCabinetInformation";
+import BuildingSelectButton from "@/components/BuildingSelectButton";
+import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
+import CabinetButtonComponent from "@/components/Cabinet/CabinetButtonComponent";
+import CabinetStatusInformation from "@/components/Cabinet/CabinetStatusInformation";
 
 const MainPage = () => {
   // 건물 목록 hooks
@@ -20,6 +21,8 @@ const MainPage = () => {
     isOpen,
     setIsOpen,
   } = useBuildingState();
+
+  const { selectedCabinet, setSelectedCabinet } = useCabinetState();
 
   return (
     <div>
@@ -50,13 +53,19 @@ const MainPage = () => {
       <div className="absolute inset-y-0 left-64 right-80 border-r-2 border-gray-400 pt-20 hidden sl:block flex-col">
         {/* 건물 선택 후, 층수 선택을 둘 다 해야 사물함 컴포넌트가 보임 */}
         {selectedBuilding !== null && selectedFloor !== null && (
-          <CabinetButtonComponent rows={6} columns={10} />
+          <CabinetButtonComponent
+            rows={4}
+            columns={12}
+            selectedBuilding={buildings[selectedBuilding]}
+            selectedFloor={buildings[selectedBuilding]?.floors[selectedFloor]}
+            setSelectedCabinet={setSelectedCabinet}
+          />
         )}
         <CabinetStatusInformation />
       </div>
 
       {/* 선택한 사물함 정보(우측) -> 추후 사물함 컴포넌트와 연결 */}
-      <SelectedCabinetInformation />
+      <SelectedCabinetInformation selectedCabinet={selectedCabinet} />
     </div>
   );
 };
