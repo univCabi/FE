@@ -45,8 +45,8 @@ const CabinetButtonComponent = ({
   };
 
   return (
-    <div className="absolute p-24 flex justify-center items-center w-full">
-      {cabinetButtons()}
+    <div className="absolute py-24 px-6 flex justify-center w-full">
+      <div className="flex flex-wrap">{cabinetButtons()}</div>
     </div>
   );
 };

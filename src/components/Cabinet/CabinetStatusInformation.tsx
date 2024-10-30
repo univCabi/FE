@@ -12,9 +12,9 @@ const CabinetStatusInformation = () => {
   return (
     <div className="flex flex-row absolute bottom-5 left-5">
       {cabinetStatus.map((status, index) => (
-        <div key={index} className="px-2 flex flex-row">
-          <div className={`w-4 h-4 ${status.color} mr-2 rounded-sm font-`} />
-          {status.label}
+        <div key={index} className="px-2 flex whitespace-nowrap">
+          <div className={`w-4 h-4 ${status.color} mr-2 rounded-sm`} />
+          <div>{status.label}</div>
         </div>
       ))}
     </div>
