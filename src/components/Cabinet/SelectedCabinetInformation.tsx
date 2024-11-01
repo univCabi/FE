@@ -1,4 +1,5 @@
 import CabinetRental from "@/components/CabinetState/CabinetRental";
+import CabinetSVG from "@/icons/cabinet.svg?react";
 
 // 선택된 사물함 정보
 interface SelectedCabinetInformationProps {
@@ -14,7 +15,9 @@ const SelectedCabinetInformation = ({
         <CabinetRental selectedCabinet={selectedCabinet} />
       ) : (
         <div>
-          <div className="pb-5">icon</div>
+          <div className="flex justify-center pb-5">
+            <CabinetSVG />
+          </div>
           <div>
             사물함을
             <br />

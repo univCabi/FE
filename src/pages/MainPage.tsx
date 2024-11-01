@@ -1,6 +1,7 @@
 import { useBuildingState } from "@/hooks/useBuildingState";
 import { useBuildingList } from "@/hooks/useBuildingList";
 import { useCabinetState } from "@/hooks/useCabinetState";
+import { useSearchInput } from "@/hooks/useSearchInput";
 import SideNavigationLayout from "@/pages/SideNavigationLayout";
 import SelectedCabinetInformation from "@/components/Cabinet/SelectedCabinetInformation";
 import BuildingSelectButton from "@/components/BuildingSelectButton";
@@ -21,8 +22,8 @@ const MainPage = () => {
     isOpen,
     setIsOpen,
   } = useBuildingState();
-
   const { selectedCabinet, setSelectedCabinet } = useCabinetState();
+  const { searchInput, setSearchInput } = useSearchInput();
 
   return (
     <div>
@@ -34,6 +35,8 @@ const MainPage = () => {
         setSelectedFloor={setSelectedFloor}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
+        searchInput={searchInput} // 추가
+        setSearchInput={setSearchInput} // 추가
       />
 
       {/* 화면 크기 = 768px 이상일 때 */}

@@ -3,6 +3,7 @@ import "./App.css";
 import MainPage from "@/pages/MainPage";
 import LoginPage from "@/pages/Login/LoginPage";
 import ErrorPage from "@/pages/ErrorPage";
+import SearchPage from "@/pages/SearchPage";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           {/*로그인 페이지 라우터 설정*/}
           <Route path="*" element={<ErrorPage />} />
           {/* 혹시나 해서 만들어 보는 에러페이지입니다 */}
+          <Route path="/search" element={<SearchPage />} />
         </Routes>
       </BrowserRouter>
     </>
