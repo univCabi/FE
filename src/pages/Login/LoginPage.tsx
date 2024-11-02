@@ -1,20 +1,31 @@
-import { useState } from "react";
 import { useLogin } from "@/hooks/useLogin";
 import LoginForm from "@/components/LoginForm";
 
 const LoginPage = () => {
-  const { login } = useLogin();
-  const [loginSuccess, setLoginSuccess] = useState<boolean>(true);
+  const {
+    handleLogin,
+    studentNumber,
+    setStudentNumber,
+    password,
+    setPassword,
+    loginSuccess,
+  } = useLogin();
 
-  // 커스텀 훅을 사용한 로그인 로직
-  const handleLogin = async (studentNumber: string, password: string) => {
-    const success = await login({ studentNumber, password });
-    setLoginSuccess(success);
+  const onSubmit = async () => {
+    await handleLogin({ studentNumber, password });
+    setPassword("");
+    setStudentNumber("");
   };
-
   return (
     <div className="w-screen min-h-screen flex flex-col justify-center items-center bg-blue-400">
-      <LoginForm onSubmit={handleLogin} loginSuccess={loginSuccess} />
+      <LoginForm
+        onSubmit={onSubmit}
+        studentNumber={studentNumber}
+        setStudentNumber={setStudentNumber}
+        password={password}
+        setPassword={setPassword}
+        loginSuccess={loginSuccess}
+      />
     </div>
   );
 };

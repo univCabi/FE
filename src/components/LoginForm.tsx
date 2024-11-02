@@ -1,19 +1,23 @@
-import { useState } from "react";
-
 interface LoginFormProps {
-  onSubmit: (studentNumber: string, password: string) => void;
+  studentNumber: string;
+  password: string;
+  setStudentNumber: (value: string) => void;
+  setPassword: (value: string) => void;
+  onSubmit: () => void;
   loginSuccess: boolean;
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, loginSuccess }) => {
-  const [studentNumber, setStudentNumber] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-
+const LoginForm = ({
+  studentNumber,
+  password,
+  setStudentNumber,
+  setPassword,
+  onSubmit,
+  loginSuccess,
+}: LoginFormProps) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(studentNumber, password);
-    setStudentNumber("");
-    setPassword("");
+    onSubmit();
   };
   return (
     <form
