@@ -5,6 +5,7 @@ interface LoginFormProps {
   setPassword: (value: string) => void;
   onSubmit: () => void;
   loginSuccess: boolean;
+  loginLogo: string;
 }
 
 const LoginForm = ({
@@ -14,6 +15,7 @@ const LoginForm = ({
   setPassword,
   onSubmit,
   loginSuccess,
+  loginLogo,
 }: LoginFormProps) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,10 +27,11 @@ const LoginForm = ({
       className="w-[60%] max-w-[22rem] flex flex-col items-center p-10 bg-white rounded-lg shadow-lg"
     >
       <h2 className="text-4xl font-bold mb-5">Login</h2>
-      <p className="text-blue-300 mb-20">여러분의 일상을 가볍게</p>
+      <p className="text-blue-600 mb-5">여러분의 일상을 가볍게</p>
+      <img className="w-[60%] mb-5" src={loginLogo} />
       <label className="text-xl mb-2">학번</label>
       <input
-        className="w-[90%] px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300 mb-2"
+        className="w-[90%] px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 mb-2"
         type="text"
         value={studentNumber}
         onChange={(e) => setStudentNumber(e.target.value)}
@@ -36,7 +39,7 @@ const LoginForm = ({
       />
       <label className="text-xl mb-2">비밀번호</label>
       <input
-        className="w-[90%] px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300 mb-4"
+        className="w-[90%] px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 mb-4"
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
