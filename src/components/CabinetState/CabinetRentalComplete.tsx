@@ -1,25 +1,39 @@
 // 대여 성공 컴포넌트
 
 import { useCabinetReturnModal } from "@/hooks/useCabinetReturnModal";
-import CabinetReturnConfirmModal from "./CabinetReturnConfirmModal";
+import { useCabinetStateManagement } from "@/hooks/useCabinetStateManagement";
+import CabinetReturnConfirmModal from "@/components/CabinetState/CabinetReturnConfirmModal";
+import CabinetRental from "@/components/CabinetState/CabinetRental";
 
 interface CabinetRentalCompleteProps {
   selectedCabinet: string;
-  confirmReturn: () => void;
-  closeReturnModal: () => void;
 }
 
 const CabinetRentalComplete = ({
   selectedCabinet,
-  confirmReturn,
-  closeReturnModal,
 }: CabinetRentalCompleteProps) => {
   const { openReturnModal, setOpenReturnModal } = useCabinetReturnModal();
+  const { isRented, setIsRented } = useCabinetStateManagement();
 
   // 반납 버튼 클릭 -> 반납 모달창 생성
   const clickedReturnButton = () => {
     setOpenReturnModal(true);
   };
+
+  // 반납 모달 -> '확인' 버튼 누르면 isRented가 false로 변경 -> 대여 중 X
+  const confirmReturn = () => {
+    // CabinetRental.tsx에서 isRented=true 인게 저장이 안되어서 우선 해당 코드에서 true로 구현
+    setIsRented(true);
+    setOpenReturnModal(false);
+  };
+  // 반납 모달 -> '취소'버튼 누르면 모달 닫기
+  const closeReturnModal = () => {
+    setOpenReturnModal(false);
+  };
+
+  if (isRented) {
+    return <CabinetRental selectedCabinet={selectedCabinet} />;
+  }
 
   return (
     <div>
@@ -41,6 +55,7 @@ const CabinetRentalComplete = ({
           2024.12.31
         </p>
       </div>
+
       {openReturnModal && (
         <CabinetReturnConfirmModal
           confirmReturn={confirmReturn}
