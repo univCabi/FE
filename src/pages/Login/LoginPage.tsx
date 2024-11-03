@@ -1,69 +1,54 @@
-import { useState } from "react";
-import axios from "axios";
-
-const LOGIN_URL = import.meta.env.VITE_LOGIN_URL; // VITE_LOGIN_URL 사용
+import { useNavigate } from "react-router-dom";
+import { useLogin } from "@/hooks/useLogin";
+import { loginApi } from "@/api/loginApi";
+import LoginForm from "@/components/LoginForm";
+import loginLogo from "@/images/android-icon.png";
 
 const LoginPage = () => {
-  const [studentNumber, setStudentNumber] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [loginFalse, setLoginFalse] = useState<boolean>(false);
-  const onSubmit = async (e: React.FormEvent) => {
-    // async 와 React.FormEvent 조사
-    e.preventDefault();
-
-    const loginData = {
-      studentNumber: studentNumber,
-      password: password,
-    };
+  const {
+    studentNumber,
+    setStudentNumber,
+    password,
+    setPassword,
+    loginSuccess,
+    setLoginSuccess,
+  } = useLogin();
+  const navigate = useNavigate();
+  const handleLogin = async () => {
     try {
-      const response = await axios.post(`${LOGIN_URL}/login`, loginData);
-      if (response.data.success) {
-        setLoginFalse(false);
-      } else {
-        setLoginFalse(true);
-      }
+      const response = await loginApi({
+        studentNumber,
+        password,
+      });
+      const { accessToken, refreshToken } = response.data;
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("refreshToken", refreshToken);
+      localStorage.setItem("studentNumber", studentNumber);
+      navigate("/main");
+      setLoginSuccess(true); //로그인 성공
+      console.log(response.status); // 로그인 상태 코드 로그
     } catch (error) {
-      setLoginFalse(true);
+      console.error("로그인 중 오류가 발생했습니다:", error);
+      console.log(error.response?.status || "오류를 알 수 없습니다.");
+      setLoginSuccess(false); //로그인 실패
     }
   };
+  const onSubmit = async () => {
+    await handleLogin();
+    setPassword("");
+    setStudentNumber("");
+  };
   return (
-    <div className="w-screen min-h-screen flex flex-col justify-center items-center bg-blue-400 ">
-      <form className="w-[60%] max-w-[22rem] flex flex-col items-center p-10 bg-white rounded-lg shadow-lg">
-        <h2 className="text-4xl font-bold mb-5">Login</h2>
-        <p className="text-blue-300 mb-20">여러분의 일상을 가볍게</p>
-        <label className="text-xl mb-2">학번</label>
-        <input
-          className="w-[90%] px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300 mb-2"
-          type="text"
-          value={studentNumber}
-          onChange={(e) => {
-            setStudentNumber(e.target.value);
-          }}
-          placeholder="학번을 입력하세요."
-        />
-        <label className="text-xl mb-2">비밀번호</label>
-        <input
-          className="w-[90%] px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300 mb-4"
-          type="password"
-          value={password}
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
-          placeholder="비밀번호를 입력하세요."
-        />
-        {loginFalse && (
-          <div className="mb-4 text-red-600">
-            {"학번이나 비밀번호가 잘못되었습니다."}
-          </div>
-        )}
-        <button
-          onClick={onSubmit}
-          type="submit"
-          className="w-[70%] text-white py-4 bg-blue-600 rounded-md"
-        >
-          L o g i n
-        </button>
-      </form>
+    <div className="w-screen min-h-screen flex flex-col justify-center items-center bg-blue-400">
+      <LoginForm
+        onSubmit={onSubmit}
+        studentNumber={studentNumber}
+        setStudentNumber={setStudentNumber}
+        password={password}
+        setPassword={setPassword}
+        loginSuccess={loginSuccess}
+        loginLogo={loginLogo}
+      />
     </div>
   );
 };
