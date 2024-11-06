@@ -3,7 +3,7 @@ import { useLogin } from "@/hooks/useLogin";
 import { loginApi } from "@/api/loginApi";
 import LoginForm from "@/components/LoginForm";
 import loginLogo from "@/images/android-icon.png";
-
+// 페이지 <-> 컴포넌트 <-> 훅 <-> api
 const LoginPage = () => {
   const {
     studentNumber,
@@ -14,6 +14,7 @@ const LoginPage = () => {
     setLoginSuccess,
   } = useLogin();
   const navigate = useNavigate();
+  // 훅?
   const handleLogin = async () => {
     try {
       const response = await loginApi({
@@ -23,7 +24,6 @@ const LoginPage = () => {
       const { accessToken, refreshToken } = response.data;
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("refreshToken", refreshToken);
-      localStorage.setItem("studentNumber", studentNumber);
       navigate("/main");
       setLoginSuccess(true); //로그인 성공
       console.log(response.status); // 로그인 상태 코드 로그
@@ -33,6 +33,8 @@ const LoginPage = () => {
       setLoginSuccess(false); //로그인 실패
     }
   };
+
+  // 컴포넌트?
   const onSubmit = async () => {
     await handleLogin();
     setPassword("");

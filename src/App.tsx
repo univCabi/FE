@@ -4,6 +4,7 @@ import MainPage from "@/pages/MainPage";
 import LoginPage from "@/pages/Login/LoginPage";
 import ErrorPage from "@/pages/ErrorPage";
 import SearchPage from "@/pages/SearchPage";
+import ProfilePage from "@/pages/ProfilePage";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="*" element={<ErrorPage />} />
           {/* 혹시나 해서 만들어 보는 에러페이지입니다 */}
           <Route path="/search" element={<SearchPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
         </Routes>
       </BrowserRouter>
     </>
