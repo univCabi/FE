@@ -1,11 +1,13 @@
+import { useLogin } from "@/hooks/useLogin";
 interface LoginFormProps {
   studentNumber: string;
   password: string;
   setStudentNumber: (value: string) => void;
   setPassword: (value: string) => void;
-  onSubmit: () => void;
   loginSuccess: boolean;
   loginLogo: string;
+  setLoginSuccess: (value: boolean) => void;
+  handleLogin: () => Promise<void>;
 }
 
 const LoginForm = ({
@@ -13,17 +15,19 @@ const LoginForm = ({
   password,
   setStudentNumber,
   setPassword,
-  onSubmit,
   loginSuccess,
   loginLogo,
+  handleLogin,
 }: LoginFormProps) => {
-  const handleSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit();
+    await handleLogin();
+    setPassword("");
+    setStudentNumber("");
   };
   return (
     <form
-      onSubmit={handleSubmit}
+      onSubmit={onSubmit}
       className="w-[60%] max-w-[22rem] flex flex-col items-center p-10 bg-white rounded-lg shadow-lg"
     >
       <h2 className="text-4xl font-bold mb-5">Login</h2>
