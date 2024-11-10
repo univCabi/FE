@@ -1,16 +1,16 @@
 import { useBuildingList } from "@/hooks/useBuildingList";
 import { useSearchInput } from "@/hooks/useSearchInput";
 import { useBuildingState } from "@/hooks/useBuildingState";
-import { useProfilePageState } from "@/hooks/useProfilePageState";
+import { useUserData } from "@/hooks/useUserData";
 import ProfileCard from "@/components/Profile/ProfileCard";
 import RentalinfoCard from "@/components/Profile/RentalinfoCard";
 import ProfileSaveButton from "@/components/Profile/ProfileSaveButton";
 import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
 import SideNavigationLayout from "@/pages/SideNavigationLayout";
 const ProfilePage = () => {
-  const { isNameOn, setIsNameOn } = useProfilePageState();
+  const { userData, userIsVisible, setUserIsVisible } = useUserData();
   const toggleSwitch = (): void => {
-    setIsNameOn(!isNameOn);
+    setUserIsVisible(!userIsVisible);
   };
   const { buildings } = useBuildingList();
   const {
@@ -46,11 +46,18 @@ const ProfilePage = () => {
         {/* md기준으로 flex-col과 flex-row 배치 */}
         <div className="mt-28 flex flex-col md:flex-row gap-10">
           {/* 프로필 */}
-          <ProfileCard isNameOn={isNameOn} toggleSwitch={toggleSwitch} />
+          <ProfileCard
+            toggleSwitch={toggleSwitch}
+            name={userData.name}
+            userIsVisible={userIsVisible}
+            affiliation={userData.affiliation}
+            studentNumber={userData.studentNumber}
+            phoneNumber={userData.phoneNumber}
+          />
           {/* 대여정보 */}
-          <RentalinfoCard />
+          <RentalinfoCard userRentalData={userData.RentCabinetInfo} />
         </div>
-        <ProfileSaveButton />
+        <ProfileSaveButton userIsVisible={userIsVisible} />
       </div>
     </div>
   );
