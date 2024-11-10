@@ -1,5 +1,5 @@
 import { userDataSaveButtonApi } from "@/api/userDataSaveButtonApi";
-export const useProfileSaveButton = (userIsVisible: boolean) => {
+export const useProfileSave = (userIsVisible: boolean) => {
   const handleProfileSave = async () => {
     try {
       const response = await userDataSaveButtonApi(userIsVisible);

@@ -1,6 +1,6 @@
-import { useProfileSaveButton } from "@/hooks/useProfileSaveButton";
+import { useProfileSave } from "@/hooks/useProfileSave";
 const ProfileSaveButton = ({ userIsVisible }: { userIsVisible: boolean }) => {
-  const { handleProfileSave } = useProfileSaveButton(userIsVisible);
+  const { handleProfileSave } = useProfileSave(userIsVisible);
   return (
     <button
       onClick={handleProfileSave}
