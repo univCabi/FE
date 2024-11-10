@@ -1,5 +1,7 @@
 // 건물, 층 선택 버튼
 
+import axios from "axios";
+
 interface BuildingSelectButtonProps {
   buildings: { name: string; floors: string[] }[];
   selectedBuilding: number | null;
@@ -15,6 +17,18 @@ const BuildingSelectButton = ({
   selectedFloor,
   setSelectedFloor,
 }: BuildingSelectButtonProps) => {
+  // api
+  const cabinetCallApi = async (building: string, floor: number) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/cabinet/main?building=${building}&floor=${floor}`
+      );
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div>
       <div className="overflow-y-auto h-3/5">
@@ -44,6 +58,7 @@ const BuildingSelectButton = ({
                     }`}
                     onClick={() => {
                       setSelectedFloor(floorIndex); // 선택된 층을 업데이트
+                      cabinetCallApi(building, floor);
                     }}
                   >
                     {floor}

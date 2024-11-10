@@ -11,21 +11,21 @@ interface CabinetRentalProps {
 }
 
 const CabinetRental = ({ selectedCabinet }: CabinetRentalProps) => {
-  const { openModal, setOpenModal } = useCabinetRentalModal();
+  const { openRentalModal, setOpenRentalModal } = useCabinetRentalModal();
   const { isRented, setIsRented } = useCabinetStateManagement();
 
   // 대여 버튼 클릭
   const clickedRentalButton = () => {
-    setOpenModal(true);
+    setOpenRentalModal(true);
   };
   // 대여 모달 -> '확인' 버튼 누르면 isRented가 true로 변경 -> 대여 중 O
   const confirmRental = () => {
     setIsRented(true);
-    setOpenModal(false);
+    setOpenRentalModal(false);
   };
   // 대여 모달 -> '취소'버튼 누르면 모달 닫기
   const closeRentalModal = () => {
-    setOpenModal(false);
+    setOpenRentalModal(false);
   };
 
   // 사물함이 대여 중이라면 CabinetRentalComplete.tsx 반환
@@ -49,7 +49,7 @@ const CabinetRental = ({ selectedCabinet }: CabinetRentalProps) => {
         취소
       </button>
 
-      {openModal && (
+      {openRentalModal && (
         <CabinetRentalConfirmModal
           closeRentalModal={closeRentalModal}
           confirmRental={confirmRental}

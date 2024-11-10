@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export const useBuildingState = () => {
   const [selectedBuilding, setSelectedBuilding] = useState<number | null>(null); // 선택한 건물의 인덱스를 저장하는 상태
