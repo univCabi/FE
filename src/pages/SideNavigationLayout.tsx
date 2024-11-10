@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router";
 import LogoSVG from "@/icons/cabiLogo.svg?react";
 import AngleDownSVG from "@/icons/angleDown.svg?react";
-
+import ProfilePageButton from "@/components/ProfilePageButton";
 interface NavBuildingProps {
   buildings: { name: string; floors: string[] }[]; // 건물 배열 (name과 floors 포함)
   selectedBuilding: number | null; // 선택된 건물의 인덱스 또는 null
@@ -24,12 +24,19 @@ const SideNavigationLayout = ({
   setSearchInput,
 }: NavBuildingProps) => {
   const location = useLocation();
-  const navigatedMainPage = useNavigate();
-
-  // 로고 클릭 시 '/main'으로 이동 & 위치가 '/main'일 경우 새로고침
-  const clickedLogo = () => {
-    navigatedMainPage("/main");
+  const navigate = useNavigate(); // 한 번만 선언하면 된다.
+  // 로고 클릭 시 '/main'으로 이동 & 위치가 '/main'일 경우 새로고침 -> 민웅기: clikendLogo에서 clickedMainLogo로 변경하였습니다.
+  const clickedMainLogo = () => {
+    navigate("/main");
     if (location.pathname === "/main") {
+      window.location.reload();
+    }
+  };
+
+  // 로고 클릭시 '/profile'로 이동 $ 위치가 '/profile'일 경우 새로고침
+  const clickedProfileLogo = () => {
+    navigate("/profile");
+    if (location.pathname === "/profile") {
       window.location.reload();
     }
   };
@@ -46,7 +53,7 @@ const SideNavigationLayout = ({
         <div className="flex items-center px-5">
           {/* 로고 */}
           <button className="pr-5 py-2">
-            <LogoSVG onClick={clickedLogo} />
+            <LogoSVG onClick={clickedMainLogo} />
           </button>
 
           {/* 건물 목록 드롭다운 */}
@@ -97,9 +104,7 @@ const SideNavigationLayout = ({
 
         {/* 우측 */}
         {/* 프로필 페이지로 들어갈 수 있는 아이콘 */}
-        <button className="mr-2 p-2 bg-blue-600 hover:bg-blue-500/70 rounded-md focus:outline-none">
-          My Page
-        </button>
+        <ProfilePageButton onClick={clickedProfileLogo} />
       </div>
     </nav>
   );
