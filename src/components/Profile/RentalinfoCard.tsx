@@ -37,13 +37,13 @@ const RentalinfoCard = ({ userRentalData }: RentalinfoCardProp) => {
           </div>
           <div className="justify-between items-start inline-flex w-full">
             <div>남은 기간</div>
-            <div className="font-bold">{`${userRentalData.startDate ?? ""}${
+            <div className="font-bold">{`${userRentalData.leftDate ?? ""}${
               userRentalData.leftDate ? "일" : "정보를 불러올 수 없습니다"
             }`}</div>
           </div>
           <div className="justify-between items-start inline-flex w-full">
             <div>종료 일자</div>
-            <div className="font-bold ">{`${userRentalData.startDate ?? ""}${
+            <div className="font-bold ">{`${userRentalData.endDate ?? ""}${
               userRentalData.endDate ? "일" : "정보를 불러올 수 없습니다"
             }`}</div>
           </div>

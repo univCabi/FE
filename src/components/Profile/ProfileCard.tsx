@@ -20,14 +20,16 @@ const ProfileCard = ({
         프로필
       </div>
       <div className="w-full flex justify-between items-center ">
-        <div className="text-black text-lg font-bold">{name ?? "비공개"}</div>
+        <div className="text-black text-lg font-bold">
+          {userIsVisible ? name : "비공개"}
+        </div>
         <div
           className="relative w-14 h-7 cursor-pointer"
           onClick={toggleSwitch}
         >
           <div
             className={`absolute w-full h-full rounded-full transition-colors duration-300 ${
-              userIsVisible ? "bg-blue-600" : "bg-gray-300"
+              userIsVisible ? "bg-blue-600" : "bg-gray-400"
             }`}
           />
           <div
