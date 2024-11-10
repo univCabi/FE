@@ -1,9 +1,8 @@
-import { userDataSaveButton } from "@/api/userDataSaveButtton";
-
+import { userDataSaveButtonApi } from "@/api/userDataSaveButtonApi";
 export const useProfileSaveButton = (userIsVisible: boolean) => {
   const handleProfileSave = async () => {
     try {
-      const response = await userDataSaveButton(userIsVisible);
+      const response = await userDataSaveButtonApi(userIsVisible);
       console.log(userIsVisible);
       console.log(response.status);
       window.location.reload();

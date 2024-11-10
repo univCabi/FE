@@ -1,6 +1,5 @@
 import { userDataApi } from "@/api/userDataApi";
 import { useState, useEffect } from "react";
-
 interface UserData {
   name: string | null;
   isVisible: boolean;

@@ -31,8 +31,10 @@ const RentalinfoCard = ({ userRentalData }: RentalinfoCardProp) => {
         <div className="px-5 py-5 w-80 text-black  bg-white rounded-lg flex flex-col justify-start items-start gap-5 shadow">
           <div className="justify-between items-start inline-flex w-full">
             <div>시작일</div>
-            <div className="font-bold">{`${userRentalData.startDate ?? ""}${
-              userRentalData.startDate ? "일" : "정보를 불러올 수 없습니다"
+            <div className="font-bold">{`${
+              userRentalData.startDate
+                ? userRentalData.startDate
+                : "정보를 불러올 수 없습니다"
             }`}</div>
           </div>
           <div className="justify-between items-start inline-flex w-full">
@@ -43,8 +45,10 @@ const RentalinfoCard = ({ userRentalData }: RentalinfoCardProp) => {
           </div>
           <div className="justify-between items-start inline-flex w-full">
             <div>종료 일자</div>
-            <div className="font-bold ">{`${userRentalData.endDate ?? ""}${
-              userRentalData.endDate ? "일" : "정보를 불러올 수 없습니다"
+            <div className="font-bold ">{`${
+              userRentalData.endDate
+                ? userRentalData.endDate
+                : "정보를 불러올 수 없습니다"
             }`}</div>
           </div>
         </div>
