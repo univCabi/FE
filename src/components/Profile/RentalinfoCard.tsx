@@ -18,10 +18,17 @@ const RentalinfoCard = ({ userRentalData }: RentalinfoCardProp) => {
       <div className=" flex-col justify-start items-start gap-16 flex">
         <div className="justify-start items-start gap-8 inline-flex">
           <div className="w-[3.75rem] h-[0.3125rem] relative">
-            <div className="w-[3.75rem] h-[3.75rem] l absolute bg-blue-500 rounded-[0.625rem]" />
+            <div
+              className={`w-[3.75rem] h-[3.75rem] ${
+                userRentalData.cabinetNumber ? "text-2xl" : "text-xl"
+              }
+               text-gray-50 absolute bg-blue-500 rounded-[0.625rem] flex justify-center items-center`}
+            >
+              {userRentalData.cabinetNumber ?? "None"}
+            </div>
           </div>
           <div className="w-[6rem] h-[4rem] relative">
-            <div className=" w-full top-3 absolute text-center text-[#7b7b7b] text-sm font-normal">
+            <div className=" w-full top-3 absolute  text-[#7b7b7b] text-sm font-normal ">
               {`${userRentalData?.building || "**"} - ${
                 userRentalData?.floor || "*"
               }층`}
