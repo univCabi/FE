@@ -28,7 +28,7 @@ const ProfileCard = ({
         {affiliation ?? "전공 정보를 불러올 수 없습니다."}
       </div>
       <div className="flex items-center ">
-        <div className="text-blue-600 mr-36">이름 정보 보기</div>
+        <div className="text-blue-600 mr-36">이름 공개 여부</div>
         <div
           className="relative w-14 h-7 cursor-pointer"
           onClick={toggleSwitch}
