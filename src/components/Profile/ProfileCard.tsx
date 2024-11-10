@@ -15,7 +15,7 @@ const ProfileCard = ({
   phoneNumber,
 }: ProfileCardProps) => {
   return (
-    <div className=" p-10 bg-neutral-100 rounded-2xl flex-col justify-start items-start gap-5 inline-flex shadow-sm">
+    <div className="p-10 bg-neutral-100 rounded-2xl flex-col justify-start items-start gap-5 inline-flex shadow-sm">
       <div className="justify-start items-start inline-flex text-black text-xl font-bold">
         프로필
       </div>
@@ -23,6 +23,12 @@ const ProfileCard = ({
         <div className="text-black text-lg font-bold">
           {userIsVisible ? name : "비공개"}
         </div>
+      </div>
+      <div className="text-[#7b7b7b] font-bold text-base ">
+        {affiliation ?? "전공 정보를 불러올 수 없습니다."}
+      </div>
+      <div className="flex items-center ">
+        <div className="text-blue-600 mr-36">이름 정보 보기</div>
         <div
           className="relative w-14 h-7 cursor-pointer"
           onClick={toggleSwitch}
@@ -40,9 +46,6 @@ const ProfileCard = ({
             }`}
           />
         </div>
-      </div>
-      <div className="text-[#7b7b7b] font-bold text-base mb-12">
-        {affiliation ?? "전공 정보를 불러올 수 없습니다."}
       </div>
       <div className="px-5 py-5 w-80 text-black  bg-white rounded-lg flex flex-col justify-start items-start gap-8 shadow">
         <div className="justify-between  inline-flex w-full">
