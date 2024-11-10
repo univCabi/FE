@@ -11,6 +11,6 @@ export const userDataApi = async () => {
     });
     return { status: response.status, data: response.data };
   } catch (error) {
-    return { status: error.response.status, data: error.response.data };
+    throw error; // 오류를 발생시켜 useUserData의 catch 블록으로 전달
   }
 };
