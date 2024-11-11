@@ -7,7 +7,7 @@ import CabinetRentalComplete from "@/components/CabinetState/CabinetRentalComple
 import CabinetSVG from "@/icons/cabinet.svg?react";
 
 interface CabinetRentalProps {
-  selectedCabinet: string;
+  selectedCabinet: number;
 }
 
 const CabinetRental = ({ selectedCabinet }: CabinetRentalProps) => {

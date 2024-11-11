@@ -6,7 +6,7 @@ import CabinetReturnConfirmModal from "@/components/CabinetState/CabinetReturnCo
 import CabinetRental from "@/components/CabinetState/CabinetRental";
 
 interface CabinetRentalCompleteProps {
-  selectedCabinet: string;
+  selectedCabinet: number;
 }
 
 const CabinetRentalComplete = ({

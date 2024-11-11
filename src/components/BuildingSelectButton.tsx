@@ -1,11 +1,14 @@
 // 건물, 층 선택 버튼
 
+import { useSearchInput } from "@/hooks/useSearchInput";
 import axios from "axios";
 
 interface BuildingSelectButtonProps {
-  buildings: { name: string; floors: string[] }[];
-  selectedBuilding: number | null;
-  setSelectedBuilding: (index: number | null) => void;
+  buildings: { name: string; floors: number[] }[];
+  // selectedBuilding: string | null;
+  // setSelectedBuilding: (index: string | null) => void;
+  selectedBuilding: any; // string 타입으로 수정해야 됨
+  setSelectedBuilding: any;
   selectedFloor: number | null;
   setSelectedFloor: (floor: number | null) => void;
 }
@@ -17,13 +20,15 @@ const BuildingSelectButton = ({
   selectedFloor,
   setSelectedFloor,
 }: BuildingSelectButtonProps) => {
+  const { searchParams, setSearchParams } = useSearchInput();
   // api
   const cabinetCallApi = async (building: string, floor: number) => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/cabinet/main?building=${building}&floor=${floor}`
+        `http://localhost:8000/cabinet?building=${building}&floor=${floor}`
       );
-      console.log(response);
+      console.log(response.data);
+      setSearchParams({ building, floor: floor.toString() }); // 쿼리스트링
     } catch (error) {
       console.log(error);
     }
@@ -36,7 +41,9 @@ const BuildingSelectButton = ({
           <div key={index} className="mx-2">
             <button
               className={`p-4 w-full text-gray-500 hover:bg-blue-600 hover:text-white rounded-lg transition-all duration-150 ${
-                selectedBuilding === index ? "bg-blue-600 text-white" : ""
+                selectedBuilding === building.name
+                  ? "bg-blue-600 text-white"
+                  : ""
               }`}
               onClick={() => {
                 setSelectedBuilding(index);
@@ -58,7 +65,7 @@ const BuildingSelectButton = ({
                     }`}
                     onClick={() => {
                       setSelectedFloor(floorIndex); // 선택된 층을 업데이트
-                      cabinetCallApi(building, floor);
+                      cabinetCallApi(building.name, floor);
                     }}
                   >
                     {floor}

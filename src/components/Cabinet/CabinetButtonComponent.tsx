@@ -4,8 +4,8 @@ interface CabinetButtonComponentProps {
   rows: number;
   columns: number;
   selectedBuilding: { name: string } | null;
-  selectedFloor: string | null;
-  setSelectedCabinet: (cabinetNumber: string) => void;
+  selectedFloor: number | null;
+  setSelectedCabinet: (cabinetNumber: number) => void;
 }
 
 const CabinetButtonComponent = ({
@@ -24,9 +24,13 @@ const CabinetButtonComponent = ({
           {Array(rows)
             .fill(0)
             .map((_, index) => {
-              const cabinetNumber = `${
-                selectedBuilding.name
-              }-${selectedFloor}-${i * rows + index + 1}`; // 사물함 고유 번호 지정 : 건물명-층수-번호
+              // const cabinetNumber = `${
+              //   selectedBuilding.name
+              // }-${selectedFloor}-${i * rows + index + 1}`; // 사물함 고유 번호 지정 : 건물명-층수-번호
+              const cabinetNumber = i * rows + index + 1; // 사물함 고유 번호 지정: 단순한 숫자 값
+
+              // 표시할 이름은 버튼 내부에서 문자열로 생성: 건물명-층수-번호
+              const displayNumber = `${selectedBuilding.name}-${selectedFloor}-${cabinetNumber}`;
 
               return (
                 <button
@@ -34,7 +38,7 @@ const CabinetButtonComponent = ({
                   onClick={() => setSelectedCabinet(cabinetNumber)}
                   className="w-16 h-20 my-2 rounded-md bg-gray-300 text-gray-500 text-sm hover:bg-gray-200 flex justify-start items-end p-2"
                 >
-                  {cabinetNumber}
+                  {displayNumber}
                 </button>
               );
             })}

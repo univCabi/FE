@@ -35,8 +35,6 @@ const MainPage = () => {
         setSelectedFloor={setSelectedFloor}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-        searchInput={searchInput} // 추가
-        setSearchInput={setSearchInput} // 추가
       />
 
       {/* 화면 크기 = 768px 이상일 때 */}

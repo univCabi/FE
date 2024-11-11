@@ -1,7 +1,7 @@
 // 대여 버튼 눌렀을 때, 대여 확인 모달
 
 interface CabinetRentalConfirmModalProps {
-  selectedCabinet: string;
+  selectedCabinet: number;
   closeRentalModal: () => void; // 모달 닫기 함수
   confirmRental: () => void; // 대여 확인 버튼
 }

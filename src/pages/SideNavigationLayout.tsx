@@ -1,19 +1,19 @@
 import { useLocation, useNavigate } from "react-router";
-
 import LogoSVG from "@/icons/cabiLogo.svg?react";
 import AngleDownSVG from "@/icons/angleDown.svg?react";
 import SearchSVG from "@/icons/search.svg?react";
+
 import { useEffect, useRef } from "react";
 
 interface NavBuildingProps {
-  buildings: { name: string; floors: string[] }[]; // 건물 배열 (name과 floors 포함)
-  selectedBuilding: number | null; // 선택된 건물의 인덱스 또는 null
-  setSelectedBuilding: (index: number | null) => void; // 선택된 건물을 설정하는 함수
+  buildings: { name: string; floors: number[] }[]; // 건물 배열 (name과 floors 포함)
+  selectedBuilding: string | null; // 선택된 건물의 인덱스 또는 null
+  setSelectedBuilding: (index: string | null) => void; // 선택된 건물을 설정하는 함수
+  // selectedBuilding: any;
+  // setSelectedBuilding: any;
   setSelectedFloor: (floor: number | null) => void; // 선택된 층을 설정하는 함수
   isOpen: boolean; // 드롭다운 on/off 상태
   setIsOpen: (isOpen: boolean) => void; // 드롭다운 상태를 설정하는 함수
-  searchInput: string; // search 관련
-  setSearchInput: (value: string) => void; // search 관련
 }
 
 const SideNavigationLayout = ({
@@ -23,8 +23,6 @@ const SideNavigationLayout = ({
   setSelectedFloor,
   isOpen,
   setIsOpen,
-  searchInput,
-  setSearchInput,
 }: NavBuildingProps) => {
   const location = useLocation();
   const navigate = useNavigate();
