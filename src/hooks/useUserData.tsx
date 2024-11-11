@@ -7,7 +7,7 @@ interface UserData {
   affiliation: string | null;
   studentNumber: number | null;
   phoneNumber: string | null;
-  RentCabinetInfo: {
+  rentCabinetInfo: {
     building: string | null;
     floor: number | null;
     cabinetNumber: number | null;
@@ -24,7 +24,7 @@ const defaultUserData: UserData = {
   affiliation: null,
   studentNumber: null,
   phoneNumber: null,
-  RentCabinetInfo: {
+  rentCabinetInfo: {
     building: null,
     floor: null,
     cabinetNumber: null,
