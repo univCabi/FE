@@ -1,14 +1,12 @@
 // 건물, 층 선택 버튼
 
-import { useSearchInput } from "@/hooks/useSearchInput";
+import { useSearch } from "@/hooks/useSearch";
 import axios from "axios";
 
 interface BuildingSelectButtonProps {
   buildings: { name: string; floors: number[] }[];
-  // selectedBuilding: string | null;
-  // setSelectedBuilding: (index: string | null) => void;
-  selectedBuilding: any; // string 타입으로 수정해야 됨
-  setSelectedBuilding: any;
+  selectedBuilding: string | null;
+  setSelectedBuilding: (name: string | null) => void;
   selectedFloor: number | null;
   setSelectedFloor: (floor: number | null) => void;
 }
@@ -20,8 +18,8 @@ const BuildingSelectButton = ({
   selectedFloor,
   setSelectedFloor,
 }: BuildingSelectButtonProps) => {
-  const { searchParams, setSearchParams } = useSearchInput();
-  // api
+  const { setSearchParams } = useSearch();
+  // 건물, 층에 대한 api
   const cabinetCallApi = async (building: string, floor: number) => {
     try {
       const response = await axios.get(
@@ -37,8 +35,8 @@ const BuildingSelectButton = ({
   return (
     <div>
       <div className="overflow-y-auto h-3/5">
-        {buildings.map((building, index) => (
-          <div key={index} className="mx-2">
+        {buildings.map((building) => (
+          <div key={building.name} className="mx-2">
             <button
               className={`p-4 w-full text-gray-500 hover:bg-blue-600 hover:text-white rounded-lg transition-all duration-150 ${
                 selectedBuilding === building.name
@@ -46,14 +44,14 @@ const BuildingSelectButton = ({
                   : ""
               }`}
               onClick={() => {
-                setSelectedBuilding(index);
+                setSelectedBuilding(building.name);
                 setSelectedFloor(null);
               }}
             >
               {building.name}
             </button>
 
-            {selectedBuilding === index && (
+            {selectedBuilding === building.name && (
               <div className="absolute inset-y-0 left-40 w-24 border-r-2 border-gray-400 flex flex-col pt-20">
                 {building.floors.map((floor, floorIndex) => (
                   <button

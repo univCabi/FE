@@ -1,19 +1,14 @@
 import { useLocation, useNavigate } from "react-router";
+import { useBuildingState } from "@/hooks/useBuildingState";
 import LogoSVG from "@/icons/cabiLogo.svg?react";
 import AngleDownSVG from "@/icons/angleDown.svg?react";
 import SearchSVG from "@/icons/search.svg?react";
 
-import { useEffect, useRef } from "react";
-
 interface NavBuildingProps {
   buildings: { name: string; floors: number[] }[]; // 건물 배열 (name과 floors 포함)
   selectedBuilding: string | null; // 선택된 건물의 인덱스 또는 null
-  setSelectedBuilding: (index: string | null) => void; // 선택된 건물을 설정하는 함수
-  // selectedBuilding: any;
-  // setSelectedBuilding: any;
+  setSelectedBuilding: (name: string | null) => void; // 선택된 건물을 설정하는 함수
   setSelectedFloor: (floor: number | null) => void; // 선택된 층을 설정하는 함수
-  isOpen: boolean; // 드롭다운 on/off 상태
-  setIsOpen: (isOpen: boolean) => void; // 드롭다운 상태를 설정하는 함수
 }
 
 const SideNavigationLayout = ({
@@ -21,31 +16,10 @@ const SideNavigationLayout = ({
   selectedBuilding,
   setSelectedBuilding,
   setSelectedFloor,
-  isOpen,
-  setIsOpen,
 }: NavBuildingProps) => {
+  const { isOpen, setIsOpen, dropdownOutsideRef } = useBuildingState();
   const location = useLocation();
   const navigate = useNavigate();
-
-  // hook으로 분리해야 할 것들
-  const dropdownOutsideRef = useRef(null); // 분리 (드롭다운 외부 클릭)
-
-  // nav바 로고 우측 드롭다운 관련(드롭다운 외부 클릭시 드롭다운 닫음)
-  useEffect(() => {
-    const handleClickedDropdownOutside = (e) => {
-      if (
-        dropdownOutsideRef.current &&
-        !dropdownOutsideRef.current.contains(e.target)
-      ) {
-        setIsOpen(false);
-      }
-    };
-    window.addEventListener("click", handleClickedDropdownOutside);
-
-    return () => {
-      window.removeEventListener("click", handleClickedDropdownOutside);
-    };
-  }, []);
 
   // 로고 클릭 시 '/main'으로 이동 & 위치가 '/main'일 경우 새로고침
   const clickedLogo = () => {
@@ -76,21 +50,19 @@ const SideNavigationLayout = ({
               className="flex justify-center py-2 px-4 bg-blue-600 hover:bg-blue-500 rounded-md"
               onClick={toggleDropdown}
             >
-              {selectedBuilding !== null
-                ? buildings[selectedBuilding].name // 선택된 건물 이름
-                : "가온관"}
+              {selectedBuilding ?? "가온관"}
               <AngleDownSVG className="ml-2" fill="#ffffff" />
             </button>
 
             {/* 드롭다운 상태일 때 */}
             {isOpen && (
               <div className="absolute w-40 bg-white text-black rounded-md shadow-lg">
-                {buildings.map((building, index) => (
+                {buildings.map((building) => (
                   <button
-                    key={index}
+                    key={building.name}
                     className="block my-1 p-3 w-full text-center hover:bg-blue-400 hover:text-white rounded-md"
                     onClick={() => {
-                      setSelectedBuilding(index); // 선택한 건물 업데이트
+                      setSelectedBuilding(building.name); // 선택한 건물 업데이트
                       setSelectedFloor(null); // 건물 층수 초기화
                       setIsOpen(false); // 드롭다운 닫기
                     }}

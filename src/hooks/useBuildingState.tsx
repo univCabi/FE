@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export const useBuildingState = () => {
   const [selectedBuilding, setSelectedBuilding] = useState<string | null>(null); // 선택한 건물의 인덱스를 저장하는 상태
@@ -17,6 +17,24 @@ export const useBuildingState = () => {
     setSelectedFloor(floorIndex);
   };
 
+  // SideNavigationLayout 드롭다운의 외부를 클릭하였을 때 드롭다운 닫음
+  const dropdownOutsideRef = useRef<HTMLDivElement | null>(null);
+  const handleClickedDropdownOutside = (e: MouseEvent) => {
+    if (
+      dropdownOutsideRef.current &&
+      !dropdownOutsideRef.current.contains(e.target as Node)
+    ) {
+      setIsOpen(false);
+    }
+  };
+  useEffect(() => {
+    if (isOpen) {
+      window.addEventListener("click", handleClickedDropdownOutside);
+    }
+    return () =>
+      window.removeEventListener("click", handleClickedDropdownOutside);
+  }, [isOpen]);
+
   return {
     selectedBuilding,
     setSelectedBuilding,
@@ -26,5 +44,6 @@ export const useBuildingState = () => {
     setIsOpen,
     toggleBuilding,
     toggleFloor,
+    dropdownOutsideRef,
   };
 };

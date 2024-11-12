@@ -1,64 +1,57 @@
+import { useNavigate } from "react-router";
+import { debounce } from "lodash";
+import { useCallback } from "react";
 import { useBuildingList } from "@/hooks/useBuildingList";
-import { useSearchInput } from "@/hooks/useSearchInput";
+import { useSearch } from "@/hooks/useSearch";
 import { useBuildingState } from "@/hooks/useBuildingState";
 import { useCabinetState } from "@/hooks/useCabinetState";
-import { useNavigate } from "react-router";
+import { searchKeywordApi } from "@/api/searchKeywordApi";
+import { searchResultButtonCallApi } from "@/api/searchResultButtonCallApi";
 import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
 import SideNavigationLayout from "@/pages/SideNavigationLayout";
 import SelectedCabinetInformation from "@/components/Cabinet/SelectedCabinetInformation";
 import LogoSVG from "@/icons/cabiLogo.svg?react";
 import SearchSVG from "@/icons/search.svg?react";
-import axios from "axios";
-
-import { debounce } from "lodash";
-import { useCallback, useState } from "react";
 
 const SearchPage = () => {
   const { buildings } = useBuildingList();
+  const { selectedBuilding, setSelectedBuilding, setSelectedFloor } =
+    useBuildingState();
   const {
-    selectedBuilding,
-    setSelectedBuilding,
-    setSelectedFloor,
-    isOpen,
-    setIsOpen,
-  } = useBuildingState();
-  const { searchInput, setSearchInput, searchParams, setSearchParams } =
-    useSearchInput();
+    searchInput,
+    setSearchInput,
+    setSearchParams,
+    searchResults,
+    setSearchResults,
+    showGridResults,
+    setShowGridResults,
+  } = useSearch();
   const { selectedCabinet } = useCabinetState();
-
-  const [searchResults, setSearchResults] = useState([]); // 검색 결과 저장 -> hook : number타입
-  const [showGridResults, setShowGridResults] = useState(false); // 검색 결과 그리드 표시 여부
-
   const navigate = useNavigate();
 
-  // input창 클릭 -> /search로 이동
-  const handleInputClick = () => {
-    navigate({
-      pathname: "/search",
-      search: searchParams.toString(),
-    });
-  };
-
-  // 검색 API 호출 후 결과 저장
-  const searchKeywordApi = async (keyword) => {
+  // 검색 API 호출
+  const handleSearchKeyword = async (keyword) => {
     setSearchParams({ keyword: String(keyword) });
     if (keyword) {
       try {
-        const response = await axios.get(
-          `http://localhost:8000/cabinet/search/detail?keyword=${keyword}`
-        );
-        // 검색 결과에 해당되는 데이터만 추출
-        const filterData = response.data.filter((inputValue) => {
-          return inputValue.cabinetNumber.toString().includes(keyword);
-        });
-
-        setSearchResults(filterData); // 검색 결과 저장
-        // setSearchResults(response.data); // 추후 삭제 예정
+        const response = await searchKeywordApi(keyword);
+        setSearchResults(response);
         setShowGridResults(true);
-        console.log(filterData); // 추후 삭제
+        console.log(response);
+        // console.log(response.data); // 추후 삭제 해야 됨-> css 수정 후
       } catch (error) {
-        console.error(error);
+        console.log(error);
       }
+    }
+  };
+  // 버튼 클릭 시 cabinet에 대한 API 요청
+  const handleClickResultButton = async (building: string, floor: number) => {
+    try {
+      const response = await searchResultButtonCallApi(building, floor);
+      navigate(`/main?building=${building}&floor=${floor}`); // 선택한 사물함 페이지로 이동
+      console.log(response);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -66,39 +59,22 @@ const SearchPage = () => {
   const handleInputRelatedSearch = (e) => {
     const keyword = e.target.value;
     setSearchInput(keyword);
-
     debouncedSearchKeywordApi(keyword);
   };
 
-  // submit 되면 api 호출
+  // submit 되면 API 호출
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    searchKeywordApi(searchInput);
+    handleSearchKeyword(searchInput);
   };
 
   // debounce 적용된 API 호출 함수
   const debouncedSearchKeywordApi = useCallback(
     debounce((keyword) => {
-      searchKeywordApi(keyword);
-    }, 200), // 3초 후에 API 호출
+      handleSearchKeyword(keyword);
+    }, 200), // 2초 후에 API 호출
     []
   );
-
-  // 버튼 클릭 시 cabinet에 대한 api 요청
-  const clickedResultButtonCallApi = async (
-    building: string,
-    floor: number
-  ) => {
-    try {
-      const response = await axios.get(
-        `http://localhost:8000/cabinet?building=${building}&floor=${floor}`
-      );
-      console.log(response.data);
-      // navigate(`/main?building=${building}&floor=${floor}`); // 선택한 사물함 페이지로 이동
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   return (
     <div>
@@ -107,8 +83,6 @@ const SearchPage = () => {
         selectedBuilding={selectedBuilding}
         setSelectedBuilding={setSelectedBuilding}
         setSelectedFloor={setSelectedFloor}
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
       />
 
       {/* 검색 입력창 */}
@@ -122,7 +96,6 @@ const SearchPage = () => {
               type="text"
               value={searchInput}
               onChange={handleInputRelatedSearch}
-              onClick={handleInputClick}
               placeholder="사물함 번호를 입력하세요"
               className="p-2 rounded-md bg-white text-black w-80"
             />
@@ -138,7 +111,7 @@ const SearchPage = () => {
                   <button
                     key={index}
                     onClick={() => {
-                      clickedResultButtonCallApi(result.building, result.floor);
+                      handleClickResultButton(result.building, result.floor);
                     }}
                     className="block my-1 p-3 w-full text-left hover:bg-blue-400 hover:text-white rounded-md"
                   >
@@ -162,11 +135,11 @@ const SearchPage = () => {
                 <button
                   key={index}
                   onClick={() => {
-                    clickedResultButtonCallApi(result.building, result.floor);
+                    handleClickResultButton(result.building, result.floor);
                   }}
                   className="bg-gray-300 hover:bg-gray-200 rounded-md px-8 py-10 text-center shadow-sm"
                 >
-                  {result.building} {result.cabinetNumber}번
+                  {result.building} {result.floor}F {result.cabinetNumber}번
                 </button>
               ))}
             </div>
