@@ -36,7 +36,7 @@ const SideNavigationLayout = ({
 
   return (
     <nav className="bg-blue-600 fixed w-full h-16 z-20 top-0 start-0 border-b border-blue-600 text-white">
-      <div className="max-w-screen-xl h-full flex flex-wrap items-center justify-between mx-auto">
+      <div className="max-w-screen-xl h-full flex items-center justify-between mx-auto">
         {/* 좌측 */}
         <div className="flex items-center px-5">
           {/* 로고 */}
@@ -78,7 +78,7 @@ const SideNavigationLayout = ({
         {/* 검색 입력창 */}
         {/* 검색 입력창 (경로가 /search가 아닐 때만 렌더링) */}
         {location.pathname !== "/search" && (
-          <div className="flex">
+          <div className="hidden sm:flex">
             <form className="flex items-center space-x-2 ml-1">
               <input
                 type="text"
@@ -95,7 +95,7 @@ const SideNavigationLayout = ({
 
         {/* 우측 */}
         {/* 프로필 페이지로 들어갈 수 있는 아이콘 */}
-        <button className="mr-2 p-2 bg-blue-600 hover:bg-blue-500/70 rounded-md focus:outline-none items-center">
+        <button className="mr-2 p-2 bg-blue-600 hover:bg-blue-500/70 rounded-md focus:outline-none items-center hidden sm:flex">
           My Page
         </button>
       </div>
