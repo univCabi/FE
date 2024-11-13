@@ -1,12 +1,12 @@
 // 건물, 층 선택 버튼
 
 import { useSearch } from "@/hooks/useSearch";
-import axios from "axios";
+import { cabinetCallApi } from "@/api/cabinetCallApi";
 
 interface BuildingSelectButtonProps {
   buildings: { name: string; floors: number[] }[];
   selectedBuilding: string | null;
-  setSelectedBuilding: (name: string | null) => void;
+  setSelectedBuilding: (building: string | null) => void;
   selectedFloor: number | null;
   setSelectedFloor: (floor: number | null) => void;
 }
@@ -19,14 +19,13 @@ const BuildingSelectButton = ({
   setSelectedFloor,
 }: BuildingSelectButtonProps) => {
   const { setSearchParams } = useSearch();
+
   // 건물, 층에 대한 api
-  const cabinetCallApi = async (building: string, floor: number) => {
+  const handlecabinetCall = async (building, floor) => {
     try {
-      const response = await axios.get(
-        `http://localhost:8000/cabinet?building=${building}&floor=${floor}`
-      );
-      console.log(response.data);
+      const response = await cabinetCallApi(building, floor);
       setSearchParams({ building, floor: floor.toString() }); // 쿼리스트링
+      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -63,7 +62,7 @@ const BuildingSelectButton = ({
                     }`}
                     onClick={() => {
                       setSelectedFloor(floorIndex); // 선택된 층을 업데이트
-                      cabinetCallApi(building.name, floor);
+                      handlecabinetCall(building.name, floor);
                     }}
                   >
                     {floor}
