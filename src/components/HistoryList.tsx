@@ -1,7 +1,15 @@
-import { useHistoryData } from "@/hooks/useHistoryData";
-const HistoryList = () => {
-  const { userHistoryData } = useHistoryData();
-  console.log(userHistoryData[0]);
+interface HistoryListProp {
+  userHistoryData: {
+    building: string;
+    floor: number;
+    section: string;
+    cabinetNumber: number;
+    startDate: string;
+    endDate: string;
+  }[];
+}
+
+const HistoryList = ({ userHistoryData }: HistoryListProp) => {
   return (
     <div className="p-10">
       {userHistoryData.map((item, index) => (

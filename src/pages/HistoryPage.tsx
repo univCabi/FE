@@ -1,11 +1,14 @@
 import { useBuildingList } from "@/hooks/useBuildingList";
 import { useSearchInput } from "@/hooks/useSearchInput";
 import { useBuildingState } from "@/hooks/useBuildingState";
+import { useHistoryData } from "@/hooks/useHistoryData";
+
 import HistoryList from "@/components/HistoryList";
 import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
 import SideNavigationLayout from "@/pages/SideNavigationLayout";
 
 const HistoryPage = () => {
+  const { userHistoryData } = useHistoryData();
   const { buildings } = useBuildingList();
   const {
     selectedBuilding,
@@ -39,7 +42,7 @@ const HistoryPage = () => {
           사물함 대여 기록
         </div>
         <div className=" max-w-[40rem] w-[80%] h-[90%] md:h-[80%] bg-[#d9d9d9] mt-5">
-          <HistoryList />
+          <HistoryList userHistoryData={userHistoryData} />
         </div>
       </div>
     </div>
