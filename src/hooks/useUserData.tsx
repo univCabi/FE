@@ -38,7 +38,7 @@ const defaultUserData: UserData = {
 export const useUserData = () => {
   const [userData, setUserData] = useState<UserData>(defaultUserData);
   const [userIsVisible, setUserIsVisible] = useState<boolean>(false);
-  const nav = useNavigate();
+  const navigate = useNavigate();
   useEffect(() => {
     const getData = async () => {
       try {
@@ -49,7 +49,7 @@ export const useUserData = () => {
         console.log(response.status);
       } catch (error) {
         if (error.response?.status === 401) {
-          nav("/login");
+          navigate("/login");
         }
         console.error("로그인 중 오류가 발생했습니다:", error);
         console.log(error.response?.status || "오류를 알 수 없습니다.");
