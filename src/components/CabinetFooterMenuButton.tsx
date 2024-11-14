@@ -3,8 +3,12 @@
 import LogSVG from "@/icons/log.svg?react";
 import LogoutSVG from "@/icons/logout.svg?react";
 import CabinetSVG from "@/icons/cabinet.svg?react";
+import { useNavigate, useLocation } from "react-router";
+import { useLogout } from "@/hooks/useLogout";
 
 const CabinetFooterMenuButton = () => {
+  const { handleLogout } = useLogout();
+
   return (
     <div className="absolute bottom-4 w-full flex flex-col items-center text-gray-500">
       <button className="flex flex-col items-center p-4 hover:bg-blue-600 hover:text-white rounded-md transition-all duration-150">
@@ -19,7 +23,10 @@ const CabinetFooterMenuButton = () => {
         />
         Available
       </button>
-      <button className="flex flex-col items-center p-4 hover:bg-blue-600 hover:text-white rounded-md transition-all duration-150">
+      <button
+        onClick={handleLogout}
+        className="flex flex-col items-center p-4 hover:bg-blue-600 hover:text-white rounded-md transition-all duration-150"
+      >
         <LogoutSVG className="mb-1 text-center" />
         Logout
       </button>

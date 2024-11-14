@@ -4,6 +4,7 @@ import LogoSVG from "@/icons/cabiLogo.svg?react";
 import AngleDownSVG from "@/icons/angleDown.svg?react";
 import SearchSVG from "@/icons/search.svg?react";
 
+import ProfilePageButton from "@/components/ProfilePageButton";
 interface NavBuildingProps {
   buildings: { name: string; floors: number[] }[]; // 건물 배열 (name과 floors 포함)
   selectedBuilding: string | null; // 선택된 건물의 인덱스 또는 null
@@ -19,12 +20,19 @@ const SideNavigationLayout = ({
 }: NavBuildingProps) => {
   const { isOpen, setIsOpen, dropdownOutsideRef } = useBuildingState();
   const location = useLocation();
-  const navigate = useNavigate();
-
-  // 로고 클릭 시 '/main'으로 이동 & 위치가 '/main'일 경우 새로고침
-  const clickedLogo = () => {
+  const navigate = useNavigate(); // 한 번만 선언하면 된다.
+  // 로고 클릭 시 '/main'으로 이동 & 위치가 '/main'일 경우 새로고침 -> 민웅기: clikendLogo에서 clickedMainLogo로 변경하였습니다.
+  const clickedMainLogo = () => {
     navigate("/main");
     if (location.pathname === "/main") {
+      window.location.reload();
+    }
+  };
+
+  // 로고 클릭시 '/profile'로 이동 $ 위치가 '/profile'일 경우 새로고침
+  const clickedProfileLogo = () => {
+    navigate("/profile");
+    if (location.pathname === "/profile") {
       window.location.reload();
     }
   };
@@ -41,7 +49,7 @@ const SideNavigationLayout = ({
         <div className="flex items-center px-5">
           {/* 로고 */}
           <button className="pr-5 py-2">
-            <LogoSVG onClick={clickedLogo} />
+            <LogoSVG onClick={clickedMainLogo} />
           </button>
 
           {/* 건물 목록 드롭다운 */}
@@ -74,7 +82,6 @@ const SideNavigationLayout = ({
             )}
           </div>
         </div>
-
         {/* 검색 입력창 */}
         {/* 검색 입력창 (경로가 /search가 아닐 때만 렌더링) */}
         {location.pathname !== "/search" && (
@@ -92,12 +99,10 @@ const SideNavigationLayout = ({
             </form>
           </div>
         )}
-
         {/* 우측 */}
         {/* 프로필 페이지로 들어갈 수 있는 아이콘 */}
-        <button className="mr-2 p-2 bg-blue-600 hover:bg-blue-500/70 rounded-md focus:outline-none items-center hidden sm:flex">
-          My Page
-        </button>
+        <ProfilePageButton onClick={clickedProfileLogo} />
+        main
       </div>
     </nav>
   );
