@@ -1,5 +1,5 @@
 import { useBuildingList } from "@/hooks/useBuildingList";
-import { useSearchInput } from "@/hooks/useSearchInput";
+import { useSearch } from "@/hooks/useSearch";
 import { useBuildingState } from "@/hooks/useBuildingState";
 import { useUserData } from "@/hooks/useUserData";
 import ProfileCard from "@/components/Profile/ProfileCard";
@@ -20,7 +20,7 @@ const ProfilePage = () => {
     isOpen,
     setIsOpen,
   } = useBuildingState();
-  const { searchInput, setSearchInput } = useSearchInput();
+  const { searchInput, setSearchInput } = useSearch();
 
   return (
     <div>
