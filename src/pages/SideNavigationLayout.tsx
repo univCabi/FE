@@ -102,7 +102,6 @@ const SideNavigationLayout = ({
         {/* 우측 */}
         {/* 프로필 페이지로 들어갈 수 있는 아이콘 */}
         <ProfilePageButton onClick={clickedProfileLogo} />
-        main
       </div>
     </nav>
   );
