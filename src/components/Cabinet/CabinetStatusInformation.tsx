@@ -2,11 +2,11 @@
 
 const CabinetStatusInformation = () => {
   const cabinetStatus = [
-    { color: "bg-lime-500", label: "내 사물함" },
-    { color: "bg-purple-500", label: "사용 중" },
-    { color: "bg-red-500", label: "반납 지연" },
-    { color: "bg-gray-300", label: "이용 가능" },
-    { color: "bg-gray-700", label: "사용 불가" },
+    { id: "MINE", color: "bg-lime-500", label: "내 사물함" },
+    { id: "USING", color: "bg-purple-500", label: "사용 중" },
+    { id: "OVERDUE", color: "bg-red-500", label: "반납 지연" },
+    { id: "AVAILABLE", color: "bg-gray-300", label: "이용 가능" },
+    { id: "BROKEN", color: "bg-gray-700", label: "사용 불가" },
   ];
 
   return (

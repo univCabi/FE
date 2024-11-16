@@ -21,7 +21,7 @@ const BuildingSelectButton = ({
   const { setSearchParams } = useSearch();
 
   // 건물, 층에 대한 api
-  const handlecabinetCall = async (building, floor) => {
+  const handlecabinetCall = async (building: string, floor: number) => {
     try {
       const response = await cabinetCallApi(building, floor);
       setSearchParams({ building, floor: floor.toString() }); // 쿼리스트링
@@ -52,16 +52,16 @@ const BuildingSelectButton = ({
 
             {selectedBuilding === building.name && (
               <div className="absolute inset-y-0 left-40 w-24 border-r-2 border-gray-400 flex flex-col pt-20">
-                {building.floors.map((floor, floorIndex) => (
+                {building.floors.map((floor) => (
                   <button
-                    key={floorIndex}
+                    key={floor}
                     className={`p-4 w-auto text-gray-500 hover:bg-blue-600 hover:text-white mx-2 rounded-lg transition-all duration-150 ${
-                      selectedFloor === floorIndex
+                      selectedFloor === floor
                         ? "bg-blue-600 text-white mx-2"
                         : ""
                     }`}
                     onClick={() => {
-                      setSelectedFloor(floorIndex); // 선택된 층을 업데이트
+                      setSelectedFloor(floor); // 선택된 층을 업데이트
                       handlecabinetCall(building.name, floor);
                     }}
                   >

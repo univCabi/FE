@@ -1,50 +1,61 @@
 // 사물함 버튼 컴포넌트 배열 관련
+import { cabinetCallApi } from "@/api/cabinetCallApi";
+
+import { useState, useEffect } from "react";
 
 interface CabinetButtonComponentProps {
-  rows: number;
-  columns: number;
   selectedBuilding: { name: string } | null;
   selectedFloor: number | null;
   setSelectedCabinet: (cabinetNumber: number) => void;
 }
+interface cabinetApiData {
+  cabinetNumber: number;
+  xPos: number;
+  yPos: number;
+  status: string;
+}
 
 const CabinetButtonComponent = ({
-  rows,
-  columns,
   selectedBuilding,
   selectedFloor,
   setSelectedCabinet,
 }: CabinetButtonComponentProps) => {
-  const cabinetButtons = () => {
-    const buttons = []; // 사물함 버튼 배열
+  const [cabinetData, setCabinetData] = useState<cabinetApiData[]>([]);
 
-    for (let i = 0; i < columns; i++) {
-      buttons.push(
-        <div key={i} className="mx-1">
-          {Array(rows)
-            .fill(0)
-            .map((_, index) => {
-              const cabinetNumber = i * rows + index + 1; // 사물함 고유 번호 지정: 단순한 숫자 값
-
-              return (
-                <button
-                  key={index}
-                  onClick={() => setSelectedCabinet(cabinetNumber)}
-                  className="w-16 h-20 my-2 rounded-md bg-gray-300 text-gray-500 text-sm hover:bg-gray-200 flex justify-start items-end p-2"
-                >
-                  {cabinetNumber}
-                </button>
-              );
-            })}
-        </div>
-      );
+  const handleCabinetCall = async (building: string, floor: number) => {
+    try {
+      const response = await cabinetCallApi(building, floor);
+      // setCabinetData(response?.cabinets || []); // 응답 데이터에서 사물함 목록 업데이트
+      setCabinetData(response.cabinets);
+    } catch (error) {
+      console.log(error);
     }
-    return buttons;
   };
 
+  // building, floor 값이 변경될 때마다 API 호출
+  useEffect(() => {
+    if (selectedBuilding !== null && selectedFloor !== null) {
+      handleCabinetCall(selectedBuilding.name, selectedFloor);
+    }
+  }, [selectedBuilding, selectedFloor]);
+
   return (
-    <div className="absolute py-24 px-6 flex justify-center w-full">
-      <div className="flex flex-wrap">{cabinetButtons()}</div>
+    <div className="w-full">
+      <div className="relative top-14 left-1/3 w-[30rem] h-5/6 flex items-center justify-center overflow-scroll">
+        {cabinetData.map((cabinet) => (
+          <button
+            key={cabinet.cabinetNumber} // 데이터의 cabinetNumber를 키로 사용
+            className="absolute w-16 h-20 rounded-md bg-gray-300 text-gray-500 text-sm hover:bg-gray-200 flex items-end p-2"
+            style={{
+              top: `${1000 - cabinet.yPos}px`, // // API에서 받은 yPos 사용 -> yPos 값을 반전 (yPos 값이 작은 cabinet이 위로 배치됨)
+              left: `${cabinet.xPos}px`, // API에서 받은 xPos 사용
+            }}
+            onClick={() => setSelectedCabinet(cabinet.cabinetNumber)}
+          >
+            {cabinet.cabinetNumber}
+          </button>
+        ))}
+      </div>
     </div>
   );
 };

@@ -1,12 +1,16 @@
 // 대여 버튼 눌렀을 때, 대여 확인 모달
 
 interface CabinetRentalConfirmModalProps {
+  selectedBuilding: string | null;
+  selectedFloor: number | null;
   selectedCabinet: number;
   closeRentalModal: () => void; // 모달 닫기 함수
   confirmRental: () => void; // 대여 확인 버튼
 }
 
 const CabinetRentalConfirmModal = ({
+  selectedBuilding,
+  selectedFloor,
   selectedCabinet,
   closeRentalModal,
   confirmRental,
@@ -20,7 +24,9 @@ const CabinetRentalConfirmModal = ({
           <p>
             대여 기간은 <strong>2024/12/31 23:59</strong>까지 입니다.
           </p>
-          <b>{selectedCabinet}번 사물함</b>
+          <b>
+            {selectedBuilding} {selectedFloor} {selectedCabinet}번 사물함
+          </b>
           <p>이 사물함을 대여하시겠습니까?</p>
         </div>
 

@@ -7,10 +7,16 @@ import CabinetRentalComplete from "@/components/CabinetState/CabinetRentalComple
 import CabinetSVG from "@/icons/cabinet.svg?react";
 
 interface CabinetRentalProps {
+  selectedBuilding: string | null;
+  selectedFloor: number | null;
   selectedCabinet: number;
 }
 
-const CabinetRental = ({ selectedCabinet }: CabinetRentalProps) => {
+const CabinetRental = ({
+  selectedBuilding,
+  selectedFloor,
+  selectedCabinet,
+}: CabinetRentalProps) => {
   const { openRentalModal, setOpenRentalModal } = useCabinetRentalModal();
   const { isRented, setIsRented } = useCabinetStateManagement();
 
@@ -30,7 +36,13 @@ const CabinetRental = ({ selectedCabinet }: CabinetRentalProps) => {
 
   // 사물함이 대여 중이라면 CabinetRentalComplete.tsx 반환
   if (isRented) {
-    return <CabinetRentalComplete selectedCabinet={selectedCabinet} />;
+    return (
+      <CabinetRentalComplete
+        selectedBuilding={selectedBuilding}
+        selectedFloor={selectedFloor}
+        selectedCabinet={selectedCabinet}
+      />
+    );
   }
 
   return (
@@ -38,7 +50,9 @@ const CabinetRental = ({ selectedCabinet }: CabinetRentalProps) => {
       <div className="pb-5 flex justify-center">
         <CabinetSVG />
       </div>
-      <div className="font-bold text-xl">{selectedCabinet}번</div>
+      <div className="font-bold text-xl">
+        {selectedBuilding} {selectedFloor} {selectedCabinet}번
+      </div>
       <button
         onClick={clickedRentalButton}
         className="mt-10 p-4 w-60 bg-blue-600 text-white border border-blue-600 rounded-lg hover:bg-blue-500 hover:text-white transition-all duration-150"
@@ -53,6 +67,8 @@ const CabinetRental = ({ selectedCabinet }: CabinetRentalProps) => {
         <CabinetRentalConfirmModal
           closeRentalModal={closeRentalModal}
           confirmRental={confirmRental}
+          selectedBuilding={selectedBuilding}
+          selectedFloor={selectedFloor}
           selectedCabinet={selectedCabinet}
         />
       )}

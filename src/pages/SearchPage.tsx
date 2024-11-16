@@ -16,6 +16,7 @@ const SearchPage = () => {
   const {
     selectedBuilding,
     setSelectedBuilding,
+    selectedFloor,
     setSelectedFloor,
     isOpen,
     setIsOpen,
@@ -119,7 +120,11 @@ const SearchPage = () => {
 
       {/* 선택한 사물함 정보(우측) */}
       <div className="absolute inset-y-0 right-0 w-80 border-gray-400 border-l-2 pt-20 hidden md:flex">
-        <SelectedCabinetInformation selectedCabinet={selectedCabinet} />
+        <SelectedCabinetInformation
+          selectedBuilding={selectedBuilding}
+          selectedFloor={selectedFloor}
+          selectedCabinet={selectedCabinet}
+        />
       </div>
     </div>
   );

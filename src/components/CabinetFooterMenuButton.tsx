@@ -3,7 +3,6 @@
 import LogSVG from "@/icons/log.svg?react";
 import LogoutSVG from "@/icons/logout.svg?react";
 import CabinetSVG from "@/icons/cabinet.svg?react";
-import { useNavigate, useLocation } from "react-router";
 import { useLogout } from "@/hooks/useLogout";
 
 const CabinetFooterMenuButton = () => {
