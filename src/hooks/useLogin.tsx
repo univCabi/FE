@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useLoginState } from "@/hooks/useLoginState";
 
 export const useLogin = () => {
-  const nav = useNavigate();
+  const navigate = useNavigate();
   const {
     studentNumber,
     setStudentNumber,
@@ -22,7 +22,7 @@ export const useLogin = () => {
       const { accessToken, refreshToken } = response.data;
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("refreshToken", refreshToken);
-      nav("/main");
+      navigate("/main");
       setLoginSuccess(true); //로그인 성공
       console.log(response.status); // 로그인 상태 코드 로그
     } catch (error) {

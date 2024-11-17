@@ -55,7 +55,7 @@ const ProfilePage = () => {
             phoneNumber={userData.phoneNumber}
           />
           {/* 대여정보 */}
-          <RentalinfoCard userRentalData={userData.RentCabinetInfo} />
+          <RentalinfoCard userRentalData={userData.rentCabinetInfo} />
         </div>
         <ProfileSaveButton userIsVisible={userIsVisible} />
       </div>
