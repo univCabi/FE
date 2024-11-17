@@ -8,7 +8,7 @@ import { useNavigate, useLocation } from "react-router";
 import { useLogout } from "@/hooks/useLogout";
 const CabinetFooterMenuButton = () => {
   // SearchPage로 이동
-  const nav = useNavigate();
+  const navigate = useNavigate();
   // SearchPage로 이동하면 'search' 버튼의 색상이 변경(현재 위치 파악용)
   const locatedPage = useLocation();
   const isSearchPage = locatedPage.pathname === "/search";
@@ -17,7 +17,7 @@ const CabinetFooterMenuButton = () => {
   return (
     <div className="absolute bottom-4 w-full flex flex-col items-center text-gray-500">
       <button
-        onClick={() => nav("/search")}
+        onClick={() => navigate("/search")}
         className={`flex flex-col items-center p-4 rounded-md transition-all duration-150 ${
           isSearchPage
             ? "bg-blue-50 text-blue-600"
@@ -28,7 +28,7 @@ const CabinetFooterMenuButton = () => {
         Search
       </button>
       <button
-        onClick={() => nav("/history")}
+        onClick={() => navigate("/history")}
         className={`flex flex-col items-center p-4 rounded-md transition-all duration-150 ${
           isHistoryPage
             ? "bg-blue-50 text-blue-600"
