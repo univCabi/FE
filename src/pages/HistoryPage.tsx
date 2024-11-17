@@ -1,5 +1,5 @@
 import { useBuildingList } from "@/hooks/useBuildingList";
-import { useSearchInput } from "@/hooks/useSearchInput";
+import { useSearch } from "@/hooks/useSearch";
 import { useBuildingState } from "@/hooks/useBuildingState";
 import { useHistoryData } from "@/hooks/useHistoryData";
 import HistoryList from "@/components/HistoryList";
@@ -16,7 +16,7 @@ const HistoryPage = () => {
     isOpen,
     setIsOpen,
   } = useBuildingState();
-  const { searchInput, setSearchInput } = useSearchInput();
+  const { searchInput, setSearchInput } = useSearch();
 
   return (
     <div>
