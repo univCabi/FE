@@ -1,18 +1,11 @@
 // 사물함 버튼 컴포넌트 배열 관련
-import { cabinetCallApi } from "@/api/cabinetCallApi";
 
-import { useState, useEffect } from "react";
+import { useCabinetData } from "@/hooks/useCabinetData";
 
 interface CabinetButtonComponentProps {
   selectedBuilding: { name: string } | null;
   selectedFloor: number | null;
   setSelectedCabinet: (cabinetNumber: number) => void;
-}
-interface cabinetApiData {
-  cabinetNumber: number;
-  xPos: number;
-  yPos: number;
-  status: string;
 }
 
 const CabinetButtonComponent = ({
@@ -20,23 +13,7 @@ const CabinetButtonComponent = ({
   selectedFloor,
   setSelectedCabinet,
 }: CabinetButtonComponentProps) => {
-  const [cabinetData, setCabinetData] = useState<cabinetApiData[]>([]);
-
-  const handleCabinetCall = async (building: string, floor: number) => {
-    try {
-      const response = await cabinetCallApi(building, floor);
-      setCabinetData(response.cabinets);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  // building, floor 값이 변경될 때마다 API 호출
-  useEffect(() => {
-    if (selectedBuilding !== null && selectedFloor !== null) {
-      handleCabinetCall(selectedBuilding.name, selectedFloor);
-    }
-  }, [selectedBuilding, selectedFloor]);
+  const cabinetData = useCabinetData(selectedBuilding, selectedFloor);
 
   // 각 상태에 대한 버튼 색상 설정
   const getStatusColor = (status: string) => {

@@ -9,6 +9,7 @@ interface BuildingSelectButtonProps {
   setSelectedBuilding: (building: string | null) => void;
   selectedFloor: number | null;
   setSelectedFloor: (floor: number | null) => void;
+  setSelectedCabinet: (cabinet: number | null) => void;
 }
 
 const BuildingSelectButton = ({
@@ -17,6 +18,7 @@ const BuildingSelectButton = ({
   setSelectedBuilding,
   selectedFloor,
   setSelectedFloor,
+  setSelectedCabinet,
 }: BuildingSelectButtonProps) => {
   const { setSearchParams } = useSearch();
 
@@ -44,7 +46,8 @@ const BuildingSelectButton = ({
               }`}
               onClick={() => {
                 setSelectedBuilding(building.name);
-                setSelectedFloor(null);
+                setSelectedFloor(null); // 층 선택 초기화
+                setSelectedCabinet(null); // 사물함 선택 초기화
               }}
             >
               {building.name}

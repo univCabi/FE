@@ -29,6 +29,7 @@ const MainPage = () => {
         selectedBuilding={selectedBuilding}
         setSelectedBuilding={setSelectedBuilding}
         setSelectedFloor={setSelectedFloor}
+        setSelectedCabinet={setSelectedCabinet} // 추가
       />
 
       {/* 화면 크기 = 768px 이상일 때 */}
@@ -41,6 +42,7 @@ const MainPage = () => {
             setSelectedBuilding={setSelectedBuilding}
             selectedFloor={selectedFloor}
             setSelectedFloor={setSelectedFloor}
+            setSelectedCabinet={setSelectedCabinet}
           />
 
           {/* 하단 메뉴(좌측) */}
@@ -86,6 +88,7 @@ const MainPage = () => {
               setSelectedBuilding={setSelectedBuilding}
               selectedFloor={selectedFloor}
               setSelectedFloor={setSelectedFloor}
+              setSelectedCabinet={setSelectedCabinet}
             />
             {/* 하단 메뉴(좌측) */}
             <CabinetFooterMenuButton />

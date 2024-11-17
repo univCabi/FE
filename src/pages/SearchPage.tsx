@@ -32,7 +32,7 @@ const SearchPage = () => {
     handleSearchKeyword,
     debouncedSearchKeywordApi,
   } = useSearch();
-  const { selectedCabinet } = useCabinetState();
+  const { selectedCabinet, setSelectedCabinet } = useCabinetState();
   const { handleClickResultButton } = useSearchResultButton();
 
   // 검색 결과 6개씩 보여주기 위한 변수
@@ -72,6 +72,7 @@ const SearchPage = () => {
         selectedBuilding={selectedBuilding}
         setSelectedBuilding={setSelectedBuilding}
         setSelectedFloor={setSelectedFloor}
+        setSelectedCabinet={setSelectedCabinet}
       />
 
       {/* 검색 관련 */}

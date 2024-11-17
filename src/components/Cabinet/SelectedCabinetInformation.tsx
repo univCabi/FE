@@ -15,7 +15,8 @@ const SelectedCabinetInformation = ({
 }: SelectedCabinetInformationProps) => {
   return (
     <div className="absolute inset-y-0 right-0 w-80 pt-20 flex flex-col justify-center items-center">
-      {selectedCabinet ? (
+      {/* 건물, 층, 사물함 모두 선택했을 때만 사물함 정보 표시 */}
+      {selectedCabinet !== null ? (
         <CabinetRental
           selectedBuilding={selectedBuilding}
           selectedFloor={selectedFloor}

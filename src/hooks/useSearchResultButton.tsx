@@ -6,7 +6,7 @@ import { cabinetCallApi } from "@/api/cabinetCallApi";
 export const useSearchResultButton = () => {
   const navigate = useNavigate();
 
-  const handleClickResultButton = async (building, floor) => {
+  const handleClickResultButton = async (building: string, floor: number) => {
     try {
       const response = await cabinetCallApi(building, floor);
       navigate(`/main?building=${building}&floor=${floor}`); // 선택한 사물함 페이지로 이동

@@ -7,6 +7,8 @@ import RentalinfoCard from "@/components/Profile/RentalinfoCard";
 import ProfileSaveButton from "@/components/Profile/ProfileSaveButton";
 import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
 import SideNavigationLayout from "@/pages/SideNavigationLayout";
+import { useCabinetState } from "@/hooks/useCabinetState";
+
 const ProfilePage = () => {
   const { userData, userIsVisible, setUserIsVisible } = useUserData();
   const toggleSwitch = (): void => {
@@ -20,6 +22,7 @@ const ProfilePage = () => {
     isOpen,
     setIsOpen,
   } = useBuildingState();
+  const { setSelectedCabinet } = useCabinetState();
   const { searchInput, setSearchInput } = useSearch();
 
   return (
@@ -33,6 +36,7 @@ const ProfilePage = () => {
         setIsOpen={setIsOpen}
         searchInput={searchInput}
         setSearchInput={setSearchInput}
+        setSelectedCabinet={setSelectedCabinet} // 추가
       />
 
       {/* 건물 정보(좌측) */}
