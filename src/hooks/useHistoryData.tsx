@@ -6,8 +6,8 @@ interface HistoryData {
   floor: number;
   section: string;
   cabinetNumber: number;
-  startDate: string;
-  endDate: string;
+  startDate: string | null;
+  endDate: string | null;
 }
 
 export const useHistoryData = () => {
@@ -18,7 +18,7 @@ export const useHistoryData = () => {
     const getHistoryData = async () => {
       try {
         const response = await userHistoryDataApi();
-        setUserHistoryData(response.data);
+        setUserHistoryData(response.data.results);
         console.log(response.status);
       } catch (error) {
         if (error.response.status === 401) {
