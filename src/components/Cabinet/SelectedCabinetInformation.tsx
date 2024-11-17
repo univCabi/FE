@@ -3,7 +3,7 @@ import CabinetSVG from "@/icons/cabinet.svg?react";
 
 // 선택된 사물함 정보
 interface SelectedCabinetInformationProps {
-  selectedCabinet: string | null;
+  selectedCabinet: number | null;
 }
 
 const SelectedCabinetInformation = ({

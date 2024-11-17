@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 export const useCabinetState = () => {
-  const [selectedCabinet, setSelectedCabinet] = useState<string | null>(null);
+  const [selectedCabinet, setSelectedCabinet] = useState<number | null>(null);
 
   return {
     selectedCabinet,
