@@ -3,11 +3,11 @@ import { logoutApi } from "@/api/logoutApi";
 
 export const useLogout = () => {
   const navigate = useNavigate();
-
+  const loginUrl = import.meta.env.VITE_LOGIN_URL;
   const handleLogout = async () => {
     try {
       const response = await logoutApi();
-      navigate("/login");
+      navigate(loginUrl);
       console.log(response.status);
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");

@@ -1,5 +1,5 @@
 import axios from "axios";
-const LOGIN_URL = import.meta.env.VITE_LOGIN_URL; // VITE_LOGIN_URL 사용
+const LOGIN_URL = import.meta.env.VITE_BE_URL; // VITE_LOGIN_URL 사용
 // 로그인 요청 재사용과 유지보수를 위한 모듈화
 interface loginApiProps {
   studentNumber: string;
