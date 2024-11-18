@@ -12,7 +12,6 @@ import SearchResultDropdownButton from "@/components/Search/SearchResultDropdown
 import SearchInput from "@/components/Search/SearchInput";
 
 import axios from "axios";
-import { useRef, useState } from "react";
 const SEARCH_URL = import.meta.env.VITE_SEARCH_URL;
 
 const SearchPage = () => {
@@ -38,24 +37,7 @@ const SearchPage = () => {
     debouncedSearchKeywordApi,
   } = useSearch();
   const { selectedCabinet, setSelectedCabinet } = useCabinetState();
-
   const { handleClickResultButton } = useSearchResultButton();
-  const [page, setPage] = useState(1); // 현재 페이지 상태
-  const [loading, setLoading] = useState(false); // 로딩 상태
-  const [isEnd, setIsEnd] = useState(false); // 마지막 페이지 여부
-  const scrollTimeoutRef = useRef<any>(null); // 스크롤 타임아웃을 위한 ref
-  // const testSearchKeywordApi = async (keyword) => {
-  //   try {
-  //     const response = await axios.get(
-  //       `${SEARCH_URL}/detail?keyword=${keyword}`
-  //     );
-
-  //     console.log(response.data);
-  //   } catch (error) {
-  //     console.log(error);
-  //     // return [];
-  //   }
-  // };
 
   // 검색 결과 6개씩 보여주기 위한 변수
   const slicedSearchResults = 6;
@@ -68,15 +50,6 @@ const SearchPage = () => {
   };
 
   // submit 되면 API 호출
-  // const handleSearchSubmit = (e) => {
-  //   e.preventDefault();
-  //   handleSearchKeyword(searchInput, setSearchParams);
-  //   // testSearchKeywordApi(searchInput);
-
-  //   if (inputRef.current) {
-  //     inputRef.current.blur();
-  //   }
-  // };
   const handleSearchSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); // form submit 시 페이지 새로고침 방지
     if (inputRef.current) {
@@ -84,7 +57,7 @@ const SearchPage = () => {
     }
     try {
       const response = await axios.get(
-        `http://localhost:8000/cabinet/search/detail/?keyword=${searchInput}`
+        `${SEARCH_URL}/detail?keyword=${searchInput}`
       );
       setSearchResults(response.data.results); // API로부터 받은 결과를 상태에 저장
       console.log(response.data);
@@ -124,7 +97,6 @@ const SearchPage = () => {
             handleSearchSubmit={handleSearchSubmit}
             handleDropdown={handleDropdown}
             submitSearchResultDropdown={submitSearchResultDropdown}
-            // postSearchKeywordApi={postSearchKeywordApi}
           />
 
           {/* 검색 결과(드롭다운) */}
@@ -141,10 +113,14 @@ const SearchPage = () => {
         {/* 검색 결과(버튼) */}
         <div className="absolute inset-y-0 left-40 right-80">
           {showGridResults && searchResults.length > 0 && (
-            <SearchResultGridButton
-              searchResults={searchResults}
-              handleClickResultButton={handleClickResultButton}
-            />
+            <>
+              <SearchResultGridButton
+                searchResults={searchResults}
+                handleClickResultButton={handleClickResultButton}
+              />
+
+              <h1>Loading...</h1>
+            </>
           )}
         </div>
 

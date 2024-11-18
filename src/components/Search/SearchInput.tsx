@@ -1,8 +1,6 @@
 // 검색 페이지 - input에 대한 컴포넌트
 
-// import { postSearchKeywordApi } from "@/api/postSearchKeywordApi";
 import SearchSVG from "@/icons/search.svg?react";
-import axios from "axios";
 
 interface SearchInputProps {
   searchInput: string; // input 값 타입
