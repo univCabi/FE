@@ -8,7 +8,7 @@ import { debounce } from "lodash";
 export const useSearch = () => {
   const [searchInput, setSearchInput] = useState("");
   const [searchParams, setSearchParams] = useSearchParams(); // searchInput 값에 대한 쿼리스트링
-  const [searchResults, setSearchResults] = useState([]); // 검색 결과 저장 -> hook : number타입
+  const [searchResults, setSearchResults] = useState<number[]>([]); // 검색 결과 저장 -> hook : number타입
   const [showGridResults, setShowGridResults] = useState(false); // 검색 결과 그리드 표시 여부
   const inputRef = useRef<HTMLInputElement | null>(null); // input focus에 대한 참조
 

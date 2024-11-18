@@ -12,6 +12,8 @@ import SearchResultDropdownButton from "@/components/Search/SearchResultDropdown
 import SearchInput from "@/components/Search/SearchInput";
 
 import axios from "axios";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { throttle } from "lodash";
 const SEARCH_URL = import.meta.env.VITE_SEARCH_URL;
 
 const SearchPage = () => {
@@ -32,6 +34,7 @@ const SearchPage = () => {
     searchResults,
     setSearchResults,
     showGridResults,
+    setShowGridResults,
     inputRef,
     handleSearchKeyword,
     debouncedSearchKeywordApi,
@@ -49,23 +52,6 @@ const SearchPage = () => {
     debouncedSearchKeywordApi(keyword);
   };
 
-  // submit 되면 API 호출
-  const handleSearchSubmit = async (e: React.FormEvent) => {
-    e.preventDefault(); // form submit 시 페이지 새로고침 방지
-    if (inputRef.current) {
-      inputRef.current.blur();
-    }
-    try {
-      const response = await axios.get(
-        `${SEARCH_URL}/detail?keyword=${searchInput}`
-      );
-      setSearchResults(response.data.results); // API로부터 받은 결과를 상태에 저장
-      console.log(response.data);
-    } catch (error) {
-      console.error("검색 실패:", error);
-    }
-  };
-
   // 검색 결과 드롭다운 관련 함수 //
   // (외부 클릭 & submit => 검색 결과 드롭다운 숨기기)
   const submitSearchResultDropdown = () => {
@@ -75,6 +61,76 @@ const SearchPage = () => {
   const handleDropdown = () => {
     setIsOpen(true);
   };
+
+  const [next, setNext] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [hasMoreResults, setHasMoreResults] = useState(true);
+  // const loaderRef = useRef<HTMLDivElement | null>(null);
+
+  // submit 되면 API 호출
+  const handleSearchSubmit = async (e: React.FormEvent) => {
+    e.preventDefault(); // form submit 시 페이지 새로고침 방지
+    if (inputRef.current) {
+      inputRef.current.blur();
+    }
+    // 상태 초기화
+    // setSearchResults([]); // 기존 검색 결과 초기화
+    // setNext(null); // 다음 URL 초기화
+    // setHasMoreResults(true); // 추가 데이터 가져올 수 있도록 초기화
+    try {
+      const response = await axios.get(
+        `${SEARCH_URL}/detail?keyword=${searchInput}`
+      );
+      // 초기 데이터 설정
+      setSearchResults(response.data.results);
+      setNext(response.data.next);
+      setHasMoreResults(Boolean(response.data.next)); // 다음 URL 존재 여부 설정
+      console.log("Next URL:", response.data.next);
+    } catch (error) {
+      console.error("검색 실패:", error);
+    }
+  };
+
+  // 검색 결과를 가져오는 함수
+  const fetchSearchResults = async (url) => {
+    setLoading(true);
+    try {
+      const response = await axios.get(url);
+      const { results, next } = response.data;
+
+      setSearchResults((prev) => [...prev, ...results]);
+      setNext(next);
+      setHasMoreResults(Boolean(next));
+    } catch (error) {
+      console.error("검색 실패:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // // 무한 스크롤 트리거
+  const handleScroll = useCallback(
+    throttle(() => {
+      if (!hasMoreResults || loading || !next) return;
+
+      const { scrollTop, scrollHeight, clientHeight } =
+        document.documentElement;
+
+      if (scrollHeight - scrollTop - clientHeight < 100) {
+        console.log("Loading next page:", next);
+        fetchSearchResults(next);
+      }
+    }, 800), // 스크롤 내린지 0.8초 뒤에 api 호출
+    [next, hasMoreResults, loading]
+  );
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [handleScroll]);
 
   return (
     <div>
@@ -113,15 +169,15 @@ const SearchPage = () => {
         {/* 검색 결과(버튼) */}
         <div className="absolute inset-y-0 left-40 right-80">
           {showGridResults && searchResults.length > 0 && (
-            <>
-              <SearchResultGridButton
-                searchResults={searchResults}
-                handleClickResultButton={handleClickResultButton}
-              />
-
-              <h1>Loading...</h1>
-            </>
+            <SearchResultGridButton
+              searchResults={searchResults}
+              handleClickResultButton={handleClickResultButton}
+            />
           )}
+          <div>
+            {loading && <p>Loading...</p>}
+            {!hasMoreResults && <p>No more results</p>}
+          </div>
         </div>
 
         {/* 검색 결과 없을 때 나오는 컴포넌트 */}
