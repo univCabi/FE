@@ -4,12 +4,17 @@ import { useCabinetReturnModal } from "@/hooks/useCabinetReturnModal";
 import { useCabinetStateManagement } from "@/hooks/useCabinetStateManagement";
 import CabinetReturnConfirmModal from "@/components/CabinetState/CabinetReturnConfirmModal";
 import CabinetRental from "@/components/CabinetState/CabinetRental";
+import CabinetSVG from "@/icons/cabinet.svg?react";
 
 interface CabinetRentalCompleteProps {
+  selectedBuilding: string | null;
+  selectedFloor: number | null;
   selectedCabinet: number;
 }
 
 const CabinetRentalComplete = ({
+  selectedBuilding,
+  selectedFloor,
   selectedCabinet,
 }: CabinetRentalCompleteProps) => {
   const { openReturnModal, setOpenReturnModal } = useCabinetReturnModal();
@@ -32,12 +37,23 @@ const CabinetRentalComplete = ({
   };
 
   if (isRented) {
-    return <CabinetRental selectedCabinet={selectedCabinet} />;
+    return (
+      <CabinetRental
+        selectedBuilding={selectedBuilding}
+        selectedFloor={selectedFloor}
+        selectedCabinet={selectedCabinet}
+      />
+    );
   }
 
   return (
     <div>
-      <h2 className="font-bold text-xl">{selectedCabinet}번 사물함</h2>
+      <div className="pb-5 flex justify-center">
+        <CabinetSVG />
+      </div>
+      <h2 className="font-bold text-xl">
+        {selectedBuilding} {selectedFloor} {selectedCabinet}번
+      </h2>
       <div className="p-10">
         <button
           onClick={clickedReturnButton}

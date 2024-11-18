@@ -7,8 +7,8 @@ export const searchKeywordApi = async (keyword) => {
     const response = await axios.get(`${SEARCH_URL}/detail?keyword=${keyword}`);
 
     const filterData = response.data.filter((inputValue) => {
-      // return inputValue.cabinetNumber.toString().includes(keyword);
-      return inputValue.building.toString().includes(keyword);
+      return inputValue.cabinetNumber.toString().includes(keyword);
+      // return inputValue.building.toString().includes(keyword); // css 보기 위한 용도 -> 추후 삭제
     });
     return filterData;
   } catch (error) {
