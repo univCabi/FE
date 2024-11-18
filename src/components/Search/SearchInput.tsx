@@ -1,6 +1,8 @@
 // 검색 페이지 - input에 대한 컴포넌트
 
+// import { postSearchKeywordApi } from "@/api/postSearchKeywordApi";
 import SearchSVG from "@/icons/search.svg?react";
+import axios from "axios";
 
 interface SearchInputProps {
   searchInput: string; // input 값 타입
@@ -34,7 +36,12 @@ const SearchInput = ({
         placeholder="사물함 번호를 입력하세요"
         className="p-2 rounded-md bg-white text-black w-80"
       />
-      <button type="submit" onClick={submitSearchResultDropdown}>
+      <button
+        type="submit"
+        onClick={() => {
+          submitSearchResultDropdown();
+        }}
+      >
         <SearchSVG />
       </button>
     </form>
