@@ -1,5 +1,5 @@
 import { useBuildingList } from "@/hooks/useBuildingList";
-import { useSearchInput } from "@/hooks/useSearchInput";
+import { useSearch } from "@/hooks/useSearch";
 import { useBuildingState } from "@/hooks/useBuildingState";
 import { useHistoryData } from "@/hooks/useHistoryData";
 import HistoryList from "@/components/HistoryList";
@@ -16,7 +16,7 @@ const HistoryPage = () => {
     isOpen,
     setIsOpen,
   } = useBuildingState();
-  const { searchInput, setSearchInput } = useSearchInput();
+  const { searchInput, setSearchInput } = useSearch();
 
   return (
     <div>
@@ -40,7 +40,7 @@ const HistoryPage = () => {
         <div className="text-black text-4xl font-bold text-center hidden md:block">
           사물함 대여 기록
         </div>
-        <div className=" max-w-[60rem] w-[70%] h-[95%] md:h-[85%]  bg-gray-100 mt-5 border rounded-xl  shadow-lg">
+        <div className=" max-w-[60rem] w-[70%] h-[95%] md:h-[85%]  bg-gray-100 mt-5 border rounded-xl overflow-y-auto hidden-scrollbar shadow-lg">
           <HistoryList userHistoryData={userHistoryData} />
         </div>
       </div>

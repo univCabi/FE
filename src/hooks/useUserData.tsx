@@ -44,7 +44,12 @@ export const useUserData = () => {
       try {
         const response = await userDataApi();
         const data = response.data;
-        setUserData(data);
+        setUserData({
+          ...data,
+          rentCabinetInfo:
+            data.rentCabinetInfo || defaultUserData.rentCabinetInfo,
+        });
+        console.log(data);
         setUserIsVisible(data.isVisible);
         console.log(response.status);
       } catch (error) {

@@ -10,25 +10,12 @@ const CabinetFooterMenuButton = () => {
   const navigate = useNavigate();
   // SearchPage로 이동하면 'search' 버튼의 색상이 변경(현재 위치 파악용)
   const locatedPage = useLocation();
-  const isSearchPage = locatedPage.pathname === "/search";
   const isHistoryPage = locatedPage.pathname === "/history";
 
   const { handleLogout } = useLogout();
 
   return (
     <div className="absolute bottom-4 w-full flex flex-col items-center text-gray-500">
-
-      <button
-        onClick={() => navigate("/search")}
-        className={`flex flex-col items-center p-4 rounded-md transition-all duration-150 ${
-          isSearchPage
-            ? "bg-blue-50 text-blue-600"
-            : "hover:bg-blue-600 hover:text-white"
-        }`}
-      >
-        <SearchSVG className="mb-1 inline-block text-center" />
-        Search
-      </button>
       <button
         onClick={() => navigate("/history")}
         className={`flex flex-col items-center p-4 rounded-md transition-all duration-150 ${
@@ -37,7 +24,6 @@ const CabinetFooterMenuButton = () => {
             : "hover:bg-blue-600 hover:text-white"
         }`}
       >
-
         <LogSVG className="mb-1 inline-block text-center" />
         History
       </button>
