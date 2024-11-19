@@ -6,6 +6,7 @@ import { cabinetCallApi } from "@/api/cabinetCallApi";
 export const useSearchResultButton = () => {
   const navigate = useNavigate();
 
+  // 검색 결과 버튼 클릭 시 사물함 API 호출
   const handleClickResultButton = async (building: string, floor: number) => {
     try {
       const response = await cabinetCallApi(building, floor);

@@ -1,5 +1,7 @@
 // 검색 결과 - 드롭다운에 대한 컴포넌트
 
+import { useSearchResultButton } from "@/hooks/useSearchResultButton";
+
 interface SearchResultDropdowndButtonProps {
   searchResults: { building: string; floor: number; cabinetNumber: number }[]; // 검색 결과
   slicedSearchResults: number; // 드롭다운 결과 6개씩 노출하기 위한 변수 타입

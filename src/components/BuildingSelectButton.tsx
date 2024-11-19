@@ -2,7 +2,8 @@
 
 import { useSearch } from "@/hooks/useSearch";
 import { cabinetCallApi } from "@/api/cabinetCallApi";
-
+import { useSearchParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 interface BuildingSelectButtonProps {
   buildings: { name: string; floors: number[] }[];
   selectedBuilding: string | null;
@@ -21,6 +22,20 @@ const BuildingSelectButton = ({
   setSelectedCabinet,
 }: BuildingSelectButtonProps) => {
   const { setSearchParams } = useSearch();
+
+  // // React Router의 쿼리스트링을 가져오기 위한 훅 -> 분리 필요
+  const [searchParams] = useSearchParams();
+  useEffect(() => {
+    // 쿼리스트링에서 building과 floor 값을 읽음
+    const buildingFromQuery = searchParams.get("building");
+    const floorFromQuery = searchParams.get("floor");
+
+    // 쿼리스트링 값이 있으면 상태를 업데이트
+    if (!selectedBuilding && buildingFromQuery && floorFromQuery) {
+      setSelectedBuilding(buildingFromQuery);
+      setSelectedFloor(floorFromQuery);
+    }
+  }, [searchParams, selectedBuilding, setSelectedBuilding, setSelectedFloor]);
 
   // 건물, 층에 대한 api
   const handlecabinetCall = async (building: string, floor: number) => {
@@ -68,7 +83,7 @@ const BuildingSelectButton = ({
                       handlecabinetCall(building.name, floor);
                     }}
                   >
-                    {floor}
+                    {floor}F
                   </button>
                 ))}
               </div>

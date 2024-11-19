@@ -11,8 +11,9 @@ import SearchResultGridButton from "@/components/Search/SearchResultGridButton";
 import SearchResultDropdownButton from "@/components/Search/SearchResultDropdownButton";
 import SearchInput from "@/components/Search/SearchInput";
 
+// 분리해야됨
 import axios from "axios";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { throttle } from "lodash";
 const SEARCH_URL = import.meta.env.VITE_SEARCH_URL;
 
@@ -30,13 +31,10 @@ const SearchPage = () => {
   const {
     searchInput,
     setSearchInput,
-    setSearchParams,
     searchResults,
     setSearchResults,
     showGridResults,
-    setShowGridResults,
     inputRef,
-    handleSearchKeyword,
     debouncedSearchKeywordApi,
   } = useSearch();
   const { selectedCabinet, setSelectedCabinet } = useCabinetState();
@@ -65,7 +63,6 @@ const SearchPage = () => {
   const [next, setNext] = useState(null);
   const [loading, setLoading] = useState(false);
   const [hasMoreResults, setHasMoreResults] = useState(true);
-  // const loaderRef = useRef<HTMLDivElement | null>(null);
 
   // submit 되면 API 호출
   const handleSearchSubmit = async (e: React.FormEvent) => {
@@ -73,10 +70,6 @@ const SearchPage = () => {
     if (inputRef.current) {
       inputRef.current.blur();
     }
-    // 상태 초기화
-    // setSearchResults([]); // 기존 검색 결과 초기화
-    // setNext(null); // 다음 URL 초기화
-    // setHasMoreResults(true); // 추가 데이터 가져올 수 있도록 초기화
     try {
       const response = await axios.get(
         `${SEARCH_URL}/detail?keyword=${searchInput}`
@@ -84,8 +77,9 @@ const SearchPage = () => {
       // 초기 데이터 설정
       setSearchResults(response.data.results);
       setNext(response.data.next);
-      setHasMoreResults(Boolean(response.data.next)); // 다음 URL 존재 여부 설정
-      console.log("Next URL:", response.data.next);
+      setHasMoreResults(response.data.next); // 다음 URL 존재 여부 설정
+
+      console.log("Next URL:", next);
     } catch (error) {
       console.error("검색 실패:", error);
     }
@@ -100,7 +94,7 @@ const SearchPage = () => {
 
       setSearchResults((prev) => [...prev, ...results]);
       setNext(next);
-      setHasMoreResults(Boolean(next));
+      setHasMoreResults(next);
     } catch (error) {
       console.error("검색 실패:", error);
     } finally {
@@ -108,29 +102,29 @@ const SearchPage = () => {
     }
   };
 
-  // // 무한 스크롤 트리거
-  const handleScroll = useCallback(
-    throttle(() => {
+  // 무한 스크롤 트리거
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null); // 무한스크롤 영역 ref
+
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const handleScroll = throttle(() => {
       if (!hasMoreResults || loading || !next) return;
 
-      const { scrollTop, scrollHeight, clientHeight } =
-        document.documentElement;
+      const { scrollTop, scrollHeight, clientHeight } = container;
 
       if (scrollHeight - scrollTop - clientHeight < 100) {
         console.log("Loading next page:", next);
         fetchSearchResults(next);
       }
-    }, 800), // 스크롤 내린지 0.8초 뒤에 api 호출
-    [next, hasMoreResults, loading]
-  );
+    }, 800); // 스크롤 내린지 0.8초 뒤에 api 호출
 
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-
+    container.addEventListener("scroll", handleScroll);
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      container.removeEventListener("scroll", handleScroll);
     };
-  }, [handleScroll]);
+  }, [next, hasMoreResults, loading]);
 
   return (
     <div>
@@ -166,18 +160,21 @@ const SearchPage = () => {
           )}
         </div>
 
-        {/* 검색 결과(버튼) */}
+        {/* 검색 결과(버튼) -> 이 부분만 무한스크롤 */}
         <div className="absolute inset-y-0 left-40 right-80">
           {showGridResults && searchResults.length > 0 && (
-            <SearchResultGridButton
-              searchResults={searchResults}
-              handleClickResultButton={handleClickResultButton}
-            />
+            <div
+              ref={scrollContainerRef}
+              className="h-full overflow-y-scroll pb-3"
+            >
+              <SearchResultGridButton
+                searchResults={searchResults}
+                handleClickResultButton={handleClickResultButton}
+              />
+              {loading && <p>Loading...</p>}
+              {!hasMoreResults && <p className="mt-3">No More Results</p>}
+            </div>
           )}
-          <div>
-            {loading && <p>Loading...</p>}
-            {!hasMoreResults && <p>No more results</p>}
-          </div>
         </div>
 
         {/* 검색 결과 없을 때 나오는 컴포넌트 */}

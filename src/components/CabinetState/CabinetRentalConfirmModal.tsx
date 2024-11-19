@@ -25,7 +25,7 @@ const CabinetRentalConfirmModal = ({
             대여 기간은 <strong>2024/12/31 23:59</strong>까지 입니다.
           </p>
           <b>
-            {selectedBuilding} {selectedFloor} {selectedCabinet}번 사물함
+            {selectedBuilding} {selectedFloor}F {selectedCabinet}번 사물함
           </b>
           <p>이 사물함을 대여하시겠습니까?</p>
         </div>
