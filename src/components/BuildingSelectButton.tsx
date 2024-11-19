@@ -1,9 +1,9 @@
-// 건물, 층 선택 버튼
+// // 건물, 층 선택 버튼
 
-import { useSearch } from "@/hooks/useSearch";
 import { cabinetCallApi } from "@/api/cabinetCallApi";
-import { useSearchParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useSearch } from "@/hooks/useSearch";
+import useSearchToMain from "@/hooks/useSearchToMain"; // 커스텀 훅 임포트
+
 interface BuildingSelectButtonProps {
   buildings: { name: string; floors: number[] }[];
   selectedBuilding: string | null;
@@ -23,21 +23,9 @@ const BuildingSelectButton = ({
 }: BuildingSelectButtonProps) => {
   const { setSearchParams } = useSearch();
 
-  // // React Router의 쿼리스트링을 가져오기 위한 훅 -> 분리 필요
-  const [searchParams] = useSearchParams();
-  useEffect(() => {
-    // 쿼리스트링에서 building과 floor 값을 읽음
-    const buildingFromQuery = searchParams.get("building");
-    const floorFromQuery = searchParams.get("floor");
+  // 결과 버튼 누르면 mainPage로 넘어가서 동일한 쿼리스트링을 가진 사물함 페이지로 이동
+  useSearchToMain(selectedBuilding, setSelectedBuilding, setSelectedFloor);
 
-    // 쿼리스트링 값이 있으면 상태를 업데이트
-    if (!selectedBuilding && buildingFromQuery && floorFromQuery) {
-      setSelectedBuilding(buildingFromQuery);
-      setSelectedFloor(floorFromQuery);
-    }
-  }, [searchParams, selectedBuilding, setSelectedBuilding, setSelectedFloor]);
-
-  // 건물, 층에 대한 api
   const handlecabinetCall = async (building: string, floor: number) => {
     try {
       const response = await cabinetCallApi(building, floor);

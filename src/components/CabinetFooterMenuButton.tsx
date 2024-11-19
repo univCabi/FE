@@ -9,7 +9,6 @@ import { useNavigate, useLocation } from "react-router";
 const CabinetFooterMenuButton = () => {
   // SearchPage로 이동
   const navigate = useNavigate();
-  // SearchPage로 이동하면 'search' 버튼의 색상이 변경(현재 위치 파악용)
   const locatedPage = useLocation();
   const isHistoryPage = locatedPage.pathname === "/history";
 

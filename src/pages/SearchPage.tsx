@@ -11,12 +11,6 @@ import SearchResultGridButton from "@/components/Search/SearchResultGridButton";
 import SearchResultDropdownButton from "@/components/Search/SearchResultDropdownButton";
 import SearchInput from "@/components/Search/SearchInput";
 
-// 분리해야됨
-import axios from "axios";
-import { useEffect, useRef, useState } from "react";
-import { throttle } from "lodash";
-const SEARCH_URL = import.meta.env.VITE_SEARCH_URL;
-
 const SearchPage = () => {
   const { buildings } = useBuildingList();
   const {
@@ -28,17 +22,25 @@ const SearchPage = () => {
     setIsOpen,
     dropdownOutsideRef,
   } = useBuildingState();
+  const { selectedCabinet, setSelectedCabinet } = useCabinetState();
+  const { handleClickResultButton } = useSearchResultButton();
   const {
     searchInput,
     setSearchInput,
     searchResults,
     setSearchResults,
     showGridResults,
+    setShowGridResults,
     inputRef,
     debouncedSearchKeywordApi,
+    fetchSearchResults,
+    setPage,
+    loading,
+    setLoading,
+    hasMoreResults,
+    setHasMoreResults,
+    scrollContainerRef,
   } = useSearch();
-  const { selectedCabinet, setSelectedCabinet } = useCabinetState();
-  const { handleClickResultButton } = useSearchResultButton();
 
   // 검색 결과 6개씩 보여주기 위한 변수
   const slicedSearchResults = 6;
@@ -60,71 +62,21 @@ const SearchPage = () => {
     setIsOpen(true);
   };
 
-  const [next, setNext] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [hasMoreResults, setHasMoreResults] = useState(true);
-
-  // submit 되면 API 호출
   const handleSearchSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); // form submit 시 페이지 새로고침 방지
+    // submit 하면 input 포커스 아웃
     if (inputRef.current) {
       inputRef.current.blur();
     }
-    try {
-      const response = await axios.get(
-        `${SEARCH_URL}/detail?keyword=${searchInput}`
-      );
-      // 초기 데이터 설정
-      setSearchResults(response.data.results);
-      setNext(response.data.next);
-      setHasMoreResults(response.data.next); // 다음 URL 존재 여부 설정
+    // 상태 초기화
+    setSearchResults([]); // 기존 검색 결과 초기화
+    setPage(1); // 첫 번째 페이지로 초기화
+    setHasMoreResults(true); // 검색 가능 상태로 설정
+    setShowGridResults(false); // 초기화 동안 그리드 숨기기
+    setLoading(false);
 
-      console.log("Next URL:", next);
-    } catch (error) {
-      console.error("검색 실패:", error);
-    }
+    await fetchSearchResults(1); // 1페이지 데이터 가져오기
   };
-
-  // 검색 결과를 가져오는 함수
-  const fetchSearchResults = async (url) => {
-    setLoading(true);
-    try {
-      const response = await axios.get(url);
-      const { results, next } = response.data;
-
-      setSearchResults((prev) => [...prev, ...results]);
-      setNext(next);
-      setHasMoreResults(next);
-    } catch (error) {
-      console.error("검색 실패:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // 무한 스크롤 트리거
-  const scrollContainerRef = useRef<HTMLDivElement | null>(null); // 무한스크롤 영역 ref
-
-  useEffect(() => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
-
-    const handleScroll = throttle(() => {
-      if (!hasMoreResults || loading || !next) return;
-
-      const { scrollTop, scrollHeight, clientHeight } = container;
-
-      if (scrollHeight - scrollTop - clientHeight < 100) {
-        console.log("Loading next page:", next);
-        fetchSearchResults(next);
-      }
-    }, 800); // 스크롤 내린지 0.8초 뒤에 api 호출
-
-    container.addEventListener("scroll", handleScroll);
-    return () => {
-      container.removeEventListener("scroll", handleScroll);
-    };
-  }, [next, hasMoreResults, loading]);
 
   return (
     <div>
@@ -161,11 +113,12 @@ const SearchPage = () => {
         </div>
 
         {/* 검색 결과(버튼) -> 이 부분만 무한스크롤 */}
-        <div className="absolute inset-y-0 left-40 right-80">
+
+        <div className="absolute inset-y-0 left-40 right-40 md:right-80">
           {showGridResults && searchResults.length > 0 && (
             <div
               ref={scrollContainerRef}
-              className="h-full overflow-y-scroll pb-3"
+              className="h-full pb-6 overflow-y-scroll"
             >
               <SearchResultGridButton
                 searchResults={searchResults}

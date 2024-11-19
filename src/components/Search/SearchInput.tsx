@@ -34,12 +34,7 @@ const SearchInput = ({
         placeholder="사물함 번호를 입력하세요"
         className="p-2 rounded-md bg-white text-black w-80"
       />
-      <button
-        type="submit"
-        onClick={() => {
-          submitSearchResultDropdown();
-        }}
-      >
+      <button type="submit" onClick={submitSearchResultDropdown}>
         <SearchSVG />
       </button>
     </form>
