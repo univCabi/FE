@@ -43,7 +43,7 @@ const ProfilePage = () => {
       </header>
 
       {/* 메인 레이아웃 */}
-      <div className="flex flex-grow pt-20">
+      <div className="flex flex-grow pt-24">
         {/* 좌측 사이드바 */}
         <aside className="hidden md:flex fixed left-0 top-16 w-40 h-[calc(100%-4rem)] border-r-2 border-gray-400 flex-col bg-white">
           <CabinetFooterMenuButton />
