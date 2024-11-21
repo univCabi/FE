@@ -52,7 +52,7 @@ const CabinetRentalComplete = ({
         <CabinetSVG />
       </div>
       <h2 className="font-bold text-xl">
-        {selectedBuilding} {selectedFloor} {selectedCabinet}번
+        {selectedBuilding} {selectedFloor}F {selectedCabinet}번
       </h2>
       <div className="p-10">
         <button

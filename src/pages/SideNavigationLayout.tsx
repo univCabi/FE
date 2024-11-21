@@ -3,8 +3,8 @@ import { useBuildingState } from "@/hooks/useBuildingState";
 import LogoSVG from "@/icons/cabiLogo.svg?react";
 import AngleDownSVG from "@/icons/angleDown.svg?react";
 import SearchSVG from "@/icons/search.svg?react";
-
 import ProfilePageButton from "@/components/ProfilePageButton";
+
 interface NavBuildingProps {
   buildings: { name: string; floors: number[] }[]; // 건물 배열 (name과 floors 포함)
   selectedBuilding: string | null; // 선택된 건물의 인덱스 또는 null

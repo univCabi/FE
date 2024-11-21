@@ -4,11 +4,11 @@ import LogSVG from "@/icons/log.svg?react";
 import LogoutSVG from "@/icons/logout.svg?react";
 import CabinetSVG from "@/icons/cabinet.svg?react";
 import { useLogout } from "@/hooks/useLogout";
+import { useNavigate, useLocation } from "react-router";
 
 const CabinetFooterMenuButton = () => {
   // SearchPage로 이동
   const navigate = useNavigate();
-  // SearchPage로 이동하면 'search' 버튼의 색상이 변경(현재 위치 파악용)
   const locatedPage = useLocation();
   const isHistoryPage = locatedPage.pathname === "/history";
 
