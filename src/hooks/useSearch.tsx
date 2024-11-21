@@ -1,4 +1,4 @@
-// search에 대한 hook
+// search에 대한 hook (submit, API, 무한스크롤)
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -9,7 +9,9 @@ import { searchKeywordApi } from "@/api/searchKeywordApi";
 export const useSearch = () => {
   const [searchInput, setSearchInput] = useState("");
   const [searchParams, setSearchParams] = useSearchParams(); // searchInput 값에 대한 쿼리스트링
-  const [searchResults, setSearchResults] = useState<number[]>([]); // 검색 결과 저장 -> hook : number타입
+  const [searchResults, setSearchResults] = useState<
+    { building: string; floor: number; cabinetNumber: number }[]
+  >([]); // 검색 결과 저장
   const [showGridResults, setShowGridResults] = useState(false); // 검색 결과 그리드 표시 여부
   const inputRef = useRef<HTMLInputElement | null>(null); // input focus에 대한 참조
 
@@ -19,6 +21,24 @@ export const useSearch = () => {
   const [hasMoreResults, setHasMoreResults] = useState(true); // 데이터가 더 있는지
   const scrollContainerRef = useRef<HTMLDivElement | null>(null); // 무한스크롤 영역 ref
 
+  // Form Submit
+  const handleSearchSubmit = async (e: React.FormEvent) => {
+    e.preventDefault(); // form submit 시 페이지 새로고침 방지
+    // submit 하면 input 포커스 아웃
+    if (inputRef.current) {
+      inputRef.current.blur();
+    }
+    // 상태 초기화
+    setSearchResults([]); // 기존 검색 결과 초기화
+    setPage(1); // 첫 번째 페이지로 초기화
+    setHasMoreResults(true); // 검색 가능 상태로 설정
+    setShowGridResults(false); // 초기화 동안 그리드 숨기기
+    setLoading(false);
+
+    await fetchSearchResults(1); // 1페이지 데이터 가져오기
+  };
+
+  // API
   // 검색 API 호출
   const handleSearchKeyword = async (keyword: string) => {
     setSearchParams({ keyword });
@@ -90,6 +110,7 @@ export const useSearch = () => {
     showGridResults,
     setShowGridResults,
     inputRef,
+    handleSearchSubmit,
     handleSearchKeyword,
     debouncedSearchKeywordApi,
 

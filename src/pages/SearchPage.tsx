@@ -3,6 +3,7 @@ import { useSearch } from "@/hooks/useSearch";
 import { useBuildingState } from "@/hooks/useBuildingState";
 import { useCabinetState } from "@/hooks/useCabinetState";
 import { useSearchResultButton } from "@/hooks/useSearchResultButton";
+import { useSearchInput } from "@/hooks/useSearchInput";
 import SideNavigationLayout from "@/pages/SideNavigationLayout";
 import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
 import SelectedCabinetInformation from "@/components/Cabinet/SelectedCabinetInformation";
@@ -26,57 +27,27 @@ const SearchPage = () => {
   const { handleClickResultButton } = useSearchResultButton();
   const {
     searchInput,
-    setSearchInput,
     searchResults,
-    setSearchResults,
+    setSearchInput,
     showGridResults,
-    setShowGridResults,
     inputRef,
+    handleSearchSubmit,
     debouncedSearchKeywordApi,
-    fetchSearchResults,
-    setPage,
     loading,
-    setLoading,
     hasMoreResults,
-    setHasMoreResults,
     scrollContainerRef,
   } = useSearch();
 
-  // 검색 결과 6개씩 보여주기 위한 변수
-  const slicedSearchResults = 6;
-
-  // searchInput 변경 시마다 디바운스 적용된 API 호출
-  const handleInputRelatedSearch = (e) => {
-    const keyword = e.target.value;
-    setSearchInput(keyword);
-    debouncedSearchKeywordApi(keyword);
-  };
-
-  // 검색 결과 드롭다운 관련 함수 //
-  // (외부 클릭 & submit => 검색 결과 드롭다운 숨기기)
-  const submitSearchResultDropdown = () => {
-    setIsOpen(false);
-  };
-  // input에 focus 상태일 때만 드롭다운 활성화
-  const handleDropdown = () => {
-    setIsOpen(true);
-  };
-
-  const handleSearchSubmit = async (e: React.FormEvent) => {
-    e.preventDefault(); // form submit 시 페이지 새로고침 방지
-    // submit 하면 input 포커스 아웃
-    if (inputRef.current) {
-      inputRef.current.blur();
-    }
-    // 상태 초기화
-    setSearchResults([]); // 기존 검색 결과 초기화
-    setPage(1); // 첫 번째 페이지로 초기화
-    setHasMoreResults(true); // 검색 가능 상태로 설정
-    setShowGridResults(false); // 초기화 동안 그리드 숨기기
-    setLoading(false);
-
-    await fetchSearchResults(1); // 1페이지 데이터 가져오기
-  };
+  const {
+    slicedSearchResults,
+    handleInputRelatedSearch,
+    submitSearchResultDropdown,
+    handleDropdown,
+  } = useSearchInput({
+    setSearchInput,
+    debouncedSearchKeywordApi,
+    setIsOpen,
+  });
 
   return (
     <div>
@@ -118,14 +89,14 @@ const SearchPage = () => {
           {showGridResults && searchResults.length > 0 && (
             <div
               ref={scrollContainerRef}
-              className="h-full pb-6 overflow-y-scroll"
+              className="h-full pb-4 overflow-y-scroll"
             >
               <SearchResultGridButton
                 searchResults={searchResults}
                 handleClickResultButton={handleClickResultButton}
+                loading={loading}
+                hasMoreResults={hasMoreResults}
               />
-              {loading && <p>Loading...</p>}
-              {!hasMoreResults && <p className="mt-3">No More Results</p>}
             </div>
           )}
         </div>

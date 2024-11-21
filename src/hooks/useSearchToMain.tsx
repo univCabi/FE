@@ -1,3 +1,5 @@
+// 검색 결과 버튼 누르면 쿼리스트링을 읽어서 main view로 이동
+
 import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 
