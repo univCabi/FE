@@ -1,6 +1,14 @@
 import { useProfileSave } from "@/hooks/useProfileSave";
-const ProfileSaveButton = ({ userIsVisible }: { userIsVisible: boolean }) => {
-  const { handleProfileSave } = useProfileSave(userIsVisible);
+interface ProfileSaveButtonProp {
+  userIsVisible: boolean;
+  saveState: boolean;
+}
+
+const ProfileSaveButton = ({
+  userIsVisible,
+  saveState,
+}: ProfileSaveButtonProp) => {
+  const { handleProfileSave } = useProfileSave(userIsVisible, saveState);
   return (
     <button
       onClick={handleProfileSave}

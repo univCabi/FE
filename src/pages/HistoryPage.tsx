@@ -44,7 +44,8 @@ const HistoryPage = () => {
         {/* 메인 콘텐츠 */}
         <main className="ml-0 md:ml-40 flex-grow flex flex-col items-center justify-center">
           {/* 페이지 타이틀 */}
-          <div className="text-black text-4xl font-bold text-center hidden md:block">
+          <div className="text-black text-4xl font-bold text-center ">
+            {/* hidden md:block 얘를 지워야하나 말아야하나.. */}
             사물함 대여 기록
           </div>
 

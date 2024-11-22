@@ -10,7 +10,8 @@ import SideNavigationLayout from "@/pages/SideNavigationLayout";
 import { useCabinetState } from "@/hooks/useCabinetState";
 
 const ProfilePage = () => {
-  const { userData, userIsVisible, setUserIsVisible } = useUserData();
+  const { userData, userIsVisible, setUserIsVisible, saveState } =
+    useUserData();
   const toggleSwitch = (): void => {
     setUserIsVisible(!userIsVisible);
   };
@@ -64,7 +65,10 @@ const ProfilePage = () => {
             {/* 대여정보 */}
             <RentalinfoCard userRentalData={userData.rentCabinetInfo} />
           </div>
-          <ProfileSaveButton userIsVisible={userIsVisible} />
+          <ProfileSaveButton
+            userIsVisible={userIsVisible}
+            saveState={saveState}
+          />
         </main>
       </div>
     </div>
