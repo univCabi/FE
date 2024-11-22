@@ -4,10 +4,8 @@ import LogSVG from "@/icons/log.svg?react";
 import LogoutSVG from "@/icons/logout.svg?react";
 import CabinetSVG from "@/icons/cabinet.svg?react";
 import { useLogout } from "@/hooks/useLogout";
-import { useNavigate, useLocation } from "react-router";
-
+import { useLocation, useNavigate } from "react-router";
 const CabinetFooterMenuButton = () => {
-  // SearchPage로 이동
   const navigate = useNavigate();
   const locatedPage = useLocation();
   const isHistoryPage = locatedPage.pathname === "/history";

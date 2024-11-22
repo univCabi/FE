@@ -26,42 +26,49 @@ const ProfilePage = () => {
   const { searchInput, setSearchInput } = useSearch();
 
   return (
-    <div>
-      <SideNavigationLayout
-        buildings={buildings}
-        selectedBuilding={selectedBuilding}
-        setSelectedBuilding={setSelectedBuilding}
-        setSelectedFloor={setSelectedFloor}
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        searchInput={searchInput}
-        setSearchInput={setSearchInput}
-        setSelectedCabinet={setSelectedCabinet} // 추가
-      />
+    <div className="relative h-screen flex flex-col">
+      {/* 상단 네비게이션 바 */}
+      <header className="sticky top-0 left-0 right-0 h-16 z-10">
+        <SideNavigationLayout
+          buildings={buildings}
+          selectedBuilding={selectedBuilding}
+          setSelectedBuilding={setSelectedBuilding}
+          setSelectedFloor={setSelectedFloor}
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          searchInput={searchInput}
+          setSearchInput={setSearchInput}
+          setSelectedCabinet={setSelectedCabinet}
+        />
+      </header>
 
-      {/* 건물 정보(좌측) */}
-      <div className="absolute inset-y-0 left-0 w-40 border-r-2 border-gray-400 flex-col pt-20 hidden md:flex">
-        {/* 하단 메뉴(좌측) */}
-        <CabinetFooterMenuButton />
-      </div>
+      {/* 메인 레이아웃 */}
+      <div className="flex flex-grow pt-24">
+        {/* 좌측 사이드바 */}
+        <aside className="hidden md:flex fixed left-0 top-16 w-40 h-[calc(100%-4rem)] border-r-2 border-gray-400 flex-col bg-white">
+          <CabinetFooterMenuButton />
+        </aside>
 
-      {/* 메인 콘텐츠 (프로필 및 대여정보) */}
-      <div className=" w-screen min-h-screen flex flex-col justify-center items-center">
-        {/* md기준으로 flex-col과 flex-row 배치 */}
-        <div className="mt-28 flex flex-col md:flex-row gap-10">
-          {/* 프로필 */}
-          <ProfileCard
-            toggleSwitch={toggleSwitch}
-            name={userData.name}
+        {/* 메인 콘텐츠 */}
+        <main className="ml-0 md:ml-40 flex-grow flex flex-col items-center justify-center">
+          <div className="flex flex-col md:flex-row gap-20 ">
+            {/* 프로필 */}
+            <ProfileCard
+              toggleSwitch={toggleSwitch}
+              name={userData.name}
+              userIsVisible={userIsVisible}
+              affiliation={userData.affiliation}
+              studentNumber={userData.studentNumber}
+              phoneNumber={userData.phoneNumber}
+            />
+            {/* 대여정보 */}
+            <RentalinfoCard userRentalData={userData.rentCabinetInfo} />
+          </div>
+          <ProfileSaveButton
             userIsVisible={userIsVisible}
-            affiliation={userData.affiliation}
-            studentNumber={userData.studentNumber}
-            phoneNumber={userData.phoneNumber}
+            saveState={userData.isVisible}
           />
-          {/* 대여정보 */}
-          <RentalinfoCard userRentalData={userData.rentCabinetInfo} />
-        </div>
-        <ProfileSaveButton userIsVisible={userIsVisible} />
+        </main>
       </div>
     </div>
   );
