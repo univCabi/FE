@@ -10,8 +10,7 @@ import SideNavigationLayout from "@/pages/SideNavigationLayout";
 import { useCabinetState } from "@/hooks/useCabinetState";
 
 const ProfilePage = () => {
-  const { userData, userIsVisible, setUserIsVisible, saveState } =
-    useUserData();
+  const { userData, userIsVisible, setUserIsVisible } = useUserData();
   const toggleSwitch = (): void => {
     setUserIsVisible(!userIsVisible);
   };
@@ -67,7 +66,7 @@ const ProfilePage = () => {
           </div>
           <ProfileSaveButton
             userIsVisible={userIsVisible}
-            saveState={saveState}
+            saveState={userData.isVisible}
           />
         </main>
       </div>

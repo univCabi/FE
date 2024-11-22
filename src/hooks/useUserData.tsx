@@ -38,7 +38,6 @@ const defaultUserData: UserData = {
 export const useUserData = () => {
   const [userData, setUserData] = useState<UserData>(defaultUserData);
   const [userIsVisible, setUserIsVisible] = useState<boolean>(false);
-  const [saveState, setSaveState] = useState<boolean>(false);
   const navigate = useNavigate();
   useEffect(() => {
     const getData = async () => {
@@ -52,7 +51,6 @@ export const useUserData = () => {
         });
         console.log(data);
         setUserIsVisible(data.isVisible);
-        setSaveState(data.isVisible);
         console.log(response.status);
       } catch (error) {
         if (error.response?.status === 401) {
@@ -64,5 +62,5 @@ export const useUserData = () => {
     };
     getData();
   }, []);
-  return { userData, userIsVisible, saveState, setUserIsVisible };
+  return { userData, userIsVisible, setUserIsVisible };
 };

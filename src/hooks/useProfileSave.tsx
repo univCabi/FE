@@ -1,11 +1,11 @@
-import { userDataSaveButtonApi } from "@/api/userDataSaveButtonApi";
+import { userProfileInfoUpdateApi } from "@/api/userProfileInfoUpdateApi";
 export const useProfileSave = (userIsVisible: boolean, saveState: boolean) => {
   const handleProfileSave = async () => {
     if (userIsVisible === saveState) {
       console.log("변경사항이없음");
     } else {
       try {
-        const response = await userDataSaveButtonApi(userIsVisible);
+        const response = await userProfileInfoUpdateApi(userIsVisible);
         console.log(userIsVisible);
         console.log(response.status);
       } catch (error) {
