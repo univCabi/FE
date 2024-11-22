@@ -51,7 +51,7 @@ const CabinetRental = ({
         <CabinetSVG />
       </div>
       <div className="font-bold text-xl">
-        {selectedBuilding} {selectedFloor} {selectedCabinet}번
+        {selectedBuilding} {selectedFloor}F {selectedCabinet}번
       </div>
       <button
         onClick={clickedRentalButton}
