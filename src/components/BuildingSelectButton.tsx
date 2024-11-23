@@ -2,7 +2,7 @@
 
 import { cabinetCallApi } from "@/api/cabinetCallApi";
 import { useSearch } from "@/hooks/useSearch";
-import useSearchToMain from "@/hooks/useSearchToMain"; // 커스텀 훅 임포트
+import { useSearchToMain } from "@/hooks/useSearchToMain";
 
 interface BuildingSelectButtonProps {
   buildings: { name: string; floors: number[] }[];
@@ -30,9 +30,16 @@ const BuildingSelectButton = ({
     try {
       const response = await cabinetCallApi(building, floor);
       setSearchParams({ building, floor: floor.toString() }); // 쿼리스트링
-      console.log(response);
+
+      console.log("건물, 층 선택 성공:", building, floor, response);
+      // console.log("성공적으로 조회되었습니다.", 200);
     } catch (error) {
-      console.log(error);
+      if (error === 404) {
+        console.log(
+          "Building with the specified name and floor not found.",
+          404
+        );
+      }
     }
   };
 

@@ -1,11 +1,22 @@
+// /search/detail 호출
+
 import axios from "axios";
 const SEARCH_URL = import.meta.env.VITE_SEARCH_URL;
 
-// // Search API 호출
 export const searchResultsApi = async (searchInput: string, page: number) => {
+  const token = localStorage.getItem("accessToken"); // 확인용 -> 추후 제거
+  if (!token) {
+    console.log("You need to log in first.");
+    return;
+  }
   try {
     const response = await axios.get(
-      `${SEARCH_URL}/detail?keyword=${searchInput}&page=${page}`
+      `${SEARCH_URL}/detail?keyword=${searchInput}&page=${page}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
     if (response && response.data) {
       return response; // 정상 응답 반환

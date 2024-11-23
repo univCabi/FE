@@ -4,10 +4,14 @@ import { useState, useEffect } from "react";
 import { cabinetCallApi } from "@/api/cabinetCallApi";
 
 interface cabinetApiData {
-  cabinetNumber: number;
-  xPos: number;
-  yPos: number;
+  cabinetId: number; // 사물함 고유 ID
+  cabinetNumber: number; // UI에 표시되는 사물함 번호
+  cabinetXPos: number;
+  cabinetYPos: number;
   status: string;
+  isVisible: boolean | null;
+  username: string | null;
+  isMine: boolean | null;
 }
 
 export const useCabinetData = (

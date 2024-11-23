@@ -1,17 +1,30 @@
+// Search API 호출
+
 import axios from "axios";
 const SEARCH_URL = import.meta.env.VITE_SEARCH_URL;
 
-// // Search API 호출
 export const searchKeywordApi = async (keyword) => {
-  try {
-    const response = await axios.get(`${SEARCH_URL}?keyword=${keyword}`);
+  const token = localStorage.getItem("accessToken"); // 확인용 -> 추후 제거
+  if (!token) {
+    console.error("Access token not found. Redirecting to login.");
+    return [];
+  }
 
-    const filterData = response.data.filter((inputValue) => {
-      return inputValue.cabinetNumber.toString().includes(keyword);
+  try {
+    const response = await axios.get(`${SEARCH_URL}?keyword=${keyword}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
+    console.log(response.data);
+
+    // 응답 데이터 검증 및 필터링
+    const filterData = response.data.filter((inputValue) =>
+      inputValue.cabinetNumber?.toString().includes(keyword)
+    );
     return filterData;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return [];
   }
 };

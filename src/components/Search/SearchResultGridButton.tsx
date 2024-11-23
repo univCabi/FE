@@ -22,7 +22,7 @@ const SearchResultGridButton = ({
             onClick={() =>
               handleClickResultButton(result.building, result.floor)
             }
-            className="bg-gray-300 hover:bg-gray-200 rounded-md p-16 text-center shadow-sm min-w-32"
+            className="bg-gray-300 hover:bg-gray-200 rounded-md  shadow-sm min-w-32 h-40"
           >
             {result.building} {result.floor}F {result.cabinetNumber}번
           </button>
