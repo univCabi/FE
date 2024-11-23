@@ -1,12 +1,10 @@
-import axios from "@/api/axiosCredentialstate";
-
-const SEARCH_URL = import.meta.env.VITE_SEARCH_URL;
+import api from "@/api/axiosInterceptApi";
 
 // // Search API 호출
 export const searchResultsApi = async (searchInput: string, page: number) => {
   try {
-    const response = await axios.get(
-      `${SEARCH_URL}/detail?keyword=${searchInput}&page=${page}`
+    const response = await api.get(
+      `/cabinet/search/detail?keyword=${searchInput}&page=${page}`
     );
     if (response && response.data) {
       return response; // 정상 응답 반환

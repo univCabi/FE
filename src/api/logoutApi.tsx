@@ -1,9 +1,11 @@
-import axios from "@/api/axiosCredentialstate";
-const LOGOUT_URL = import.meta.env.VITE_BE_URL; // VITE_LOGIN_URL 사용
+import api from "@/api/axiosInterceptApi";
+import { AppDispatch } from "@/redux/store/store";
+import { clearAccessToken } from "@/redux/slice/authSlice";
 
-export const logoutApi = async () => {
+export const logoutApi = async (distpatch: AppDispatch) => {
   try {
-    const response = await axios.post(`${LOGOUT_URL}/authn/logout`);
+    const response = await api.post("authn/logout");
+    distpatch(clearAccessToken());
     return { status: response.status, data: response.data };
   } catch (error) {
     return { status: error.response.status, data: error.response.data };
