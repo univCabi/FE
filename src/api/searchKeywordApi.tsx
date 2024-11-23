@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "@/api/axiosCredentialstate";
 const SEARCH_URL = import.meta.env.VITE_SEARCH_URL;
 
 // // Search API 호출

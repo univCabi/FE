@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "@/api/axiosCredentialstate";
 const CABINET_URL = import.meta.env.VITE_CABINET_URL;
 
 // 메인 페이지: 건물, 층 선택 시 호출되는 API

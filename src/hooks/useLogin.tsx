@@ -19,9 +19,6 @@ export const useLogin = () => {
         studentNumber,
         password,
       });
-      const { accessToken, refreshToken } = response.data;
-      localStorage.setItem("accessToken", accessToken);
-      localStorage.setItem("refreshToken", refreshToken);
       navigate("/main");
       setLoginSuccess(true); //로그인 성공
       console.log(response.status); // 로그인 상태 코드 로그

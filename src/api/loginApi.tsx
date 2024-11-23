@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "@/api/axiosCredentialstate";
 const LOGIN_URL = import.meta.env.VITE_BE_URL; // VITE_LOGIN_URL 사용
 // 로그인 요청 재사용과 유지보수를 위한 모듈화
 interface loginApiProps {
@@ -13,6 +13,6 @@ export const loginApi = async ({ studentNumber, password }: loginApiProps) => {
     });
     return { status: response.status, data: response.data };
   } catch (error) {
-    return { status: error.response.status, error: error.response.data };
+    throw error;
   }
 };
