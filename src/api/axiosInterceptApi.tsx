@@ -19,10 +19,16 @@ api.interceptors.response.use(
         store.dispatch(setAccessToken(newAccessToken));
         return api(Request);
       } catch (refreshError) {
+        console.error("refresh 토큰 만료", refreshError);
         store.dispatch(clearAccessToken());
         window.location.href = "/login";
         return Promise.reject(refreshError);
       }
+    }
+    if (error.response.status === 500) {
+      console.error("500에러", error);
+      window.location.href = "/login";
+      return Promise.reject(error);
     }
     return Promise.reject(error);
   }
