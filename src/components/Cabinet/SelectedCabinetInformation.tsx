@@ -6,6 +6,7 @@ interface SelectedCabinetInformationProps {
   selectedBuilding: string | null;
   selectedFloor: number | null;
   selectedCabinet: number | null;
+  // selectedCabinet: { cabinetId: number; cabinetNumber: number } | null;
 }
 
 const SelectedCabinetInformation = ({

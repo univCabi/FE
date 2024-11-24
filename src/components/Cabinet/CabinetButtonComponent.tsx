@@ -4,9 +4,12 @@ import { cabinetDetailInfoApi } from "@/api/cabinetDetailInfoApi";
 import { useCabinetData } from "@/hooks/useCabinetData";
 
 interface CabinetButtonComponentProps {
-  selectedBuilding: { name: string } | null;
+  selectedBuilding: {
+    name: string;
+    floors: string[]; // 층 리스트
+  } | null;
   selectedFloor: number | null;
-  setSelectedCabinet: (cabinetId: number) => void;
+  setSelectedCabinet: (cabinetNumber: number) => void;
 }
 
 const CabinetButtonComponent = ({
@@ -20,7 +23,10 @@ const CabinetButtonComponent = ({
   const handlecabinetDetailInformaion = async (cabinetId: number) => {
     try {
       const response = await cabinetDetailInfoApi(cabinetId);
+      setSelectedCabinet(cabinetId); // cabinetId 저장
+
       console.log("사물함 조회 성공", { cabinetId, response });
+      return response.data;
     } catch (error) {
       if (error === 400) {
         console.error(error);
@@ -45,8 +51,6 @@ const CabinetButtonComponent = ({
         return "bg-gray-300"; // 이용 가능
       case "BROKEN":
         return "bg-gray-700"; // 사용 불가
-      default:
-        return ""; // 기본값
     }
   };
 
@@ -62,16 +66,6 @@ const CabinetButtonComponent = ({
     <div className="w-full h-[80%] flex items-center justify-center">
       <div className="relative h-[30rem] overflow-scroll lg:w-[67rem] md:w-[80%] sm:w-[75%] w-[100%]">
         {cabinetData.map((cabinet) => {
-          // 선택된 층에 대한 floorIndex 가져오기
-          const floorIndex =
-            selectedBuilding?.floorIndex[
-              selectedBuilding.floors.indexOf(selectedFloor ?? "")
-            ];
-          if (!floorIndex) return null; // floorIndex가 없으면 렌더링 생략
-
-          // 고유 cabinetId 생성
-          const cabinetId = (floorIndex - 1) * 48 + cabinet.cabinetNumber;
-
           return (
             <button
               key={cabinet.cabinetNumber}
@@ -83,13 +77,11 @@ const CabinetButtonComponent = ({
                 left: `${cabinet.cabinetXPos * 90}px`, // API에서 받은 xPos 사용
               }}
               onClick={() => {
-                setSelectedCabinet(cabinet.cabinetNumber); // 선택된 사물함 ID 설정
-                handlecabinetDetailInformaion(cabinetId); // 상세 정보 호출
+                handlecabinetDetailInformaion(cabinet.id);
+                // setSelectedCabinet(cabinet.cabinetNumber);
               }}
             >
               {cabinet.cabinetNumber}
-              {/* cabinetId 확인용 코드 */}
-              {/* {cabinetId} */}
             </button>
           );
         })}

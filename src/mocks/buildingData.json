@@ -20,91 +20,91 @@
   {
     "name": "공학2관",
     "floors": ["2", "8", "9"],
-    "floorIndex": ["7", "8", "9"],
+    "floorIndex": ["8", "9", "10"],
     "section": "A"
   },
   {
     "name": "디자인관",
     "floors": ["10", "11", "12"],
-    "floorIndex": ["10", "11", "12"],
+    "floorIndex": ["11", "12", "13"],
     "section": "A"
   },
   {
     "name": "나래관",
     "floors": ["13", "14", "15"],
-    "floorIndex": ["13", "14", "15"],
+    "floorIndex": ["14", "15", "16"],
     "section": "A"
   },
   {
     "name": "누리관",
     "floors": ["16", "17", "18"],
-    "floorIndex": ["16", "17", "18"],
+    "floorIndex": ["17", "18", "19"],
     "section": "A"
   },
   {
     "name": "수산과학관",
     "floors": ["19", "20", "21"],
-    "floorIndex": ["19", "20", "21"],
+    "floorIndex": ["20", "21", "22"],
     "section": "A"
   },
   {
     "name": "웅비관",
     "floors": ["22", "23", "24"],
-    "floorIndex": ["22", "23", "24"],
+    "floorIndex": ["23", "24", "25"],
     "section": "A"
   },
   {
     "name": "인문사회경영관",
     "floors": ["25", "26", "27"],
-    "floorIndex": ["25", "26", "27"],
+    "floorIndex": ["26", "27", "28"],
     "section": "A"
   },
   {
     "name": "자연과학1관",
     "floors": ["28", "29", "30"],
-    "floorIndex": ["28", "29", "30"],
+    "floorIndex": ["29", "30", "31"],
     "section": "A"
   },
   {
     "name": "자연과학2관",
     "floors": ["31", "32", "33"],
-    "floorIndex": ["31", "32", "33"],
+    "floorIndex": ["32", "33", "34"],
     "section": "A"
   },
   {
     "name": "장영실관",
     "floors": ["34", "35", "36"],
-    "floorIndex": ["34", "35", "36"],
+    "floorIndex": ["35", "36", "37"],
     "section": "A"
   },
   {
     "name": "창의관",
     "floors": ["37", "38", "39"],
-    "floorIndex": ["37", "38", "39"],
+    "floorIndex": ["38", "39", "40"],
     "section": "A"
   },
   {
     "name": "충무관",
     "floors": ["40", "41", "42"],
-    "floorIndex": ["40", "41", "42"],
+    "floorIndex": ["41", "42", "43"],
     "section": "A"
   },
   {
     "name": "향파관",
     "floors": ["43", "44", "45"],
-    "floorIndex": ["43", "44", "45"],
+    "floorIndex": ["44", "45", "46"],
     "section": "A"
   },
   {
     "name": "환경해양관",
     "floors": ["46", "47", "48"],
-    "floorIndex": ["46", "47", "48"],
+    "floorIndex": ["47", "48", "49"],
     "section": "A"
   },
   {
     "name": "호연관",
     "floors": ["49", "50", "51"],
-    "floorIndex": ["49", "50", "51"],
+    "floorIndex": ["50", "51", "52"],
     "section": "A"
   }
 ]
