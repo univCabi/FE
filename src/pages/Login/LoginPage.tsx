@@ -1,5 +1,5 @@
 import { useLogin } from "@/hooks/useLogin";
-import LoginForm from "@/components/LoginForm";
+import LoginForm from "@/components/Login/LoginForm";
 import loginLogo from "@/images/android-icon.png";
 // 페이지 <-> 컴포넌트 <-> 훅 <-> api
 const LoginPage = () => {
