@@ -11,8 +11,10 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const Request = error.config;
-    if (error.response.status === 401 && !Request._retry) {
-      Request._retry = true; // 무한 반복 막기
+    if (
+      error.response.status === 401 &&
+      error.response.data.message === "Access token expired"
+    ) {
       try {
         const response = await api.post("/authn/token/access");
         const newAccessToken = response.data.accessToken;
@@ -24,6 +26,14 @@ api.interceptors.response.use(
         window.location.href = "/login";
         return Promise.reject(refreshError);
       }
+    } else if (
+      error.response.status === 401 &&
+      error.response.data.message === "Refresh token expired"
+    ) {
+      console.error("refresh 토큰 만료", error);
+      store.dispatch(clearAccessToken());
+      window.location.href = "/login";
+      return Promise.reject(error);
     }
     if (error.response.status === 500) {
       console.error("500에러", error);
