@@ -3,6 +3,10 @@ import store from "@/redux/store/store";
 import { setAccessToken, clearAccessToken } from "@/redux/slice/authSlice";
 
 const api = axios.create({
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${store.getState().auth.accessToken}`,
+  },
   baseURL: import.meta.env.VITE_BE_URL, // 모든 api 요청은 기본으로 localhost:8000 으로 보냅니다.
   withCredentials: true, // 모든 api 요청은 withCredentials:true 설정입니다.
 });
