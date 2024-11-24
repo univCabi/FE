@@ -32,9 +32,8 @@ const BuildingSelectButton = ({
     try {
       const response = await cabinetCallApi(building, floor);
       setSearchParams({ building, floor: floor.toString() }); // 쿼리스트링
-
-      console.log("건물, 층 선택 성공:", building, floor, response);
-      // console.log("성공적으로 조회되었습니다.", 200);
+      console.log(200);
+      return response.data;
     } catch (error) {
       if (error === 404) {
         console.log(

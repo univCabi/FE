@@ -19,7 +19,14 @@ const MainPage = () => {
     selectedFloor,
     setSelectedFloor,
   } = useBuildingState();
-  const { selectedCabinet, setSelectedCabinet } = useCabinetState();
+  const {
+    selectedCabinet,
+    setSelectedCabinet,
+    selectedStatus,
+    setSelectedStatus,
+    expiredAt,
+    setExpiredAt,
+  } = useCabinetState();
 
   return (
     <div>
@@ -61,7 +68,9 @@ const MainPage = () => {
                   ) || null
                 }
                 selectedFloor={selectedFloor}
+                selectedCabinet={selectedCabinet}
                 setSelectedCabinet={setSelectedCabinet}
+                setSelectedStatus={setSelectedStatus}
               />
               <CabinetStatusInformation />
             </>
@@ -73,6 +82,10 @@ const MainPage = () => {
             selectedBuilding={selectedBuilding}
             selectedFloor={selectedFloor}
             selectedCabinet={selectedCabinet}
+            selectedStatus={selectedStatus}
+            setSelectedStatus={setSelectedStatus}
+            setExpiredAt={setExpiredAt}
+            expiredAt={expiredAt}
           />
         </div>
       </div>
@@ -111,7 +124,9 @@ const MainPage = () => {
                     ) || null
                   }
                   selectedFloor={selectedFloor}
+                  selectedCabinet={selectedCabinet}
                   setSelectedCabinet={setSelectedCabinet}
+                  setSelectedStatus={setSelectedStatus}
                 />
               </div>
               {/* 화면 크기 = 768px 이하일 때 사물함 정보 숨김 */}
@@ -129,6 +144,10 @@ const MainPage = () => {
               selectedBuilding={selectedBuilding}
               selectedFloor={selectedFloor}
               selectedCabinet={selectedCabinet}
+              selectedStatus={selectedStatus}
+              setSelectedStatus={setSelectedStatus}
+              expiredAt={expiredAt}
+              setExpiredAt={setExpiredAt}
             />
           </div>
         )}

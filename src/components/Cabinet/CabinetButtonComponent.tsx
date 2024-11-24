@@ -2,6 +2,7 @@
 
 import { cabinetDetailInfoApi } from "@/api/cabinetDetailInfoApi";
 import { useCabinetData } from "@/hooks/useCabinetData";
+import { useEffect, useState } from "react";
 
 interface CabinetButtonComponentProps {
   selectedBuilding: {
@@ -9,13 +10,17 @@ interface CabinetButtonComponentProps {
     floors: string[]; // 층 리스트
   } | null;
   selectedFloor: number | null;
+  selectedCabinet: number | null;
   setSelectedCabinet: (cabinetNumber: number) => void;
+  setSelectedStatus: (status: string) => void; // 추가
 }
 
 const CabinetButtonComponent = ({
   selectedBuilding,
   selectedFloor,
+  selectedCabinet,
   setSelectedCabinet,
+  setSelectedStatus, // 추가
 }: CabinetButtonComponentProps) => {
   const cabinetData = useCabinetData(selectedBuilding, selectedFloor);
 
@@ -23,9 +28,12 @@ const CabinetButtonComponent = ({
   const handlecabinetDetailInformaion = async (cabinetId: number) => {
     try {
       const response = await cabinetDetailInfoApi(cabinetId);
+
       setSelectedCabinet(cabinetId); // cabinetId 저장
+      setSelectedStatus(response.status);
 
       console.log("사물함 조회 성공", { cabinetId, response });
+
       return response.data;
     } catch (error) {
       if (error === 400) {
@@ -39,12 +47,13 @@ const CabinetButtonComponent = ({
   };
 
   // 각 상태에 대한 버튼 색상 설정
-  const getStatusColor = (status: string) => {
+  const getStatusColor = (status: string, isMine: boolean | null) => {
+    if (status === "USING" && isMine === true) {
+      return "bg-purple-500"; // 본인이 사용 중인 사물함
+    }
     switch (status) {
-      case "MINE":
-        return "bg-lime-500"; // 내 사물함
       case "USING":
-        return "bg-purple-500"; // 사용 중
+        return "bg-purple-500";
       case "OVERDUE":
         return "bg-red-500"; // 반납 지연
       case "AVAILABLE":
@@ -53,10 +62,9 @@ const CabinetButtonComponent = ({
         return "bg-gray-700"; // 사용 불가
     }
   };
-
   // 각 상태에 따른 텍스트 색상 설정
   const getStatusTextColor = (status: string) => {
-    if (status === "AVAILABLE" || status === "MINE") {
+    if (status === "AVAILABLE") {
       return "text-black"; // AVAILABLE, MINE일 경우 text-black
     }
     return "text-white"; // 나머지 상태는 text-white
@@ -68,9 +76,11 @@ const CabinetButtonComponent = ({
         {cabinetData.map((cabinet) => {
           return (
             <button
+              // disabled={cabinet.isMine === false && cabinet.status === "USING"}
               key={cabinet.cabinetNumber}
               className={`absolute w-16 h-20 rounded-md hover:bg-opacity-80 flex items-end text-sm p-2 ${getStatusColor(
-                cabinet.status
+                cabinet.status,
+                cabinet.isMine // isMine을 전달
               )} ${getStatusTextColor(cabinet.status)}`}
               style={{
                 top: `${350 - cabinet.cabinetYPos * 100}px`, // API에서 받은 yPos 사용
@@ -78,7 +88,6 @@ const CabinetButtonComponent = ({
               }}
               onClick={() => {
                 handlecabinetDetailInformaion(cabinet.id);
-                // setSelectedCabinet(cabinet.cabinetNumber);
               }}
             >
               {cabinet.cabinetNumber}

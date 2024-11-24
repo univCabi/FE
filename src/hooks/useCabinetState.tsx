@@ -1,19 +1,18 @@
-// 사물함 선택 관련 hook
+// // 사물함 선택, 대여, 반납 관련 hook
 
 import { useState } from "react";
 
 export const useCabinetState = () => {
-  const [selectedCabinet, setSelectedCabinet] = useState<number | null>(null); // cabinetNumber 관리 - UI용
-  // const [cabinetId, setCabinetId] = useState<number | null>(null); // cabinetId 관리 - 고유 사물함 ID
+  const [selectedCabinet, setSelectedCabinet] = useState<number | null>(null);
+  const [selectedStatus, setSelectedStatus] = useState<string | null>(null); // 사물함 status
+  const [expiredAt, setExpiredAt] = useState<string | null>(null); // 반납 기한
 
-  // const [selectedCabinet, setSelectedCabinet] = useState<{
-  //   cabinetId: number | null;
-  //   cabinetNumber: number | null;
-  // }>({ cabinetId: null, cabinetNumber: null });
   return {
     selectedCabinet,
     setSelectedCabinet,
-    // cabinetId,
-    // setCabinetId,
+    selectedStatus,
+    setSelectedStatus,
+    expiredAt,
+    setExpiredAt,
   };
 };

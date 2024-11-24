@@ -1,3 +1,5 @@
+// 사물함 반납 API
+
 import axios from "axios";
 
 export const returnApi = async (cabinetId: number) => {
@@ -19,7 +21,7 @@ export const returnApi = async (cabinetId: number) => {
     );
 
     if (response.status === 200) {
-      console.log("Cabinet Return Successful:", cabinetId);
+      console.log("Cabinet Return Successful:", response.status);
       return {
         success: true,
         message: "Cabinet Return Successful",
@@ -27,20 +29,17 @@ export const returnApi = async (cabinetId: number) => {
       };
     }
   } catch (error: any) {
-    if (error.response) {
-      const { status, data } = error.response;
-
-      if (status === 400) {
-        console.error("Cabinet is not rented:", data);
-        return { success: false, message: "Cabinet is not rented" };
+    if (error) {
+      if (error === 400) {
+        console.error("Cabinet is already rented");
+        return { success: false, message: "Cabinet is already rented" };
       }
 
-      if (status === 404) {
-        console.error("Cabinet not found:", data);
+      if (error === 404) {
+        console.error("Cabinet not found");
         return { success: false, message: "Cabinet not found" };
       }
     }
-
     console.error("Unexpected error:", error);
     return { success: false, message: "Unexpected error occurred" };
   }

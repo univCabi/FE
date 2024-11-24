@@ -21,18 +21,18 @@ export const rentApi = async (cabinetId: number) => {
     );
 
     if (response.status === 200) {
-      console.log("Cabinet rent successful:", cabinetId);
+      console.log("Cabinet rent successful:", response.data);
       return { success: true, message: "Rent successful", data: response.data };
     }
   } catch (error: any) {
     if (error) {
       if (error === 400) {
-        // console.error("Cabinet is already rented");
+        console.error("Cabinet is already rented");
         return { success: false, message: "Cabinet is already rented" };
       }
 
       if (error === 404) {
-        // console.error("Cabinet not found");
+        console.error("Cabinet not found");
         return { success: false, message: "Cabinet not found" };
       }
     }
