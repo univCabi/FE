@@ -5,7 +5,7 @@ import { rentApi } from "@/api/rentApi";
 interface CabinetRentalConfirmModalProps {
   selectedBuilding: string | null;
   selectedFloor: number | null;
-  selectedCabinet: number;
+  selectedCabinet: { cabinetId: number; cabinetNumber: number } | null;
   closeRentalModal: () => void; // 모달 닫기 함수
   setSelectedStatus: (status: string) => void; // 상태 업데이트 함수
   setExpiredAt: (expiredAt: string | null) => void;
@@ -22,7 +22,7 @@ const CabinetRentalConfirmModal = ({
   const handleRent = async () => {
     if (!selectedCabinet) return;
     try {
-      const response = await rentApi(selectedCabinet);
+      const response = await rentApi(selectedCabinet.cabinetId);
       if (response?.success) {
         setSelectedStatus(response.data.status);
         setExpiredAt(response.data.expiredAt);
@@ -46,7 +46,8 @@ const CabinetRentalConfirmModal = ({
             대여 기간은 <strong>2024/12/31 23:59</strong>까지 입니다.
           </p>
           <b>
-            {selectedBuilding} {selectedFloor}F {selectedCabinet}번 사물함
+            {selectedBuilding} {selectedFloor}F {selectedCabinet?.cabinetNumber}
+            번 사물함
           </b>
           <p>이 사물함을 대여하시겠습니까?</p>
         </div>

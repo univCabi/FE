@@ -3,7 +3,7 @@
 import { returnApi } from "@/api/returnApi";
 
 interface CabinetReturnConfirmModalProps {
-  selectedCabinet: number;
+  selectedCabinet: { cabinetId: number; cabinetNumber: number } | null;
   closeReturnModal: () => void;
   setSelectedStatus: (status: string | null) => void; // 상태 업데이트 함수 추가
 }
@@ -15,7 +15,7 @@ const CabinetReturnConfirmModal = ({
   const handleReturn = async () => {
     if (!selectedCabinet) return;
     try {
-      const response = await returnApi(selectedCabinet);
+      const response = await returnApi(selectedCabinet.cabinetId);
       if (response?.success) {
         setSelectedStatus(response.data.status);
         closeReturnModal();

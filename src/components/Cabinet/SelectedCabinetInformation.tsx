@@ -12,7 +12,8 @@ import { useCabinetData } from "@/hooks/useCabinetData";
 interface SelectedCabinetInformationProps {
   selectedBuilding: string | null;
   selectedFloor: number | null;
-  selectedCabinet: number | null;
+  selectedCabinet: { cabinetId: number; cabinetNumber: number } | null;
+
   selectedStatus: string | null; // 추가
   setSelectedStatus: (status: string | null) => void; // 상태 업데이트 함수 추가
   expiredAt: string | null; // 추가: 대여 만료일
@@ -48,7 +49,7 @@ const SelectedCabinetInformation = ({
   // selectedCabinet이 변경될 때 상태 자동 조회
   useEffect(() => {
     if (selectedCabinet) {
-      fetchCabinetStatus(selectedCabinet);
+      fetchCabinetStatus(selectedCabinet.cabinetId);
     }
   }, [selectedCabinet]);
 
@@ -83,7 +84,8 @@ const SelectedCabinetInformation = ({
                 <CabinetSVG />
               </div>
               <div className="font-bold text-xl">
-                {selectedBuilding} {selectedFloor}F {selectedCabinet}번
+                {selectedBuilding} {selectedFloor}F
+                {selectedCabinet.cabinetNumber}번
               </div>
               <button
                 onClick={clickedRentalButton}
@@ -114,7 +116,8 @@ const SelectedCabinetInformation = ({
                 <CabinetSVG />
               </div>
               <h2 className="font-bold text-xl">
-                {selectedBuilding} {selectedFloor}F {selectedCabinet}번
+                {selectedBuilding} {selectedFloor}F
+                {selectedCabinet.cabinetNumber}번
               </h2>
               <div className="p-10">
                 <button
@@ -161,56 +164,3 @@ const SelectedCabinetInformation = ({
   );
 };
 export default SelectedCabinetInformation;
-
-// // 사물함 상태 조회
-// const fetchCabinetStatus = async (cabinetId: number) => {
-//   // 얘때문에 저런거같은디
-//   try {
-//     const response = await cabinetDetailInfoApi(cabinetId);
-//     setSelectedStatus(response.status); // 상태 업데이트
-//     setExpiredAt(response.expiredAt);
-//     // console.log("사물함 상태 조회 성공:", response);
-//   } catch (error) {
-//     console.error("사물함 상태 조회 실패:", error);
-//   }
-// };
-
-// // selectedCabinet이 변경될 때 상태 자동 조회
-// useEffect(() => {
-//   if (selectedCabinet) {
-//     fetchCabinetStatus(selectedCabinet);
-//   }
-// }, [selectedCabinet]);
-
-// interface SelectedCabinetInformationProps {
-//   selectedCabinet: {
-//     id: number;
-//     number: number;
-//     status: string;
-//     expiredAt: string | null;
-//   } | null;
-// }
-
-// const SelectedCabinetInformation = ({
-//   selectedCabinet,
-// }: SelectedCabinetInformationProps) => {
-//   if (!selectedCabinet) {
-//     return (
-//       <div>
-//         <p>사물함을 선택해주세요.</p>
-//       </div>
-//     );
-//   }
-
-//   return (
-//     <div className="absolute inset-y-0 right-0 w-80 pt-20 flex flex-col justify-center items-center bg-white border-l-2 border-gray-400 ">
-//       <h2 className="font-bold text-xl">
-//         사물함 {selectedCabinet.number}번 (ID: {selectedCabinet.id})
-//       </h2>
-//       <p>상태: {selectedCabinet.status}</p>
-//       <p>만료일: {selectedCabinet.expiredAt || "없음"}</p>
-//     </div>
-//   );
-// };
-
-// export default SelectedCabinetInformation;

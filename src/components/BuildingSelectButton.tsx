@@ -10,8 +10,13 @@ interface BuildingSelectButtonProps {
   setSelectedBuilding: (building: string | null) => void;
   selectedFloor: number | null;
   setSelectedFloor: (floor: number | null) => void;
-  selectedCabinet: number | null;
-  setSelectedCabinet: (cabinet: number | null) => void;
+  selectedCabinet: { cabinetId: number; cabinetNumber: number } | null;
+  setSelectedCabinet: (
+    cabinet: {
+      cabinetId: number;
+      cabinetNumber: number;
+    } | null
+  ) => void;
 }
 
 const BuildingSelectButton = ({

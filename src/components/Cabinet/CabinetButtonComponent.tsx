@@ -2,7 +2,6 @@
 
 import { cabinetDetailInfoApi } from "@/api/cabinetDetailInfoApi";
 import { useCabinetData } from "@/hooks/useCabinetData";
-import { useEffect, useState } from "react";
 
 interface CabinetButtonComponentProps {
   selectedBuilding: {
@@ -10,8 +9,15 @@ interface CabinetButtonComponentProps {
     floors: string[]; // 층 리스트
   } | null;
   selectedFloor: number | null;
-  selectedCabinet: number | null;
-  setSelectedCabinet: (cabinetNumber: number) => void;
+  selectedCabinet: { cabinetId: number; cabinetNumber: number } | null;
+
+  setSelectedCabinet: (
+    cabinet: {
+      cabinetId: number;
+      cabinetNumber: number;
+    } | null
+  ) => void; // 수정
+
   setSelectedStatus: (status: string) => void; // 추가
 }
 
@@ -25,14 +31,17 @@ const CabinetButtonComponent = ({
   const cabinetData = useCabinetData(selectedBuilding, selectedFloor);
 
   // 사물함 정보 API 호출
-  const handlecabinetDetailInformaion = async (cabinetId: number) => {
+  const handlecabinetDetailInformaion = async (
+    cabinetId: number,
+    cabinetNumber: number
+  ) => {
     try {
       const response = await cabinetDetailInfoApi(cabinetId);
 
-      setSelectedCabinet(cabinetId); // cabinetId 저장
+      setSelectedCabinet({ cabinetId, cabinetNumber });
       setSelectedStatus(response.status);
 
-      console.log("사물함 조회 성공", { cabinetId, response });
+      console.log("사물함 조회 성공", response);
 
       return response.data;
     } catch (error) {
@@ -87,7 +96,10 @@ const CabinetButtonComponent = ({
                 left: `${cabinet.cabinetXPos * 90}px`, // API에서 받은 xPos 사용
               }}
               onClick={() => {
-                handlecabinetDetailInformaion(cabinet.id);
+                handlecabinetDetailInformaion(
+                  cabinet.id,
+                  cabinet.cabinetNumber
+                );
               }}
             >
               {cabinet.cabinetNumber}
