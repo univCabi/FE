@@ -1,10 +1,10 @@
+import LogoSVG from "@/icons/cabiLogo.svg?react";
 interface LoginFormProps {
   studentNumber: string;
   password: string;
   setStudentNumber: (value: string) => void;
   setPassword: (value: string) => void;
   loginSuccess: boolean;
-  loginLogo: string;
   setLoginSuccess: (value: boolean) => void;
   handleLogin: () => Promise<void>;
 }
@@ -15,7 +15,6 @@ const LoginForm = ({
   setStudentNumber,
   setPassword,
   loginSuccess,
-  loginLogo,
   handleLogin,
 }: LoginFormProps) => {
   const onSubmit = async (e: React.FormEvent) => {
@@ -33,7 +32,7 @@ const LoginForm = ({
       <p className="text-blue-600 mb-5 text-[0.75rem] sm:text-base">
         여러분의 일상을 가볍게
       </p>
-      <img className="w-[80%] sl:w-[60%] max-w-[12rem] mb-5" src={loginLogo} />
+      <LogoSVG className="w-[80%] h-[50%] sl:w-[60%]  mb-5" />
       <label className="sm:text-xl mb-2">학번</label>
       <input
         className="text-sm sm:text-base w-[120%] sl:w-[90%] px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 mb-2"
