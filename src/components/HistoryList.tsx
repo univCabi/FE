@@ -4,8 +4,8 @@ interface HistoryListProp {
     floor: number;
     section: string;
     cabinetNumber: number;
-    startDate: string | null;
-    endDate: string | null;
+    startDate: string | number | Date;
+    endDate: string | number | Date;
   }[];
 }
 
@@ -21,14 +21,28 @@ const HistoryList = ({ userHistoryData }: HistoryListProp) => {
       </thead>
       <tbody>
         {userHistoryData.map((item, index) => (
-          <tr key={index} className="even:bg-white ">
+          <tr key={index} className="even:bg-white">
             <td className="w-80 table-cell text-center p-5 ">
-              {item.building}-{item.floor}F-{item.cabinetNumber}-{item.section}
+              {item.building}-{item.section}-{item.cabinetNumber}-{item.floor}F
             </td>
             <td className="w-1/3 table-cell text-center p-5">
-              {item.startDate}
+              {new Date(item.startDate)
+                .toLocaleDateString("ko-kR", {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit",
+                })
+                .replace(/\.$/, "")}
             </td>
-            <td className="w-1/3 table-cell text-center p-5">{item.endDate}</td>
+            <td className="w-1/3 table-cell text-center p-5">
+              {new Date(item.endDate)
+                .toLocaleDateString("ko-KR", {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit",
+                })
+                .replace(/\.$/, "")}
+            </td>
           </tr>
         ))}
       </tbody>
