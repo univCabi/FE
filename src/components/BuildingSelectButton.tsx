@@ -41,10 +41,7 @@ const BuildingSelectButton = ({
       return response.data;
     } catch (error) {
       if (error === 404) {
-        console.log(
-          "Building with the specified name and floor not found.",
-          404
-        );
+        console.error(404);
       }
     }
   };

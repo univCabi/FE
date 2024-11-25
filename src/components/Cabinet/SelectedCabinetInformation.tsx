@@ -1,46 +1,56 @@
 import CabinetSVG from "@/icons/cabinet.svg?react";
 import { useCabinetRentalModal } from "@/hooks/useCabinetRentalModal";
-import CabinetRentalConfirmModal from "../CabinetState/CabinetRentalConfirmModal";
-import CabinetReturnConfirmModal from "../CabinetState/CabinetReturnConfirmModal";
+import CabinetRentalConfirmModal from "@/components/CabinetState/CabinetRentalConfirmModal";
+import CabinetReturnConfirmModal from "@/components/CabinetState/CabinetReturnConfirmModal";
 import { useCabinetReturnModal } from "@/hooks/useCabinetReturnModal";
 import { cabinetDetailInfoApi } from "@/api/cabinetDetailInfoApi";
-import { useEffect, useState } from "react";
-import { useCabinetData } from "@/hooks/useCabinetData";
-// import { useCabinetStatus } from "@/hooks/useCabinetState";
+import { useEffect } from "react";
 
 // 선택된 사물함 정보
 interface SelectedCabinetInformationProps {
   selectedBuilding: string | null;
   selectedFloor: number | null;
   selectedCabinet: { cabinetId: number; cabinetNumber: number } | null;
-
-  selectedStatus: string | null; // 추가
-  setSelectedStatus: (status: string | null) => void; // 상태 업데이트 함수 추가
-  expiredAt: string | null; // 추가: 대여 만료일
-  setExpiredAt: (expiredAt: string | null) => void; // 추가
+  setSelectedCabinet: (
+    cabinet: {
+      cabinetId: number;
+      cabinetNumber: number;
+    } | null
+  ) => void;
+  selectedStatus: string | null;
+  setSelectedStatus: (status: string | null) => void;
+  expiredAt: string | null;
+  setExpiredAt: (expiredAt: string | null) => void;
+  isMine: boolean | null;
+  setIsMine: (isMine: boolean | null) => void;
 }
 
 const SelectedCabinetInformation = ({
   selectedCabinet,
   selectedBuilding,
   selectedFloor,
+  setSelectedCabinet,
   selectedStatus,
   setSelectedStatus,
   expiredAt,
   setExpiredAt,
+  isMine,
+  setIsMine,
 }: SelectedCabinetInformationProps) => {
   const { openRentalModal, setOpenRentalModal } = useCabinetRentalModal();
   const { openReturnModal, setOpenReturnModal } = useCabinetReturnModal();
-  // const { selectedStatus, expiredAt } = useCabinetStatus({
-  //   cabinetId: selectedCabinet,
-  // });
+
   // 사물함 상태 조회
   const fetchCabinetStatus = async (cabinetId: number) => {
     // 얘때문에 저런거같은디
     try {
       const response = await cabinetDetailInfoApi(cabinetId);
-      // setSelectedStatus(response.status); // 상태 업데이트
-      setExpiredAt(response.expiredAt);
+
+      setIsMine(response.isMine); // 사용 여부 설정
+      setSelectedStatus(response.status); // 상태 설정
+      setExpiredAt(response.expiredAt); // 만료일 설정
+
+      return response.data;
     } catch (error) {
       console.error(error);
     }
@@ -48,10 +58,10 @@ const SelectedCabinetInformation = ({
 
   // selectedCabinet이 변경될 때 상태 자동 조회
   useEffect(() => {
-    if (selectedCabinet) {
+    if (selectedCabinet?.cabinetId) {
       fetchCabinetStatus(selectedCabinet.cabinetId);
     }
-  }, [selectedCabinet]);
+  }, [selectedCabinet, selectedStatus, isMine]);
 
   // 대여 버튼 클릭
   const clickedRentalButton = () => {
@@ -72,19 +82,23 @@ const SelectedCabinetInformation = ({
     setOpenReturnModal(false);
   };
 
+  // 취소 버튼 -> 사물함 선택 해제
+  const cancelButton = () => {
+    setSelectedCabinet(null);
+  };
+
   return (
     <div className="absolute inset-y-0 right-0 w-80 pt-20 flex flex-col justify-center items-center bg-white border-l-2 border-gray-400 ">
-      {/* 건물, 층, 사물함 모두 선택했을 때만 사물함 정보 표시 */}
-
       {selectedCabinet !== null ? (
-        selectedStatus === "AVAILABLE" ? ( // status가 AVAILABLE일 경우
+        selectedStatus === "AVAILABLE" ? (
+          // 상태가 AVAILABLE일 경우
           <>
             <div>
               <div className="pb-5 flex justify-center">
                 <CabinetSVG />
               </div>
               <div className="font-bold text-xl">
-                {selectedBuilding} {selectedFloor}F
+                {selectedBuilding} {selectedFloor}F{" "}
                 {selectedCabinet.cabinetNumber}번
               </div>
               <button
@@ -93,7 +107,10 @@ const SelectedCabinetInformation = ({
               >
                 대여
               </button>
-              <button className="mt-4 p-4 w-60 bg-white text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-200 hover:text-blue-600 transition-all duration-150">
+              <button
+                onClick={cancelButton}
+                className="mt-4 p-4 w-60 bg-white text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-200 hover:text-blue-600 transition-all duration-150"
+              >
                 취소
               </button>
             </div>
@@ -104,19 +121,21 @@ const SelectedCabinetInformation = ({
                 selectedBuilding={selectedBuilding}
                 selectedFloor={selectedFloor}
                 selectedCabinet={selectedCabinet}
-                setSelectedStatus={setSelectedStatus} // 추가
+                setSelectedStatus={setSelectedStatus}
+                expiredAt={expiredAt}
                 setExpiredAt={setExpiredAt}
               />
             )}
           </>
-        ) : selectedStatus === "USING" ? ( // status가 USING일 경우
+        ) : selectedStatus === "USING" && isMine === true ? (
+          // 상태가 USING이고 본인의 사물함일 경우
           <>
             <div>
               <div className="pb-5 flex justify-center">
                 <CabinetSVG />
               </div>
               <h2 className="font-bold text-xl">
-                {selectedBuilding} {selectedFloor}F
+                {selectedBuilding} {selectedFloor}F{" "}
                 {selectedCabinet.cabinetNumber}번
               </h2>
               <div className="p-10">
@@ -126,7 +145,10 @@ const SelectedCabinetInformation = ({
                 >
                   반납
                 </button>
-                <button className="mt-4 p-4 w-60 bg-white text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-200 hover:text-blue-600 transition-all duration-150">
+                <button
+                  onClick={cancelButton}
+                  className="mt-4 p-4 w-60 bg-white text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-200 hover:text-blue-600 transition-all duration-150"
+                >
                   취소
                 </button>
               </div>
@@ -140,11 +162,26 @@ const SelectedCabinetInformation = ({
                 <CabinetReturnConfirmModal
                   closeReturnModal={closeReturnModal}
                   selectedCabinet={selectedCabinet}
-                  setSelectedStatus={setSelectedStatus} // 추가
+                  setSelectedStatus={setSelectedStatus}
+                  setExpiredAt={setExpiredAt}
                 />
               )}
             </div>
           </>
+        ) : selectedStatus === "USING" && isMine == false ? (
+          // 상태가 USING이고 타인의 사물함일 경우
+          <div className="text-center">
+            <div className="pb-5 flex justify-center">
+              <CabinetSVG />
+            </div>
+            <h2 className="font-bold text-xl">
+              {selectedBuilding} {selectedFloor}F{" "}
+              {selectedCabinet.cabinetNumber}번
+            </h2>
+            <p className="mt-10 text-red-600 font-bold">
+              이미 대여중인 사물함입니다.
+            </p>
+          </div>
         ) : (
           <div>사물함 정보를 표시할 수 없습니다.</div>
         )

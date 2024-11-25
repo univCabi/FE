@@ -6,20 +6,24 @@ interface CabinetReturnConfirmModalProps {
   selectedCabinet: { cabinetId: number; cabinetNumber: number } | null;
   closeReturnModal: () => void;
   setSelectedStatus: (status: string | null) => void; // 상태 업데이트 함수 추가
+  setExpiredAt: (expiredAt: string | null) => void; // 추가
 }
 const CabinetReturnConfirmModal = ({
   selectedCabinet,
   closeReturnModal,
   setSelectedStatus,
+  setExpiredAt,
 }: CabinetReturnConfirmModalProps) => {
   const handleReturn = async () => {
     if (!selectedCabinet) return;
     try {
       const response = await returnApi(selectedCabinet.cabinetId);
+      console.log(response?.data.expiredAt); // 디버깅을 위한 로그
+
       if (response?.success) {
         setSelectedStatus(response.data.status);
         closeReturnModal();
-
+        setExpiredAt(null); // 반납 기간 초기화
         return response.data;
       } else {
         closeReturnModal();

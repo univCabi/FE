@@ -17,8 +17,12 @@ interface CabinetButtonComponentProps {
       cabinetNumber: number;
     } | null
   ) => void; // 수정
-
+  selectedStatus: string | null;
   setSelectedStatus: (status: string) => void; // 추가
+  expiredAt: string | null; // 추가: 대여 만료일
+  setExpiredAt: (expiredAt: string | null) => void; // 추가
+  isMine: boolean | null; // 변경: null 허용
+  setIsMine: (isMine: boolean | null) => void; // 변경: null 허용
 }
 
 const CabinetButtonComponent = ({
@@ -26,7 +30,12 @@ const CabinetButtonComponent = ({
   selectedFloor,
   selectedCabinet,
   setSelectedCabinet,
-  setSelectedStatus, // 추가
+  selectedStatus,
+  setSelectedStatus,
+  expiredAt,
+  setExpiredAt,
+  isMine,
+  setIsMine,
 }: CabinetButtonComponentProps) => {
   const cabinetData = useCabinetData(selectedBuilding, selectedFloor);
 
@@ -57,7 +66,7 @@ const CabinetButtonComponent = ({
 
   // 각 상태에 대한 버튼 색상 설정
   const getStatusColor = (status: string, isMine: boolean | null) => {
-    if (status === "USING" && isMine === true) {
+    if (status === "USING" && isMine === false) {
       return "bg-purple-500"; // 본인이 사용 중인 사물함
     }
     switch (status) {

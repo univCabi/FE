@@ -8,6 +8,7 @@ interface CabinetRentalConfirmModalProps {
   selectedCabinet: { cabinetId: number; cabinetNumber: number } | null;
   closeRentalModal: () => void; // 모달 닫기 함수
   setSelectedStatus: (status: string) => void; // 상태 업데이트 함수
+  expiredAt: string | null;
   setExpiredAt: (expiredAt: string | null) => void;
 }
 
@@ -17,12 +18,14 @@ const CabinetRentalConfirmModal = ({
   selectedCabinet,
   closeRentalModal,
   setSelectedStatus,
+  expiredAt,
   setExpiredAt,
 }: CabinetRentalConfirmModalProps) => {
   const handleRent = async () => {
     if (!selectedCabinet) return;
     try {
       const response = await rentApi(selectedCabinet.cabinetId);
+
       if (response?.success) {
         setSelectedStatus(response.data.status);
         setExpiredAt(response.data.expiredAt);
@@ -42,9 +45,6 @@ const CabinetRentalConfirmModal = ({
         <h2 className="text-2xl font-bold mb-5">대여 확인</h2>
 
         <div className="text-lg">
-          <p>
-            대여 기간은 <strong>2024/12/31 23:59</strong>까지 입니다.
-          </p>
           <b>
             {selectedBuilding} {selectedFloor}F {selectedCabinet?.cabinetNumber}
             번 사물함
