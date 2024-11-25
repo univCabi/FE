@@ -25,6 +25,22 @@ interface SelectedCabinetInformationProps {
   setIsMine: (isMine: boolean | null) => void;
 }
 
+// 날짜 포맷팅 함수
+const formatDate = (isoString: string | null): string => {
+  if (!isoString) return "날짜 정보 없음";
+
+  const date = new Date(isoString);
+  const options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  };
+
+  return date.toLocaleDateString("ko-KR", options);
+};
+
 const SelectedCabinetInformation = ({
   selectedCabinet,
   selectedBuilding,
@@ -45,11 +61,10 @@ const SelectedCabinetInformation = ({
     // 얘때문에 저런거같은디
     try {
       const response = await cabinetDetailInfoApi(cabinetId);
-
       setIsMine(response.isMine); // 사용 여부 설정
       setSelectedStatus(response.status); // 상태 설정
       setExpiredAt(response.expiredAt); // 만료일 설정
-
+      console.log(" 조회 성공", response.isMine);
       return response.data;
     } catch (error) {
       console.error(error);
@@ -154,7 +169,8 @@ const SelectedCabinetInformation = ({
               </div>
               <div className="text-lg">
                 <p>
-                  반납 기한: <strong>{expiredAt}</strong>
+                  반납 기한: <br />
+                  <strong>{formatDate(expiredAt)}</strong>
                 </p>
               </div>
 
