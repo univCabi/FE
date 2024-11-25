@@ -1,17 +1,10 @@
-import axios from "axios";
-const DATA_URL = import.meta.env.VITE_BE_URL; // VITE_LOGIN_URL 사용
+import api from "@/api/axiosInterceptApi";
 
 export const userProfileInfoUpdateApi = async (userIsVisible: boolean) => {
   try {
-    const response = await axios.post(
-      `${DATA_URL}/user/profile/me`,
-      { isVisible: userIsVisible },
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      }
-    );
+    const response = await api.post("/user/profile/me", {
+      isVisible: userIsVisible,
+    });
     return { status: response.status, data: response.data };
   } catch (error) {
     return { status: error.response.status, data: error.response.data };
