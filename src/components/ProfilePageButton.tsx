@@ -12,7 +12,7 @@ const ProfilePageButton = ({ onClick }: ProfilePageButtonProps) => {
   return (
     <button
       onClick={onClick}
-      className={`mr-2 p-2 rounded-md focus:outline-none hover:bg-blue-500 ${
+      className={`mr-5 p-2 rounded-md focus:outline-none hover:bg-blue-500 ${
         isProfilePage ? "bg-blue-500" : "bg-blue-600"
       }`}
     >
