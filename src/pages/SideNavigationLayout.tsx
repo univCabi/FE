@@ -12,10 +12,12 @@ interface NavBuildingProps {
   setSelectedFloor: (floor: number | null) => void; // 선택된 층을 설정하는 함수
   // setSelectedCabinet: (cabinet: number | null) => void; // 추가 (드롭다운에서 건물 선택 시 사물함 정보도 초기화)
   selectedCabinet: { cabinetId: number; cabinetNumber: number } | null;
-  setSelectedCabinet: (cabinet: {
-    cabinetId: number;
-    cabinetNumber: number;
-  }) => void; // 수정
+  setSelectedCabinet: (
+    cabinet: {
+      cabinetId: number;
+      cabinetNumber: number;
+    } | null
+  ) => void;
 }
 
 const SideNavigationLayout = ({

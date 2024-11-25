@@ -10,7 +10,6 @@ interface BuildingSelectButtonProps {
   setSelectedBuilding: (building: string | null) => void;
   selectedFloor: number | null;
   setSelectedFloor: (floor: number | null) => void;
-  selectedCabinet: { cabinetId: number; cabinetNumber: number } | null;
   setSelectedCabinet: (
     cabinet: {
       cabinetId: number;
@@ -25,7 +24,6 @@ const BuildingSelectButton = ({
   setSelectedBuilding,
   selectedFloor,
   setSelectedFloor,
-  selectedCabinet,
   setSelectedCabinet,
 }: BuildingSelectButtonProps) => {
   const { setSearchParams } = useSearch();

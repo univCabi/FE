@@ -3,8 +3,6 @@ import { useCabinetRentalModal } from "@/hooks/useCabinetRentalModal";
 import CabinetRentalConfirmModal from "@/components/CabinetState/CabinetRentalConfirmModal";
 import CabinetReturnConfirmModal from "@/components/CabinetState/CabinetReturnConfirmModal";
 import { useCabinetReturnModal } from "@/hooks/useCabinetReturnModal";
-import { cabinetDetailInfoApi } from "@/api/cabinetDetailInfoApi";
-import { useEffect } from "react";
 
 // 선택된 사물함 정보
 interface SelectedCabinetInformationProps {
@@ -28,16 +26,12 @@ interface SelectedCabinetInformationProps {
 // 날짜 포맷팅 함수
 const formatDate = (isoString: string | null): string => {
   if (!isoString) return "날짜 정보 없음";
-
   const date = new Date(isoString);
   const options: Intl.DateTimeFormatOptions = {
     year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
+    month: "2-digit",
+    day: "2-digit",
   };
-
   return date.toLocaleDateString("ko-KR", options);
 };
 
@@ -55,28 +49,6 @@ const SelectedCabinetInformation = ({
 }: SelectedCabinetInformationProps) => {
   const { openRentalModal, setOpenRentalModal } = useCabinetRentalModal();
   const { openReturnModal, setOpenReturnModal } = useCabinetReturnModal();
-
-  // 사물함 상태 조회
-  const fetchCabinetStatus = async (cabinetId: number) => {
-    // 얘때문에 저런거같은디
-    try {
-      const response = await cabinetDetailInfoApi(cabinetId);
-      setIsMine(response.isMine); // 사용 여부 설정
-      setSelectedStatus(response.status); // 상태 설정
-      setExpiredAt(response.expiredAt); // 만료일 설정
-      console.log(" 조회 성공", response.isMine);
-      return response.data;
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  // selectedCabinet이 변경될 때 상태 자동 조회
-  useEffect(() => {
-    if (selectedCabinet?.cabinetId) {
-      fetchCabinetStatus(selectedCabinet.cabinetId);
-    }
-  }, [selectedCabinet, selectedStatus, isMine]);
 
   // 대여 버튼 클릭
   const clickedRentalButton = () => {
@@ -131,15 +103,19 @@ const SelectedCabinetInformation = ({
             </div>
 
             {openRentalModal && (
-              <CabinetRentalConfirmModal
-                closeRentalModal={closeRentalModal}
-                selectedBuilding={selectedBuilding}
-                selectedFloor={selectedFloor}
-                selectedCabinet={selectedCabinet}
-                setSelectedStatus={setSelectedStatus}
-                expiredAt={expiredAt}
-                setExpiredAt={setExpiredAt}
-              />
+              <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
+                <CabinetRentalConfirmModal
+                  selectedBuilding={selectedBuilding}
+                  selectedFloor={selectedFloor}
+                  selectedCabinet={selectedCabinet}
+                  closeRentalModal={closeRentalModal}
+                  setSelectedStatus={setSelectedStatus}
+                  expiredAt={expiredAt}
+                  setExpiredAt={setExpiredAt}
+                  isMine={isMine}
+                  setIsMine={setIsMine}
+                />
+              </div>
             )}
           </>
         ) : selectedStatus === "USING" && isMine === true ? (
@@ -175,12 +151,14 @@ const SelectedCabinetInformation = ({
               </div>
 
               {openReturnModal && (
-                <CabinetReturnConfirmModal
-                  closeReturnModal={closeReturnModal}
-                  selectedCabinet={selectedCabinet}
-                  setSelectedStatus={setSelectedStatus}
-                  setExpiredAt={setExpiredAt}
-                />
+                <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
+                  <CabinetReturnConfirmModal
+                    selectedCabinet={selectedCabinet}
+                    closeReturnModal={closeReturnModal}
+                    setSelectedStatus={setSelectedStatus}
+                    setExpiredAt={setExpiredAt}
+                  />
+                </div>
               )}
             </div>
           </>
@@ -198,9 +176,7 @@ const SelectedCabinetInformation = ({
               이미 대여중인 사물함입니다.
             </p>
           </div>
-        ) : (
-          <div>사물함 정보를 표시할 수 없습니다.</div>
-        )
+        ) : null
       ) : (
         <div>
           <div className="flex justify-center pb-5">

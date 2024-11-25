@@ -73,6 +73,10 @@ const MainPage = () => {
                 selectedCabinet={selectedCabinet}
                 setSelectedCabinet={setSelectedCabinet}
                 setSelectedStatus={setSelectedStatus}
+                setExpiredAt={setExpiredAt}
+                expiredAt={expiredAt}
+                isMine={isMine}
+                setIsMine={setIsMine}
               />
               <CabinetStatusInformation />
             </>

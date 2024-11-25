@@ -10,7 +10,7 @@ export const useSearchResultButton = () => {
   const handleClickResultButton = async (building: string, floor: number) => {
     try {
       const response = await cabinetCallApi(building, floor);
-      navigate(`/main?building=${building}&floor=${floor}`); // 선택한 사물함 페이지로 이동
+      navigate(`/main?building=${building}&floor=${floor}`);
       console.log(response);
     } catch (error) {
       console.log(error);

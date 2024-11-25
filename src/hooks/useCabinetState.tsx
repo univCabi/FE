@@ -13,7 +13,25 @@ export const useCabinetState = () => {
     useState<SelectedCabinet | null>(null);
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null); // 사물함 status
   const [expiredAt, setExpiredAt] = useState<string | null>(null); // 반납 기한
-  const [isMine, setIsMine] = useState<boolean | null>(null); // 본인 여부
+  const [isMine, setIsMine] = useState<boolean | null>(false); // 본인 여부
+
+  const fetchCabinetStatus = async (cabinetId: number) => {
+    try {
+      const response = await cabinetDetailInfoApi(cabinetId);
+      setIsMine(response.isMine); // 사용 여부 설정
+      setSelectedStatus(response.status); // 상태 설정
+      setExpiredAt(response.expiredAt); // 만료일 설정
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    if (selectedCabinet?.cabinetId) {
+      fetchCabinetStatus(selectedCabinet.cabinetId);
+    }
+  }, [selectedCabinet]);
 
   return {
     selectedCabinet,
@@ -24,5 +42,6 @@ export const useCabinetState = () => {
     setExpiredAt,
     isMine,
     setIsMine,
+    fetchCabinetStatus,
   };
 };

@@ -7,14 +7,14 @@ interface cabinetApiData {
   floor: number;
   section: string;
   building: string;
-  id: number; // 사물함 고유 ID
-  cabinetNumber: number; // UI에 표시되는 사물함 번호
+  id: number;
+  cabinetNumber: number;
   cabinetXPos: number;
   cabinetYPos: number;
   status: string;
   isVisible: boolean | null;
   username: string | null;
-  isMine: boolean | null;
+  isMine: boolean;
   expiredAt: string | null;
 }
 
@@ -39,5 +39,5 @@ export const useCabinetData = (
     }
   }, [selectedBuilding, selectedFloor]);
 
-  return cabinetData;
+  return { cabinetData, setCabinetData };
 };
