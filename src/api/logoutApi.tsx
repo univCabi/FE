@@ -1,17 +1,9 @@
-import axios from "axios";
-const LOGOUT_URL = import.meta.env.VITE_BE_URL; // VITE_LOGIN_URL 사용
+import api from "@/api/axiosInterceptApi";
 
 export const logoutApi = async () => {
   try {
-    const response = await axios.post(
-      `${LOGOUT_URL}/authn/logout`,
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      }
-    );
+    const response = await api.post("authn/logout");
+    document.cookie = `accessToken=; path=/; Expires=Thu, 01 Jan 1970 00:00:00 UTC;`; // accessToken 만료로 삭제
     return { status: response.status, data: response.data };
   } catch (error) {
     return { status: error.response.status, data: error.response.data };
