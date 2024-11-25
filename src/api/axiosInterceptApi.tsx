@@ -36,6 +36,7 @@ api.interceptors.response.use(
         return api(Request);
       } catch (refreshError) {
         console.error("refresh 토큰 만료", refreshError);
+        document.cookie = `accessToken=; path=/; Expires=Thu, 01 Jan 1970 00:00:00 UTC;`; // accessToken 만료로 삭제
         window.location.href = "/login";
         return Promise.reject(refreshError);
       }
@@ -44,11 +45,13 @@ api.interceptors.response.use(
       error.response.data.message === "Refresh token expired"
     ) {
       console.error("refresh 토큰 만료", error);
+      document.cookie = `accessToken=; path=/; Expires=Thu, 01 Jan 1970 00:00:00 UTC;`; // accessToken 만료로 삭제
       window.location.href = "/login";
       return Promise.reject(error);
     }
     if (error.response.status === 500) {
       console.error("500에러", error);
+      document.cookie = `accessToken=; path=/; Expires=Thu, 01 Jan 1970 00:00:00 UTC;`; // accessToken 만료로 삭제
       window.location.href = "/login";
       return Promise.reject(error);
     }
