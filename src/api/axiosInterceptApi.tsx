@@ -1,15 +1,25 @@
 import axios from "axios";
-import store from "@/redux/store/store";
-import { setAccessToken, clearAccessToken } from "@/redux/slice/authSlice";
 
 const api = axios.create({
-  headers: {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${store.getState().auth.accessToken}`,
-  },
   baseURL: import.meta.env.VITE_BE_URL, // 모든 api 요청은 기본으로 localhost:8000 으로 보냅니다.
   withCredentials: true, // 모든 api 요청은 withCredentials:true 설정입니다.
 });
+
+api.interceptors.request.use(
+  (response) => {
+    const accessToken = document.cookie
+      .split("; ")
+      .find((cookie) => cookie.startsWith("accessToken="))
+      ?.split("=")[1];
+    if (accessToken) {
+      response.headers.Authorization = `Bearer ${accessToken}`;
+    }
+    return response;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 api.interceptors.response.use(
   (response) => response,
@@ -22,11 +32,10 @@ api.interceptors.response.use(
       try {
         const response = await api.post("/authn/token/access");
         const newAccessToken = response.data.accessToken;
-        store.dispatch(setAccessToken(newAccessToken));
+        document.cookie = `accessToken=${newAccessToken}; path=/; Secure; SameSite=Strict`;
         return api(Request);
       } catch (refreshError) {
         console.error("refresh 토큰 만료", refreshError);
-        store.dispatch(clearAccessToken());
         window.location.href = "/login";
         return Promise.reject(refreshError);
       }
@@ -35,7 +44,6 @@ api.interceptors.response.use(
       error.response.data.message === "Refresh token expired"
     ) {
       console.error("refresh 토큰 만료", error);
-      store.dispatch(clearAccessToken());
       window.location.href = "/login";
       return Promise.reject(error);
     }
