@@ -25,9 +25,14 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const Request = error.config;
+    const objectErrorStatus = Number(JSON.stringify(error.response.status));
+    const objectErrorTokenClass = JSON.stringify(
+      error.response.data.messages[0].token_class
+    );
+
     if (
-      error.response.status === 401 &&
-      error.response.data.message === "Access token expired"
+      objectErrorStatus === 401 &&
+      objectErrorTokenClass === `"AccessToken"`
     ) {
       try {
         const response = await api.post("/authn/token/access");
@@ -41,15 +46,15 @@ api.interceptors.response.use(
         return Promise.reject(refreshError);
       }
     } else if (
-      error.response.status === 401 &&
-      error.response.data.message === "Refresh token expired"
+      objectErrorStatus === 401 &&
+      objectErrorTokenClass === `"RefreshToken"`
     ) {
       console.error("refresh 토큰 만료", error);
       document.cookie = `accessToken=; path=/; Expires=Thu, 01 Jan 1970 00:00:00 UTC;`; // accessToken 만료로 삭제
       window.location.href = "/login";
       return Promise.reject(error);
     }
-    if (error.response.status === 500) {
+    if (objectErrorStatus === 500) {
       console.error("500에러", error);
       document.cookie = `accessToken=; path=/; Expires=Thu, 01 Jan 1970 00:00:00 UTC;`; // accessToken 만료로 삭제
       window.location.href = "/login";
