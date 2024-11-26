@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router";
 import LogoSVG from "@/icons/cabiLogo.svg?react";
-
 const ErrorCompoenent = () => {
   const navigate = useNavigate();
   return (

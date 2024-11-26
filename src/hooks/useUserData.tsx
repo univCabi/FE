@@ -14,7 +14,7 @@ interface UserData {
     status: string | null;
     startDate: string | null;
     endDate: string | null;
-    leftDate: number | null;
+    leftDate: string | null;
   };
 }
 

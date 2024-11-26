@@ -6,7 +6,7 @@ interface RentalinfoCardProp {
     status: string | null;
     startDate: string | null;
     endDate: string | null;
-    leftDate: number | null;
+    leftDate: string | null;
   };
 }
 const RentalinfoCard = ({ userRentalData }: RentalinfoCardProp) => {
@@ -40,21 +40,41 @@ const RentalinfoCard = ({ userRentalData }: RentalinfoCardProp) => {
             <div>시작일</div>
             <div className="font-bold">{`${
               userRentalData.startDate
-                ? userRentalData.startDate
+                ? new Date(userRentalData.startDate)
+                    .toLocaleDateString("ko-KR", {
+                      year: "numeric",
+                      month: "2-digit",
+                      day: "2-digit",
+                    })
+                    .replace(/\.$/, "")
                 : "대여 정보가 없습니다."
             }`}</div>
           </div>
           <div className="justify-between items-start inline-flex w-full">
             <div>남은 기간</div>
-            <div className="font-bold">{`${userRentalData.leftDate ?? ""}${
-              userRentalData.leftDate ? "일" : "대여 정보가 없습니다."
+            <div className="font-bold">{`${
+              userRentalData.leftDate
+                ? new Date(userRentalData.leftDate)
+                    .toLocaleDateString("ko-KR", {
+                      year: "numeric",
+                      month: "2-digit",
+                      day: "2-digit",
+                    })
+                    .replace(/\.$/, "")
+                : "대여 정보가 없습니다."
             }`}</div>
           </div>
           <div className="justify-between items-start inline-flex w-full">
             <div>종료 일자</div>
             <div className="font-bold ">{`${
               userRentalData.endDate
-                ? userRentalData.endDate
+                ? new Date(userRentalData.endDate)
+                    .toLocaleDateString("ko-KR", {
+                      year: "numeric",
+                      month: "2-digit",
+                      day: "2-digit",
+                    })
+                    .replace(/\.$/, "")
                 : "대여 정보가 없습니다."
             }`}</div>
           </div>
