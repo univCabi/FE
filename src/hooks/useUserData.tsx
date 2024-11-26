@@ -12,9 +12,9 @@ interface UserData {
     floor: number | null;
     cabinetNumber: number | null;
     status: string | null;
-    startDate: string | Date | number;
-    endDate: string | Date | number;
-    leftDate: string | Date | number;
+    startDate: string | null;
+    endDate: string | null;
+    leftDate: string | null;
   };
 }
 
@@ -29,9 +29,9 @@ const defaultUserData: UserData = {
     floor: null,
     cabinetNumber: null,
     status: null,
-    startDate: "",
-    endDate: "",
-    leftDate: "",
+    startDate: null,
+    endDate: null,
+    leftDate: null,
   },
 };
 

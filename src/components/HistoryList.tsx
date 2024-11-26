@@ -4,8 +4,8 @@ interface HistoryListProp {
     floor: number;
     section: string;
     cabinetNumber: number;
-    startDate: string | number | Date;
-    endDate: string | number | Date;
+    startDate: string | null;
+    endDate: string | null;
   }[];
 }
 
@@ -26,7 +26,7 @@ const HistoryList = ({ userHistoryData }: HistoryListProp) => {
               {item.building}-{item.section}-{item.cabinetNumber}-{item.floor}F
             </td>
             <td className="w-1/3 table-cell text-center p-5">
-              {new Date(item.startDate)
+              {new Date(item.startDate || "")
                 .toLocaleDateString("ko-kR", {
                   year: "numeric",
                   month: "2-digit",
@@ -35,7 +35,7 @@ const HistoryList = ({ userHistoryData }: HistoryListProp) => {
                 .replace(/\.$/, "")}
             </td>
             <td className="w-1/3 table-cell text-center p-5">
-              {new Date(item.endDate)
+              {new Date(item.endDate || "")
                 .toLocaleDateString("ko-KR", {
                   year: "numeric",
                   month: "2-digit",

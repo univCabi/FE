@@ -5,8 +5,8 @@ interface HistoryData {
   floor: number;
   section: string;
   cabinetNumber: number;
-  startDate: string | number | Date;
-  endDate: string | number | Date;
+  startDate: string | null;
+  endDate: string | null;
 }
 
 export const useHistoryData = () => {

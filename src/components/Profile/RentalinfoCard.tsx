@@ -4,9 +4,9 @@ interface RentalinfoCardProp {
     floor: number | null;
     cabinetNumber: number | null;
     status: string | null;
-    startDate: string | number | Date;
-    endDate: string | number | Date;
-    leftDate: string | number | Date;
+    startDate: string | null;
+    endDate: string | null;
+    leftDate: string | null;
   };
 }
 const RentalinfoCard = ({ userRentalData }: RentalinfoCardProp) => {
