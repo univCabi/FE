@@ -13,7 +13,7 @@ export const useCabinetState = () => {
     useState<SelectedCabinetProps | null>(null);
   const [selectedStatus, setSelectedStatus] = useState<string>(); // 사물함 status
   const [expiredAt, setExpiredAt] = useState<string | null>(null); // 반납 기한
-  const [isMineState, setIsMineState] = useState<boolean>(false); // 본인 여부
+  const [isMineState, setIsMineState] = useState<boolean>(); // 본인 여부
 
   const fetchCabinetStatus = async (cabinetId: number) => {
     try {
@@ -21,8 +21,8 @@ export const useCabinetState = () => {
       setIsMineState(response.isMine); // 사용 여부 설정
       setSelectedStatus(response.status); // 상태 설정
       setExpiredAt(response.expiredAt); // 만료일 설정
-      console.log("fetch 후 상태 업데이트:", response.isMine, response.status);
-
+      console.log("fetch 후 상태 업데이트:", response.isMine);
+      console.log("isMine", response.isMine);
       return response.data;
     } catch (error) {
       console.error(error);
@@ -33,15 +33,8 @@ export const useCabinetState = () => {
     if (selectedCabinet === null) return;
 
     if (selectedCabinet.cabinetId) {
-      // fetchCabinetStatus(selectedCabinet.cabinetId);
-      // console.log("hook에서 실행", isMineState, selectedStatus);
-      fetchCabinetStatus(selectedCabinet.cabinetId)
-        .then(() => {
-          console.log("fetch 후 실행", isMineState, selectedStatus);
-        })
-        .catch((error) => {
-          console.error("Error fetching cabinet status:", error);
-        });
+      fetchCabinetStatus(selectedCabinet.cabinetId);
+      console.log("hook에서 실행", isMineState, selectedStatus);
     }
   }, [isMineState, selectedStatus, selectedCabinet]);
 

@@ -15,7 +15,7 @@ interface SelectedCabinetInformationProps {
       cabinetNumber: number;
     } | null
   ) => void;
-  selectedStatus: string | null;
+  selectedStatus: string;
   setSelectedStatus: (status: string) => void;
   expiredAt: string | null;
   setExpiredAt: (expiredAt: string | null) => void;

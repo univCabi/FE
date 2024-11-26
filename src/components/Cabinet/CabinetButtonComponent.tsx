@@ -26,11 +26,12 @@ const CabinetButtonComponent = ({
   isMineState,
   setIsMineState,
 }: CabinetButtonComponentProps) => {
-  const { cabinetData } = useCabinetData(
+  const { cabinetData, setCabinetData } = useCabinetData(
     selectedBuilding,
     selectedFloor,
     selectedCabinet,
-    isMineState
+    isMineState,
+    selectedStatus
   );
 
   // 사물함 정보 API 호출
@@ -41,9 +42,9 @@ const CabinetButtonComponent = ({
     try {
       const response = await cabinetDetailInfoApi(cabinetId);
       setSelectedCabinet({ cabinetId, cabinetNumber });
-      setSelectedStatus(response.status);
-      setIsMineState(response.isMine);
-      console.log("사물함 조회 성공22x", isMineState);
+      setSelectedStatus(response.status); // status 저장
+      setIsMineState(response.isMine); // isMine 저장
+
       return response.data;
     } catch (error) {
       if (error === 400) {
@@ -61,7 +62,8 @@ const CabinetButtonComponent = ({
     if (selectedStatus === "USING") {
       if (isMineState === true) {
         return "bg-lime-500 text-white"; // 본인이 사용 중인 사물함
-      } else {
+      }
+      if (isMineState === false) {
         return "bg-purple-500 text-white"; // 다른 사람이 사용 중인 사물함
       }
     }

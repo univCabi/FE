@@ -22,7 +22,8 @@ export const useCabinetData = (
   selectedBuilding: { name: string } | null,
   selectedFloor: number | null,
   selectedCabinet: { cabinetId: number; cabinetNumber: number } | null,
-  isMineState: boolean
+  isMineState: boolean,
+  selectedStatus: string
 ) => {
   const [cabinetData, setCabinetData] = useState<cabinetApiData[]>([]);
 
@@ -39,14 +40,15 @@ export const useCabinetData = (
     setCabinetData((prevData) =>
       prevData.map((cabinet) =>
         cabinet.id === selectedCabinet?.cabinetId
-          ? { ...cabinet, isMine: isMineState } // 현재 선택된 사물함의 isMine 업데이트
+          ? // ? { ...cabinet, isMine: isMineState } // 현재 선택된 사물함의 isMine 업데이트
+            { ...cabinet, status: selectedStatus, isMine: true } // 현재 선택된 사물함의 isMine 업데이트
           : cabinet
       )
     );
     if (selectedBuilding !== null && selectedFloor !== null) {
       handleCabinetCall(selectedBuilding.name, selectedFloor);
     }
-  }, [selectedBuilding, selectedFloor, isMineState]);
+  }, [selectedBuilding, selectedFloor, isMineState, selectedStatus]);
 
   return { cabinetData, setCabinetData, handleCabinetCall };
 };
