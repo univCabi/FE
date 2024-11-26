@@ -1,23 +1,12 @@
 // 사물함 대여 API
 
-import axios from "axios";
+import api from "@/api/axiosInterceptApi";
 
 export const rentApi = async (cabinetId: number) => {
-  const token = localStorage.getItem("accessToken"); // 확인용 -> 추후 제거
-  if (!token) {
-    console.error("Access token is missing.");
-    return { success: false, message: "Token is missing" };
-  }
-
   try {
-    const response = await axios.post(
+    const response = await api.post(
       `http://localhost:8000/cabinet/rent`,
-      { cabinetId }, // 요청 데이터
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
+      { cabinetId } // 요청 데이터
     );
 
     if (response.status === 200) {

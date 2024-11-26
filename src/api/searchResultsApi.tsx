@@ -1,13 +1,7 @@
-// /search/detail 호출
-
 import api from "@/api/axiosInterceptApi";
 
+// // Search API 호출
 export const searchResultsApi = async (searchInput: string, page: number) => {
-  const token = localStorage.getItem("accessToken"); // 확인용 -> 추후 제거
-  if (!token) {
-    console.log("You need to log in first.");
-    return;
-  }
   try {
     const response = await api.get(
       `/cabinet/search/detail?keyword=${searchInput}&page=${page}`
