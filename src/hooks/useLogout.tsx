@@ -9,8 +9,6 @@ export const useLogout = () => {
       const response = await logoutApi();
       navigate(loginUrl);
       console.log(response.status);
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
     } catch (error) {
       console.error("로그아웃 중 오류가 발생했습니다:", error);
       console.log(error.response?.status || "오류를 알 수 없습니다.");

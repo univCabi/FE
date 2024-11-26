@@ -11,7 +11,7 @@ interface RentalinfoCardProp {
 }
 const RentalinfoCard = ({ userRentalData }: RentalinfoCardProp) => {
   return (
-    <div className="p-10 bg-neutral-100 rounded-2xl flex-col justify-start items-start gap-5 inline-flex shadow-sm">
+    <div className="p-10 w-96 sl:w-full bg-neutral-100 rounded-2xl flex-col justify-start items-start gap-5 inline-flex shadow-md">
       <div className="justify-start items-start inline-flex text-black text-xl font-bold">
         대여정보
       </div>
@@ -24,7 +24,7 @@ const RentalinfoCard = ({ userRentalData }: RentalinfoCardProp) => {
               }
                text-gray-50 absolute bg-blue-500 rounded-[0.625rem] flex justify-center items-center`}
             >
-              {userRentalData.cabinetNumber ?? "None"}
+              {userRentalData.cabinetNumber ?? "___"}
             </div>
           </div>
           <div className="w-[6rem] h-[4rem] relative">
