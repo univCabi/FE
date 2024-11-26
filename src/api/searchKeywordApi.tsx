@@ -3,6 +3,8 @@
 import axios from "axios";
 const SEARCH_URL = import.meta.env.VITE_SEARCH_URL;
 
+import api from "@/api/axiosInterceptApi";
+
 export const searchKeywordApi = async (keyword) => {
   const token = localStorage.getItem("accessToken"); // 확인용 -> 추후 제거
   if (!token) {
@@ -11,11 +13,8 @@ export const searchKeywordApi = async (keyword) => {
   }
 
   try {
-    const response = await axios.get(`${SEARCH_URL}?keyword=${keyword}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await api.get(`/cabinet/search?keyword=${keyword}`);
+
     console.log(response.data);
 
     // 응답 데이터 검증 및 필터링

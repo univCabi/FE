@@ -10,9 +10,7 @@ module.exports = {
         background: "#f2f2f2",
       },
       fontFamily: {
-        spoqa: ["SpoqaHanSansNeo-Regular"],
-        spoqaMedium: ["SpoqaHanSansNeo-Medium"],
-        spoqaBold: ["SpoqaHanSansNeo-Bold"],
+        sans: ["Pretendard", "sans-serif"],
       },
     },
     screens: {

@@ -1,7 +1,6 @@
 // /search/detail 호출
 
-import axios from "axios";
-const SEARCH_URL = import.meta.env.VITE_SEARCH_URL;
+import api from "@/api/axiosInterceptApi";
 
 export const searchResultsApi = async (searchInput: string, page: number) => {
   const token = localStorage.getItem("accessToken"); // 확인용 -> 추후 제거
@@ -10,13 +9,8 @@ export const searchResultsApi = async (searchInput: string, page: number) => {
     return;
   }
   try {
-    const response = await axios.get(
-      `${SEARCH_URL}/detail?keyword=${searchInput}&page=${page}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
+    const response = await api.get(
+      `/cabinet/search/detail?keyword=${searchInput}&page=${page}`
     );
     if (response && response.data) {
       return response; // 정상 응답 반환

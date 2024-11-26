@@ -1,18 +1,21 @@
-import axios from "axios";
-const LOGIN_URL = import.meta.env.VITE_BE_URL; // VITE_LOGIN_URL 사용
-// 로그인 요청 재사용과 유지보수를 위한 모듈화
-interface loginApiProps {
+import api from "@/api/axiosInterceptApi";
+
+interface LoginApiProps {
   studentNumber: string;
   password: string;
 }
-export const loginApi = async ({ studentNumber, password }: loginApiProps) => {
+
+export const loginApi = async ({ studentNumber, password }: LoginApiProps) => {
   try {
-    const response = await axios.post(`${LOGIN_URL}/authn/login`, {
+    const response = await api.post("/authn/login", {
       studentNumber,
       password,
     });
+    const accessToken = response.data.accessToken;
+    document.cookie = `accessToken=${accessToken}; path=/; Secure; SameSite=Strict`;
     return { status: response.status, data: response.data };
   } catch (error) {
-    return { status: error.response.status, error: error.response.data };
+    console.error("loginApi 오류:", error);
+    throw error; // 에러를 호출한 쪽으로 전달
   }
 };
