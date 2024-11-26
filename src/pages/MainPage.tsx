@@ -26,8 +26,8 @@ const MainPage = () => {
     setSelectedStatus,
     expiredAt,
     setExpiredAt,
-    isMine,
-    setIsMine,
+    isMineState,
+    setIsMineState,
   } = useCabinetState();
 
   return (
@@ -75,8 +75,8 @@ const MainPage = () => {
                 setSelectedStatus={setSelectedStatus}
                 setExpiredAt={setExpiredAt}
                 expiredAt={expiredAt}
-                isMine={isMine}
-                setIsMine={setIsMine}
+                isMineState={isMineState}
+                setIsMineState={setIsMineState}
               />
               <CabinetStatusInformation />
             </>
@@ -93,8 +93,8 @@ const MainPage = () => {
             setExpiredAt={setExpiredAt}
             setSelectedCabinet={setSelectedCabinet}
             expiredAt={expiredAt}
-            isMine={isMine}
-            setIsMine={setIsMine}
+            isMineState={isMineState}
+            setIsMineState={setIsMineState}
           />
         </div>
       </div>
@@ -138,8 +138,8 @@ const MainPage = () => {
                   setSelectedStatus={setSelectedStatus}
                   setExpiredAt={setExpiredAt}
                   expiredAt={expiredAt}
-                  isMine={isMine}
-                  setIsMine={setIsMine}
+                  isMineState={isMineState}
+                  setIsMineState={setIsMineState}
                 />
               </div>
               {/* 화면 크기 = 768px 이하일 때 사물함 정보 숨김 */}
@@ -162,8 +162,8 @@ const MainPage = () => {
               setExpiredAt={setExpiredAt}
               setSelectedCabinet={setSelectedCabinet}
               expiredAt={expiredAt}
-              isMine={isMine}
-              setIsMine={setIsMine}
+              isMineState={isMineState}
+              setIsMineState={setIsMineState}
             />
           </div>
         )}

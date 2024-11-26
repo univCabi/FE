@@ -3,22 +3,22 @@
 import { cabinetDetailInfoApi } from "@/api/cabinetDetailInfoApi";
 import { useEffect, useState } from "react";
 
-interface SelectedCabinet {
-  cabinetId: number | null;
-  cabinetNumber: number | null;
+interface SelectedCabinetProps {
+  cabinetId: number;
+  cabinetNumber: number;
 }
 
 export const useCabinetState = () => {
   const [selectedCabinet, setSelectedCabinet] =
-    useState<SelectedCabinet | null>(null);
-  const [selectedStatus, setSelectedStatus] = useState<string | null>(null); // 사물함 status
+    useState<SelectedCabinetProps | null>(null);
+  const [selectedStatus, setSelectedStatus] = useState<string>(); // 사물함 status
   const [expiredAt, setExpiredAt] = useState<string | null>(null); // 반납 기한
-  const [isMine, setIsMine] = useState<boolean | null>(false); // 본인 여부
+  const [isMineState, setIsMineState] = useState<boolean>(); // 본인 여부
 
   const fetchCabinetStatus = async (cabinetId: number) => {
     try {
       const response = await cabinetDetailInfoApi(cabinetId);
-      setIsMine(response.isMine); // 사용 여부 설정
+      setIsMineState(response.isMine); // 사용 여부 설정
       setSelectedStatus(response.status); // 상태 설정
       setExpiredAt(response.expiredAt); // 만료일 설정
       return response.data;
@@ -28,10 +28,13 @@ export const useCabinetState = () => {
   };
 
   useEffect(() => {
+    if (selectedCabinet === null) return;
+
     if (selectedCabinet?.cabinetId) {
       fetchCabinetStatus(selectedCabinet.cabinetId);
+      console.log("hook에서 실행", isMineState, selectedStatus);
     }
-  }, [selectedCabinet]);
+  }, [isMineState, selectedStatus]);
 
   return {
     selectedCabinet,
@@ -40,8 +43,8 @@ export const useCabinetState = () => {
     setSelectedStatus,
     expiredAt,
     setExpiredAt,
-    isMine,
-    setIsMine,
+    isMineState,
+    setIsMineState,
     fetchCabinetStatus,
   };
 };

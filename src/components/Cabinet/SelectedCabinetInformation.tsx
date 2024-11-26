@@ -1,8 +1,8 @@
 import CabinetSVG from "@/icons/cabinet.svg?react";
 import { useCabinetRentalModal } from "@/hooks/useCabinetRentalModal";
+import { useCabinetReturnModal } from "@/hooks/useCabinetReturnModal";
 import CabinetRentalConfirmModal from "@/components/CabinetState/CabinetRentalConfirmModal";
 import CabinetReturnConfirmModal from "@/components/CabinetState/CabinetReturnConfirmModal";
-import { useCabinetReturnModal } from "@/hooks/useCabinetReturnModal";
 
 // 선택된 사물함 정보
 interface SelectedCabinetInformationProps {
@@ -16,11 +16,11 @@ interface SelectedCabinetInformationProps {
     } | null
   ) => void;
   selectedStatus: string | null;
-  setSelectedStatus: (status: string | null) => void;
+  setSelectedStatus: (status: string) => void;
   expiredAt: string | null;
   setExpiredAt: (expiredAt: string | null) => void;
-  isMine: boolean | null;
-  setIsMine: (isMine: boolean | null) => void;
+  isMineState: boolean;
+  setIsMineState: (isMine: boolean) => void;
 }
 
 // 날짜 포맷팅 함수
@@ -44,8 +44,8 @@ const SelectedCabinetInformation = ({
   setSelectedStatus,
   expiredAt,
   setExpiredAt,
-  isMine,
-  setIsMine,
+  isMineState,
+  setIsMineState,
 }: SelectedCabinetInformationProps) => {
   const { openRentalModal, setOpenRentalModal } = useCabinetRentalModal();
   const { openReturnModal, setOpenReturnModal } = useCabinetReturnModal();
@@ -112,13 +112,13 @@ const SelectedCabinetInformation = ({
                   setSelectedStatus={setSelectedStatus}
                   expiredAt={expiredAt}
                   setExpiredAt={setExpiredAt}
-                  isMine={isMine}
-                  setIsMine={setIsMine}
+                  isMineState={isMineState}
+                  setIsMineState={setIsMineState}
                 />
               </div>
             )}
           </>
-        ) : selectedStatus === "USING" && isMine === true ? (
+        ) : selectedStatus === "USING" && isMineState === true ? (
           // 상태가 USING이고 본인의 사물함일 경우
           <>
             <div>
@@ -153,16 +153,20 @@ const SelectedCabinetInformation = ({
               {openReturnModal && (
                 <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
                   <CabinetReturnConfirmModal
+                    selectedBuilding={selectedBuilding}
+                    selectedFloor={selectedFloor}
                     selectedCabinet={selectedCabinet}
                     closeReturnModal={closeReturnModal}
                     setSelectedStatus={setSelectedStatus}
                     setExpiredAt={setExpiredAt}
+                    isMineState={isMineState}
+                    setIsMineState={setIsMineState}
                   />
                 </div>
               )}
             </div>
           </>
-        ) : selectedStatus === "USING" && isMine == false ? (
+        ) : selectedStatus === "USING" && isMineState == false ? (
           // 상태가 USING이고 타인의 사물함일 경우
           <div className="text-center">
             <div className="pb-5 flex justify-center">
