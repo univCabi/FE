@@ -110,9 +110,7 @@ const SelectedCabinetInformation = ({
                   selectedCabinet={selectedCabinet}
                   closeRentalModal={closeRentalModal}
                   setSelectedStatus={setSelectedStatus}
-                  expiredAt={expiredAt}
                   setExpiredAt={setExpiredAt}
-                  isMineState={isMineState}
                   setIsMineState={setIsMineState}
                 />
               </div>
@@ -159,7 +157,6 @@ const SelectedCabinetInformation = ({
                     closeReturnModal={closeReturnModal}
                     setSelectedStatus={setSelectedStatus}
                     setExpiredAt={setExpiredAt}
-                    isMineState={isMineState}
                     setIsMineState={setIsMineState}
                   />
                 </div>

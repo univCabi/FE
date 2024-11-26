@@ -42,8 +42,8 @@ const CabinetButtonComponent = ({
       const response = await cabinetDetailInfoApi(cabinetId);
       setSelectedCabinet({ cabinetId, cabinetNumber });
       setSelectedStatus(response.status);
-      // setIsMineState(response.isMine);
-      console.log("사물함 조회 성공", isMineState);
+      setIsMineState(response.isMine);
+      console.log("사물함 조회 성공22x", isMineState);
       return response.data;
     } catch (error) {
       if (error === 400) {
@@ -65,7 +65,6 @@ const CabinetButtonComponent = ({
         return "bg-purple-500 text-white"; // 다른 사람이 사용 중인 사물함
       }
     }
-
     switch (selectedStatus) {
       case "OVERDUE":
         return "bg-red-500"; // 반납 지연

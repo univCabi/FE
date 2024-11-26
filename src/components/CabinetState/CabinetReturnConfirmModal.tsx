@@ -1,26 +1,21 @@
 // 반납 버튼 눌렀을 때, 반납 확인 모달
 
-import { cabinetDetailInfoApi } from "@/api/cabinetDetailInfoApi";
 import { returnApi } from "@/api/returnApi";
-import { useCabinetData } from "@/hooks/useCabinetData";
-import { useEffect } from "react";
 
 interface CabinetReturnConfirmModalProps {
+  selectedBuilding: string | null;
+  selectedFloor: number | null;
   selectedCabinet: { cabinetId: number; cabinetNumber: number } | null;
   closeReturnModal: () => void;
   setSelectedStatus: (status: string) => void; // 상태 업데이트 함수 추가
   setExpiredAt: (expiredAt: string | null) => void; // 추가
-  isMineState: boolean;
   setIsMineState: (isMine: boolean) => void;
-  selectedBuilding: string | null;
-  selectedFloor: number | null;
 }
 const CabinetReturnConfirmModal = ({
   selectedCabinet,
   closeReturnModal,
   setSelectedStatus,
   setExpiredAt,
-  isMineState,
   setIsMineState,
 }: CabinetReturnConfirmModalProps) => {
   const handleReturn = async () => {

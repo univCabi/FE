@@ -8,9 +8,8 @@ interface CabinetRentalConfirmModalProps {
   selectedCabinet: { cabinetId: number; cabinetNumber: number } | null;
   closeRentalModal: () => void; // 모달 닫기 함수
   setSelectedStatus: (status: string) => void; // 상태 업데이트 함수
-  expiredAt: string | null;
   setExpiredAt: (expiredAt: string | null) => void;
-  isMineState: boolean;
+
   setIsMineState: (isMine: boolean) => void;
 }
 
@@ -33,7 +32,7 @@ const CabinetRentalConfirmModal = ({
         setExpiredAt(response.data.expiredAt);
         setIsMineState(response.data.isMine);
         closeRentalModal();
-        return response.data;
+        return response;
       } else {
         closeRentalModal();
       }
