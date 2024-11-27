@@ -34,7 +34,7 @@ const HistoryList = ({ userHistoryData }: HistoryListProp) => {
                       day: "2-digit",
                     })
                     .replace(/\.$/, "")
-                : "NULL"}
+                : "날짜 정보를 불러올 수 없습니다."}
             </td>
             <td className="w-1/3 table-cell text-center p-5">
               {item.endDate
@@ -45,7 +45,7 @@ const HistoryList = ({ userHistoryData }: HistoryListProp) => {
                       day: "2-digit",
                     })
                     .replace(/\.$/, "")
-                : "NULL"}
+                : "날짜 정보를 불러올 수 없습니다."}
             </td>
           </tr>
         ))}
