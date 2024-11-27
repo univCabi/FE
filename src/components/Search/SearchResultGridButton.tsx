@@ -2,7 +2,12 @@
 
 interface SearchResultGridButtonProps {
   searchResults: { building: string; floor: number; cabinetNumber: number }[];
-  handleClickResultButton: (building: string, floor: number) => void;
+  handleClickResultButton: (
+    building: string,
+    floor: number,
+    cabinetNumber: number
+  ) => void;
+
   loading: boolean;
   hasMoreResults: boolean;
 }
@@ -20,7 +25,11 @@ const SearchResultGridButton = ({
           <button
             key={index}
             onClick={() =>
-              handleClickResultButton(result.building, result.floor)
+              handleClickResultButton(
+                result.building,
+                result.floor,
+                result.cabinetNumber
+              )
             }
             className="bg-gray-300 hover:bg-gray-200 rounded-md  shadow-sm min-w-32 h-40"
           >

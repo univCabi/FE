@@ -1,5 +1,4 @@
 // 사물함 API에서 data 불러오기 위한 hook
-
 import { useState, useEffect } from "react";
 import { cabinetCallApi } from "@/api/cabinetCallApi";
 
@@ -37,18 +36,26 @@ export const useCabinetData = (
   };
 
   useEffect(() => {
+    // cabinetData 상태 업데이트 (사물함 버튼 관련)
     setCabinetData((prevData) =>
       prevData.map((cabinet) =>
         cabinet.id === selectedCabinet?.cabinetId
-          ? // ? { ...cabinet, isMine: isMineState } // 현재 선택된 사물함의 isMine 업데이트
-            { ...cabinet, status: selectedStatus, isMine: true } // 현재 선택된 사물함의 isMine 업데이트
+          ? { ...cabinet, isMine: isMineState }
           : cabinet
       )
     );
     if (selectedBuilding !== null && selectedFloor !== null) {
       handleCabinetCall(selectedBuilding.name, selectedFloor);
     }
-  }, [selectedBuilding, selectedFloor, isMineState, selectedStatus]);
+  }, [
+    selectedBuilding,
+    selectedFloor,
+    // selectedCabinet,
+    isMineState,
+    // selectedStatus,
+  ]);
+
+  console.log("cabinetData: " + JSON.stringify(cabinetData));
 
   return { cabinetData, setCabinetData, handleCabinetCall };
 };

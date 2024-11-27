@@ -16,6 +16,7 @@ interface BuildingSelectButtonProps {
       cabinetNumber: number;
     } | null
   ) => void;
+  filteredCabinetDetail: { id: number; status: string; isMine: boolean } | null; // 추가
 }
 
 const BuildingSelectButton = ({
@@ -25,6 +26,7 @@ const BuildingSelectButton = ({
   selectedFloor,
   setSelectedFloor,
   setSelectedCabinet,
+  filteredCabinetDetail,
 }: BuildingSelectButtonProps) => {
   const { setSearchParams } = useSearch();
 
@@ -36,6 +38,7 @@ const BuildingSelectButton = ({
       const response = await cabinetCallApi(building, floor);
       setSearchParams({ building, floor: floor.toString() }); // 쿼리스트링
       console.log(200);
+
       return response.data;
     } catch (error) {
       if (error === 404) {

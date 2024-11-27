@@ -2,7 +2,7 @@
 
 import LogSVG from "@/icons/log.svg?react";
 import LogoutSVG from "@/icons/logout.svg?react";
-import CabinetSVG from "@/icons/cabinet.svg?react";
+// import CabinetSVG from "@/icons/cabinet.svg?react";
 import { useLogout } from "@/hooks/useLogout";
 import { useLocation, useNavigate } from "react-router";
 const CabinetFooterMenuButton = () => {
@@ -25,14 +25,14 @@ const CabinetFooterMenuButton = () => {
         <LogSVG className="mb-1 inline-block text-center" />
         History
       </button>
-      <button className="flex flex-col items-center p-4 hover:bg-blue-600 hover:text-white rounded-md transition-all duration-150">
+      {/* <button className="flex flex-col items-center p-4 hover:bg-blue-600 hover:text-white rounded-md transition-all duration-150">
         <CabinetSVG
           className="mb-1 inline-block text-center"
           height="24"
           width="24"
         />
         Available
-      </button>
+      </button> */}
       <button
         onClick={handleLogout}
         className="flex flex-col items-center p-4 hover:bg-blue-600 hover:text-white rounded-md transition-all duration-150"

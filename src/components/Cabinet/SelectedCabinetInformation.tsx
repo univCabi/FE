@@ -75,7 +75,7 @@ const SelectedCabinetInformation = ({
   };
 
   return (
-    <div className="absolute inset-y-0 right-0 w-80 pt-20 flex flex-col justify-center items-center bg-white border-l-2 border-gray-400 ">
+    <div className="absolute inset-y-0 right-0 w-80 pt-20 flex flex-col justify-center items-center bg-white border-l-2 border-gray-400">
       {selectedCabinet !== null ? (
         selectedStatus === "AVAILABLE" ? (
           // 상태가 AVAILABLE일 경우
@@ -101,7 +101,6 @@ const SelectedCabinetInformation = ({
                 취소
               </button>
             </div>
-
             {openRentalModal && (
               <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
                 <CabinetRentalConfirmModal
@@ -147,23 +146,22 @@ const SelectedCabinetInformation = ({
                   <strong>{formatDate(expiredAt)}</strong>
                 </p>
               </div>
-
-              {openReturnModal && (
-                <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
-                  <CabinetReturnConfirmModal
-                    selectedBuilding={selectedBuilding}
-                    selectedFloor={selectedFloor}
-                    selectedCabinet={selectedCabinet}
-                    closeReturnModal={closeReturnModal}
-                    setSelectedStatus={setSelectedStatus}
-                    setExpiredAt={setExpiredAt}
-                    setIsMineState={setIsMineState}
-                  />
-                </div>
-              )}
             </div>
+            {openReturnModal && (
+              <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
+                <CabinetReturnConfirmModal
+                  selectedBuilding={selectedBuilding}
+                  selectedFloor={selectedFloor}
+                  selectedCabinet={selectedCabinet}
+                  closeReturnModal={closeReturnModal}
+                  setSelectedStatus={setSelectedStatus}
+                  setExpiredAt={setExpiredAt}
+                  setIsMineState={setIsMineState}
+                />
+              </div>
+            )}
           </>
-        ) : selectedStatus === "USING" && isMineState == false ? (
+        ) : selectedStatus === "USING" && isMineState === false ? (
           // 상태가 USING이고 타인의 사물함일 경우
           <div className="text-center">
             <div className="pb-5 flex justify-center">
@@ -175,6 +173,15 @@ const SelectedCabinetInformation = ({
             </h2>
             <p className="mt-10 text-red-600 font-bold">
               이미 대여중인 사물함입니다.
+            </p>
+          </div>
+        ) : selectedStatus === "BROKEN" || selectedStatus === "OVERDUE" ? (
+          <div className="text-center">
+            <div className="pb-5 flex justify-center">
+              <CabinetSVG />
+            </div>
+            <p className="mt-10 text-red-600 font-bold">
+              사용이 불가능한 사물함입니다.
             </p>
           </div>
         ) : null
