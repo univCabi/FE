@@ -61,7 +61,7 @@ const RentalinfoCard = ({ userRentalData }: RentalinfoCardProp) => {
                         (1000 * 60 * 60 * 24)
                     );
                     return leftDate > 0
-                      ? `${leftDate}일 남았습니다.`
+                      ? `${leftDate}일`
                       : "대여 기간이 종료되었습니다.";
                   })()
                 : "대여 정보가 없습니다."}
