@@ -6,7 +6,6 @@ interface RentalinfoCardProp {
     status: string | null;
     startDate: string | null;
     endDate: string | null;
-    leftDate: string | null;
   };
 }
 const RentalinfoCard = ({ userRentalData }: RentalinfoCardProp) => {
@@ -52,17 +51,21 @@ const RentalinfoCard = ({ userRentalData }: RentalinfoCardProp) => {
           </div>
           <div className="justify-between items-start inline-flex w-full">
             <div>남은 기간</div>
-            <div className="font-bold">{`${
-              userRentalData.leftDate
-                ? new Date(userRentalData.leftDate)
-                    .toLocaleDateString("ko-KR", {
-                      year: "numeric",
-                      month: "2-digit",
-                      day: "2-digit",
-                    })
-                    .replace(/\.$/, "")
-                : "대여 정보가 없습니다."
-            }`}</div>
+            <div className="font-bold">
+              {userRentalData.endDate
+                ? (() => {
+                    const endDate = new Date(userRentalData.endDate);
+                    const today = new Date();
+                    const leftDate: number = Math.ceil(
+                      (endDate.getTime() - today.getTime()) /
+                        (1000 * 60 * 60 * 24)
+                    );
+                    return leftDate > 0
+                      ? `${leftDate}일 남았습니다.`
+                      : "대여 기간이 종료되었습니다.";
+                  })()
+                : "대여 정보가 없습니다."}
+            </div>
           </div>
           <div className="justify-between items-start inline-flex w-full">
             <div>종료 일자</div>

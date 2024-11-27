@@ -14,7 +14,6 @@ interface UserData {
     status: string | null;
     startDate: string | null;
     endDate: string | null;
-    leftDate: string | null;
   };
 }
 
@@ -31,7 +30,6 @@ const defaultUserData: UserData = {
     status: null,
     startDate: null,
     endDate: null,
-    leftDate: null,
   },
 };
 
