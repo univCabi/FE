@@ -26,22 +26,26 @@ const HistoryList = ({ userHistoryData }: HistoryListProp) => {
               {item.building}-{item.section}-{item.cabinetNumber}-{item.floor}F
             </td>
             <td className="w-1/3 table-cell text-center p-5">
-              {new Date(item.startDate || "")
-                .toLocaleDateString("ko-kR", {
-                  year: "numeric",
-                  month: "2-digit",
-                  day: "2-digit",
-                })
-                .replace(/\.$/, "")}
+              {item.startDate
+                ? new Date(item.startDate)
+                    .toLocaleDateString("ko-kR", {
+                      year: "numeric",
+                      month: "2-digit",
+                      day: "2-digit",
+                    })
+                    .replace(/\.$/, "")
+                : "NULL"}
             </td>
             <td className="w-1/3 table-cell text-center p-5">
-              {new Date(item.endDate || "")
-                .toLocaleDateString("ko-KR", {
-                  year: "numeric",
-                  month: "2-digit",
-                  day: "2-digit",
-                })
-                .replace(/\.$/, "")}
+              {item.endDate
+                ? new Date(item.endDate)
+                    .toLocaleDateString("ko-KR", {
+                      year: "numeric",
+                      month: "2-digit",
+                      day: "2-digit",
+                    })
+                    .replace(/\.$/, "")
+                : "NULL"}
             </td>
           </tr>
         ))}
