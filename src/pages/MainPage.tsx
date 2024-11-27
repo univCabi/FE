@@ -7,6 +7,7 @@ import BuildingSelectButton from "@/components/BuildingSelectButton";
 import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
 import CabinetButtonComponent from "@/components/Cabinet/CabinetButtonComponent";
 import CabinetStatusInformation from "@/components/Cabinet/CabinetStatusInformation";
+import { useLocation } from "react-router";
 
 const MainPage = () => {
   // 건물 목록 hooks
@@ -30,6 +31,9 @@ const MainPage = () => {
     setIsMineState,
   } = useCabinetState();
 
+  const location = useLocation();
+  const filteredCabinetDetail = location.state?.filteredCabinetDetail;
+
   return (
     <div>
       {/* 상단 네비게이션바(화면 크기 상관없이 표시) */}
@@ -52,6 +56,8 @@ const MainPage = () => {
             selectedFloor={selectedFloor}
             setSelectedFloor={setSelectedFloor}
             setSelectedCabinet={setSelectedCabinet}
+            selectedCabinet={selectedCabinet}
+            filteredCabinetDetail={filteredCabinetDetail}
           />
 
           {/* 하단 메뉴(좌측) */}
@@ -73,10 +79,9 @@ const MainPage = () => {
                 selectedCabinet={selectedCabinet}
                 setSelectedCabinet={setSelectedCabinet}
                 setSelectedStatus={setSelectedStatus}
-                setExpiredAt={setExpiredAt}
-                expiredAt={expiredAt}
                 isMineState={isMineState}
                 setIsMineState={setIsMineState}
+                filteredCabinetDetail={filteredCabinetDetail}
               />
               <CabinetStatusInformation />
             </>
@@ -111,6 +116,8 @@ const MainPage = () => {
               selectedFloor={selectedFloor}
               setSelectedFloor={setSelectedFloor}
               setSelectedCabinet={setSelectedCabinet}
+              selectedCabinet={selectedCabinet}
+              filteredCabinetDetail={filteredCabinetDetail}
             />
             {/* 하단 메뉴(좌측) */}
             <CabinetFooterMenuButton />
@@ -136,10 +143,9 @@ const MainPage = () => {
                   selectedCabinet={selectedCabinet}
                   setSelectedCabinet={setSelectedCabinet}
                   setSelectedStatus={setSelectedStatus}
-                  setExpiredAt={setExpiredAt}
-                  expiredAt={expiredAt}
                   isMineState={isMineState}
                   setIsMineState={setIsMineState}
+                  filteredCabinetDetail={filteredCabinetDetail}
                 />
               </div>
               {/* 화면 크기 = 768px 이하일 때 사물함 정보 숨김 */}

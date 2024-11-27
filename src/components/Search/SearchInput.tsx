@@ -22,7 +22,7 @@ const SearchInput = ({
   return (
     <form
       onSubmit={handleSearchSubmit}
-      className="flex space-x-2 mt-[0.9rem] z-20 items-center relative left-[5.5rem]"
+      className="flex space-x-2 mt-[0.88rem] z-20 items-center relative left-[6.05rem]"
     >
       <input
         type="text"

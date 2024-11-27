@@ -2,6 +2,7 @@
 
 import { cabinetDetailInfoApi } from "@/api/cabinetDetailInfoApi";
 import { useCabinetData } from "@/hooks/useCabinetData";
+import { useEffect } from "react";
 
 interface CabinetButtonComponentProps {
   selectedBuilding: { name: string; floors: number } | null;
@@ -14,6 +15,12 @@ interface CabinetButtonComponentProps {
   setSelectedStatus: (status: string) => void;
   isMineState: boolean;
   setIsMineState: (isMine: boolean) => void;
+  filteredCabinetDetail: {
+    id: number;
+    status: string;
+    isMine: boolean;
+    cabinetNumber: number;
+  } | null;
 }
 
 const CabinetButtonComponent = ({
@@ -25,8 +32,9 @@ const CabinetButtonComponent = ({
   setSelectedStatus,
   isMineState,
   setIsMineState,
+  filteredCabinetDetail,
 }: CabinetButtonComponentProps) => {
-  const { cabinetData, setCabinetData } = useCabinetData(
+  const { cabinetData } = useCabinetData(
     selectedBuilding,
     selectedFloor,
     selectedCabinet,
@@ -35,7 +43,7 @@ const CabinetButtonComponent = ({
   );
 
   // 사물함 정보 API 호출
-  const handlecabinetDetailInformaion = async (
+  const handleCabinetDetailInformaion = async (
     cabinetId: number,
     cabinetNumber: number
   ) => {
@@ -44,26 +52,44 @@ const CabinetButtonComponent = ({
       setSelectedCabinet({ cabinetId, cabinetNumber });
       setSelectedStatus(response.status); // status 저장
       setIsMineState(response.isMine); // isMine 저장
-
       return response.data;
     } catch (error) {
-      if (error === 400) {
-        console.error(error);
-      } else if (error === 404) {
-        console.error(error);
-      } else {
-        console.error(error);
-      }
+      console.error(error);
     }
   };
+  useEffect(() => {
+    if (filteredCabinetDetail) {
+      // cabinetNumber로 cabinetData에서 매칭되는 cabinet 찾기
+      const matchedCabinet = cabinetData.find(
+        (cabinet) =>
+          cabinet.cabinetNumber === filteredCabinetDetail.cabinetNumber
+      );
+
+      // console.log("Matched Cabinet:", matchedCabinet);
+
+      if (matchedCabinet) {
+        // cabinetId를 사용하여 상세 정보 API 호출
+        handleCabinetDetailInformaion(
+          matchedCabinet.id,
+          matchedCabinet.cabinetNumber
+        );
+      }
+    }
+    return;
+  }, [cabinetData]);
 
   // 각 상태에 대한 버튼 색상 설정
   const getStatusColor = (selectedStatus: string, isMineState: boolean) => {
+    console.log(
+      "selectedStauts :" + selectedStatus + " " + "isMineState: " + isMineState
+    );
     if (selectedStatus === "USING") {
       if (isMineState === true) {
+        console.log("return true");
         return "bg-lime-500 text-white"; // 본인이 사용 중인 사물함
       }
       if (isMineState === false) {
+        console.log("return fasle");
         return "bg-purple-500 text-white"; // 다른 사람이 사용 중인 사물함
       }
     }
@@ -93,7 +119,7 @@ const CabinetButtonComponent = ({
                 left: `${cabinet.cabinetXPos * 90}px`, // API에서 받은 xPos 사용
               }}
               onClick={() => {
-                handlecabinetDetailInformaion(
+                handleCabinetDetailInformaion(
                   cabinet.id,
                   cabinet.cabinetNumber
                 );
