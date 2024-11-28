@@ -55,7 +55,7 @@ export const useCabinetData = (
     // selectedStatus,
   ]);
 
-  console.log("cabinetData: " + JSON.stringify(cabinetData));
+  // console.log("cabinetData: " + JSON.stringify(cabinetData));
 
   return { cabinetData, setCabinetData, handleCabinetCall };
 };
