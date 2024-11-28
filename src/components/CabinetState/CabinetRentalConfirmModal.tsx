@@ -1,11 +1,16 @@
 // 대여 버튼 눌렀을 때, 대여 확인 모달
 
+import { rentApi } from "@/api/rentApi";
+
 interface CabinetRentalConfirmModalProps {
   selectedBuilding: string | null;
   selectedFloor: number | null;
-  selectedCabinet: number;
+  selectedCabinet: { cabinetId: number; cabinetNumber: number } | null;
   closeRentalModal: () => void; // 모달 닫기 함수
-  confirmRental: () => void; // 대여 확인 버튼
+  setSelectedStatus: (status: string) => void; // 상태 업데이트 함수
+  setExpiredAt: (expiredAt: string | null) => void;
+
+  setIsMineState: (isMine: boolean) => void;
 }
 
 const CabinetRentalConfirmModal = ({
@@ -13,19 +18,39 @@ const CabinetRentalConfirmModal = ({
   selectedFloor,
   selectedCabinet,
   closeRentalModal,
-  confirmRental,
+  setSelectedStatus,
+  setExpiredAt,
+  setIsMineState,
 }: CabinetRentalConfirmModalProps) => {
+  const handleRent = async () => {
+    if (!selectedCabinet) return;
+    try {
+      const response = await rentApi(selectedCabinet.cabinetId);
+
+      if (response?.success) {
+        setSelectedStatus(response.data.status);
+        setExpiredAt(response.data.expiredAt);
+        setIsMineState(response.data.isMine);
+        closeRentalModal();
+        return response;
+      } else {
+        closeRentalModal();
+      }
+    } catch (error) {
+      console.error(error);
+      closeRentalModal();
+    }
+  };
+
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-white p-6 rounded-lg shadow-xl w-96">
         <h2 className="text-2xl font-bold mb-5">대여 확인</h2>
 
         <div className="text-lg">
-          <p>
-            대여 기간은 <strong>2024/12/31 23:59</strong>까지 입니다.
-          </p>
           <b>
-            {selectedBuilding} {selectedFloor}F {selectedCabinet}번 사물함
+            {selectedBuilding} {selectedFloor}F {selectedCabinet?.cabinetNumber}
+            번 사물함
           </b>
           <p>이 사물함을 대여하시겠습니까?</p>
         </div>
@@ -33,7 +58,7 @@ const CabinetRentalConfirmModal = ({
         <div className="mt-5 flex justify-center">
           <button
             className="mr-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-500"
-            onClick={confirmRental} // 확인 버튼 클릭 시 모달 닫음 + cabinetRentalComplete.tsx가 렌더링
+            onClick={handleRent} // 확인 버튼 클릭 시 대여 API 호출 + 모달 닫음 + cabinetRentalComplete.tsx가 렌더링
           >
             확인
           </button>

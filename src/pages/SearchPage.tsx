@@ -23,7 +23,16 @@ const SearchPage = () => {
     setIsOpen,
     dropdownOutsideRef,
   } = useBuildingState();
-  const { selectedCabinet, setSelectedCabinet } = useCabinetState();
+  const {
+    selectedCabinet,
+    setSelectedCabinet,
+    selectedStatus,
+    setSelectedStatus,
+    expiredAt,
+    setExpiredAt,
+    isMineState,
+    setIsMineState,
+  } = useCabinetState();
   const { handleClickResultButton } = useSearchResultButton();
   const {
     searchInput,
@@ -117,6 +126,13 @@ const SearchPage = () => {
           selectedBuilding={selectedBuilding}
           selectedFloor={selectedFloor}
           selectedCabinet={selectedCabinet}
+          selectedStatus={selectedStatus}
+          setSelectedStatus={setSelectedStatus}
+          setExpiredAt={setExpiredAt}
+          setSelectedCabinet={setSelectedCabinet}
+          expiredAt={expiredAt}
+          isMineState={isMineState}
+          setIsMineState={setIsMineState}
         />
       </div>
     </div>

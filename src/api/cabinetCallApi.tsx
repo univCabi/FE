@@ -4,10 +4,12 @@ import api from "@/api/axiosInterceptApi";
 export const cabinetCallApi = async (building: string, floor: number) => {
   try {
     const response = await api.get(
-      `/cabient?building=${building}&floor=${floor}`
+      `/cabinet?building=${building}&floor=${floor}`
     );
     return response.data;
   } catch (error) {
-    console.log(error);
+    if (error === 404) {
+      console.log(error);
+    }
   }
 };

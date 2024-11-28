@@ -1,14 +1,42 @@
 // 반납 버튼 눌렀을 때, 반납 확인 모달
 
-interface CabinetReturnConfirmModalProps {
-  closeReturnModal: () => void;
-  confirmReturn: () => void;
-}
+import { returnApi } from "@/api/returnApi";
 
+interface CabinetReturnConfirmModalProps {
+  selectedBuilding: string | null;
+  selectedFloor: number | null;
+  selectedCabinet: { cabinetId: number; cabinetNumber: number } | null;
+  closeReturnModal: () => void;
+  setSelectedStatus: (status: string) => void; // 상태 업데이트 함수 추가
+  setExpiredAt: (expiredAt: string | null) => void; // 추가
+  setIsMineState: (isMine: boolean) => void;
+}
 const CabinetReturnConfirmModal = ({
+  selectedCabinet,
   closeReturnModal,
-  confirmReturn,
+  setSelectedStatus,
+  setExpiredAt,
+  setIsMineState,
 }: CabinetReturnConfirmModalProps) => {
+  const handleReturn = async () => {
+    if (!selectedCabinet) return;
+    try {
+      const response = await returnApi(selectedCabinet.cabinetId);
+
+      if (response?.success) {
+        setSelectedStatus(response.data.status);
+        setIsMineState(response.data.isMine);
+        closeReturnModal();
+        setExpiredAt(null); // 반납 기간 초기화
+        return response.data;
+      } else {
+        closeReturnModal();
+      }
+    } catch (error) {
+      closeReturnModal();
+    }
+  };
+
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-white p-6 rounded-lg shadow-xl w-96">
@@ -18,7 +46,7 @@ const CabinetReturnConfirmModal = ({
         <div className="mt-5 flex justify-center">
           <button
             className="mr-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-500"
-            onClick={confirmReturn} // 확인 버튼 클릭 시 CabinetRental.tsx가 렌더링
+            onClick={handleReturn} // 확인 버튼 클릭 시 반납 API 호출 + CabinetRental.tsx가 렌더링
           >
             확인
           </button>

@@ -2,7 +2,7 @@
 
 import { cabinetCallApi } from "@/api/cabinetCallApi";
 import { useSearch } from "@/hooks/useSearch";
-import useSearchToMain from "@/hooks/useSearchToMain"; // 커스텀 훅 임포트
+import { useSearchToMain } from "@/hooks/useSearchToMain";
 
 interface BuildingSelectButtonProps {
   buildings: { name: string; floors: number[] }[];
@@ -10,7 +10,13 @@ interface BuildingSelectButtonProps {
   setSelectedBuilding: (building: string | null) => void;
   selectedFloor: number | null;
   setSelectedFloor: (floor: number | null) => void;
-  setSelectedCabinet: (cabinet: number | null) => void;
+  setSelectedCabinet: (
+    cabinet: {
+      cabinetId: number;
+      cabinetNumber: number;
+    } | null
+  ) => void;
+  filteredCabinetDetail: { id: number; status: string; isMine: boolean } | null; // 추가
 }
 
 const BuildingSelectButton = ({
@@ -20,6 +26,7 @@ const BuildingSelectButton = ({
   selectedFloor,
   setSelectedFloor,
   setSelectedCabinet,
+  filteredCabinetDetail,
 }: BuildingSelectButtonProps) => {
   const { setSearchParams } = useSearch();
 
@@ -30,9 +37,13 @@ const BuildingSelectButton = ({
     try {
       const response = await cabinetCallApi(building, floor);
       setSearchParams({ building, floor: floor.toString() }); // 쿼리스트링
-      console.log(response);
+      console.log(200);
+
+      return response.data;
     } catch (error) {
-      console.log(error);
+      if (error === 404) {
+        console.error(404);
+      }
     }
   };
 
@@ -68,6 +79,7 @@ const BuildingSelectButton = ({
                     }`}
                     onClick={() => {
                       setSelectedFloor(floor); // 선택된 층을 업데이트
+                      setSelectedCabinet(null);
                       handlecabinetCall(building.name, floor);
                     }}
                   >

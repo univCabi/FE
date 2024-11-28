@@ -3,7 +3,11 @@
 interface SearchResultDropdowndButtonProps {
   searchResults: { building: string; floor: number; cabinetNumber: number }[]; // 검색 결과
   slicedSearchResults: number; // 드롭다운 결과 6개씩 노출하기 위한 변수 타입
-  handleClickResultButton: (building: string, floor: number) => void; // 결과 드롭다운 버튼
+  handleClickResultButton: (
+    building: string,
+    floor: number,
+    cabinetNumber: number
+  ) => void; // 결과 드롭다운 버튼
   setIsOpen: (isOpen: boolean) => void; // 드롭다운 상태
 }
 
@@ -21,7 +25,11 @@ const SearchResultDropdowndButton = ({
           <button
             key={index}
             onClick={(e) => {
-              handleClickResultButton(result.building, result.floor);
+              handleClickResultButton(
+                result.building,
+                result.floor,
+                result.cabinetNumber
+              );
               setIsOpen(false);
             }}
             className="block my-1 p-4 w-full text-left hover:bg-blue-400 hover:text-white rounded-md"
