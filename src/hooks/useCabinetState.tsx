@@ -21,7 +21,7 @@ export const useCabinetState = () => {
       // setIsMineState(response.isMine); // 사용 여부 설정
       // setSelectedStatus(response.status); // 상태 설정
       setExpiredAt(response.expiredAt); // 만료일 설정
-      console.log("fetch 후 상태 업데이트-isMine:", response.isMine);
+      // console.log("fetch 후 상태 업데이트-isMine:", response.isMine);
       return response.data;
     } catch (error) {
       console.error(error);
@@ -32,7 +32,7 @@ export const useCabinetState = () => {
     if (selectedCabinet === null) return;
     if (selectedCabinet.cabinetId) {
       fetchCabinetDetailInfomation(selectedCabinet.cabinetId);
-      console.log("hook에서 실행", isMineState, selectedStatus);
+      // console.log("hook에서 실행", isMineState, selectedStatus);
     }
   }, [isMineState, selectedStatus, selectedCabinet]);
 
