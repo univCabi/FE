@@ -8,14 +8,14 @@ interface SearchResultDropdowndButtonProps {
     floor: number,
     cabinetNumber: number
   ) => void; // 결과 드롭다운 버튼
-  setIsOpen: (isOpen: boolean) => void; // 드롭다운 상태
+  setIsDropdownOpen: (isDropdownOpen: boolean) => void; // 드롭다운 상태
 }
 
 const SearchResultDropdowndButton = ({
   searchResults,
   slicedSearchResults,
   handleClickResultButton,
-  setIsOpen,
+  setIsDropdownOpen,
 }: SearchResultDropdowndButtonProps) => {
   return (
     <div className="relative top-full left-[4.5rem] w-80 mt-2 bg-white rounded-md shadow-lg z-30">
@@ -30,7 +30,7 @@ const SearchResultDropdowndButton = ({
                 result.floor,
                 result.cabinetNumber
               );
-              setIsOpen(false);
+              setIsDropdownOpen(false);
             }}
             className="block my-1 p-4 w-full text-left hover:bg-blue-400 hover:text-white rounded-md"
           >

@@ -13,8 +13,8 @@ interface CabinetButtonComponentProps {
   ) => void;
   selectedStatus: string;
   setSelectedStatus: (status: string) => void;
-  isMineState: boolean;
-  setIsMineState: (isMine: boolean) => void;
+  isMyCabinet: boolean;
+  setIsMyCabinet: (isMine: boolean) => void;
   filteredCabinetDetail: {
     id: number;
     status: string;
@@ -30,15 +30,15 @@ const CabinetButtonComponent = ({
   setSelectedCabinet,
   selectedStatus,
   setSelectedStatus,
-  isMineState,
-  setIsMineState,
+  isMyCabinet,
+  setIsMyCabinet,
   filteredCabinetDetail,
 }: CabinetButtonComponentProps) => {
   const { cabinetData } = useCabinetData(
     selectedBuilding,
     selectedFloor,
     selectedCabinet,
-    isMineState,
+    isMyCabinet,
     selectedStatus
   );
 
@@ -51,7 +51,7 @@ const CabinetButtonComponent = ({
       const response = await cabinetDetailInfoApi(cabinetId);
       setSelectedCabinet({ cabinetId, cabinetNumber });
       setSelectedStatus(response.status); // status 저장
-      setIsMineState(response.isMine); // isMine 저장
+      setIsMyCabinet(response.isMine); // isMine 저장
       console.log(200);
       return response.data;
     } catch (error) {
@@ -78,15 +78,15 @@ const CabinetButtonComponent = ({
   }, [cabinetData]);
 
   // 각 상태에 대한 버튼 색상 설정
-  const getStatusColor = (selectedStatus: string, isMineState: boolean) => {
+  const getStatusColor = (selectedStatus: string, isMyCabinet: boolean) => {
     // console.log(
-    //   "selectedStauts :" + selectedStatus + " " + "isMineState: " + isMineState
+    //   "selectedStauts :" + selectedStatus + " " + "isMyCabinet: " + isMyCabinet
     // );
     if (selectedStatus === "USING") {
-      if (isMineState === true) {
+      if (isMyCabinet === true) {
         return "bg-lime-500 text-white"; // 본인이 사용 중인 사물함
       }
-      if (isMineState === false) {
+      if (isMyCabinet === false) {
         return "bg-purple-500 text-white"; // 다른 사람이 사용 중인 사물함
       }
     }

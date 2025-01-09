@@ -13,14 +13,14 @@ import SearchResultDropdownButton from "@/components/Search/SearchResultDropdown
 import SearchInput from "@/components/Search/SearchInput";
 
 const SearchPage = () => {
-  const { buildings } = useBuildingList();
+  const { buildingList } = useBuildingList();
   const {
     selectedBuilding,
     setSelectedBuilding,
     selectedFloor,
     setSelectedFloor,
-    isOpen,
-    setIsOpen,
+    isDropdownOpen,
+    setIsDropdownOpen,
     dropdownOutsideRef,
   } = useBuildingState();
   const {
@@ -30,8 +30,8 @@ const SearchPage = () => {
     setSelectedStatus,
     expiredAt,
     setExpiredAt,
-    isMineState,
-    setIsMineState,
+    isMyCabinet,
+    setIsMyCabinet,
   } = useCabinetState();
   const { handleClickResultButton } = useSearchResultButton();
   const {
@@ -42,7 +42,7 @@ const SearchPage = () => {
     inputRef,
     handleSearchSubmit,
     debouncedSearchKeywordApi,
-    loading,
+    isLoading,
     hasMoreResults,
     scrollContainerRef,
   } = useSearch();
@@ -55,13 +55,13 @@ const SearchPage = () => {
   } = useSearchInput({
     setSearchInput,
     debouncedSearchKeywordApi,
-    setIsOpen,
+    setIsDropdownOpen,
   });
 
   return (
     <div>
       <SideNavigationLayout
-        buildings={buildings}
+        buildingList={buildingList}
         selectedBuilding={selectedBuilding}
         setSelectedBuilding={setSelectedBuilding}
         setSelectedFloor={setSelectedFloor}
@@ -82,12 +82,12 @@ const SearchPage = () => {
           />
 
           {/* 검색 결과(드롭다운) */}
-          {searchInput && isOpen && (
+          {searchInput && isDropdownOpen && (
             <SearchResultDropdownButton
               searchResults={searchResults}
               slicedSearchResults={slicedSearchResults}
               handleClickResultButton={handleClickResultButton}
-              setIsOpen={setIsOpen}
+              setIsDropdownOpen={setIsDropdownOpen}
             />
           )}
         </div>
@@ -103,7 +103,7 @@ const SearchPage = () => {
               <SearchResultGridButton
                 searchResults={searchResults}
                 handleClickResultButton={handleClickResultButton}
-                loading={loading}
+                isLoading={isLoading}
                 hasMoreResults={hasMoreResults}
               />
             </div>
@@ -131,8 +131,8 @@ const SearchPage = () => {
           setExpiredAt={setExpiredAt}
           setSelectedCabinet={setSelectedCabinet}
           expiredAt={expiredAt}
-          isMineState={isMineState}
-          setIsMineState={setIsMineState}
+          isMyCabinet={isMyCabinet}
+          setIsMyCabinet={setIsMyCabinet}
         />
       </div>
     </div>

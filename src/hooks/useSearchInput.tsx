@@ -3,13 +3,13 @@
 interface useSearchHandlersProps {
   setSearchInput: (input: string) => void;
   debouncedSearchKeywordApi: (keyword: string) => void;
-  setIsOpen: (isOpen: boolean) => void;
+  setIsDropdownOpen: (isDropdownOpen: boolean) => void;
 }
 
 export const useSearchInput = ({
   setSearchInput,
   debouncedSearchKeywordApi,
-  setIsOpen,
+  setIsDropdownOpen,
 }: useSearchHandlersProps) => {
   // 검색 결과 6개씩 보여주기 위한 변수
   const slicedSearchResults = 6;
@@ -24,12 +24,12 @@ export const useSearchInput = ({
   // 검색 결과 드롭다운 관련 함수
   // (외부 클릭 & submit => 검색 결과 드롭다운 숨기기)
   const submitSearchResultDropdown = () => {
-    setIsOpen(false);
+    setIsDropdownOpen(false);
   };
 
   //   input에 focus 상태일 때만 드롭다운 활성화
   const handleDropdown = () => {
-    setIsOpen(true);
+    setIsDropdownOpen(true);
   };
 
   return {

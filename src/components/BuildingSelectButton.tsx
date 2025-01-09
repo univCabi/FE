@@ -5,7 +5,7 @@ import { useSearch } from "@/hooks/useSearch";
 import { useSearchToMain } from "@/hooks/useSearchToMain";
 
 interface BuildingSelectButtonProps {
-  buildings: { name: string; floors: number[] }[];
+  buildingList: { name: string; floors: number[] }[];
   selectedBuilding: string | null;
   setSelectedBuilding: (building: string | null) => void;
   selectedFloor: number | null;
@@ -20,7 +20,7 @@ interface BuildingSelectButtonProps {
 }
 
 const BuildingSelectButton = ({
-  buildings,
+  buildingList,
   selectedBuilding,
   setSelectedBuilding,
   selectedFloor,
@@ -50,7 +50,7 @@ const BuildingSelectButton = ({
   return (
     <div>
       <div className="overflow-y-auto h-3/5 pt-[5rem] w-40">
-        {buildings.map((building) => (
+        {buildingList.map((building) => (
           <div key={building.name} className="mx-2">
             <button
               className={`p-4 w-full text-gray-500 hover:bg-blue-600 hover:text-white rounded-lg transition-all duration-150 ${

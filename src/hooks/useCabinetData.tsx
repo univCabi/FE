@@ -21,7 +21,7 @@ export const useCabinetData = (
   selectedBuilding: { name: string } | null,
   selectedFloor: number | null,
   selectedCabinet: { cabinetId: number; cabinetNumber: number } | null,
-  isMineState: boolean,
+  isMyCabinet: boolean,
   selectedStatus: string
 ) => {
   const [cabinetData, setCabinetData] = useState<cabinetApiData[]>([]);
@@ -40,7 +40,7 @@ export const useCabinetData = (
     setCabinetData((prevData) =>
       prevData.map((cabinet) =>
         cabinet.id === selectedCabinet?.cabinetId
-          ? { ...cabinet, isMine: isMineState }
+          ? { ...cabinet, isMine: isMyCabinet }
           : cabinet
       )
     );
@@ -51,7 +51,7 @@ export const useCabinetData = (
     selectedBuilding,
     selectedFloor,
     // selectedCabinet,
-    isMineState,
+    isMyCabinet,
     // selectedStatus,
   ]);
 

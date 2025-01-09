@@ -8,14 +8,14 @@ interface SearchResultGridButtonProps {
     cabinetNumber: number
   ) => void;
 
-  loading: boolean;
+  isLoading: boolean;
   hasMoreResults: boolean;
 }
 
 const SearchResultGridButton = ({
   searchResults,
   handleClickResultButton,
-  loading,
+  isLoading,
   hasMoreResults,
 }: SearchResultGridButtonProps) => {
   return (
@@ -38,7 +38,7 @@ const SearchResultGridButton = ({
         ))}
       </div>
       <div className="flex justify-center mt-3">
-        {loading && <p>Loading...</p>}
+        {isLoading && <p>Loading...</p>}
         {!hasMoreResults && <p>No More Results</p>}
       </div>
     </div>

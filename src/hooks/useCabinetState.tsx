@@ -13,12 +13,12 @@ export const useCabinetState = () => {
     useState<SelectedCabinetProps | null>(null);
   const [selectedStatus, setSelectedStatus] = useState<string>(); // 사물함 status
   const [expiredAt, setExpiredAt] = useState<string | null>(null); // 반납 기한
-  const [isMineState, setIsMineState] = useState<boolean>(); // 본인 사물함 여부
+  const [isMyCabinet, setIsMyCabinet] = useState<boolean>(); // 본인 사물함 여부
 
   const fetchCabinetDetailInfomation = async (cabinetId: number) => {
     try {
       const response = await cabinetDetailInfoApi(cabinetId);
-      // setIsMineState(response.isMine); // 사용 여부 설정
+      // setIsMyCabinet(response.isMine); // 사용 여부 설정
       // setSelectedStatus(response.status); // 상태 설정
       setExpiredAt(response.expiredAt); // 만료일 설정
       // console.log("fetch 후 상태 업데이트-isMine:", response.isMine);
@@ -32,9 +32,9 @@ export const useCabinetState = () => {
     if (selectedCabinet === null) return;
     if (selectedCabinet.cabinetId) {
       fetchCabinetDetailInfomation(selectedCabinet.cabinetId);
-      // console.log("hook에서 실행", isMineState, selectedStatus);
+      // console.log("hook에서 실행", isMyCabinet, selectedStatus);
     }
-  }, [isMineState, selectedStatus, selectedCabinet]);
+  }, [isMyCabinet, selectedStatus, selectedCabinet]);
 
   return {
     selectedCabinet,
@@ -43,8 +43,8 @@ export const useCabinetState = () => {
     setSelectedStatus,
     expiredAt,
     setExpiredAt,
-    isMineState,
-    setIsMineState,
+    isMyCabinet,
+    setIsMyCabinet,
     fetchCabinetDetailInfomation,
   };
 };

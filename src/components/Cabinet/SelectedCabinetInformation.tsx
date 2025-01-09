@@ -19,8 +19,8 @@ interface SelectedCabinetInformationProps {
   setSelectedStatus: (status: string) => void;
   expiredAt: string | null;
   setExpiredAt: (expiredAt: string | null) => void;
-  isMineState: boolean;
-  setIsMineState: (isMine: boolean) => void;
+  isMyCabinet: boolean;
+  setIsMyCabinet: (isMine: boolean) => void;
 }
 
 // 날짜 포맷팅 함수
@@ -44,8 +44,8 @@ const SelectedCabinetInformation = ({
   setSelectedStatus,
   expiredAt,
   setExpiredAt,
-  isMineState,
-  setIsMineState,
+  isMyCabinet,
+  setIsMyCabinet,
 }: SelectedCabinetInformationProps) => {
   const { openRentalModal, setOpenRentalModal } = useCabinetRentalModal();
   const { openReturnModal, setOpenReturnModal } = useCabinetReturnModal();
@@ -110,12 +110,12 @@ const SelectedCabinetInformation = ({
                   closeRentalModal={closeRentalModal}
                   setSelectedStatus={setSelectedStatus}
                   setExpiredAt={setExpiredAt}
-                  setIsMineState={setIsMineState}
+                  setIsMyCabinet={setIsMyCabinet}
                 />
               </div>
             )}
           </>
-        ) : selectedStatus === "USING" && isMineState === true ? (
+        ) : selectedStatus === "USING" && isMyCabinet === true ? (
           // 상태가 USING이고 본인의 사물함일 경우
           <>
             <div>
@@ -156,12 +156,12 @@ const SelectedCabinetInformation = ({
                   closeReturnModal={closeReturnModal}
                   setSelectedStatus={setSelectedStatus}
                   setExpiredAt={setExpiredAt}
-                  setIsMineState={setIsMineState}
+                  setIsMyCabinet={setIsMyCabinet}
                 />
               </div>
             )}
           </>
-        ) : selectedStatus === "USING" && isMineState === false ? (
+        ) : selectedStatus === "USING" && isMyCabinet === false ? (
           // 상태가 USING이고 타인의 사물함일 경우
           <div className="text-center">
             <div className="pb-5 flex justify-center">

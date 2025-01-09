@@ -3,10 +3,10 @@ import { useState } from "react";
 import buildingData from "@/mocks/buildingData.json";
 
 export const useBuildingList = () => {
-  const [buildings, setBuildings] = useState(buildingData);
+  const [buildingList, setBuildingList] = useState(buildingData);
 
   return {
-    buildings,
-    setBuildings,
+    buildingList,
+    setBuildingList,
   };
 };

@@ -10,7 +10,7 @@ interface CabinetRentalConfirmModalProps {
   setSelectedStatus: (status: string) => void; // 상태 업데이트 함수
   setExpiredAt: (expiredAt: string | null) => void;
 
-  setIsMineState: (isMine: boolean) => void;
+  setIsMyCabinet: (isMine: boolean) => void;
 }
 
 const CabinetRentalConfirmModal = ({
@@ -20,7 +20,7 @@ const CabinetRentalConfirmModal = ({
   closeRentalModal,
   setSelectedStatus,
   setExpiredAt,
-  setIsMineState,
+  setIsMyCabinet,
 }: CabinetRentalConfirmModalProps) => {
   const handleRent = async () => {
     if (!selectedCabinet) return;
@@ -30,7 +30,7 @@ const CabinetRentalConfirmModal = ({
       if (response?.success) {
         setSelectedStatus(response.data.status);
         setExpiredAt(response.data.expiredAt);
-        setIsMineState(response.data.isMine);
+        setIsMyCabinet(response.data.isMine);
         closeRentalModal();
         return response;
       } else {

@@ -9,14 +9,14 @@ interface CabinetReturnConfirmModalProps {
   closeReturnModal: () => void;
   setSelectedStatus: (status: string) => void; // 상태 업데이트 함수 추가
   setExpiredAt: (expiredAt: string | null) => void; // 추가
-  setIsMineState: (isMine: boolean) => void;
+  setIsMyCabinet: (isMine: boolean) => void;
 }
 const CabinetReturnConfirmModal = ({
   selectedCabinet,
   closeReturnModal,
   setSelectedStatus,
   setExpiredAt,
-  setIsMineState,
+  setIsMyCabinet,
 }: CabinetReturnConfirmModalProps) => {
   const handleReturn = async () => {
     if (!selectedCabinet) return;
@@ -25,7 +25,7 @@ const CabinetReturnConfirmModal = ({
 
       if (response?.success) {
         setSelectedStatus(response.data.status);
-        setIsMineState(response.data.isMine);
+        setIsMyCabinet(response.data.isMine);
         closeReturnModal();
         setExpiredAt(null); // 반납 기간 초기화
         return response.data;

@@ -11,7 +11,7 @@ import CabinetStatusInformation from "@/components/Cabinet/CabinetStatusInformat
 
 const MainPage = () => {
   // 건물 목록 hooks
-  const { buildings } = useBuildingList();
+  const { buildingList } = useBuildingList();
 
   // 건물, 층수 버튼, dropdown 관련 hooks
   const {
@@ -27,8 +27,8 @@ const MainPage = () => {
     setSelectedStatus,
     expiredAt,
     setExpiredAt,
-    isMineState,
-    setIsMineState,
+    isMyCabinet,
+    setIsMyCabinet,
   } = useCabinetState();
 
   const location = useLocation();
@@ -38,7 +38,7 @@ const MainPage = () => {
     <div>
       {/* 상단 네비게이션바(화면 크기 상관없이 표시) */}
       <SideNavigationLayout
-        buildings={buildings}
+        buildingList={buildingList}
         selectedBuilding={selectedBuilding}
         setSelectedBuilding={setSelectedBuilding}
         setSelectedFloor={setSelectedFloor}
@@ -50,7 +50,7 @@ const MainPage = () => {
         {/* 건물 정보(좌측) */}
         <div className="absolute inset-y-0 left-0 w-40 border-r-2 border-gray-400 hidden md:flex">
           <BuildingSelectButton
-            buildings={buildings}
+            buildingList={buildingList}
             selectedBuilding={selectedBuilding}
             setSelectedBuilding={setSelectedBuilding}
             selectedFloor={selectedFloor}
@@ -71,7 +71,7 @@ const MainPage = () => {
             <>
               <CabinetButtonComponent
                 selectedBuilding={
-                  buildings.find(
+                  buildingList.find(
                     (building) => building.name === selectedBuilding
                   ) || null
                 }
@@ -79,8 +79,8 @@ const MainPage = () => {
                 selectedCabinet={selectedCabinet}
                 setSelectedCabinet={setSelectedCabinet}
                 setSelectedStatus={setSelectedStatus}
-                isMineState={isMineState}
-                setIsMineState={setIsMineState}
+                isMyCabinet={isMyCabinet}
+                setIsMyCabinet={setIsMyCabinet}
                 filteredCabinetDetail={filteredCabinetDetail}
               />
               <CabinetStatusInformation />
@@ -98,8 +98,8 @@ const MainPage = () => {
             setExpiredAt={setExpiredAt}
             setSelectedCabinet={setSelectedCabinet}
             expiredAt={expiredAt}
-            isMineState={isMineState}
-            setIsMineState={setIsMineState}
+            isMyCabinet={isMyCabinet}
+            setIsMyCabinet={setIsMyCabinet}
           />
         </div>
       </div>
@@ -110,7 +110,7 @@ const MainPage = () => {
         {selectedFloor === null && (
           <div className="absolute inset-y-0 left-0 w-40 border-r-2 border-gray-400 flex">
             <BuildingSelectButton
-              buildings={buildings}
+              buildingList={buildingList}
               selectedBuilding={selectedBuilding}
               setSelectedBuilding={setSelectedBuilding}
               selectedFloor={selectedFloor}
@@ -135,7 +135,7 @@ const MainPage = () => {
               <div className="absolute inset-y-0 left-12 right-8 pt-16">
                 <CabinetButtonComponent
                   selectedBuilding={
-                    buildings.find(
+                    buildingList.find(
                       (building) => building.name === selectedBuilding
                     ) || null
                   }
@@ -143,8 +143,8 @@ const MainPage = () => {
                   selectedCabinet={selectedCabinet}
                   setSelectedCabinet={setSelectedCabinet}
                   setSelectedStatus={setSelectedStatus}
-                  isMineState={isMineState}
-                  setIsMineState={setIsMineState}
+                  isMyCabinet={isMyCabinet}
+                  setIsMyCabinet={setIsMyCabinet}
                   filteredCabinetDetail={filteredCabinetDetail}
                 />
               </div>
@@ -168,8 +168,8 @@ const MainPage = () => {
               setExpiredAt={setExpiredAt}
               setSelectedCabinet={setSelectedCabinet}
               expiredAt={expiredAt}
-              isMineState={isMineState}
-              setIsMineState={setIsMineState}
+              isMyCabinet={isMyCabinet}
+              setIsMyCabinet={setIsMyCabinet}
             />
           </div>
         )}
