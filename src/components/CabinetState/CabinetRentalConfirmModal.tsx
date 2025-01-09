@@ -9,7 +9,6 @@ interface CabinetRentalConfirmModalProps {
   closeRentalModal: () => void; // 모달 닫기 함수
   setSelectedStatus: (status: string) => void; // 상태 업데이트 함수
   setExpiredAt: (expiredAt: string | null) => void;
-
   setIsMyCabinet: (isMine: boolean) => void;
 }
 
@@ -22,7 +21,7 @@ const CabinetRentalConfirmModal = ({
   setExpiredAt,
   setIsMyCabinet,
 }: CabinetRentalConfirmModalProps) => {
-  const handleRent = async () => {
+  const fetchCabinetRental = async () => {
     if (!selectedCabinet) return;
     try {
       const response = await rentApi(selectedCabinet.cabinetId);
@@ -58,7 +57,7 @@ const CabinetRentalConfirmModal = ({
         <div className="mt-5 flex justify-center">
           <button
             className="mr-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-500"
-            onClick={handleRent} // 확인 버튼 클릭 시 대여 API 호출 + 모달 닫음 + cabinetRentalComplete.tsx가 렌더링
+            onClick={fetchCabinetRental} // 확인 버튼 클릭 시 대여 API 호출 + 모달 닫음 + cabinetRentalComplete.tsx가 렌더링
           >
             확인
           </button>

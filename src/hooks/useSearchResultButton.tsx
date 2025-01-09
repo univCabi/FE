@@ -10,7 +10,7 @@ export const useSearchResultButton = () => {
   const [filteredCabinetDetail, setFilteredCabinetDetail] = useState(null); // 상세 데이터 저장
 
   // 검색 결과 버튼 클릭 시 사물함 API 호출
-  const handleClickResultButton = async (
+  const fetchClickResultButton = async (
     building: string,
     floor: number,
     keyword: number
@@ -52,7 +52,7 @@ export const useSearchResultButton = () => {
   }, [filteredCabinetDetail, navigate]);
 
   return {
-    handleClickResultButton,
+    fetchClickResultButton,
     filteredCabinetDetail,
   };
 };

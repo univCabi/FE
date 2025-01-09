@@ -40,7 +40,7 @@ export const useSearch = () => {
 
   // API
   // 검색 API 호출
-  const handleSearchKeyword = async (keyword: string) => {
+  const fetchSearchKeyword = async (keyword: string) => {
     setSearchParams({ keyword });
     if (keyword) {
       try {
@@ -54,7 +54,7 @@ export const useSearch = () => {
   };
   // debounce 적용된 API 호출 함수
   const debouncedSearchKeywordApi = useCallback(
-    debounce((keyword) => handleSearchKeyword(keyword), 200),
+    debounce((keyword) => fetchSearchKeyword(keyword), 200),
     []
   );
 
@@ -111,7 +111,7 @@ export const useSearch = () => {
     setShowGridResults,
     inputRef,
     handleSearchSubmit,
-    handleSearchKeyword,
+    fetchSearchKeyword,
     debouncedSearchKeywordApi,
 
     page,

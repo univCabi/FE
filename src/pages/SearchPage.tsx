@@ -33,7 +33,7 @@ const SearchPage = () => {
     isMyCabinet,
     setIsMyCabinet,
   } = useCabinetState();
-  const { handleClickResultButton } = useSearchResultButton();
+  const { fetchClickResultButton } = useSearchResultButton();
   const {
     searchInput,
     searchResults,
@@ -86,7 +86,7 @@ const SearchPage = () => {
             <SearchResultDropdownButton
               searchResults={searchResults}
               slicedSearchResults={slicedSearchResults}
-              handleClickResultButton={handleClickResultButton}
+              fetchClickResultButton={fetchClickResultButton}
               setIsDropdownOpen={setIsDropdownOpen}
             />
           )}
@@ -102,7 +102,7 @@ const SearchPage = () => {
             >
               <SearchResultGridButton
                 searchResults={searchResults}
-                handleClickResultButton={handleClickResultButton}
+                fetchClickResultButton={fetchClickResultButton}
                 isLoading={isLoading}
                 hasMoreResults={hasMoreResults}
               />

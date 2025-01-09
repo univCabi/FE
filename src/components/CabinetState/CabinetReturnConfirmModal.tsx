@@ -18,7 +18,7 @@ const CabinetReturnConfirmModal = ({
   setExpiredAt,
   setIsMyCabinet,
 }: CabinetReturnConfirmModalProps) => {
-  const handleReturn = async () => {
+  const fetchCabinetReturn = async () => {
     if (!selectedCabinet) return;
     try {
       const response = await returnApi(selectedCabinet.cabinetId);
@@ -46,7 +46,7 @@ const CabinetReturnConfirmModal = ({
         <div className="mt-5 flex justify-center">
           <button
             className="mr-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-500"
-            onClick={handleReturn} // 확인 버튼 클릭 시 반납 API 호출 + CabinetRental.tsx가 렌더링
+            onClick={fetchCabinetReturn} // 확인 버튼 클릭 시 반납 API 호출 + CabinetRental.tsx가 렌더링
           >
             확인
           </button>

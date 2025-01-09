@@ -26,7 +26,7 @@ export const useCabinetData = (
 ) => {
   const [cabinetData, setCabinetData] = useState<cabinetApiData[]>([]);
 
-  const handleCabinetCall = async (building: string, floor: number) => {
+  const fetchCabinetCall = async (building: string, floor: number) => {
     try {
       const response = await cabinetCallApi(building, floor);
       setCabinetData(response.cabinets);
@@ -45,7 +45,7 @@ export const useCabinetData = (
       )
     );
     if (selectedBuilding !== null && selectedFloor !== null) {
-      handleCabinetCall(selectedBuilding.name, selectedFloor);
+      fetchCabinetCall(selectedBuilding.name, selectedFloor);
     }
   }, [
     selectedBuilding,
@@ -57,5 +57,5 @@ export const useCabinetData = (
 
   // console.log("cabinetData: " + JSON.stringify(cabinetData));
 
-  return { cabinetData, setCabinetData, handleCabinetCall };
+  return { cabinetData, setCabinetData, fetchCabinetCall };
 };

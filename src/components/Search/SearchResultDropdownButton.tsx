@@ -3,7 +3,7 @@
 interface SearchResultDropdowndButtonProps {
   searchResults: { building: string; floor: number; cabinetNumber: number }[]; // 검색 결과
   slicedSearchResults: number; // 드롭다운 결과 6개씩 노출하기 위한 변수 타입
-  handleClickResultButton: (
+  fetchClickResultButton: (
     building: string,
     floor: number,
     cabinetNumber: number
@@ -14,7 +14,7 @@ interface SearchResultDropdowndButtonProps {
 const SearchResultDropdowndButton = ({
   searchResults,
   slicedSearchResults,
-  handleClickResultButton,
+  fetchClickResultButton,
   setIsDropdownOpen,
 }: SearchResultDropdowndButtonProps) => {
   return (
@@ -25,7 +25,7 @@ const SearchResultDropdowndButton = ({
           <button
             key={index}
             onClick={(e) => {
-              handleClickResultButton(
+              fetchClickResultButton(
                 result.building,
                 result.floor,
                 result.cabinetNumber

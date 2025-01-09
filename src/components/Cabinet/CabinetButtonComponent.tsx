@@ -43,7 +43,7 @@ const CabinetButtonComponent = ({
   );
 
   // 사물함 정보 API 호출
-  const handleCabinetDetailInformaion = async (
+  const fetchCabinetDetailInformaion = async (
     cabinetId: number,
     cabinetNumber: number
   ) => {
@@ -68,7 +68,7 @@ const CabinetButtonComponent = ({
 
       if (matchedCabinet) {
         // cabinetId를 사용하여 상세 정보 API 호출
-        handleCabinetDetailInformaion(
+        fetchCabinetDetailInformaion(
           matchedCabinet.id,
           matchedCabinet.cabinetNumber
         );
@@ -116,10 +116,7 @@ const CabinetButtonComponent = ({
                 left: `${cabinet.cabinetXPos * 90}px`, // API에서 받은 xPos 사용
               }}
               onClick={() => {
-                handleCabinetDetailInformaion(
-                  cabinet.id,
-                  cabinet.cabinetNumber
-                );
+                fetchCabinetDetailInformaion(cabinet.id, cabinet.cabinetNumber);
               }}
             >
               {cabinet.cabinetNumber}

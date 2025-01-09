@@ -1,4 +1,4 @@
-// // 건물, 층 선택 버튼
+// 건물, 층 선택 버튼
 
 import { cabinetCallApi } from "@/api/cabinetCallApi";
 import { useSearch } from "@/hooks/useSearch";
@@ -33,7 +33,7 @@ const BuildingSelectButton = ({
   // 결과 버튼 누르면 mainPage로 넘어가서 동일한 쿼리스트링을 가진 사물함 페이지로 이동
   useSearchToMain(selectedBuilding, setSelectedBuilding, setSelectedFloor);
 
-  const handlecabinetCall = async (building: string, floor: number) => {
+  const fetchCabinetCall = async (building: string, floor: number) => {
     try {
       const response = await cabinetCallApi(building, floor);
       setSearchParams({ building, floor: floor.toString() }); // 쿼리스트링
@@ -80,7 +80,7 @@ const BuildingSelectButton = ({
                     onClick={() => {
                       setSelectedFloor(floor); // 선택된 층을 업데이트
                       setSelectedCabinet(null);
-                      handlecabinetCall(building.name, floor);
+                      fetchCabinetCall(building.name, floor);
                     }}
                   >
                     {floor}F

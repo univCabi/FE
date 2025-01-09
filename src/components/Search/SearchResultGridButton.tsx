@@ -2,7 +2,7 @@
 
 interface SearchResultGridButtonProps {
   searchResults: { building: string; floor: number; cabinetNumber: number }[];
-  handleClickResultButton: (
+  fetchClickResultButton: (
     building: string,
     floor: number,
     cabinetNumber: number
@@ -14,7 +14,7 @@ interface SearchResultGridButtonProps {
 
 const SearchResultGridButton = ({
   searchResults,
-  handleClickResultButton,
+  fetchClickResultButton,
   isLoading,
   hasMoreResults,
 }: SearchResultGridButtonProps) => {
@@ -25,7 +25,7 @@ const SearchResultGridButton = ({
           <button
             key={index}
             onClick={() =>
-              handleClickResultButton(
+              fetchClickResultButton(
                 result.building,
                 result.floor,
                 result.cabinetNumber
