@@ -49,7 +49,7 @@ const BuildingSelectButton = ({
 
   return (
     <div>
-      <div className="overflow-y-auto h-3/5">
+      <div className="overflow-y-auto h-3/5 pt-[5rem] w-40">
         {buildings.map((building) => (
           <div key={building.name} className="mx-2">
             <button

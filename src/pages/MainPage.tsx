@@ -1,3 +1,4 @@
+import { useLocation } from "react-router";
 import { useBuildingState } from "@/hooks/useBuildingState";
 import { useBuildingList } from "@/hooks/useBuildingList";
 import { useCabinetState } from "@/hooks/useCabinetState";
@@ -7,7 +8,6 @@ import BuildingSelectButton from "@/components/BuildingSelectButton";
 import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
 import CabinetButtonComponent from "@/components/Cabinet/CabinetButtonComponent";
 import CabinetStatusInformation from "@/components/Cabinet/CabinetStatusInformation";
-import { useLocation } from "react-router";
 
 const MainPage = () => {
   // 건물 목록 hooks
@@ -42,13 +42,13 @@ const MainPage = () => {
         selectedBuilding={selectedBuilding}
         setSelectedBuilding={setSelectedBuilding}
         setSelectedFloor={setSelectedFloor}
-        setSelectedCabinet={setSelectedCabinet} // 추가
+        setSelectedCabinet={setSelectedCabinet}
       />
 
       {/* 화면 크기 = 768px 이상일 때 */}
       <div className="md:flex">
         {/* 건물 정보(좌측) */}
-        <div className="absolute inset-y-0 left-0 w-40 border-r-2 border-gray-400 flex-col pt-20 hidden md:flex">
+        <div className="absolute inset-y-0 left-0 w-40 border-r-2 border-gray-400 hidden md:flex">
           <BuildingSelectButton
             buildings={buildings}
             selectedBuilding={selectedBuilding}
@@ -108,7 +108,7 @@ const MainPage = () => {
       <div className="md:hidden">
         {/* 건물 & 층 선택 안했을 때 -> 건물 & 층 선택하는 컴포넌트만 표시 */}
         {selectedFloor === null && (
-          <div className="absolute inset-y-0 left-0 w-40 border-r-2 border-gray-400 flex-col pt-20 flex">
+          <div className="absolute inset-y-0 left-0 w-40 border-r-2 border-gray-400 flex">
             <BuildingSelectButton
               buildings={buildings}
               selectedBuilding={selectedBuilding}
