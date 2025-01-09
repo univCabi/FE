@@ -1,22 +1,15 @@
 import LogoSVG from "@/icons/cabiLogo.svg?react";
-interface LoginFormProps {
-  studentNumber: string;
-  password: string;
-  setStudentNumber: (value: string) => void;
-  setPassword: (value: string) => void;
-  loginSuccess: boolean;
-  setLoginSuccess: (value: boolean) => void;
-  handleLogin: () => Promise<void>;
-}
+import { useHandleLogin } from "@/hooks/useHandleLogin";
 
-const LoginForm = ({
-  studentNumber,
-  password,
-  setStudentNumber,
-  setPassword,
-  loginSuccess,
-  handleLogin,
-}: LoginFormProps) => {
+const LoginForm = () => {
+  const {
+    handleLogin,
+    studentNumber,
+    setStudentNumber,
+    password,
+    setPassword,
+    loginSuccess,
+  } = useHandleLogin();
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     await handleLogin();
