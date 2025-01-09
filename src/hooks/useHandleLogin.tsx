@@ -1,17 +1,13 @@
 import { loginApi } from "@/api/loginApi";
 import { useNavigate } from "react-router-dom";
-import { useLoginState } from "@/hooks/useLoginState";
+import { useState } from "react";
 
-export const useLogin = () => {
+export const useHandleLogin = () => {
+  const [studentNumber, setStudentNumber] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [loginSuccess, setLoginSuccess] = useState<boolean>(true);
+
   const navigate = useNavigate();
-  const {
-    studentNumber,
-    setStudentNumber,
-    password,
-    setPassword,
-    loginSuccess,
-    setLoginSuccess,
-  } = useLoginState();
 
   const handleLogin = async () => {
     try {

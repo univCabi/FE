@@ -1,4 +1,4 @@
-import { useLogin } from "@/hooks/useLogin";
+import { useHandleLogin } from "@/hooks/useHandleLogin";
 import LoginForm from "@/components/Login/LoginForm";
 // 페이지 <-> 컴포넌트 <-> 훅 <-> api
 const LoginPage = () => {
@@ -10,7 +10,7 @@ const LoginPage = () => {
     setPassword,
     loginSuccess,
     setLoginSuccess,
-  } = useLogin();
+  } = useHandleLogin();
 
   return (
     <div className="w-screen min-h-screen flex flex-col justify-center items-center bg-blue-400">
