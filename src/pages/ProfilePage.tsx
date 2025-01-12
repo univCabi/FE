@@ -16,9 +16,6 @@ const ProfilePage = () => {
     userIsVisible,
     userData.isVisible
   );
-  const toggleSwitch = (): void => {
-    setUserIsVisible(!userIsVisible);
-  };
   const { buildings } = useBuildingList();
   const {
     selectedBuilding,
@@ -30,6 +27,16 @@ const ProfilePage = () => {
   const { setSelectedCabinet } = useCabinetState();
   const { searchInput, setSearchInput } = useSearch();
 
+  const toggleSwitch = (): void => {
+    setUserIsVisible(!userIsVisible);
+  };
+
+  const onSubmit = () => {
+    if (window.confirm("저장하시겠습니까?")) {
+      handleProfileSave();
+      window.location.reload();
+    }
+  };
   return (
     <div className="relative h-screen flex flex-col">
       {/* 상단 네비게이션 바 */}
@@ -75,7 +82,7 @@ const ProfilePage = () => {
                 ? "bg-gray-400 "
                 : "bg-blue-600 hover:text-blue-900"
             } rounded-lg justify-center items-center inline-flex text-center text-white text-xl shadow-2xl`}
-            onClick={handleProfileSave}
+            onClick={onSubmit}
             text={"저장"}
             disabled={userIsVisible === userData.isVisible}
           />
