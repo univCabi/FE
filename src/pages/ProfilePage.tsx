@@ -2,8 +2,8 @@ import { useBuildingList } from "@/hooks/useBuildingList";
 import { useSearch } from "@/hooks/useSearch";
 import { useBuildingState } from "@/hooks/useBuildingState";
 import { useUserData } from "@/hooks/useUserData";
-import ProfileCard from "@/components/Profile/ProfileCard";
-import RentalinfoCard from "@/components/Profile/RentalinfoCard";
+import ProfileInfoCard from "@/components/Profile/ProfileInfoCard";
+import RentalInfoCard from "@/components/Profile/RentalInfoCard";
 import ProfileSaveButton from "@/components/Profile/ProfileSaveButton";
 import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
 import SideNavigationLayout from "@/pages/SideNavigationLayout";
@@ -53,7 +53,7 @@ const ProfilePage = () => {
         <main className="ml-0 md:ml-40 flex-grow flex flex-col items-center justify-center">
           <div className="flex flex-col md:flex-row gap-20 ">
             {/* 프로필 */}
-            <ProfileCard
+            <ProfileInfoCard
               toggleSwitch={toggleSwitch}
               name={userData.name}
               userIsVisible={userIsVisible}
@@ -62,7 +62,7 @@ const ProfilePage = () => {
               phoneNumber={userData.phoneNumber}
             />
             {/* 대여정보 */}
-            <RentalinfoCard userRentalData={userData.rentCabinetInfo} />
+            <RentalInfoCard userRentalData={userData.rentCabinetInfo} />
           </div>
           <ProfileSaveButton
             userIsVisible={userIsVisible}
