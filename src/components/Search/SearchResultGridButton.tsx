@@ -19,7 +19,7 @@ const SearchResultGridButton = ({
   hasMoreResults,
 }: SearchResultGridButtonProps) => {
   return (
-    <div>
+    <>
       <div className="grid pt-28 justify-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-16 px-4 sm:px-8 md:px-16 lg:px-24">
         {searchResults.map((result, index) => (
           <button
@@ -41,7 +41,7 @@ const SearchResultGridButton = ({
         {isLoading && <p>Loading...</p>}
         {!hasMoreResults && <p>No More Results</p>}
       </div>
-    </div>
+    </>
   );
 };
 export default SearchResultGridButton;

@@ -1,4 +1,4 @@
-// // 사물함 버튼 컴포넌트 배열 관련
+// 사물함 버튼 컴포넌트 배열 관련
 
 import { cabinetDetailInfoApi } from "@/api/cabinetDetailInfoApi";
 import { useCabinetData } from "@/hooks/useCabinetData";
@@ -79,9 +79,6 @@ const CabinetButtonComponent = ({
 
   // 각 상태에 대한 버튼 색상 설정
   const getStatusColor = (selectedStatus: string, isMyCabinet: boolean) => {
-    // console.log(
-    //   "selectedStauts :" + selectedStatus + " " + "isMyCabinet: " + isMyCabinet
-    // );
     if (selectedStatus === "USING") {
       if (isMyCabinet === true) {
         return "bg-lime-500 text-white"; // 본인이 사용 중인 사물함

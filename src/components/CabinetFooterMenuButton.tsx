@@ -1,10 +1,11 @@
 // 좌측 하단 메뉴
 
+import { useLocation, useNavigate } from "react-router";
+import { useLogout } from "@/hooks/useLogout";
 import LogSVG from "@/icons/log.svg?react";
 import LogoutSVG from "@/icons/logout.svg?react";
 // import CabinetSVG from "@/icons/cabinet.svg?react";
-import { useLogout } from "@/hooks/useLogout";
-import { useLocation, useNavigate } from "react-router";
+
 const CabinetFooterMenuButton = () => {
   const navigate = useNavigate();
   const locatedPage = useLocation();

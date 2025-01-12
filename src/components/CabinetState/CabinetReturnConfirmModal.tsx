@@ -3,8 +3,6 @@
 import { returnApi } from "@/api/returnApi";
 
 interface CabinetReturnConfirmModalProps {
-  selectedBuilding: string | null;
-  selectedFloor: number | null;
   selectedCabinet: { cabinetId: number; cabinetNumber: number } | null;
   closeReturnModal: () => void;
   setSelectedStatus: (status: string) => void; // 상태 업데이트 함수 추가
@@ -22,7 +20,6 @@ const CabinetReturnConfirmModal = ({
     if (!selectedCabinet) return;
     try {
       const response = await returnApi(selectedCabinet.cabinetId);
-
       if (response?.success) {
         setSelectedStatus(response.data.status);
         setIsMyCabinet(response.data.isMine);

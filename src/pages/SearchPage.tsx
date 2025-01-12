@@ -59,7 +59,7 @@ const SearchPage = () => {
   });
 
   return (
-    <div>
+    <>
       <SideNavigationLayout
         buildingList={buildingList}
         selectedBuilding={selectedBuilding}
@@ -69,7 +69,7 @@ const SearchPage = () => {
       />
 
       {/* 검색 관련 */}
-      <div>
+      <>
         {/* 검색 입력창 */}
         <div className="flex flex-col items-center" ref={dropdownOutsideRef}>
           <SearchInput
@@ -112,7 +112,7 @@ const SearchPage = () => {
 
         {/* 검색 결과 없을 때 나오는 컴포넌트 */}
         {searchResults.length === 0 && <DefaultSearchComponent />}
-      </div>
+      </>
 
       {/* 건물 정보(좌측) */}
       <div className="absolute inset-y-0 left-0 w-40 border-r-2 border-gray-400 flex-col pt-20 hidden md:flex">
@@ -135,7 +135,7 @@ const SearchPage = () => {
           setIsMyCabinet={setIsMyCabinet}
         />
       </div>
-    </div>
+    </>
   );
 };
 export default SearchPage;

@@ -35,7 +35,7 @@ const MainPage = () => {
   const filteredCabinetDetail = location.state?.filteredCabinetDetail;
 
   return (
-    <div>
+    <>
       {/* 상단 네비게이션바(화면 크기 상관없이 표시) */}
       <SideNavigationLayout
         buildingList={buildingList}
@@ -174,7 +174,7 @@ const MainPage = () => {
           </div>
         )}
       </div>
-    </div>
+    </>
   );
 };
 

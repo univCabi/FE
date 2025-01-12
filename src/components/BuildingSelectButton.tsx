@@ -16,7 +16,6 @@ interface BuildingSelectButtonProps {
       cabinetNumber: number;
     } | null
   ) => void;
-  filteredCabinetDetail: { id: number; status: string; isMine: boolean } | null; // 추가
 }
 
 const BuildingSelectButton = ({
@@ -26,7 +25,6 @@ const BuildingSelectButton = ({
   selectedFloor,
   setSelectedFloor,
   setSelectedCabinet,
-  filteredCabinetDetail,
 }: BuildingSelectButtonProps) => {
   const { setSearchParams } = useSearch();
 
