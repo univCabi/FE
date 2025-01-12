@@ -1,6 +1,6 @@
-import LogoSVG from "@/icons/cabiLogo.svg?react";
 import { useHandleLogin } from "@/hooks/useHandleLogin";
-
+import SubmitButton from "../SubmitButton";
+import LogoSVG from "@/icons/cabiLogo.svg?react";
 const LoginForm = () => {
   const {
     handleLogin,
@@ -17,10 +17,7 @@ const LoginForm = () => {
     setStudentNumber("");
   };
   return (
-    <form
-      onSubmit={onSubmit}
-      className="sl:w-[60%] w-[70%] sl:max-w-[22.5rem]  flex flex-col items-center p-12 sl:p-10 bg-white rounded-lg shadow-lg"
-    >
+    <form className="sl:w-[60%] w-[70%] sl:max-w-[22.5rem]  flex flex-col items-center p-12 sl:p-10 bg-white rounded-lg shadow-lg">
       <h2 className="text-[2.25em] font-bold mb-5">Login</h2>
       <p className="text-blue-600 mb-5 text-[0.75rem] sm:text-base">
         여러분의 일상을 가볍게
@@ -47,12 +44,14 @@ const LoginForm = () => {
           {"학번이나 비밀번호가 잘못되었습니다."}
         </div>
       )}
-      <button
-        type="submit"
-        className=" text-sm sm:text-base w-[60%] sl:w-[70%]  text-white py-2.5 sl:py-3.5 bg-blue-600 rounded-md "
-      >
-        L o g i n
-      </button>
+
+      <SubmitButton
+        text={"L o g i n"}
+        className={
+          "text-sm sm:text-base w-[60%] sl:w-[70%]  text-white py-2.5 sl:py-3.5 bg-blue-600 rounded-md"
+        }
+        onClick={onSubmit}
+      ></SubmitButton>
     </form>
   );
 };
