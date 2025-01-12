@@ -4,13 +4,18 @@ import { useBuildingState } from "@/hooks/useBuildingState";
 import { useUserData } from "@/hooks/useUserData";
 import ProfileInfoCard from "@/components/Profile/ProfileInfoCard";
 import RentalInfoCard from "@/components/Profile/RentalInfoCard";
-import ProfileSaveButton from "@/components/Profile/ProfileSaveButton";
 import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
+import SubmitButton from "@/components/SubmitButton";
 import SideNavigationLayout from "@/pages/SideNavigationLayout";
 import { useCabinetState } from "@/hooks/useCabinetState";
+import { useProfileSave } from "@/hooks/useProfileSave";
 
 const ProfilePage = () => {
   const { userData, userIsVisible, setUserIsVisible } = useUserData();
+  const { handleProfileSave } = useProfileSave(
+    userIsVisible,
+    userData.isVisible
+  );
   const toggleSwitch = (): void => {
     setUserIsVisible(!userIsVisible);
   };
@@ -64,9 +69,15 @@ const ProfilePage = () => {
             {/* 대여정보 */}
             <RentalInfoCard userRentalData={userData.rentCabinetInfo} />
           </div>
-          <ProfileSaveButton
-            userIsVisible={userIsVisible}
-            saveState={userData.isVisible}
+          <SubmitButton
+            className={`mt-10 mb-10 w-40 h-16 ${
+              userIsVisible === userData.isVisible
+                ? "bg-gray-400 "
+                : "bg-blue-600 hover:text-blue-900"
+            } rounded-lg justify-center items-center inline-flex text-center text-white text-xl shadow-2xl`}
+            onClick={handleProfileSave}
+            text={"저장"}
+            disabled={userIsVisible === userData.isVisible}
           />
         </main>
       </div>

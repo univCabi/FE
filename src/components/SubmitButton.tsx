@@ -2,7 +2,7 @@ interface SubmitButtonProps {
   className: string;
   disabled?: boolean;
   text: string;
-  onClick: (e: React.FormEvent) => void;
+  onClick: (e?: React.FormEvent) => void;
 }
 
 const SubmitButton = ({
@@ -12,7 +12,7 @@ const SubmitButton = ({
   onClick,
 }: SubmitButtonProps) => {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
-    if (e.key === "Enter") onClick(e);
+    if (e.key === "Enter") onClick();
   };
   return (
     <button
