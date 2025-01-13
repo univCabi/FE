@@ -5,7 +5,7 @@ import { useUserData } from "@/hooks/useUserData";
 import ProfileInfoCard from "@/components/Profile/ProfileInfoCard";
 import RentalInfoCard from "@/components/Profile/RentalInfoCard";
 import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
-import SubmitButton from "@/components/SubmitButton";
+import SubmitAndNavigateButton from "@/components/SubmitAndNavigateButton";
 import SideNavigationLayout from "@/pages/SideNavigationLayout";
 import { useCabinetState } from "@/hooks/useCabinetState";
 import { useProfileSave } from "@/hooks/useProfileSave";
@@ -76,7 +76,7 @@ const ProfilePage = () => {
             {/* 대여정보 */}
             <RentalInfoCard userRentalData={userData.rentCabinetInfo} />
           </div>
-          <SubmitButton
+          <SubmitAndNavigateButton
             className={`mt-10 mb-10 w-40 h-16 ${
               userIsVisible === userData.isVisible
                 ? "bg-gray-400 "

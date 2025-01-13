@@ -1,5 +1,5 @@
 import { useHandleLogin } from "@/hooks/useHandleLogin";
-import SubmitButton from "../SubmitButton";
+import SubmitAndNavigateButton from "../SubmitAndNavigateButton";
 import LogoSVG from "@/icons/cabiLogo.svg?react";
 const LoginForm = () => {
   const {
@@ -45,13 +45,13 @@ const LoginForm = () => {
         </div>
       )}
 
-      <SubmitButton
+      <SubmitAndNavigateButton
         text={"L o g i n"}
         className={
           "text-sm sm:text-base w-[60%] sl:w-[70%]  text-white py-2.5 sl:py-3.5 bg-blue-600 rounded-md"
         }
         onClick={onSubmit}
-      ></SubmitButton>
+      ></SubmitAndNavigateButton>
     </form>
   );
 };
