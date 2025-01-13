@@ -1,11 +1,10 @@
 import { useCabinetRentalModal } from "@/hooks/useCabinetRentalModal";
 import { useCabinetReturnModal } from "@/hooks/useCabinetReturnModal";
-import CabinetRentalConfirmModal from "@/components/CabinetState/CabinetRentalConfirmModal";
-import CabinetReturnConfirmModal from "@/components/CabinetState/CabinetReturnConfirmModal";
-import CabinetStateDisplay from "@/components/Cabinet/CabinetStateDisplay";
+import CabinetRentalConfirmModal from "@/components/Cabinet/Modal/CabinetRentalConfirmModal";
+import CabinetReturnConfirmModal from "@/components/Cabinet/Modal/CabinetReturnConfirmModal";
+import CabinetInformationDisplay from "@/components/Cabinet/CabinetInformationDisplay";
 import CabinetActionButtons from "@/components/Cabinet/CabinetActionButtons";
 import CabinetSVG from "@/icons/cabinet.svg?react";
-import { useBuildingState } from "@/hooks/useBuildingState";
 
 // 선택된 사물함 정보
 interface SelectedCabinetInformationProps {
@@ -67,7 +66,7 @@ const SelectedCabinetInformation = ({
           // 상태가 AVAILABLE일 경우
           <>
             <>
-              <CabinetStateDisplay
+              <CabinetInformationDisplay
                 selectedBuilding={selectedBuilding}
                 selectedFloor={selectedFloor}
                 selectedCabinet={selectedCabinet.cabinetNumber}
@@ -97,7 +96,7 @@ const SelectedCabinetInformation = ({
           // 상태가 USING이고 본인의 사물함일 경우
           <>
             <>
-              <CabinetStateDisplay
+              <CabinetInformationDisplay
                 selectedBuilding={selectedBuilding}
                 selectedFloor={selectedFloor}
                 selectedCabinet={selectedCabinet.cabinetNumber}
@@ -131,14 +130,14 @@ const SelectedCabinetInformation = ({
           </>
         ) : selectedStatus === "USING" && isMyCabinet === false ? (
           // 상태가 USING이고 타인의 사물함일 경우
-          <CabinetStateDisplay
+          <CabinetInformationDisplay
             selectedBuilding={selectedBuilding}
             selectedFloor={selectedFloor}
             selectedCabinet={selectedCabinet.cabinetNumber}
             statusMessage="이미 대여중인 사물함입니다."
           />
         ) : selectedStatus === "BROKEN" || selectedStatus === "OVERDUE" ? (
-          <CabinetStateDisplay
+          <CabinetInformationDisplay
             selectedBuilding={selectedBuilding}
             selectedFloor={selectedFloor}
             selectedCabinet={selectedCabinet.cabinetNumber}

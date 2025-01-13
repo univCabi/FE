@@ -6,7 +6,7 @@ import SideNavigationLayout from "@/pages/SideNavigationLayout";
 import SelectedCabinetInformation from "@/components/Cabinet/SelectedCabinetInformation";
 import BuildingSelectButton from "@/components/BuildingSelectButton";
 import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
-import CabinetButtonComponent from "@/components/Cabinet/CabinetButtonComponent";
+import CabinetButtonLayout from "@/components/Cabinet/CabinetButtonLayout";
 import CabinetStatusInformation from "@/components/Cabinet/CabinetStatusInformation";
 
 const MainPage = () => {
@@ -69,7 +69,7 @@ const MainPage = () => {
           {/* 건물 선택 후, 층수 선택을 둘 다 해야 사물함 컴포넌트가 보임 */}
           {selectedBuilding !== null && selectedFloor !== null && (
             <>
-              <CabinetButtonComponent
+              <CabinetButtonLayout
                 selectedBuilding={
                   buildingList.find(
                     (building) => building.name === selectedBuilding
@@ -133,7 +133,7 @@ const MainPage = () => {
           >
             <>
               <div className="absolute inset-y-0 left-12 right-8 pt-16">
-                <CabinetButtonComponent
+                <CabinetButtonLayout
                   selectedBuilding={
                     buildingList.find(
                       (building) => building.name === selectedBuilding

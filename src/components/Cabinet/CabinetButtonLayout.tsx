@@ -1,10 +1,10 @@
-// 사물함 버튼 컴포넌트 배열 관련
+// 사물함 배열 관련
 
 import { cabinetDetailInfoApi } from "@/api/cabinetDetailInfoApi";
 import { useCabinetData } from "@/hooks/useCabinetData";
 import { useEffect } from "react";
 
-interface CabinetButtonComponentProps {
+interface CabinetButtonLayoutProps {
   selectedBuilding: { name: string; floors: number } | null;
   selectedFloor: number | null;
   selectedCabinet: { cabinetId: number; cabinetNumber: number } | null;
@@ -23,7 +23,7 @@ interface CabinetButtonComponentProps {
   } | null;
 }
 
-const CabinetButtonComponent = ({
+const CabinetButtonLayout = ({
   selectedBuilding,
   selectedFloor,
   selectedCabinet,
@@ -33,7 +33,7 @@ const CabinetButtonComponent = ({
   isMyCabinet,
   setIsMyCabinet,
   filteredCabinetDetail,
-}: CabinetButtonComponentProps) => {
+}: CabinetButtonLayoutProps) => {
   const { cabinetData } = useCabinetData(
     selectedBuilding,
     selectedFloor,
@@ -125,4 +125,4 @@ const CabinetButtonComponent = ({
   );
 };
 
-export default CabinetButtonComponent;
+export default CabinetButtonLayout;

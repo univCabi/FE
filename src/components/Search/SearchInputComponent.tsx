@@ -2,7 +2,7 @@
 
 import SearchSVG from "@/icons/search.svg?react";
 
-interface SearchInputProps {
+interface SearchInputComponentProps {
   searchInput: string; // input 값 타입
   inputRef: React.RefObject<HTMLInputElement>; // input focus에 대한 참조
   handleInputRelatedSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -11,14 +11,14 @@ interface SearchInputProps {
   submitSearchResultDropdown: () => void;
 }
 
-const SearchInput = ({
+const SearchInputComponent = ({
   searchInput,
   inputRef,
   handleInputRelatedSearch,
   handleSearchSubmit,
   handleDropdown,
   submitSearchResultDropdown,
-}: SearchInputProps) => {
+}: SearchInputComponentProps) => {
   return (
     <form
       onSubmit={handleSearchSubmit}
@@ -41,4 +41,4 @@ const SearchInput = ({
   );
 };
 
-export default SearchInput;
+export default SearchInputComponent;

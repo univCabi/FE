@@ -2,7 +2,7 @@
 
 import LogoSVG from "@/icons/cabiLogo.svg?react";
 
-const DefaultSearchComponent = () => {
+const DefaultSearchDisplay = () => {
   return (
     <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
       <div className="flex flex-col items-center space-y-4">
@@ -12,4 +12,4 @@ const DefaultSearchComponent = () => {
     </div>
   );
 };
-export default DefaultSearchComponent;
+export default DefaultSearchDisplay;

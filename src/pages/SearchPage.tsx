@@ -7,10 +7,10 @@ import { useSearchInput } from "@/hooks/useSearchInput";
 import SideNavigationLayout from "@/pages/SideNavigationLayout";
 import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
 import SelectedCabinetInformation from "@/components/Cabinet/SelectedCabinetInformation";
-import DefaultSearchComponent from "@/components/Search/DefaultSearchComponent";
+import DefaultSearchDisplay from "@/components/Search/DefaultSearchDisplay";
 import SearchResultGridButton from "@/components/Search/SearchResultGridButton";
 import SearchResultDropdownButton from "@/components/Search/SearchResultDropdownButton";
-import SearchInput from "@/components/Search/SearchInput";
+import SearchInputComponent from "@/components/Search/SearchInputComponent";
 
 const SearchPage = () => {
   const { buildingList } = useBuildingList();
@@ -72,7 +72,7 @@ const SearchPage = () => {
       <>
         {/* 검색 입력창 */}
         <div className="flex flex-col items-center" ref={dropdownOutsideRef}>
-          <SearchInput
+          <SearchInputComponent
             searchInput={searchInput}
             inputRef={inputRef}
             handleInputRelatedSearch={handleInputRelatedSearch}
@@ -111,7 +111,7 @@ const SearchPage = () => {
         </div>
 
         {/* 검색 결과 없을 때 나오는 컴포넌트 */}
-        {searchResults.length === 0 && <DefaultSearchComponent />}
+        {searchResults.length === 0 && <DefaultSearchDisplay />}
       </>
 
       {/* 건물 정보(좌측) */}

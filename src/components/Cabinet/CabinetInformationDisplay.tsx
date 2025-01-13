@@ -1,19 +1,19 @@
 // 클릭했을 때 사물함 status에 따른 사물함 정보 화면
 import CabinetSVG from "@/icons/cabinet.svg?react";
 
-interface CabinetStateDisplayProps {
+interface CabinetInformationDisplayProps {
   selectedBuilding: string | null;
   selectedFloor: number | null;
   selectedCabinet: number | null;
   statusMessage: string;
 }
 
-const CabinetStateDisplay = ({
+const CabinetInformationDisplay = ({
   selectedBuilding,
   selectedFloor,
   selectedCabinet,
   statusMessage,
-}: CabinetStateDisplayProps) => (
+}: CabinetInformationDisplayProps) => (
   <div className="text-center">
     <div className="pb-5 flex justify-center">
       <CabinetSVG />
@@ -27,4 +27,4 @@ const CabinetStateDisplay = ({
   </div>
 );
 
-export default CabinetStateDisplay;
+export default CabinetInformationDisplay;
