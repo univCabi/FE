@@ -1,5 +1,3 @@
-// 사물함 반납 API
-
 import api from "@/api/axiosInterceptApi";
 
 export const returnApi = async (cabinetId: number) => {
@@ -10,7 +8,7 @@ export const returnApi = async (cabinetId: number) => {
     );
 
     if (response.status === 200) {
-      console.log("Cabinet Return Successful:", response.status);
+      console.log(response.status);
       return {
         success: true,
         message: "Cabinet Return Successful",

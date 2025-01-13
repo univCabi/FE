@@ -1,6 +1,6 @@
 // Search Page - input에 대한 결과 드롭다운 hook
 
-interface useSearchHandlersProps {
+interface useSearchInputProps {
   setSearchInput: (input: string) => void;
   debouncedSearchKeywordApi: (keyword: string) => void;
   setIsDropdownOpen: (isDropdownOpen: boolean) => void;
@@ -10,7 +10,7 @@ export const useSearchInput = ({
   setSearchInput,
   debouncedSearchKeywordApi,
   setIsDropdownOpen,
-}: useSearchHandlersProps) => {
+}: useSearchInputProps) => {
   // 검색 결과 6개씩 보여주기 위한 변수
   const slicedSearchResults = 6;
 

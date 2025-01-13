@@ -57,7 +57,6 @@ const MainPage = () => {
             setSelectedFloor={setSelectedFloor}
             setSelectedCabinet={setSelectedCabinet}
             selectedCabinet={selectedCabinet}
-            filteredCabinetDetail={filteredCabinetDetail}
           />
 
           {/* 하단 메뉴(좌측) */}
@@ -117,7 +116,6 @@ const MainPage = () => {
               setSelectedFloor={setSelectedFloor}
               setSelectedCabinet={setSelectedCabinet}
               selectedCabinet={selectedCabinet}
-              filteredCabinetDetail={filteredCabinetDetail}
             />
             {/* 하단 메뉴(좌측) */}
             <CabinetFooterMenuButton />

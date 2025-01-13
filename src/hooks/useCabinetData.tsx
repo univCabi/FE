@@ -21,17 +21,18 @@ export const useCabinetData = (
   selectedBuilding: { name: string } | null,
   selectedFloor: number | null,
   selectedCabinet: { cabinetId: number; cabinetNumber: number } | null,
-  isMyCabinet: boolean,
-  selectedStatus: string
+  isMyCabinet: boolean
 ) => {
   const [cabinetData, setCabinetData] = useState<cabinetApiData[]>([]);
 
-  const fetchCabinetCall = async (building: string, floor: number) => {
+  const fetchCabinetData = async (building: string, floor: number) => {
     try {
       const response = await cabinetCallApi(building, floor);
       setCabinetData(response.cabinets);
     } catch (error) {
-      console.log(error);
+      if (error === 404) {
+        console.error(404);
+      }
     }
   };
 
@@ -45,17 +46,9 @@ export const useCabinetData = (
       )
     );
     if (selectedBuilding !== null && selectedFloor !== null) {
-      fetchCabinetCall(selectedBuilding.name, selectedFloor);
+      fetchCabinetData(selectedBuilding.name, selectedFloor);
     }
-  }, [
-    selectedBuilding,
-    selectedFloor,
-    // selectedCabinet,
-    isMyCabinet,
-    // selectedStatus,
-  ]);
+  }, [selectedBuilding, selectedFloor, isMyCabinet]);
 
-  // console.log("cabinetData: " + JSON.stringify(cabinetData));
-
-  return { cabinetData, setCabinetData, fetchCabinetCall };
+  return { cabinetData, setCabinetData, fetchCabinetData };
 };

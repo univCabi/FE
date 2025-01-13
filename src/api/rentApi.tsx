@@ -1,5 +1,3 @@
-// 사물함 대여 API
-
 import api from "@/api/axiosInterceptApi";
 
 export const rentApi = async (cabinetId: number) => {
@@ -10,7 +8,7 @@ export const rentApi = async (cabinetId: number) => {
     );
 
     if (response.status === 200) {
-      console.log("Cabinet rent successful:", response.data);
+      console.log(response.status, response.data);
       return { success: true, message: "Rent successful", data: response.data };
     }
   } catch (error: any) {

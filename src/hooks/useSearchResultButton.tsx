@@ -1,7 +1,7 @@
 // 검색 결과 버튼 클릭 시 cabinet에 대한 API 요청을 위한 hook
 
-import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import { cabinetCallApi } from "@/api/cabinetCallApi";
 import { cabinetDetailInfoApi } from "@/api/cabinetDetailInfoApi";
 
@@ -13,16 +13,14 @@ export const useSearchResultButton = () => {
   const fetchClickResultButton = async (
     building: string,
     floor: number,
-    keyword: number
+    keyword?: number
   ) => {
     try {
       const response = await cabinetCallApi(building, floor);
-
       // keyword와 cabinetNumber 비교하여 일치하는 데이터 찾기
       const matchedCabinet = response.cabinets.find(
         (cabinet) => cabinet.cabinetNumber === keyword
       );
-
       if (matchedCabinet) {
         // 상세 정보 API 호출
         const cabinetDetail = await cabinetDetailInfoApi(matchedCabinet.id);
@@ -32,6 +30,7 @@ export const useSearchResultButton = () => {
           building,
           floor,
         });
+        console.log(200);
       } else {
       }
     } catch (error) {
