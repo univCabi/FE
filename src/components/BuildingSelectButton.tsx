@@ -1,5 +1,6 @@
 // 건물, 층 선택 버튼
 
+import { useSearchResultButton } from "@/hooks/useSearchResultButton";
 import { useSearchToMain } from "@/hooks/useSearchToMain";
 
 interface BuildingSelectButtonProps {
@@ -24,7 +25,8 @@ const BuildingSelectButton = ({
   setSelectedFloor,
   setSelectedCabinet,
 }: BuildingSelectButtonProps) => {
-  // 결과 버튼 누르면 mainPage로 넘어가서 동일한 쿼리스트링을 가진 사물함 페이지로 이동
+  const { fetchSearchResultCabinetData } = useSearchResultButton();
+  // search result와 동일한 쿼리스트링 페이지로 이동
   useSearchToMain(selectedBuilding, setSelectedBuilding, setSelectedFloor);
 
   return (
@@ -60,6 +62,7 @@ const BuildingSelectButton = ({
                     onClick={() => {
                       setSelectedFloor(floor); // 선택된 층을 업데이트
                       setSelectedCabinet(null);
+                      fetchSearchResultCabinetData(building.name, floor);
                     }}
                   >
                     {floor}F

@@ -25,6 +25,7 @@ export const useCabinetData = (
 ) => {
   const [cabinetData, setCabinetData] = useState<cabinetApiData[]>([]);
 
+  // building, floor 선택 -> 사물함 버튼 활성화
   const fetchCabinetData = async (building: string, floor: number) => {
     try {
       const response = await cabinetCallApi(building, floor);
@@ -40,9 +41,7 @@ export const useCabinetData = (
     // cabinetData 상태 업데이트 (사물함 버튼 관련)
     setCabinetData((prevData) =>
       prevData.map((cabinet) =>
-        cabinet.id === selectedCabinet?.cabinetId
-          ? { ...cabinet, isMine: isMyCabinet }
-          : cabinet
+        cabinet.id === selectedCabinet?.cabinetId ? { ...cabinet } : cabinet
       )
     );
     if (selectedBuilding !== null && selectedFloor !== null) {

@@ -8,7 +8,7 @@ export const rentApi = async (cabinetId: number) => {
     );
 
     if (response.status === 200) {
-      console.log(response.status, response.data);
+      console.log(response.status);
       return { success: true, message: "Rent successful", data: response.data };
     }
   } catch (error: any) {

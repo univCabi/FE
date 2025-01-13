@@ -39,9 +39,7 @@ const CabinetButtonLayout = ({
     selectedCabinet,
     isMyCabinet
   );
-
   const { getStatusColor } = useCabinetState();
-
   // 사물함 정보 API 호출
   const fetchCabinetDetailInformation = async (
     cabinetId: number,
