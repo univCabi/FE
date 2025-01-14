@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import "./App.css";
 import MainPage from "@/pages/MainPage";
-import LoginPage from "@/pages/Login/LoginPage";
+import LoginPage from "@/pages/LoginPage";
 import ErrorPage from "@/pages/ErrorPage";
 import SearchPage from "@/pages/SearchPage";
 import HistoryPage from "@/pages/HistoryPage";
