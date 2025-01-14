@@ -1,6 +1,6 @@
-import { loginApi } from "@/api/loginApi";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { loginApi } from "@/api/loginApi";
 
 export const useHandleLogin = () => {
   const [studentNumber, setStudentNumber] = useState<string>("");
