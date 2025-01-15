@@ -1,9 +1,8 @@
 import CabinetSVG from "@/icons/cabinet.svg?react";
-import { useCabinetRentalModal } from "@/hooks/useCabinetRentalModal";
-import { useCabinetReturnModal } from "@/hooks/useCabinetReturnModal";
+import { useConfirnModalState } from "@/hooks/useConfirmModalState";
 import { rentApi } from "@/api/rentApi";
 import { returnApi } from "@/api/returnApi";
-import HandleModal from "@/components/HandleModal";
+import HandleConfirmModal from "@/components/HandleConfirmModal";
 
 // 선택된 사물함 정보
 interface SelectedCabinetInformationProps {
@@ -48,9 +47,12 @@ const SelectedCabinetInformation = ({
   isMineState,
   setIsMineState,
 }: SelectedCabinetInformationProps) => {
-  const { openRentalModal, setOpenRentalModal } = useCabinetRentalModal();
-  const { openReturnModal, setOpenReturnModal } = useCabinetReturnModal();
-
+  const {
+    openRentalModal,
+    setOpenRentalModal,
+    openReturnModal,
+    setOpenReturnModal,
+  } = useConfirnModalState();
   // 대여 버튼 클릭
   const clickedRentalButton = () => {
     setOpenRentalModal(true);
@@ -142,7 +144,7 @@ const SelectedCabinetInformation = ({
               </button>
             </div>
             {openRentalModal && (
-              <HandleModal
+              <HandleConfirmModal
                 onClick={handleRent}
                 setModalCancelState={setOpenRentalModal}
                 title={"대여 확인"}
@@ -184,7 +186,7 @@ const SelectedCabinetInformation = ({
               </div>
             </div>
             {openReturnModal && (
-              <HandleModal
+              <HandleConfirmModal
                 onClick={handleReturn}
                 setModalCancelState={setOpenReturnModal}
                 title={"반납 확인"}
