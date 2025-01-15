@@ -1,6 +1,5 @@
 // 반납 버튼 눌렀을 때, 반납 확인 모달
 
-import { returnApi } from "@/api/returnApi";
 import { useCabinetReturn } from "@/hooks/useCabinetReturn";
 
 interface CabinetReturnConfirmModalProps {

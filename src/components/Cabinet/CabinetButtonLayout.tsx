@@ -33,7 +33,6 @@ const CabinetButtonLayout = ({
   const { cabinetData } = useCabinetData(
     selectedBuilding,
     selectedFloor,
-    // selectedCabinet,
     isMyCabinet
   );
   const { fetchCabinetDetailInformation } = useCabinetDetailData({
