@@ -2,7 +2,7 @@ import CabinetSVG from "@/icons/cabinet.svg?react";
 import { useConfirmModalState } from "@/hooks/useConfirmModalState";
 import { rentApi } from "@/api/rentApi";
 import { returnApi } from "@/api/returnApi";
-import HandleConfirmModal from "@/components/HandleConfirmModal";
+import ConfirmModalView from "@/components/ConfirmModalView";
 
 // 선택된 사물함 정보
 interface SelectedCabinetInformationProps {
@@ -144,7 +144,7 @@ const SelectedCabinetInformation = ({
               </button>
             </div>
             {openRentalModal && (
-              <HandleConfirmModal
+              <ConfirmModalView
                 onClick={handleRent}
                 setModalCancelState={setOpenRentalModal}
                 title={"대여 확인"}
@@ -186,7 +186,7 @@ const SelectedCabinetInformation = ({
               </div>
             </div>
             {openReturnModal && (
-              <HandleConfirmModal
+              <ConfirmModalView
                 onClick={handleReturn}
                 setModalCancelState={setOpenReturnModal}
                 title={"반납 확인"}

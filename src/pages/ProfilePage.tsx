@@ -7,7 +7,7 @@ import ProfileInfoCard from "@/components/Profile/ProfileInfoCard";
 import RentalInfoCard from "@/components/Profile/RentalInfoCard";
 import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
 import SubmitAndNavigateButton from "@/components/SubmitAndNavigateButton";
-import HandleConfirmModal from "@/components/HandleConfirmModal";
+import ConfirmModalView from "@/components/ConfirmModalView";
 import SideNavigationLayout from "@/pages/SideNavigationLayout";
 import { useCabinetState } from "@/hooks/useCabinetState";
 import { useProfileSave } from "@/hooks/useProfileSave";
@@ -45,7 +45,7 @@ const ProfilePage = () => {
     <div className="relative h-screen flex flex-col">
       {/* 모달 */}
       {openProfileSaveButtonModal && (
-        <HandleConfirmModal
+        <ConfirmModalView
           onClick={onSubmit}
           title={"알림"}
           text={"해당 내용을 저장하시겠습니까?"}

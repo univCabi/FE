@@ -7,7 +7,7 @@ interface HadleModalProps {
   text?: string;
 }
 
-const HandleConfirmModal = ({
+const ConfirmModalView = ({
   onClick,
   setModalCancelState,
   title,
@@ -43,4 +43,4 @@ const HandleConfirmModal = ({
   );
 };
 
-export default HandleConfirmModal;
+export default ConfirmModalView;
