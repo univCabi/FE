@@ -1,5 +1,5 @@
 import CabinetSVG from "@/icons/cabinet.svg?react";
-import { useConfirnModalState } from "@/hooks/useConfirmModalState";
+import { useConfirmModalState } from "@/hooks/useConfirmModalState";
 import { rentApi } from "@/api/rentApi";
 import { returnApi } from "@/api/returnApi";
 import HandleConfirmModal from "@/components/HandleConfirmModal";
@@ -52,7 +52,7 @@ const SelectedCabinetInformation = ({
     setOpenRentalModal,
     openReturnModal,
     setOpenReturnModal,
-  } = useConfirnModalState();
+  } = useConfirmModalState();
   // 대여 버튼 클릭
   const clickedRentalButton = () => {
     setOpenRentalModal(true);
