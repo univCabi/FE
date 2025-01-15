@@ -2,8 +2,8 @@ import CabinetSVG from "@/icons/cabinet.svg?react";
 import { useCabinetRentalModal } from "@/hooks/useCabinetRentalModal";
 import { useCabinetReturnModal } from "@/hooks/useCabinetReturnModal";
 import { rentApi } from "@/api/rentApi";
+import { returnApi } from "@/api/returnApi";
 import HandleModal from "@/components/HandleModal";
-import CabinetReturnConfirmModal from "@/components/CabinetState/CabinetReturnConfirmModal";
 
 // 선택된 사물함 정보
 interface SelectedCabinetInformationProps {
@@ -95,6 +95,25 @@ const SelectedCabinetInformation = ({
     }
   };
 
+  const handleReturn = async () => {
+    if (!selectedCabinet) return;
+    try {
+      const response = await returnApi(selectedCabinet.cabinetId);
+
+      if (response?.success) {
+        setSelectedStatus(response.data.status);
+        setIsMineState(response.data.isMine);
+        closeReturnModal();
+        setExpiredAt(null); // 반납 기간 초기화
+        return response.data;
+      } else {
+        closeReturnModal();
+      }
+    } catch (error) {
+      closeReturnModal();
+    }
+  };
+
   return (
     <div className="absolute inset-y-0 right-0 w-80 pt-20 flex flex-col justify-center items-center bg-white border-l-2 border-gray-400">
       {selectedCabinet !== null ? (
@@ -165,17 +184,12 @@ const SelectedCabinetInformation = ({
               </div>
             </div>
             {openReturnModal && (
-              <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
-                <CabinetReturnConfirmModal
-                  selectedBuilding={selectedBuilding}
-                  selectedFloor={selectedFloor}
-                  selectedCabinet={selectedCabinet}
-                  closeReturnModal={closeReturnModal}
-                  setSelectedStatus={setSelectedStatus}
-                  setExpiredAt={setExpiredAt}
-                  setIsMineState={setIsMineState}
-                />
-              </div>
+              <HandleModal
+                onClick={handleReturn}
+                setModalCancelState={setOpenReturnModal}
+                title={"반납 확인"}
+                text={"이 사물함을 반납하시겠습니까?"}
+              />
             )}
           </>
         ) : selectedStatus === "USING" && isMineState === false ? (
