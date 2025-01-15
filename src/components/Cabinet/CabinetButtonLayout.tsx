@@ -1,14 +1,12 @@
 // 사물함 배열 관련
 
-import { useEffect } from "react";
-import { cabinetDetailInfoApi } from "@/api/cabinetDetailInfoApi";
 import { useCabinetData } from "@/hooks/useCabinetData";
 import { useCabinetState } from "@/hooks/useCabinetState";
+import { useCabinetDetailData } from "@/hooks/useCabinetDetailData";
 
 interface CabinetButtonLayoutProps {
   selectedBuilding: { name: string } | null;
   selectedFloor: number | null;
-  selectedCabinet: { cabinetId: number; cabinetNumber: number } | null;
   setSelectedCabinet: (
     cabinet: { cabinetId: number; cabinetNumber: number } | null
   ) => void;
@@ -26,7 +24,6 @@ interface CabinetButtonLayoutProps {
 const CabinetButtonLayout = ({
   selectedBuilding,
   selectedFloor,
-  selectedCabinet,
   setSelectedCabinet,
   setSelectedStatus,
   isMyCabinet,
@@ -36,45 +33,17 @@ const CabinetButtonLayout = ({
   const { cabinetData } = useCabinetData(
     selectedBuilding,
     selectedFloor,
-    selectedCabinet,
+    // selectedCabinet,
     isMyCabinet
   );
+  const { fetchCabinetDetailInformation } = useCabinetDetailData({
+    cabinetData,
+    filteredCabinetDetail,
+    setSelectedCabinet,
+    setSelectedStatus,
+    setIsMyCabinet,
+  });
   const { getStatusColor } = useCabinetState();
-  // 사물함 정보 API 호출
-  const fetchCabinetDetailInformation = async (
-    cabinetId: number,
-    cabinetNumber: number
-  ) => {
-    try {
-      const response = await cabinetDetailInfoApi(cabinetId);
-      setSelectedCabinet({ cabinetId, cabinetNumber });
-      setSelectedStatus(response.status); // status 저장
-      setIsMyCabinet(response.isMine); // isMine 저장
-      console.log(200);
-      return response.data;
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    if (filteredCabinetDetail) {
-      // cabinetNumber로 cabinetData에서 매칭되는 cabinet 찾기
-      const matchedCabinet = cabinetData.find(
-        (cabinet) =>
-          cabinet.cabinetNumber === filteredCabinetDetail.cabinetNumber
-      );
-
-      if (matchedCabinet) {
-        // cabinetId를 사용하여 상세 정보 API 호출
-        fetchCabinetDetailInformation(
-          matchedCabinet.id,
-          matchedCabinet.cabinetNumber
-        );
-      }
-    }
-    return;
-  }, [cabinetData]);
 
   return (
     <div className="w-full h-[80%] flex items-center justify-center">

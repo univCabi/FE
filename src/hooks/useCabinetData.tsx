@@ -20,7 +20,7 @@ interface cabinetApiData {
 export const useCabinetData = (
   selectedBuilding: { name: string } | null,
   selectedFloor: number | null,
-  selectedCabinet: { cabinetId: number; cabinetNumber: number } | null,
+  // selectedCabinet: { cabinetId: number; cabinetNumber: number } | null,
   isMyCabinet: boolean
 ) => {
   const [cabinetData, setCabinetData] = useState<cabinetApiData[]>([]);
@@ -39,15 +39,19 @@ export const useCabinetData = (
 
   useEffect(() => {
     // cabinetData 상태 업데이트 (사물함 버튼 관련)
-    setCabinetData((prevData) =>
-      prevData.map((cabinet) =>
-        cabinet.id === selectedCabinet?.cabinetId ? { ...cabinet } : cabinet
-      )
-    );
+    // setCabinetData((prevData) =>
+    //   prevData.map((cabinet) =>
+    //     cabinet.id === selectedCabinet?.cabinetId ? { ...cabinet, isMine: isMyCabinet } : cabinet
+    //   )
+    // );
     if (selectedBuilding !== null && selectedFloor !== null) {
       fetchCabinetData(selectedBuilding.name, selectedFloor);
     }
   }, [selectedBuilding, selectedFloor, isMyCabinet]);
 
-  return { cabinetData, setCabinetData, fetchCabinetData };
+  return {
+    cabinetData,
+    setCabinetData,
+    fetchCabinetData,
+  };
 };
