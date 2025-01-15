@@ -1,7 +1,8 @@
 import CabinetSVG from "@/icons/cabinet.svg?react";
 import { useCabinetRentalModal } from "@/hooks/useCabinetRentalModal";
 import { useCabinetReturnModal } from "@/hooks/useCabinetReturnModal";
-import CabinetRentalConfirmModal from "@/components/CabinetState/CabinetRentalConfirmModal";
+import { rentApi } from "@/api/rentApi";
+import HandleModal from "@/components/HandleModal";
 import CabinetReturnConfirmModal from "@/components/CabinetState/CabinetReturnConfirmModal";
 
 // 선택된 사물함 정보
@@ -74,6 +75,26 @@ const SelectedCabinetInformation = ({
     setSelectedCabinet(null);
   };
 
+  const handleRent = async () => {
+    if (!selectedCabinet) return;
+    try {
+      const response = await rentApi(selectedCabinet.cabinetId);
+
+      if (response?.success) {
+        setSelectedStatus(response.data.status);
+        setExpiredAt(response.data.expiredAt);
+        setIsMineState(response.data.isMine);
+        closeRentalModal();
+        return response;
+      } else {
+        closeRentalModal();
+      }
+    } catch (error) {
+      console.error(error);
+      closeRentalModal();
+    }
+  };
+
   return (
     <div className="absolute inset-y-0 right-0 w-80 pt-20 flex flex-col justify-center items-center bg-white border-l-2 border-gray-400">
       {selectedCabinet !== null ? (
@@ -102,17 +123,13 @@ const SelectedCabinetInformation = ({
               </button>
             </div>
             {openRentalModal && (
-              <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
-                <CabinetRentalConfirmModal
-                  selectedBuilding={selectedBuilding}
-                  selectedFloor={selectedFloor}
-                  selectedCabinet={selectedCabinet}
-                  closeRentalModal={closeRentalModal}
-                  setSelectedStatus={setSelectedStatus}
-                  setExpiredAt={setExpiredAt}
-                  setIsMineState={setIsMineState}
-                />
-              </div>
+              <HandleModal
+                onClick={handleRent}
+                setModalCancelState={setOpenRentalModal}
+                title={"대여 확인"}
+                boldText={`${selectedBuilding} ${selectedFloor}F ${selectedCabinet?.cabinetNumber}번 사물함`}
+                text={"이 사물함을 대여하시겠습니까?"}
+              />
             )}
           </>
         ) : selectedStatus === "USING" && isMineState === true ? (

@@ -34,6 +34,7 @@ const ProfilePage = () => {
   const onSubmit = () => {
     if (window.confirm("저장하시겠습니까?")) {
       handleProfileSave();
+
       window.location.reload();
     }
   };
