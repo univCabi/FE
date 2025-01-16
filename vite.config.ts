@@ -10,4 +10,9 @@ export default defineConfig({
     alias: { find: "@", replacement: resolve(__dirname, "src") },
   },
   plugins: [react(), svgr(), tsconfigPaths()],
+  server: {
+    watch: {
+      usePolling: true, // 파일 변경 감지 활성화
+    },
+  },
 });

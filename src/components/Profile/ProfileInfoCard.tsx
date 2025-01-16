@@ -1,4 +1,4 @@
-interface ProfileCardProps {
+interface ProfileInfoCardProps {
   toggleSwitch: () => void;
   name: string | null;
   userIsVisible: boolean;
@@ -6,14 +6,14 @@ interface ProfileCardProps {
   studentNumber: number | null;
   phoneNumber: string | null;
 }
-const ProfileCard = ({
+const ProfileInfoCard = ({
   toggleSwitch,
   name,
   userIsVisible,
   affiliation,
   studentNumber,
   phoneNumber,
-}: ProfileCardProps) => {
+}: ProfileInfoCardProps) => {
   return (
     <div className="p-10 w-96 sl:w-full bg-neutral-100 rounded-2xl flex-col justify-start items-start gap-5 inline-flex shadow-md">
       <div className="justify-start items-start inline-flex text-black text-lg sl:text-xl font-bold">
@@ -67,4 +67,4 @@ const ProfileCard = ({
   );
 };
 
-export default ProfileCard;
+export default ProfileInfoCard;

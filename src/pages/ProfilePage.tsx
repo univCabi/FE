@@ -2,19 +2,23 @@ import { useBuildingList } from "@/hooks/useBuildingList";
 import { useSearch } from "@/hooks/useSearch";
 import { useBuildingState } from "@/hooks/useBuildingState";
 import { useUserData } from "@/hooks/useUserData";
-import ProfileCard from "@/components/Profile/ProfileCard";
-import RentalinfoCard from "@/components/Profile/RentalinfoCard";
-import ProfileSaveButton from "@/components/Profile/ProfileSaveButton";
+import ProfileInfoCard from "@/components/Profile/ProfileInfoCard";
+import RentalInfoCard from "@/components/Profile/RentalInfoCard";
 import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
+import SubmitAndNavigateButton from "@/components/SubmitAndNavigateButton";
 import SideNavigationLayout from "@/pages/SideNavigationLayout";
 import { useCabinetState } from "@/hooks/useCabinetState";
+import { useProfileSave } from "@/hooks/useProfileSave";
 
 const ProfilePage = () => {
   const { userData, userIsVisible, setUserIsVisible } = useUserData();
-  const toggleSwitch = (): void => {
-    setUserIsVisible(!userIsVisible);
-  };
+
+  const { handleProfileSave } = useProfileSave(
+    userIsVisible,
+    userData.isVisible
+  );
   const { buildingList } = useBuildingList();
+
   const {
     selectedBuilding,
     setSelectedBuilding,
@@ -25,6 +29,16 @@ const ProfilePage = () => {
   const { setSelectedCabinet } = useCabinetState();
   const { searchInput, setSearchInput } = useSearch();
 
+  const toggleSwitch = (): void => {
+    setUserIsVisible(!userIsVisible);
+  };
+
+  const onSubmit = () => {
+    if (window.confirm("저장하시겠습니까?")) {
+      handleProfileSave();
+      window.location.reload();
+    }
+  };
   return (
     <div className="relative h-screen flex flex-col">
       {/* 상단 네비게이션 바 */}
@@ -53,7 +67,7 @@ const ProfilePage = () => {
         <main className="ml-0 md:ml-40 flex-grow flex flex-col items-center justify-center">
           <div className="flex flex-col md:flex-row gap-20 ">
             {/* 프로필 */}
-            <ProfileCard
+            <ProfileInfoCard
               toggleSwitch={toggleSwitch}
               name={userData.name}
               userIsVisible={userIsVisible}
@@ -62,11 +76,17 @@ const ProfilePage = () => {
               phoneNumber={userData.phoneNumber}
             />
             {/* 대여정보 */}
-            <RentalinfoCard userRentalData={userData.rentCabinetInfo} />
+            <RentalInfoCard userRentalData={userData.rentCabinetInfo} />
           </div>
-          <ProfileSaveButton
-            userIsVisible={userIsVisible}
-            saveState={userData.isVisible}
+          <SubmitAndNavigateButton
+            className={`mt-10 mb-10 w-40 h-16 ${
+              userIsVisible === userData.isVisible
+                ? "bg-gray-400 "
+                : "bg-blue-600 hover:text-blue-900"
+            } rounded-lg justify-center items-center inline-flex text-center text-white text-xl shadow-2xl`}
+            onClick={onSubmit}
+            text={"저장"}
+            disabled={userIsVisible === userData.isVisible}
           />
         </main>
       </div>
