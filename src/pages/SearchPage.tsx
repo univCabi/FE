@@ -7,7 +7,7 @@ import { useSearchInput } from "@/hooks/useSearchInput";
 import SideNavigationLayout from "@/pages/SideNavigationLayout";
 import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
 import SelectedCabinetInformation from "@/components/Cabinet/SelectedCabinetInformation";
-import DefaultSearchDisplay from "@/components/Search/DefaultSearchDisplay";
+import DefaultSearchLayout from "@/components/Search/DefaultSearchLayout";
 import SearchResultGridButton from "@/components/Search/SearchResultGridButton";
 import SearchResultDropdownButton from "@/components/Search/SearchResultDropdownButton";
 import SearchInputComponent from "@/components/Search/SearchInputComponent";
@@ -111,7 +111,7 @@ const SearchPage = () => {
         </div>
 
         {/* 검색 결과 없을 때 나오는 컴포넌트 */}
-        {searchResults.length === 0 && <DefaultSearchDisplay />}
+        {searchResults.length === 0 && <DefaultSearchLayout />}
       </>
 
       {/* 건물 정보(좌측) */}
