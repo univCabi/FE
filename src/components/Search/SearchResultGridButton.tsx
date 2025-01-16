@@ -2,30 +2,30 @@
 
 interface SearchResultGridButtonProps {
   searchResults: { building: string; floor: number; cabinetNumber: number }[];
-  handleClickResultButton: (
+  fetchClickResultButton: (
     building: string,
     floor: number,
     cabinetNumber: number
   ) => void;
 
-  loading: boolean;
+  isLoading: boolean;
   hasMoreResults: boolean;
 }
 
 const SearchResultGridButton = ({
   searchResults,
-  handleClickResultButton,
-  loading,
+  fetchClickResultButton,
+  isLoading,
   hasMoreResults,
 }: SearchResultGridButtonProps) => {
   return (
-    <div>
+    <>
       <div className="grid pt-28 justify-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-16 px-4 sm:px-8 md:px-16 lg:px-24">
         {searchResults.map((result, index) => (
           <button
             key={index}
             onClick={() =>
-              handleClickResultButton(
+              fetchClickResultButton(
                 result.building,
                 result.floor,
                 result.cabinetNumber
@@ -38,10 +38,10 @@ const SearchResultGridButton = ({
         ))}
       </div>
       <div className="flex justify-center mt-3">
-        {loading && <p>Loading...</p>}
+        {isLoading && <p>Loading...</p>}
         {!hasMoreResults && <p>No More Results</p>}
       </div>
-    </div>
+    </>
   );
 };
 export default SearchResultGridButton;

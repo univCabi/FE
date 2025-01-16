@@ -1,11 +1,11 @@
-// // 건물, 층 선택 버튼
+// 건물, 층 선택 버튼
 
 import { cabinetCallApi } from "@/api/cabinetCallApi";
 import { useSearch } from "@/hooks/useSearch";
 import { useSearchToMain } from "@/hooks/useSearchToMain";
 
 interface BuildingSelectButtonProps {
-  buildings: { name: string; floors: number[] }[];
+  buildingList: { name: string; floors: number[] }[];
   selectedBuilding: string | null;
   setSelectedBuilding: (building: string | null) => void;
   selectedFloor: number | null;
@@ -16,24 +16,23 @@ interface BuildingSelectButtonProps {
       cabinetNumber: number;
     } | null
   ) => void;
-  filteredCabinetDetail: { id: number; status: string; isMine: boolean } | null; // 추가
 }
 
 const BuildingSelectButton = ({
-  buildings,
+  buildingList,
   selectedBuilding,
   setSelectedBuilding,
   selectedFloor,
   setSelectedFloor,
   setSelectedCabinet,
-  filteredCabinetDetail,
 }: BuildingSelectButtonProps) => {
-  const { setSearchParams } = useSearch();
-
-  // 결과 버튼 누르면 mainPage로 넘어가서 동일한 쿼리스트링을 가진 사물함 페이지로 이동
+  // search result와 동일한 쿼리스트링 페이지로 이동
   useSearchToMain(selectedBuilding, setSelectedBuilding, setSelectedFloor);
-
-  const handlecabinetCall = async (building: string, floor: number) => {
+  const { setSearchParams } = useSearch();
+  const fetchSearchResultCabinetData = async (
+    building: string,
+    floor: number
+  ) => {
     try {
       const response = await cabinetCallApi(building, floor);
       setSearchParams({ building, floor: floor.toString() }); // 쿼리스트링
@@ -49,8 +48,8 @@ const BuildingSelectButton = ({
 
   return (
     <div>
-      <div className="overflow-y-auto h-3/5">
-        {buildings.map((building) => (
+      <div className="overflow-y-auto h-3/5 pt-[5rem] w-40">
+        {buildingList.map((building) => (
           <div key={building.name} className="mx-2">
             <button
               className={`p-4 w-full text-gray-500 hover:bg-blue-600 hover:text-white rounded-lg transition-all duration-150 ${
@@ -80,7 +79,7 @@ const BuildingSelectButton = ({
                     onClick={() => {
                       setSelectedFloor(floor); // 선택된 층을 업데이트
                       setSelectedCabinet(null);
-                      handlecabinetCall(building.name, floor);
+                      fetchSearchResultCabinetData(building.name, floor);
                     }}
                   >
                     {floor}F

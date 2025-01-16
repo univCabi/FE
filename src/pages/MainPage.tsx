@@ -1,3 +1,4 @@
+import { useLocation } from "react-router";
 import { useBuildingState } from "@/hooks/useBuildingState";
 import { useBuildingList } from "@/hooks/useBuildingList";
 import { useCabinetState } from "@/hooks/useCabinetState";
@@ -5,13 +6,12 @@ import SideNavigationLayout from "@/pages/SideNavigationLayout";
 import SelectedCabinetInformation from "@/components/Cabinet/SelectedCabinetInformation";
 import BuildingSelectButton from "@/components/BuildingSelectButton";
 import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
-import CabinetButtonComponent from "@/components/Cabinet/CabinetButtonComponent";
+import CabinetButtonLayout from "@/components/Cabinet/CabinetButtonLayout";
 import CabinetStatusInformation from "@/components/Cabinet/CabinetStatusInformation";
-import { useLocation } from "react-router";
 
 const MainPage = () => {
   // 건물 목록 hooks
-  const { buildings } = useBuildingList();
+  const { buildingList } = useBuildingList();
 
   // 건물, 층수 버튼, dropdown 관련 hooks
   const {
@@ -27,37 +27,36 @@ const MainPage = () => {
     setSelectedStatus,
     expiredAt,
     setExpiredAt,
-    isMineState,
-    setIsMineState,
+    isMyCabinet,
+    setIsMyCabinet,
   } = useCabinetState();
 
   const location = useLocation();
   const filteredCabinetDetail = location.state?.filteredCabinetDetail;
 
   return (
-    <div>
+    <>
       {/* 상단 네비게이션바(화면 크기 상관없이 표시) */}
       <SideNavigationLayout
-        buildings={buildings}
+        buildingList={buildingList}
         selectedBuilding={selectedBuilding}
         setSelectedBuilding={setSelectedBuilding}
         setSelectedFloor={setSelectedFloor}
-        setSelectedCabinet={setSelectedCabinet} // 추가
+        setSelectedCabinet={setSelectedCabinet}
       />
 
       {/* 화면 크기 = 768px 이상일 때 */}
       <div className="md:flex">
         {/* 건물 정보(좌측) */}
-        <div className="absolute inset-y-0 left-0 w-40 border-r-2 border-gray-400 flex-col pt-20 hidden md:flex">
+        <div className="absolute inset-y-0 left-0 w-40 border-r-2 border-gray-400 hidden md:flex">
           <BuildingSelectButton
-            buildings={buildings}
+            buildingList={buildingList}
             selectedBuilding={selectedBuilding}
             setSelectedBuilding={setSelectedBuilding}
             selectedFloor={selectedFloor}
             setSelectedFloor={setSelectedFloor}
             setSelectedCabinet={setSelectedCabinet}
             selectedCabinet={selectedCabinet}
-            filteredCabinetDetail={filteredCabinetDetail}
           />
 
           {/* 하단 메뉴(좌측) */}
@@ -69,9 +68,9 @@ const MainPage = () => {
           {/* 건물 선택 후, 층수 선택을 둘 다 해야 사물함 컴포넌트가 보임 */}
           {selectedBuilding !== null && selectedFloor !== null && (
             <>
-              <CabinetButtonComponent
+              <CabinetButtonLayout
                 selectedBuilding={
-                  buildings.find(
+                  buildingList.find(
                     (building) => building.name === selectedBuilding
                   ) || null
                 }
@@ -79,8 +78,8 @@ const MainPage = () => {
                 selectedCabinet={selectedCabinet}
                 setSelectedCabinet={setSelectedCabinet}
                 setSelectedStatus={setSelectedStatus}
-                isMineState={isMineState}
-                setIsMineState={setIsMineState}
+                isMyCabinet={isMyCabinet}
+                setIsMyCabinet={setIsMyCabinet}
                 filteredCabinetDetail={filteredCabinetDetail}
               />
               <CabinetStatusInformation />
@@ -98,8 +97,8 @@ const MainPage = () => {
             setExpiredAt={setExpiredAt}
             setSelectedCabinet={setSelectedCabinet}
             expiredAt={expiredAt}
-            isMineState={isMineState}
-            setIsMineState={setIsMineState}
+            isMyCabinet={isMyCabinet}
+            setIsMyCabinet={setIsMyCabinet}
           />
         </div>
       </div>
@@ -108,16 +107,15 @@ const MainPage = () => {
       <div className="md:hidden">
         {/* 건물 & 층 선택 안했을 때 -> 건물 & 층 선택하는 컴포넌트만 표시 */}
         {selectedFloor === null && (
-          <div className="absolute inset-y-0 left-0 w-40 border-r-2 border-gray-400 flex-col pt-20 flex">
+          <div className="absolute inset-y-0 left-0 w-40 border-r-2 border-gray-400 flex">
             <BuildingSelectButton
-              buildings={buildings}
+              buildingList={buildingList}
               selectedBuilding={selectedBuilding}
               setSelectedBuilding={setSelectedBuilding}
               selectedFloor={selectedFloor}
               setSelectedFloor={setSelectedFloor}
               setSelectedCabinet={setSelectedCabinet}
               selectedCabinet={selectedCabinet}
-              filteredCabinetDetail={filteredCabinetDetail}
             />
             {/* 하단 메뉴(좌측) */}
             <CabinetFooterMenuButton />
@@ -133,9 +131,9 @@ const MainPage = () => {
           >
             <>
               <div className="absolute inset-y-0 left-12 right-8 pt-16">
-                <CabinetButtonComponent
+                <CabinetButtonLayout
                   selectedBuilding={
-                    buildings.find(
+                    buildingList.find(
                       (building) => building.name === selectedBuilding
                     ) || null
                   }
@@ -143,8 +141,8 @@ const MainPage = () => {
                   selectedCabinet={selectedCabinet}
                   setSelectedCabinet={setSelectedCabinet}
                   setSelectedStatus={setSelectedStatus}
-                  isMineState={isMineState}
-                  setIsMineState={setIsMineState}
+                  isMyCabinet={isMyCabinet}
+                  setIsMyCabinet={setIsMyCabinet}
                   filteredCabinetDetail={filteredCabinetDetail}
                 />
               </div>
@@ -168,13 +166,13 @@ const MainPage = () => {
               setExpiredAt={setExpiredAt}
               setSelectedCabinet={setSelectedCabinet}
               expiredAt={expiredAt}
-              isMineState={isMineState}
-              setIsMineState={setIsMineState}
+              isMyCabinet={isMyCabinet}
+              setIsMyCabinet={setIsMyCabinet}
             />
           </div>
         )}
       </div>
-    </div>
+    </>
   );
 };
 

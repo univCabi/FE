@@ -20,42 +20,31 @@ interface cabinetApiData {
 export const useCabinetData = (
   selectedBuilding: { name: string } | null,
   selectedFloor: number | null,
-  selectedCabinet: { cabinetId: number; cabinetNumber: number } | null,
-  isMineState: boolean,
-  selectedStatus: string
+  isMyCabinet: boolean
 ) => {
   const [cabinetData, setCabinetData] = useState<cabinetApiData[]>([]);
 
-  const handleCabinetCall = async (building: string, floor: number) => {
+  // building, floor 선택 -> 사물함 버튼 활성화
+  const fetchCabinetData = async (building: string, floor: number) => {
     try {
       const response = await cabinetCallApi(building, floor);
       setCabinetData(response.cabinets);
     } catch (error) {
-      console.log(error);
+      if (error === 404) {
+        console.error(404);
+      }
     }
   };
 
   useEffect(() => {
-    // cabinetData 상태 업데이트 (사물함 버튼 관련)
-    setCabinetData((prevData) =>
-      prevData.map((cabinet) =>
-        cabinet.id === selectedCabinet?.cabinetId
-          ? { ...cabinet, isMine: isMineState }
-          : cabinet
-      )
-    );
     if (selectedBuilding !== null && selectedFloor !== null) {
-      handleCabinetCall(selectedBuilding.name, selectedFloor);
+      fetchCabinetData(selectedBuilding.name, selectedFloor);
     }
-  }, [
-    selectedBuilding,
-    selectedFloor,
-    // selectedCabinet,
-    isMineState,
-    // selectedStatus,
-  ]);
+  }, [selectedBuilding, selectedFloor, isMyCabinet]);
 
-  // console.log("cabinetData: " + JSON.stringify(cabinetData));
-
-  return { cabinetData, setCabinetData, handleCabinetCall };
+  return {
+    cabinetData,
+    setCabinetData,
+    fetchCabinetData,
+  };
 };

@@ -14,17 +14,19 @@ import { useProfileSave } from "@/hooks/useProfileSave";
 
 const ProfilePage = () => {
   const { userData, userIsVisible, setUserIsVisible } = useUserData();
+
   const { handleProfileSave } = useProfileSave(
     userIsVisible,
     userData.isVisible
   );
-  const { buildings } = useBuildingList();
+  const { buildingList } = useBuildingList();
+
   const {
     selectedBuilding,
     setSelectedBuilding,
     setSelectedFloor,
-    isOpen,
-    setIsOpen,
+    isDropdownOpen,
+    setIsDropdownOpen,
   } = useBuildingState();
   const { setSelectedCabinet } = useCabinetState();
   const { searchInput, setSearchInput } = useSearch();
@@ -55,12 +57,12 @@ const ProfilePage = () => {
       {/* 상단 네비게이션 바 */}
       <header className="sticky top-0 left-0 right-0 h-16 z-10">
         <SideNavigationLayout
-          buildings={buildings}
+          buildingList={buildingList}
           selectedBuilding={selectedBuilding}
           setSelectedBuilding={setSelectedBuilding}
           setSelectedFloor={setSelectedFloor}
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
+          isDropdownOpen={isDropdownOpen}
+          setIsDropdownOpen={setIsDropdownOpen}
           searchInput={searchInput}
           setSearchInput={setSearchInput}
           setSelectedCabinet={setSelectedCabinet}

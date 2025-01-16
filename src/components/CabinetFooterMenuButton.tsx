@@ -1,8 +1,10 @@
+
 import { useLocation, useNavigate } from "react-router";
 import { useLogout } from "@/hooks/useLogout";
 import HistorySVG from "@/icons/log.svg?react";
 import SubmitAndNavigateButton from "@/components/SubmitAndNavigateButton";
 import LogoutSVG from "@/icons/logout.svg?react";
+
 
 const CabinetFooterMenuButton = () => {
   const navigate = useNavigate();
