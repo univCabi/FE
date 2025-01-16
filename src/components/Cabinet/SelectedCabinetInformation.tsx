@@ -1,7 +1,7 @@
-import { useCabinetRentalModal } from "@/hooks/useCabinetRentalModal";
-import { useCabinetReturnModal } from "@/hooks/useCabinetReturnModal";
-import CabinetRentalConfirmModal from "@/components/Cabinet/Modal/CabinetRentalConfirmModal";
-import CabinetReturnConfirmModal from "@/components/Cabinet/Modal/CabinetReturnConfirmModal";
+import { useConfirmModalState } from "@/hooks/useConfirmModalState";
+import { useCabinetRental } from "@/hooks/useCabinetRental";
+import { useCabinetReturn } from "@/hooks/useCabinetReturn";
+import ConfirmModalView from "@/components/ConfirmModalView";
 import CabinetInformationDisplay from "@/components/Cabinet/CabinetInformationDisplay";
 import CabinetActionButtons from "@/components/Cabinet/CabinetActionButtons";
 import CabinetSVG from "@/icons/cabinet.svg?react";
@@ -49,15 +49,48 @@ const SelectedCabinetInformation = ({
   isMyCabinet,
   setIsMyCabinet,
 }: SelectedCabinetInformationProps) => {
-  const { openRentalModal, clickedRentalButton, closeRentalModal } =
-    useCabinetRentalModal();
-  const { openReturnModal, clickedReturnButton, closeReturnModal } =
-    useCabinetReturnModal();
-
+  const {
+    openRentalModal,
+    openReturnModal,
+    setOpenRentalModal,
+    setOpenReturnModal,
+  } = useConfirmModalState();
+  // 대여 버튼 클릭
+  const clickedRentalButton = () => {
+    setOpenRentalModal(true);
+  };
+  // 대여 모달 -> '취소'버튼 누르면 모달 닫기
+  const closeRentalModal = () => {
+    setOpenRentalModal(false);
+  };
+  // 반납 버튼 클릭 -> 반납 모달창 생성
+  const clickedReturnButton = () => {
+    setOpenReturnModal(true);
+  };
+  // 반납 모달 -> '취소'버튼 누르면 모달 닫기
+  const closeReturnModal = () => {
+    setOpenReturnModal(false);
+  };
   // 취소 버튼 -> 사물함 선택 해제
   const cancelButton = () => {
     setSelectedCabinet(null);
   };
+
+  const { fetchCabinetRental } = useCabinetRental({
+    selectedCabinet,
+    closeRentalModal,
+    setSelectedStatus,
+    setExpiredAt,
+    setIsMyCabinet,
+  });
+
+  const { fetchCabinetReturn } = useCabinetReturn({
+    selectedCabinet,
+    closeReturnModal,
+    setSelectedStatus,
+    setExpiredAt,
+    setIsMyCabinet,
+  });
 
   return (
     <div className="absolute inset-y-0 right-0 w-80 pt-20 flex flex-col justify-center items-center bg-white border-l-2 border-gray-400">
@@ -79,17 +112,13 @@ const SelectedCabinetInformation = ({
               />
             </>
             {openRentalModal && (
-              <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
-                <CabinetRentalConfirmModal
-                  selectedBuilding={selectedBuilding}
-                  selectedFloor={selectedFloor}
-                  selectedCabinet={selectedCabinet}
-                  closeRentalModal={closeRentalModal}
-                  setSelectedStatus={setSelectedStatus}
-                  setExpiredAt={setExpiredAt}
-                  setIsMyCabinet={setIsMyCabinet}
-                />
-              </div>
+              <ConfirmModalView
+                onClick={fetchCabinetRental}
+                setModalCancelState={setOpenRentalModal}
+                title={"대여 확인"}
+                boldText={`${selectedBuilding} ${selectedFloor}F ${selectedCabinet?.cabinetNumber}번 사물함`}
+                text={"이 사물함을 대여하시겠습니까?"}
+              />
             )}
           </>
         ) : selectedStatus === "USING" && isMyCabinet === true ? (
@@ -115,17 +144,12 @@ const SelectedCabinetInformation = ({
               </div>
             </>
             {openReturnModal && (
-              <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
-                <CabinetReturnConfirmModal
-                  selectedBuilding={selectedBuilding}
-                  selectedFloor={selectedFloor}
-                  selectedCabinet={selectedCabinet}
-                  closeReturnModal={closeReturnModal}
-                  setSelectedStatus={setSelectedStatus}
-                  setExpiredAt={setExpiredAt}
-                  setIsMyCabinet={setIsMyCabinet}
-                />
-              </div>
+              <ConfirmModalView
+                onClick={fetchCabinetReturn}
+                setModalCancelState={setOpenReturnModal}
+                title={"반납 확인"}
+                text={"이 사물함을 반납하시겠습니까?"}
+              />
             )}
           </>
         ) : selectedStatus === "USING" && isMyCabinet === false ? (

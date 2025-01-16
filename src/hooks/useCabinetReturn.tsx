@@ -34,7 +34,6 @@ export const useCabinetReturn = ({
   };
 
   return {
-    closeReturnModal,
     fetchCabinetReturn,
   };
 };

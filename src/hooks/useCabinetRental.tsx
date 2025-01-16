@@ -32,7 +32,6 @@ export const useCabinetRental = ({
   };
 
   return {
-    closeRentalModal,
     fetchCabinetRental,
   };
 };

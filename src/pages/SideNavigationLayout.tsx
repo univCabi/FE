@@ -1,6 +1,5 @@
 import { useLocation, useNavigate } from "react-router";
 import { useBuildingState } from "@/hooks/useBuildingState";
-import ProfilePageButton from "@/components/ProfilePageButton";
 import SubmitAndNavigateButton from "@/components/SubmitAndNavigateButton";
 import LogoSVG from "@/icons/cabiLogo.svg?react";
 import AngleDownSVG from "@/icons/angleDown.svg?react";
