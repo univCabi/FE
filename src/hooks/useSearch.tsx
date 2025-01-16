@@ -17,7 +17,7 @@ export const useSearch = () => {
 
   // 무한스크롤 관련
   const [page, setPage] = useState(1); // 시작 페이지 = 1
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [hasMoreResults, setHasMoreResults] = useState(true); // 데이터가 더 있는지
   const scrollContainerRef = useRef<HTMLDivElement | null>(null); // 무한스크롤 영역 ref
 
@@ -33,14 +33,14 @@ export const useSearch = () => {
     setPage(1); // 첫 번째 페이지로 초기화
     setHasMoreResults(true); // 검색 가능 상태로 설정
     setShowGridResults(false); // 초기화 동안 그리드 숨기기
-    setLoading(false);
+    setIsLoading(false);
 
     await fetchSearchResults(1); // 1페이지 데이터 가져오기
   };
 
   // API
   // 검색 API 호출
-  const handleSearchKeyword = async (keyword: string) => {
+  const fetchSearchKeyword = async (keyword: string) => {
     setSearchParams({ keyword });
     if (keyword) {
       try {
@@ -54,15 +54,15 @@ export const useSearch = () => {
   };
   // debounce 적용된 API 호출 함수
   const debouncedSearchKeywordApi = useCallback(
-    debounce((keyword) => handleSearchKeyword(keyword), 200),
+    debounce((keyword) => fetchSearchKeyword(keyword), 200),
     []
   );
 
   // 무한스크롤
   // 검색 결과를 가져오는 함수
   const fetchSearchResults = async (page: number) => {
-    if (loading || (!hasMoreResults && page !== 1)) return;
-    setLoading(true);
+    if (isLoading || (!hasMoreResults && page !== 1)) return;
+    setIsLoading(true);
     try {
       const response = await searchResultsApi(searchInput, page);
       const data = response.data;
@@ -74,13 +74,13 @@ export const useSearch = () => {
       if (data.next !== null) {
         setPage((prevPage) => prevPage + 1); // next가 있으면, 다음 페이지로 이동
       } else {
-        setLoading(false); // 마지막 페이지인 경우 로딩 종료
+        setIsLoading(false); // 마지막 페이지인 경우 로딩 종료
       }
       console.log("현재 페이지", page);
     } catch (error) {
       console.error("검색 실패:", error);
     } finally {
-      setLoading(false); // 로딩 상태 해제
+      setIsLoading(false); // 로딩 상태 해제
     }
   };
 
@@ -98,7 +98,7 @@ export const useSearch = () => {
     return () => {
       container.removeEventListener("scroll", handleScroll);
     };
-  }, [page, hasMoreResults, loading, searchInput]);
+  }, [page, hasMoreResults, isLoading, searchInput]);
 
   return {
     searchInput,
@@ -111,13 +111,13 @@ export const useSearch = () => {
     setShowGridResults,
     inputRef,
     handleSearchSubmit,
-    handleSearchKeyword,
+    fetchSearchKeyword,
     debouncedSearchKeywordApi,
 
     page,
     setPage,
-    loading,
-    setLoading,
+    isLoading,
+    setIsLoading,
     hasMoreResults,
     setHasMoreResults,
     fetchSearchResults,

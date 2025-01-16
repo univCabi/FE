@@ -1,41 +1,28 @@
 // 반납 버튼 눌렀을 때, 반납 확인 모달
 
-import { returnApi } from "@/api/returnApi";
+import { useCabinetReturn } from "@/hooks/useCabinetReturn";
 
 interface CabinetReturnConfirmModalProps {
-  selectedBuilding: string | null;
-  selectedFloor: number | null;
   selectedCabinet: { cabinetId: number; cabinetNumber: number } | null;
   closeReturnModal: () => void;
-  setSelectedStatus: (status: string) => void; // 상태 업데이트 함수 추가
-  setExpiredAt: (expiredAt: string | null) => void; // 추가
-  setIsMineState: (isMine: boolean) => void;
+  setSelectedStatus: (status: string) => void;
+  setExpiredAt: (expiredAt: string | null) => void;
+  setIsMyCabinet: (isMine: boolean) => void;
 }
 const CabinetReturnConfirmModal = ({
   selectedCabinet,
   closeReturnModal,
   setSelectedStatus,
   setExpiredAt,
-  setIsMineState,
+  setIsMyCabinet,
 }: CabinetReturnConfirmModalProps) => {
-  const handleReturn = async () => {
-    if (!selectedCabinet) return;
-    try {
-      const response = await returnApi(selectedCabinet.cabinetId);
-
-      if (response?.success) {
-        setSelectedStatus(response.data.status);
-        setIsMineState(response.data.isMine);
-        closeReturnModal();
-        setExpiredAt(null); // 반납 기간 초기화
-        return response.data;
-      } else {
-        closeReturnModal();
-      }
-    } catch (error) {
-      closeReturnModal();
-    }
-  };
+  const { fetchCabinetReturn } = useCabinetReturn({
+    selectedCabinet,
+    closeReturnModal,
+    setSelectedStatus,
+    setExpiredAt,
+    setIsMyCabinet,
+  });
 
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
@@ -46,13 +33,13 @@ const CabinetReturnConfirmModal = ({
         <div className="mt-5 flex justify-center">
           <button
             className="mr-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-500"
-            onClick={handleReturn} // 확인 버튼 클릭 시 반납 API 호출 + CabinetRental.tsx가 렌더링
+            onClick={fetchCabinetReturn}
           >
             확인
           </button>
           <button
             className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-100"
-            onClick={closeReturnModal} // 취소 버튼 클릭 시 모달 닫기
+            onClick={closeReturnModal}
           >
             취소
           </button>

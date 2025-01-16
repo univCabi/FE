@@ -3,10 +3,19 @@
 import { useState } from "react";
 
 export const useCabinetRentalModal = () => {
-  const [openRentalModal, setOpenRentalModal] = useState(false); // 대여 모달
+  const [openRentalModal, setOpenRentalModal] = useState(false);
+
+  const clickedRentalButton = () => {
+    setOpenRentalModal(true);
+  };
+  const closeRentalModal = () => {
+    setOpenRentalModal(false);
+  };
 
   return {
     openRentalModal,
     setOpenRentalModal,
+    clickedRentalButton,
+    closeRentalModal,
   };
 };

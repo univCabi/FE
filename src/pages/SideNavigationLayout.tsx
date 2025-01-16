@@ -8,11 +8,10 @@ import SearchSVG from "@/icons/search.svg?react";
 import ProfileSVG from "@/icons/profile.svg?react";
 
 interface NavBuildingProps {
-  buildings: { name: string; floors: number[] }[]; // 건물 배열 (name과 floors 포함)
+  buildingList: { name: string; floors: number[] }[]; // 건물 배열 (name과 floors 포함)
   selectedBuilding: string | null; // 선택된 건물의 인덱스 또는 null
   setSelectedBuilding: (name: string | null) => void; // 선택된 건물을 설정하는 함수
   setSelectedFloor: (floor: number | null) => void; // 선택된 층을 설정하는 함수
-  // setSelectedCabinet: (cabinet: number | null) => void; // 추가 (드롭다운에서 건물 선택 시 사물함 정보도 초기화)
   selectedCabinet: { cabinetId: number; cabinetNumber: number } | null;
   setSelectedCabinet: (
     cabinet: {
@@ -23,13 +22,14 @@ interface NavBuildingProps {
 }
 
 const SideNavigationLayout = ({
-  buildings,
+  buildingList,
   selectedBuilding,
   setSelectedBuilding,
   setSelectedFloor,
   setSelectedCabinet,
 }: NavBuildingProps) => {
-  const { isOpen, setIsOpen, dropdownOutsideRef } = useBuildingState();
+  const { isDropdownOpen, setIsDropdownOpen, dropdownOutsideRef } =
+    useBuildingState();
   const location = useLocation();
   const navigate = useNavigate(); // 한 번만 선언하면 된다.
   // 로고 클릭 시 '/main'으로 이동 & 위치가 '/main'일 경우 새로고침 -> 민웅기: clikendLogo에서 clickedMainLogo로 변경하였습니다.
@@ -51,7 +51,7 @@ const SideNavigationLayout = ({
 
   // 드롭다운 토글
   const toggleDropdown = () => {
-    setIsOpen(!isOpen);
+    setIsDropdownOpen(!isDropdownOpen);
   };
 
   return (
@@ -75,9 +75,9 @@ const SideNavigationLayout = ({
             </button>
 
             {/* 드롭다운 상태일 때 */}
-            {isOpen && (
+            {isDropdownOpen && (
               <div className="absolute w-40 bg-white text-black rounded-md shadow-lg">
-                {buildings.map((building) => (
+                {buildingList.map((building) => (
                   <button
                     key={building.name}
                     className="block my-1 p-3 w-full text-center hover:bg-blue-400 hover:text-white rounded-md"
@@ -85,7 +85,7 @@ const SideNavigationLayout = ({
                       setSelectedBuilding(building.name); // 선택한 건물 업데이트
                       setSelectedFloor(null); // 건물 층수 초기화
                       setSelectedCabinet(null);
-                      setIsOpen(false); // 드롭다운 닫기
+                      setIsDropdownOpen(false); // 드롭다운 닫기
                     }}
                   >
                     {building.name}

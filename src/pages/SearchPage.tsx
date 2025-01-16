@@ -7,20 +7,20 @@ import { useSearchInput } from "@/hooks/useSearchInput";
 import SideNavigationLayout from "@/pages/SideNavigationLayout";
 import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
 import SelectedCabinetInformation from "@/components/Cabinet/SelectedCabinetInformation";
-import DefaultSearchComponent from "@/components/Search/DefaultSearchComponent";
+import DefaultSearchLayout from "@/components/Search/DefaultSearchLayout";
 import SearchResultGridButton from "@/components/Search/SearchResultGridButton";
 import SearchResultDropdownButton from "@/components/Search/SearchResultDropdownButton";
-import SearchInput from "@/components/Search/SearchInput";
+import SearchInputComponent from "@/components/Search/SearchInputComponent";
 
 const SearchPage = () => {
-  const { buildings } = useBuildingList();
+  const { buildingList } = useBuildingList();
   const {
     selectedBuilding,
     setSelectedBuilding,
     selectedFloor,
     setSelectedFloor,
-    isOpen,
-    setIsOpen,
+    isDropdownOpen,
+    setIsDropdownOpen,
     dropdownOutsideRef,
   } = useBuildingState();
   const {
@@ -30,10 +30,10 @@ const SearchPage = () => {
     setSelectedStatus,
     expiredAt,
     setExpiredAt,
-    isMineState,
-    setIsMineState,
+    isMyCabinet,
+    setIsMyCabinet,
   } = useCabinetState();
-  const { handleClickResultButton } = useSearchResultButton();
+  const { fetchClickResultButton } = useSearchResultButton();
   const {
     searchInput,
     searchResults,
@@ -42,7 +42,7 @@ const SearchPage = () => {
     inputRef,
     handleSearchSubmit,
     debouncedSearchKeywordApi,
-    loading,
+    isLoading,
     hasMoreResults,
     scrollContainerRef,
   } = useSearch();
@@ -55,13 +55,13 @@ const SearchPage = () => {
   } = useSearchInput({
     setSearchInput,
     debouncedSearchKeywordApi,
-    setIsOpen,
+    setIsDropdownOpen,
   });
 
   return (
-    <div>
+    <>
       <SideNavigationLayout
-        buildings={buildings}
+        buildingList={buildingList}
         selectedBuilding={selectedBuilding}
         setSelectedBuilding={setSelectedBuilding}
         setSelectedFloor={setSelectedFloor}
@@ -69,10 +69,10 @@ const SearchPage = () => {
       />
 
       {/* 검색 관련 */}
-      <div>
+      <>
         {/* 검색 입력창 */}
         <div className="flex flex-col items-center" ref={dropdownOutsideRef}>
-          <SearchInput
+          <SearchInputComponent
             searchInput={searchInput}
             inputRef={inputRef}
             handleInputRelatedSearch={handleInputRelatedSearch}
@@ -82,12 +82,12 @@ const SearchPage = () => {
           />
 
           {/* 검색 결과(드롭다운) */}
-          {searchInput && isOpen && (
+          {searchInput && isDropdownOpen && (
             <SearchResultDropdownButton
               searchResults={searchResults}
               slicedSearchResults={slicedSearchResults}
-              handleClickResultButton={handleClickResultButton}
-              setIsOpen={setIsOpen}
+              fetchClickResultButton={fetchClickResultButton}
+              setIsDropdownOpen={setIsDropdownOpen}
             />
           )}
         </div>
@@ -102,8 +102,8 @@ const SearchPage = () => {
             >
               <SearchResultGridButton
                 searchResults={searchResults}
-                handleClickResultButton={handleClickResultButton}
-                loading={loading}
+                fetchClickResultButton={fetchClickResultButton}
+                isLoading={isLoading}
                 hasMoreResults={hasMoreResults}
               />
             </div>
@@ -111,8 +111,8 @@ const SearchPage = () => {
         </div>
 
         {/* 검색 결과 없을 때 나오는 컴포넌트 */}
-        {searchResults.length === 0 && <DefaultSearchComponent />}
-      </div>
+        {searchResults.length === 0 && <DefaultSearchLayout />}
+      </>
 
       {/* 건물 정보(좌측) */}
       <div className="absolute inset-y-0 left-0 w-40 border-r-2 border-gray-400 flex-col pt-20 hidden md:flex">
@@ -131,11 +131,11 @@ const SearchPage = () => {
           setExpiredAt={setExpiredAt}
           setSelectedCabinet={setSelectedCabinet}
           expiredAt={expiredAt}
-          isMineState={isMineState}
-          setIsMineState={setIsMineState}
+          isMyCabinet={isMyCabinet}
+          setIsMyCabinet={setIsMyCabinet}
         />
       </div>
-    </div>
+    </>
   );
 };
 export default SearchPage;
