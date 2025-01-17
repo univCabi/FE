@@ -71,7 +71,7 @@ const MainPage = () => {
               <CabinetButtonLayout
                 selectedBuilding={
                   buildingList.find(
-                    (building) => building.name === selectedBuilding
+                    (data) => data.building === selectedBuilding
                   ) || null
                 }
                 selectedFloor={selectedFloor}
@@ -134,7 +134,7 @@ const MainPage = () => {
                 <CabinetButtonLayout
                   selectedBuilding={
                     buildingList.find(
-                      (building) => building.name === selectedBuilding
+                      (data) => data.building === selectedBuilding
                     ) || null
                   }
                   selectedFloor={selectedFloor}

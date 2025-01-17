@@ -18,7 +18,7 @@ interface cabinetApiData {
 }
 
 export const useCabinetData = (
-  selectedBuilding: { name: string } | null,
+  selectedBuilding: { building: string } | null,
   selectedFloor: number | null,
   isMyCabinet: boolean
 ) => {
@@ -38,7 +38,7 @@ export const useCabinetData = (
 
   useEffect(() => {
     if (selectedBuilding !== null && selectedFloor !== null) {
-      fetchCabinetData(selectedBuilding.name, selectedFloor);
+      fetchCabinetData(selectedBuilding.building, selectedFloor);
     }
   }, [selectedBuilding, selectedFloor, isMyCabinet]);
 

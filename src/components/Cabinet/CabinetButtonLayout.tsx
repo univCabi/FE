@@ -5,7 +5,7 @@ import { useCabinetState } from "@/hooks/useCabinetState";
 import { useCabinetDetailData } from "@/hooks/useCabinetDetailData";
 
 interface CabinetButtonLayoutProps {
-  selectedBuilding: { name: string } | null;
+  selectedBuilding: { building: string } | null;
   selectedFloor: number | null;
   setSelectedCabinet: (
     cabinet: { cabinetId: number; cabinetNumber: number } | null

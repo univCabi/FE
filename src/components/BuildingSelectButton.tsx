@@ -5,7 +5,7 @@ import { useSearch } from "@/hooks/useSearch";
 import { useSearchToMain } from "@/hooks/useSearchToMain";
 
 interface BuildingSelectButtonProps {
-  buildingList: { name: string; floors: number[] }[];
+  buildingList: { building: string; floor: number[] }[];
   selectedBuilding: string | null;
   setSelectedBuilding: (building: string | null) => void;
   selectedFloor: number | null;
@@ -49,26 +49,26 @@ const BuildingSelectButton = ({
   return (
     <div>
       <div className="overflow-y-auto h-3/5 pt-[5rem] w-40">
-        {buildingList.map((building) => (
-          <div key={building.name} className="mx-2">
+        {buildingList.map((buildingData) => (
+          <div key={buildingData.building} className="mx-2">
             <button
               className={`p-4 w-full text-gray-500 hover:bg-blue-600 hover:text-white rounded-lg transition-all duration-150 ${
-                selectedBuilding === building.name
+                selectedBuilding === buildingData.building
                   ? "bg-blue-600 text-white"
                   : ""
               }`}
               onClick={() => {
-                setSelectedBuilding(building.name);
+                setSelectedBuilding(buildingData.building);
                 setSelectedFloor(null); // 층 선택 초기화
                 setSelectedCabinet(null); // 사물함 선택 초기화
               }}
             >
-              {building.name}
+              {buildingData.building}
             </button>
 
-            {selectedBuilding === building.name && (
+            {selectedBuilding === buildingData.building && (
               <div className="absolute inset-y-0 left-40 w-24 border-r-2 border-gray-400 flex flex-col pt-20">
-                {building.floors.map((floor) => (
+                {buildingData.floor.map((floor) => (
                   <button
                     key={floor}
                     className={`p-4 w-auto text-gray-500 hover:bg-blue-600 hover:text-white mx-2 rounded-lg transition-all duration-150 ${
@@ -79,7 +79,10 @@ const BuildingSelectButton = ({
                     onClick={() => {
                       setSelectedFloor(floor); // 선택된 층을 업데이트
                       setSelectedCabinet(null);
-                      fetchSearchResultCabinetData(building.name, floor);
+                      fetchSearchResultCabinetData(
+                        buildingData.building,
+                        floor
+                      );
                     }}
                   >
                     {floor}F
