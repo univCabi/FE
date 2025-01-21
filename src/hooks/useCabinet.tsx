@@ -1,24 +1,44 @@
-// 사물함 선택, 대여, 반납, color 관련 hook
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { cabinetDetailInfoApi } from "@/api/cabinetDetailInfoApi";
+import { cabinetCallApi } from "@/api/cabinetCallApi";
 
 interface SelectedCabinetProps {
   cabinetId: number;
   cabinetNumber: number;
 }
-
-export const useCabinetState = () => {
+export const useCabinet = () => {
   const [selectedCabinet, setSelectedCabinet] =
     useState<SelectedCabinetProps | null>(null);
-  const [selectedStatus, setSelectedStatus] = useState<string>(); // 사물함 status
+  const [selectedStatus, setSelectedStatus] = useState<string | null>(); // 사물함 status
   const [expiredAt, setExpiredAt] = useState<string | null>(null); // 반납 기한
   const [isMyCabinet, setIsMyCabinet] = useState<boolean>(); // 본인 사물함 여부
 
-  const fetchCabinetDetailInformation = async (cabinetId: number) => {
+  // 사물함 API 호출
+  const fetchCabinetData = async (building: string, floor: number) => {
+    try {
+      const response = await cabinetCallApi(building, floor);
+      console.log(200);
+      return response;
+    } catch (error) {
+      if (error === 404) {
+        console.error(404);
+      }
+    }
+  };
+
+  // 사물함 세부 정보 API 호출
+  const fetchCabinetDetailInformation = async (
+    cabinetId: number,
+    cabinetNumber: number
+  ) => {
     try {
       const response = await cabinetDetailInfoApi(cabinetId);
-      setExpiredAt(response.expiredAt); // 만료일 설정
-      return response.data;
+      setSelectedCabinet({ cabinetId, cabinetNumber });
+      setSelectedStatus(response.status);
+      setIsMyCabinet(response.isMine);
+      setExpiredAt(response.expiredAt);
+      console.log(200);
+      return response;
     } catch (error) {
       console.error(error);
     }
@@ -44,13 +64,6 @@ export const useCabinetState = () => {
     }
   };
 
-  useEffect(() => {
-    if (selectedCabinet === null) return;
-    if (selectedCabinet.cabinetId) {
-      fetchCabinetDetailInformation(selectedCabinet.cabinetId);
-    }
-  }, [isMyCabinet, selectedStatus, selectedCabinet]);
-
   return {
     selectedCabinet,
     setSelectedCabinet,
@@ -60,7 +73,8 @@ export const useCabinetState = () => {
     setExpiredAt,
     isMyCabinet,
     setIsMyCabinet,
-    fetchCabinetDetailInformation,
     getStatusColor,
+    fetchCabinetDetailInformation,
+    fetchCabinetData,
   };
 };

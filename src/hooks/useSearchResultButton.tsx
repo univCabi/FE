@@ -3,11 +3,16 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { cabinetCallApi } from "@/api/cabinetCallApi";
-import { cabinetDetailInfoApi } from "@/api/cabinetDetailInfoApi";
+
+interface filteredCabinetDetailProps {
+  building: string;
+  floor: number;
+}
 
 export const useSearchResultButton = () => {
   const navigate = useNavigate();
-  const [filteredCabinetDetail, setFilteredCabinetDetail] = useState(null); // 상세 데이터 저장
+  const [filteredCabinetDetail, setFilteredCabinetDetail] =
+    useState<filteredCabinetDetailProps | null>(null); // 상세 데이터 저장
 
   // 검색 결과 버튼 클릭 시 사물함 API 호출
   const fetchClickResultButton = async (
@@ -22,16 +27,12 @@ export const useSearchResultButton = () => {
         (cabinet) => cabinet.cabinetNumber === keyword
       );
       if (matchedCabinet) {
-        // 상세 정보 API 호출
-        const cabinetDetail = await cabinetDetailInfoApi(matchedCabinet.id);
         // 상태 업데이트
         setFilteredCabinetDetail({
-          ...cabinetDetail,
+          ...matchedCabinet,
           building,
           floor,
         });
-        console.log(200);
-      } else {
       }
     } catch (error) {
       console.error(error);
@@ -48,7 +49,7 @@ export const useSearchResultButton = () => {
         }
       );
     }
-  }, [filteredCabinetDetail, navigate]);
+  }, [filteredCabinetDetail]);
 
   return {
     fetchClickResultButton,

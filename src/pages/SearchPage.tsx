@@ -1,7 +1,6 @@
-import { useBuildingList } from "@/hooks/useBuildingList";
 import { useSearch } from "@/hooks/useSearch";
 import { useBuildingState } from "@/hooks/useBuildingState";
-import { useCabinetState } from "@/hooks/useCabinetState";
+import { useCabinet } from "@/hooks/useCabinet";
 import { useSearchResultButton } from "@/hooks/useSearchResultButton";
 import { useSearchInput } from "@/hooks/useSearchInput";
 import SideNavigationLayout from "@/pages/SideNavigationLayout";
@@ -13,8 +12,8 @@ import SearchResultDropdownButton from "@/components/Search/SearchResultDropdown
 import SearchInputComponent from "@/components/Search/SearchInputComponent";
 
 const SearchPage = () => {
-  const { buildingList } = useBuildingList();
   const {
+    buildingList,
     selectedBuilding,
     setSelectedBuilding,
     selectedFloor,
@@ -32,7 +31,7 @@ const SearchPage = () => {
     setExpiredAt,
     isMyCabinet,
     setIsMyCabinet,
-  } = useCabinetState();
+  } = useCabinet();
   const { fetchClickResultButton } = useSearchResultButton();
   const {
     searchInput,

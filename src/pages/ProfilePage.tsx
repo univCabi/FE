@@ -1,16 +1,15 @@
-import { useBuildingList } from "@/hooks/useBuildingList";
 import { useSearch } from "@/hooks/useSearch";
 import { useBuildingState } from "@/hooks/useBuildingState";
 import { useUserData } from "@/hooks/useUserData";
 import { useConfirmModalState } from "@/hooks/useConfirmModalState";
+import { useCabinet } from "@/hooks/useCabinet";
+import { useProfileSave } from "@/hooks/useProfileSave";
 import ProfileInfoCard from "@/components/Profile/ProfileInfoCard";
 import RentalInfoCard from "@/components/Profile/RentalInfoCard";
 import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
 import SubmitAndNavigateButton from "@/components/SubmitAndNavigateButton";
 import ConfirmModalView from "@/components/ConfirmModalView";
 import SideNavigationLayout from "@/pages/SideNavigationLayout";
-import { useCabinetState } from "@/hooks/useCabinetState";
-import { useProfileSave } from "@/hooks/useProfileSave";
 
 const ProfilePage = () => {
   const { userData, userIsVisible, setUserIsVisible } = useUserData();
@@ -19,16 +18,16 @@ const ProfilePage = () => {
     userIsVisible,
     userData.isVisible
   );
-  const { buildingList } = useBuildingList();
 
   const {
+    buildingList,
     selectedBuilding,
     setSelectedBuilding,
     setSelectedFloor,
     isDropdownOpen,
     setIsDropdownOpen,
   } = useBuildingState();
-  const { setSelectedCabinet } = useCabinetState();
+  const { setSelectedCabinet } = useCabinet();
   const { searchInput, setSearchInput } = useSearch();
   const { openProfileSaveButtonModal, setOpenProfileSaveButtonModal } =
     useConfirmModalState();

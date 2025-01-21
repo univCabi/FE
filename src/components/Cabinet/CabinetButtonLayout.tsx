@@ -1,48 +1,41 @@
 // 사물함 배열 관련
-
-import { useCabinetData } from "@/hooks/useCabinetData";
-import { useCabinetState } from "@/hooks/useCabinetState";
-import { useCabinetDetailData } from "@/hooks/useCabinetDetailData";
+import { useEffect } from "react";
+import { useCabinet } from "@/hooks/useCabinet";
+import { useCabinetActivation } from "@/hooks/useCabinetActivation";
 
 interface CabinetButtonLayoutProps {
   selectedBuilding: { building: string } | null;
   selectedFloor: number | null;
-  setSelectedCabinet: (
-    cabinet: { cabinetId: number; cabinetNumber: number } | null
-  ) => void;
-  setSelectedStatus: (status: string) => void;
   isMyCabinet: boolean;
-  setIsMyCabinet: (isMine: boolean) => void;
   filteredCabinetDetail: {
     id: number;
-    status: string;
-    isMine: boolean;
     cabinetNumber: number;
   } | null;
+  fetchCabinetDetailInformation: (id: number, cabientNumber: number) => void;
 }
 
 const CabinetButtonLayout = ({
   selectedBuilding,
   selectedFloor,
-  setSelectedCabinet,
-  setSelectedStatus,
   isMyCabinet,
-  setIsMyCabinet,
   filteredCabinetDetail,
+  fetchCabinetDetailInformation,
 }: CabinetButtonLayoutProps) => {
-  const { cabinetData } = useCabinetData(
+  const { getStatusColor } = useCabinet();
+  const { cabinetData } = useCabinetActivation({
     selectedBuilding,
     selectedFloor,
-    isMyCabinet
-  );
-  const { fetchCabinetDetailInformation } = useCabinetDetailData({
-    cabinetData,
-    filteredCabinetDetail,
-    setSelectedCabinet,
-    setSelectedStatus,
-    setIsMyCabinet,
+    isMyCabinet,
   });
-  const { getStatusColor } = useCabinetState();
+  // 검색 결과에 해당하는 사물함이 있을 경우에만 실행
+  useEffect(() => {
+    if (filteredCabinetDetail) {
+      fetchCabinetDetailInformation(
+        filteredCabinetDetail.id,
+        filteredCabinetDetail.cabinetNumber
+      );
+    }
+  }, [filteredCabinetDetail]);
 
   return (
     <div className="w-full h-[80%] flex items-center justify-center">

@@ -2,10 +2,7 @@ import api from "@/api/axiosInterceptApi";
 
 export const rentApi = async (cabinetId: number) => {
   try {
-    const response = await api.post(
-      `http://localhost:8000/cabinet/rent`,
-      { cabinetId } // 요청 데이터
-    );
+    const response = await api.post("/cabinet/rent", { cabinetId });
 
     if (response.status === 200) {
       console.log(response.status);
