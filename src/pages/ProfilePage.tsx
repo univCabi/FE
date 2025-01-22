@@ -1,4 +1,3 @@
-import { useSearch } from "@/hooks/useSearch";
 import { useBuildingState } from "@/hooks/useBuildingState";
 import { useUserData } from "@/hooks/useUserData";
 import { useConfirmModalState } from "@/hooks/useConfirmModalState";
@@ -24,11 +23,10 @@ const ProfilePage = () => {
     selectedBuilding,
     setSelectedBuilding,
     setSelectedFloor,
-    isDropdownOpen,
-    setIsDropdownOpen,
   } = useBuildingState();
+
   const { setSelectedCabinet } = useCabinet();
-  const { searchInput, setSearchInput } = useSearch();
+
   const { openProfileSaveButtonModal, setOpenProfileSaveButtonModal } =
     useConfirmModalState();
 
@@ -53,20 +51,14 @@ const ProfilePage = () => {
           setModalCancelState={setOpenProfileSaveButtonModal}
         />
       )}
-      {/* 상단 네비게이션 바 */}
-      <header className="sticky top-0 left-0 right-0 h-16 z-10">
-        <SideNavigationLayout
-          buildingList={buildingList}
-          selectedBuilding={selectedBuilding}
-          setSelectedBuilding={setSelectedBuilding}
-          setSelectedFloor={setSelectedFloor}
-          isDropdownOpen={isDropdownOpen}
-          setIsDropdownOpen={setIsDropdownOpen}
-          searchInput={searchInput}
-          setSearchInput={setSearchInput}
-          setSelectedCabinet={setSelectedCabinet}
-        />
-      </header>
+      {/* 상단 네비게이션바(화면 크기 상관없이 표시) */}
+      <SideNavigationLayout
+        buildingList={buildingList}
+        selectedBuilding={selectedBuilding}
+        setSelectedBuilding={setSelectedBuilding}
+        setSelectedFloor={setSelectedFloor}
+        setSelectedCabinet={setSelectedCabinet}
+      />
 
       {/* 메인 레이아웃 */}
       <div className="flex flex-grow pt-24">
