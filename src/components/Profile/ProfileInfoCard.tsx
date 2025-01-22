@@ -1,10 +1,7 @@
-interface ProfileInfoCardProps {
+import { UserInfo } from "@/interface";
+interface ProfileInfoCardProps extends UserInfo {
   toggleSwitch: () => void;
-  name: string | null;
   userIsVisible: boolean;
-  affiliation: string | null;
-  studentNumber: number | null;
-  phoneNumber: string | null;
 }
 const ProfileInfoCard = ({
   toggleSwitch,

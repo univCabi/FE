@@ -1,11 +1,11 @@
 // 검색 결과 - 드롭다운에 대한 컴포넌트
 
 interface SearchResultDropdowndButtonProps {
-  searchResults: { building: string; floor: number; cabinetNumber: number }[]; // 검색 결과
+  searchResults: { building: string; floor: string; cabinetNumber: number }[]; // 검색 결과
   slicedSearchResults: number; // 드롭다운 결과 6개씩 노출하기 위한 변수 타입
   fetchClickResultButton: (
     building: string,
-    floor: number,
+    floor: string,
     cabinetNumber: number
   ) => void; // 결과 드롭다운 버튼
   setIsDropdownOpen: (isDropdownOpen: boolean) => void; // 드롭다운 상태
@@ -24,7 +24,7 @@ const SearchResultDropdowndButton = ({
         searchResults.slice(0, slicedSearchResults).map((result, index) => (
           <button
             key={index}
-            onClick={(e) => {
+            onClick={() => {
               fetchClickResultButton(
                 result.building,
                 result.floor,

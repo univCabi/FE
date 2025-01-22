@@ -1,7 +1,7 @@
 interface HistoryListProp {
   userHistoryData: {
     building: string;
-    floor: number;
+    floor: string;
     section: string;
     cabinetNumber: number;
     startDate: string | null;

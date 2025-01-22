@@ -1,18 +1,16 @@
 // 건물, 층 선택 버튼
-
+import { BuildingData, SelectedCabinet } from "@/interface";
 import { useCabinet } from "@/hooks/useCabinet";
 import { useSearch } from "@/hooks/useSearch";
 import { useSearchToMain } from "@/hooks/useSearchToMain";
 
 interface BuildingSelectButtonProps {
-  buildingList: { building: string; floor: number[]; section: string }[];
+  buildingList: BuildingData[];
   selectedBuilding: string | null;
   setSelectedBuilding: (building: string | null) => void;
-  selectedFloor: number | null;
-  setSelectedFloor: (floor: number | null) => void;
-  setSelectedCabinet: (
-    cabinet: { cabinetId: number; cabinetNumber: number } | null
-  ) => void;
+  selectedFloor: string | null;
+  setSelectedFloor: (floor: string | null) => void;
+  setSelectedCabinet: (cabinet: SelectedCabinet | null) => void;
 }
 
 const BuildingSelectButton = ({

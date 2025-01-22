@@ -1,21 +1,7 @@
-import { userDataApi } from "@/api/userDataApi";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-interface UserData {
-  name: string | null;
-  isVisible: boolean;
-  affiliation: string | null;
-  studentNumber: number | null;
-  phoneNumber: string | null;
-  rentCabinetInfo: {
-    building: string | null;
-    floor: number | null;
-    cabinetNumber: number | null;
-    status: string | null;
-    startDate: string | null;
-    endDate: string | null;
-  };
-}
+import { UserData } from "@/interface";
+import { userDataApi } from "@/api/userDataApi";
 
 const defaultUserData: UserData = {
   name: null,

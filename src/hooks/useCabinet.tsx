@@ -1,20 +1,17 @@
 import { useState } from "react";
+import { SelectedCabinet } from "@/interface";
 import { cabinetDetailInfoApi } from "@/api/cabinetDetailInfoApi";
 import { cabinetCallApi } from "@/api/cabinetCallApi";
 
-interface SelectedCabinetProps {
-  cabinetId: number;
-  cabinetNumber: number;
-}
 export const useCabinet = () => {
   const [selectedCabinet, setSelectedCabinet] =
-    useState<SelectedCabinetProps | null>(null);
+    useState<SelectedCabinet | null>(null);
   const [selectedStatus, setSelectedStatus] = useState<string | null>(); // 사물함 status
   const [expiredAt, setExpiredAt] = useState<string | null>(null); // 반납 기한
   const [isMyCabinet, setIsMyCabinet] = useState<boolean>(); // 본인 사물함 여부
 
   // 사물함 API 호출
-  const fetchCabinetData = async (building: string, floor: number) => {
+  const fetchCabinetData = async (building: string, floor: string) => {
     try {
       const response = await cabinetCallApi(building, floor);
       console.log(200);

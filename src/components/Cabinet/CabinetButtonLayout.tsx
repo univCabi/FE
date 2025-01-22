@@ -5,7 +5,7 @@ import { useCabinetActivation } from "@/hooks/useCabinetActivation";
 
 interface CabinetButtonLayoutProps {
   selectedBuilding: { building: string } | null;
-  selectedFloor: number | null;
+  selectedFloor: string | null;
   isMyCabinet: boolean;
   filteredCabinetDetail: {
     id: number;

@@ -6,7 +6,7 @@ import { useSearchParams } from "react-router-dom";
 export const useSearchToMain = (
   selectedBuilding: string | null,
   setSelectedBuilding: (building: string | null) => void,
-  setSelectedFloor: (floor: number | null) => void
+  setSelectedFloor: (floor: string | null) => void
 ) => {
   const [searchParams] = useSearchParams();
 

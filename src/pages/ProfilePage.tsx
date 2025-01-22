@@ -88,7 +88,7 @@ const ProfilePage = () => {
               phoneNumber={userData.phoneNumber}
             />
             {/* 대여정보 */}
-            <RentalInfoCard userRentalData={userData.rentCabinetInfo} />
+            <RentalInfoCard rentCabinetInfo={userData.rentCabinetInfo} />
           </div>
           <SubmitAndNavigateButton
             className={`mt-10 mb-10 w-40 h-16 ${

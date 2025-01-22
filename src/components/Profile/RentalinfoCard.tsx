@@ -1,14 +1,9 @@
+import { RentCabinetInfo } from "@/interface";
+
 interface RentalInfoCardProp {
-  userRentalData: {
-    building: string | null;
-    floor: number | null;
-    cabinetNumber: number | null;
-    status: string | null;
-    startDate: string | null;
-    endDate: string | null;
-  };
+  rentCabinetInfo: RentCabinetInfo;
 }
-const RentalInfoCard = ({ userRentalData }: RentalInfoCardProp) => {
+const RentalInfoCard = ({ rentCabinetInfo }: RentalInfoCardProp) => {
   return (
     <div className="p-10 w-96 sl:w-full bg-neutral-100 rounded-2xl flex-col justify-start items-start gap-5 inline-flex shadow-md">
       <div className="justify-start items-start inline-flex text-black text-xl font-bold">
@@ -19,17 +14,17 @@ const RentalInfoCard = ({ userRentalData }: RentalInfoCardProp) => {
           <div className="w-[3.75rem] h-[0.3125rem] relative">
             <div
               className={`w-[3.75rem] h-[3.75rem] ${
-                userRentalData.cabinetNumber ? "text-2xl" : "text-xl"
+                rentCabinetInfo.cabinetNumber ? "text-2xl" : "text-xl"
               }
                text-gray-50 absolute bg-blue-500 rounded-[0.625rem] flex justify-center items-center`}
             >
-              {userRentalData.cabinetNumber ?? "___"}
+              {rentCabinetInfo.cabinetNumber ?? "___"}
             </div>
           </div>
           <div className="w-[6rem] h-[4rem] relative">
             <div className=" w-full top-3 absolute  text-[#7b7b7b] text-sm font-normal ">
-              {`${userRentalData?.building || "**"} - ${
-                userRentalData?.floor || "*"
+              {`${rentCabinetInfo?.building || "**"} - ${
+                rentCabinetInfo?.floor || "*"
               }층`}
             </div>
           </div>
@@ -38,8 +33,8 @@ const RentalInfoCard = ({ userRentalData }: RentalInfoCardProp) => {
           <div className="justify-between items-start inline-flex w-full">
             <div>시작일</div>
             <div className="font-bold">{`${
-              userRentalData.startDate
-                ? new Date(userRentalData.startDate)
+              rentCabinetInfo.startDate
+                ? new Date(rentCabinetInfo.startDate)
                     .toLocaleDateString("ko-KR", {
                       year: "numeric",
                       month: "2-digit",
@@ -52,9 +47,9 @@ const RentalInfoCard = ({ userRentalData }: RentalInfoCardProp) => {
           <div className="justify-between items-start inline-flex w-full">
             <div>남은 기간</div>
             <div className="font-bold">
-              {userRentalData.endDate
+              {rentCabinetInfo.endDate
                 ? (() => {
-                    const endDate = new Date(userRentalData.endDate);
+                    const endDate = new Date(rentCabinetInfo.endDate);
                     const today = new Date();
                     const leftDate: number = Math.ceil(
                       (endDate.getTime() - today.getTime()) /
@@ -70,8 +65,8 @@ const RentalInfoCard = ({ userRentalData }: RentalInfoCardProp) => {
           <div className="justify-between items-start inline-flex w-full">
             <div>종료 일자</div>
             <div className="font-bold ">{`${
-              userRentalData.endDate
-                ? new Date(userRentalData.endDate)
+              rentCabinetInfo.endDate
+                ? new Date(rentCabinetInfo.endDate)
                     .toLocaleDateString("ko-KR", {
                       year: "numeric",
                       month: "2-digit",

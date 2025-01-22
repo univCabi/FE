@@ -2,7 +2,7 @@ import { userHistoryDataApi } from "@/api/userHistoryDataApi";
 import { useEffect, useState } from "react";
 interface HistoryData {
   building: string;
-  floor: number;
+  floor: string;
   section: string;
   cabinetNumber: number;
   startDate: string | null;

@@ -3,7 +3,7 @@ import CabinetSVG from "@/icons/cabinet.svg?react";
 
 interface CabinetInformationDisplayProps {
   selectedBuilding: string | null;
-  selectedFloor: number | null;
+  selectedFloor: string | null;
   selectedCabinet: number | null;
   statusMessage: string;
 }

@@ -1,10 +1,10 @@
 // 검색 결과 - 결과 grid에 대한 컴포넌트
 
 interface SearchResultGridButtonProps {
-  searchResults: { building: string; floor: number; cabinetNumber: number }[];
+  searchResults: { building: string; floor: string; cabinetNumber: number }[];
   fetchClickResultButton: (
     building: string,
-    floor: number,
+    floor: string,
     cabinetNumber: number
   ) => void;
 
