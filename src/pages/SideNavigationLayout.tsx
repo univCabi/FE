@@ -7,9 +7,9 @@ import SearchSVG from "@/icons/search.svg?react";
 import ProfileSVG from "@/icons/profile.svg?react";
 
 interface NavBuildingProps {
-  buildingList: { name: string; floors: number[] }[]; // 건물 배열 (name과 floors 포함)
+  buildingList: { building: string; floor: number[] }[]; // 건물 배열 (name과 floors 포함)
   selectedBuilding: string | null; // 선택된 건물의 인덱스 또는 null
-  setSelectedBuilding: (name: string | null) => void; // 선택된 건물을 설정하는 함수
+  setSelectedBuilding: (building: string | null) => void; // 선택된 건물을 설정하는 함수
   setSelectedFloor: (floor: number | null) => void; // 선택된 층을 설정하는 함수
   selectedCabinet: { cabinetId: number; cabinetNumber: number } | null;
   setSelectedCabinet: (
@@ -76,18 +76,18 @@ const SideNavigationLayout = ({
             {/* 드롭다운 상태일 때 */}
             {isDropdownOpen && (
               <div className="absolute w-40 bg-white text-black rounded-md shadow-lg">
-                {buildingList.map((building) => (
+                {buildingList.map((buildingData) => (
                   <button
-                    key={building.name}
+                    key={buildingData.building}
                     className="block my-1 p-3 w-full text-center hover:bg-blue-400 hover:text-white rounded-md"
                     onClick={() => {
-                      setSelectedBuilding(building.name); // 선택한 건물 업데이트
+                      setSelectedBuilding(buildingData.building); // 선택한 건물 업데이트
                       setSelectedFloor(null); // 건물 층수 초기화
                       setSelectedCabinet(null);
                       setIsDropdownOpen(false); // 드롭다운 닫기
                     }}
                   >
-                    {building.name}
+                    {buildingData.building}
                   </button>
                 ))}
               </div>

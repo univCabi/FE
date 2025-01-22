@@ -1,7 +1,6 @@
 import { useLocation } from "react-router";
 import { useBuildingState } from "@/hooks/useBuildingState";
-import { useBuildingList } from "@/hooks/useBuildingList";
-import { useCabinetState } from "@/hooks/useCabinetState";
+import { useCabinet } from "@/hooks/useCabinet";
 import SideNavigationLayout from "@/pages/SideNavigationLayout";
 import SelectedCabinetInformation from "@/components/Cabinet/SelectedCabinetInformation";
 import BuildingSelectButton from "@/components/BuildingSelectButton";
@@ -10,11 +9,11 @@ import CabinetButtonLayout from "@/components/Cabinet/CabinetButtonLayout";
 import CabinetStatusInformation from "@/components/Cabinet/CabinetStatusInformation";
 
 const MainPage = () => {
-  // 건물 목록 hooks
-  const { buildingList } = useBuildingList();
+  const location = useLocation();
+  const filteredCabinetDetail = location.state?.filteredCabinetDetail;
 
-  // 건물, 층수 버튼, dropdown 관련 hooks
   const {
+    buildingList,
     selectedBuilding,
     setSelectedBuilding,
     selectedFloor,
@@ -29,10 +28,8 @@ const MainPage = () => {
     setExpiredAt,
     isMyCabinet,
     setIsMyCabinet,
-  } = useCabinetState();
-
-  const location = useLocation();
-  const filteredCabinetDetail = location.state?.filteredCabinetDetail;
+    fetchCabinetDetailInformation,
+  } = useCabinet();
 
   return (
     <>
@@ -56,7 +53,6 @@ const MainPage = () => {
             selectedFloor={selectedFloor}
             setSelectedFloor={setSelectedFloor}
             setSelectedCabinet={setSelectedCabinet}
-            selectedCabinet={selectedCabinet}
           />
 
           {/* 하단 메뉴(좌측) */}
@@ -71,16 +67,13 @@ const MainPage = () => {
               <CabinetButtonLayout
                 selectedBuilding={
                   buildingList.find(
-                    (building) => building.name === selectedBuilding
+                    (data) => data.building === selectedBuilding
                   ) || null
                 }
                 selectedFloor={selectedFloor}
-                selectedCabinet={selectedCabinet}
-                setSelectedCabinet={setSelectedCabinet}
-                setSelectedStatus={setSelectedStatus}
                 isMyCabinet={isMyCabinet}
-                setIsMyCabinet={setIsMyCabinet}
                 filteredCabinetDetail={filteredCabinetDetail}
+                fetchCabinetDetailInformation={fetchCabinetDetailInformation}
               />
               <CabinetStatusInformation />
             </>
@@ -115,7 +108,6 @@ const MainPage = () => {
               selectedFloor={selectedFloor}
               setSelectedFloor={setSelectedFloor}
               setSelectedCabinet={setSelectedCabinet}
-              selectedCabinet={selectedCabinet}
             />
             {/* 하단 메뉴(좌측) */}
             <CabinetFooterMenuButton />
@@ -134,16 +126,13 @@ const MainPage = () => {
                 <CabinetButtonLayout
                   selectedBuilding={
                     buildingList.find(
-                      (building) => building.name === selectedBuilding
+                      (data) => data.building === selectedBuilding
                     ) || null
                   }
                   selectedFloor={selectedFloor}
-                  selectedCabinet={selectedCabinet}
-                  setSelectedCabinet={setSelectedCabinet}
-                  setSelectedStatus={setSelectedStatus}
                   isMyCabinet={isMyCabinet}
-                  setIsMyCabinet={setIsMyCabinet}
                   filteredCabinetDetail={filteredCabinetDetail}
+                  fetchCabinetDetailInformation={fetchCabinetDetailInformation}
                 />
               </div>
               {/* 화면 크기 = 768px 이하일 때 사물함 정보 숨김 */}

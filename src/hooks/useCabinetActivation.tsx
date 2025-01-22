@@ -1,8 +1,9 @@
-// 사물함 API에서 data 불러오기 위한 hook
+// 사물함 버튼 활성화 -> cabinetData 저장
+
 import { useState, useEffect } from "react";
 import { cabinetCallApi } from "@/api/cabinetCallApi";
 
-interface cabinetApiData {
+interface CabinetData {
   floor: number;
   section: string;
   building: string;
@@ -17,34 +18,43 @@ interface cabinetApiData {
   expiredAt: string | null;
 }
 
-export const useCabinetData = (
-  selectedBuilding: { name: string } | null,
-  selectedFloor: number | null,
-  isMyCabinet: boolean
-) => {
-  const [cabinetData, setCabinetData] = useState<cabinetApiData[]>([]);
+interface UseCabinetActivationProps {
+  selectedBuilding: { building: string } | null;
+  selectedFloor: number | null;
+  isMyCabinet: boolean;
+}
 
-  // building, floor 선택 -> 사물함 버튼 활성화
-  const fetchCabinetData = async (building: string, floor: number) => {
+export const useCabinetActivation = ({
+  selectedBuilding,
+  selectedFloor,
+  isMyCabinet,
+}: UseCabinetActivationProps) => {
+  const [cabinetData, setCabinetData] = useState<CabinetData[]>([]);
+
+  const fetchCabinetButtonActivation = async (
+    building: string,
+    floor: number
+  ) => {
     try {
       const response = await cabinetCallApi(building, floor);
       setCabinetData(response.cabinets);
+
+      return response;
     } catch (error) {
       if (error === 404) {
         console.error(404);
       }
     }
   };
-
   useEffect(() => {
     if (selectedBuilding !== null && selectedFloor !== null) {
-      fetchCabinetData(selectedBuilding.name, selectedFloor);
+      fetchCabinetButtonActivation(selectedBuilding.building, selectedFloor);
     }
   }, [selectedBuilding, selectedFloor, isMyCabinet]);
 
   return {
     cabinetData,
     setCabinetData,
-    fetchCabinetData,
+    fetchCabinetButtonActivation,
   };
 };

@@ -1,4 +1,3 @@
-import { useBuildingList } from "@/hooks/useBuildingList";
 import { useSearch } from "@/hooks/useSearch";
 import { useBuildingState } from "@/hooks/useBuildingState";
 import { useHistoryData } from "@/hooks/useHistoryData";
@@ -8,8 +7,8 @@ import SideNavigationLayout from "@/pages/SideNavigationLayout";
 
 const HistoryPage = () => {
   const { userHistoryData } = useHistoryData();
-  const { buildingList } = useBuildingList();
   const {
+    buildingList,
     selectedBuilding,
     setSelectedBuilding,
     setSelectedFloor,
