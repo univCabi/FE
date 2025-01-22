@@ -3,7 +3,7 @@ import { useBuildingState } from "@/hooks/useBuildingState";
 import { useCabinet } from "@/hooks/useCabinet";
 import { useSearchResultButton } from "@/hooks/useSearchResultButton";
 import { useSearchInput } from "@/hooks/useSearchInput";
-import SideNavigationLayout from "@/pages/SideNavigationLayout";
+import SideNavigationLayout from "@/components/SideNavigationLayout";
 import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
 import SelectedCabinetInformation from "@/components/Cabinet/SelectedCabinetInformation";
 import DefaultSearchLayout from "@/components/Search/DefaultSearchLayout";

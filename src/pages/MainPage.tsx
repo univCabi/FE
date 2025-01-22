@@ -1,7 +1,7 @@
 import { useLocation } from "react-router";
 import { useBuildingState } from "@/hooks/useBuildingState";
 import { useCabinet } from "@/hooks/useCabinet";
-import SideNavigationLayout from "@/pages/SideNavigationLayout";
+import SideNavigationLayout from "@/components/SideNavigationLayout";
 import SelectedCabinetInformation from "@/components/Cabinet/SelectedCabinetInformation";
 import BuildingSelectButton from "@/components/BuildingSelectButton";
 import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";

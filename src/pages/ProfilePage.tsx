@@ -9,7 +9,7 @@ import RentalInfoCard from "@/components/Profile/RentalInfoCard";
 import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
 import SubmitAndNavigateButton from "@/components/SubmitAndNavigateButton";
 import ConfirmModalView from "@/components/ConfirmModalView";
-import SideNavigationLayout from "@/pages/SideNavigationLayout";
+import SideNavigationLayout from "@/components/SideNavigationLayout";
 
 const ProfilePage = () => {
   const { userData, userIsVisible, setUserIsVisible } = useUserData();
@@ -36,8 +36,8 @@ const ProfilePage = () => {
     setUserIsVisible(!userIsVisible);
   };
 
-  const onSubmit = () => {
-    handleProfileSave();
+  const onSubmit = async () => {
+    await handleProfileSave();
     window.location.reload();
     setOpenProfileSaveButtonModal(false);
   };
