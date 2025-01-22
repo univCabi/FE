@@ -8,7 +8,7 @@ interface RentalInfoCardProp {
     endDate: string | null;
   };
 }
-const RentalInfoCard = ({ userRentalData }: RentalinfoCardProp) => {
+const RentalInfoCard = ({ userRentalData }: RentalInfoCardProp) => {
   return (
     <div className="p-10 w-96 sl:w-full bg-neutral-100 rounded-2xl flex-col justify-start items-start gap-5 inline-flex shadow-md">
       <div className="justify-start items-start inline-flex text-black text-xl font-bold">

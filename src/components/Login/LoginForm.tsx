@@ -16,6 +16,7 @@ const LoginForm = () => {
     setPassword("");
     setStudentNumber("");
   };
+
   return (
     <form className="sl:w-[60%] w-[70%] sl:max-w-[22.5rem]  flex flex-col items-center p-12 sl:p-10 bg-white rounded-lg shadow-lg">
       <h2 className="text-[2.25em] font-bold mb-5">Login</h2>
@@ -50,7 +51,7 @@ const LoginForm = () => {
         className={
           "text-sm sm:text-base w-[60%] sl:w-[70%]  text-white py-2.5 sl:py-3.5 bg-blue-600 rounded-md"
         }
-        onClick={onSubmit}
+        onClick={(e) => onSubmit(e as React.FormEvent)}
       ></SubmitAndNavigateButton>
     </form>
   );
