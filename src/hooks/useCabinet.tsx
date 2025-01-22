@@ -6,7 +6,7 @@ import { cabinetCallApi } from "@/api/cabinetCallApi";
 export const useCabinet = () => {
   const [selectedCabinet, setSelectedCabinet] =
     useState<SelectedCabinet | null>(null);
-  const [selectedStatus, setSelectedStatus] = useState<string | null>(); // 사물함 status
+  const [selectedStatus, setSelectedStatus] = useState<string>(); // 사물함 status
   const [expiredAt, setExpiredAt] = useState<string | null>(null); // 반납 기한
   const [isMyCabinet, setIsMyCabinet] = useState<boolean>(); // 본인 사물함 여부
 
