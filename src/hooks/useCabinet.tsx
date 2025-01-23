@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { SelectedCabinet } from "types/interface";
+import { SelectedCabinet } from "types/CabinetType";
 import { cabinetDetailInfoApi } from "@/api/cabinetDetailInfoApi";
 import { cabinetCallApi } from "@/api/cabinetCallApi";
 

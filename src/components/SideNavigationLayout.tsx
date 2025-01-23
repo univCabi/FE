@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router";
-import { BuildingData } from "types/interface";
+import { BuildingData } from "types/CabinetType";
 import { useBuildingState } from "@/hooks/useBuildingState";
 import SubmitAndNavigateButton from "@/components/SubmitAndNavigateButton";
 import LogoSVG from "@/icons/cabiLogo.svg?react";

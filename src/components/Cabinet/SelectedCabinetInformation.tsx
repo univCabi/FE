@@ -1,4 +1,4 @@
-import { SelectedCabinet } from "types/interface";
+import { SelectedCabinet } from "types/CabinetType";
 import { useConfirmModalState } from "@/hooks/useConfirmModalState";
 import { useCabinetRental } from "@/hooks/useCabinetRental";
 import { useCabinetReturn } from "@/hooks/useCabinetReturn";

@@ -1,4 +1,4 @@
-import { RentCabinetInfo } from "types/interface";
+import { RentCabinetInfo } from "types/UserType";
 
 interface RentalInfoCardProp {
   rentCabinetInfo: RentCabinetInfo;
