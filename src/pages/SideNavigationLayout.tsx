@@ -1,4 +1,5 @@
 import { useLocation, useNavigate } from "react-router";
+import { BuildingData } from "types/CabinetType";
 import { useBuildingState } from "@/hooks/useBuildingState";
 import SubmitAndNavigateButton from "@/components/SubmitAndNavigateButton";
 import LogoSVG from "@/icons/cabiLogo.svg?react";
@@ -7,11 +8,11 @@ import SearchSVG from "@/icons/search.svg?react";
 import ProfileSVG from "@/icons/profile.svg?react";
 
 interface NavBuildingProps {
-  buildingList: { building: string; floor: number[] }[]; // 건물 배열 (name과 floors 포함)
+  buildingList: BuildingData[]; // 건물 배열 (name과 floors 포함)
   selectedBuilding: string | null; // 선택된 건물의 인덱스 또는 null
   setSelectedBuilding: (building: string | null) => void; // 선택된 건물을 설정하는 함수
   setSelectedFloor: (floor: number | null) => void; // 선택된 층을 설정하는 함수
-  selectedCabinet: { cabinetId: number; cabinetNumber: number } | null;
+  selectedCabinet?: { cabinetId: number; cabinetNumber: number } | null;
   setSelectedCabinet: (
     cabinet: {
       cabinetId: number;

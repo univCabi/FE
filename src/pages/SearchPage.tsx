@@ -125,12 +125,12 @@ const SearchPage = () => {
           selectedBuilding={selectedBuilding}
           selectedFloor={selectedFloor}
           selectedCabinet={selectedCabinet}
-          selectedStatus={selectedStatus}
+          selectedStatus={selectedStatus as string}
           setSelectedStatus={setSelectedStatus}
           setExpiredAt={setExpiredAt}
           setSelectedCabinet={setSelectedCabinet}
           expiredAt={expiredAt}
-          isMyCabinet={isMyCabinet}
+          isMyCabinet={isMyCabinet as boolean}
           setIsMyCabinet={setIsMyCabinet}
         />
       </div>

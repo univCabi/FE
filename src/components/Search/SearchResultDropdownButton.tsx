@@ -24,7 +24,7 @@ const SearchResultDropdowndButton = ({
         searchResults.slice(0, slicedSearchResults).map((result, index) => (
           <button
             key={index}
-            onClick={(e) => {
+            onClick={() => {
               fetchClickResultButton(
                 result.building,
                 result.floor,

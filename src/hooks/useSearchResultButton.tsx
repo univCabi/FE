@@ -24,7 +24,8 @@ export const useSearchResultButton = () => {
       const response = await cabinetCallApi(building, floor);
       // keyword와 cabinetNumber 비교하여 일치하는 데이터 찾기
       const matchedCabinet = response.cabinets.find(
-        (cabinet) => cabinet.cabinetNumber === keyword
+        (cabinet: { cabinetNumber: number }) =>
+          cabinet.cabinetNumber === keyword
       );
       if (matchedCabinet) {
         // 상태 업데이트

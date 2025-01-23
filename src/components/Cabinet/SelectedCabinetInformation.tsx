@@ -1,3 +1,4 @@
+import { SelectedCabinet } from "types/CabinetType";
 import { useConfirmModalState } from "@/hooks/useConfirmModalState";
 import { useCabinetRental } from "@/hooks/useCabinetRental";
 import { useCabinetReturn } from "@/hooks/useCabinetReturn";
@@ -11,12 +12,7 @@ interface SelectedCabinetInformationProps {
   selectedBuilding: string | null;
   selectedFloor: number | null;
   selectedCabinet: { cabinetId: number; cabinetNumber: number } | null;
-  setSelectedCabinet: (
-    cabinet: {
-      cabinetId: number;
-      cabinetNumber: number;
-    } | null
-  ) => void;
+  setSelectedCabinet: (cabinet: SelectedCabinet | null) => void;
   selectedStatus: string;
   setSelectedStatus: (status: string) => void;
   expiredAt: string | null;
