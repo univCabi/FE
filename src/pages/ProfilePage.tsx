@@ -8,7 +8,7 @@ import RentalInfoCard from "@/components/Profile/RentalInfoCard";
 import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
 import SubmitAndNavigateButton from "@/components/SubmitAndNavigateButton";
 import ConfirmModalView from "@/components/ConfirmModalView";
-import SideNavigationLayout from "@/components/SideNavigationLayout";
+import SideNavigationLayout from "@/pages/SideNavigationLayout";
 
 const ProfilePage = () => {
   const { userData, userIsVisible, setUserIsVisible } = useUserData();

@@ -3,7 +3,7 @@ import { useBuildingState } from "@/hooks/useBuildingState";
 import { useHistoryData } from "@/hooks/useHistoryData";
 import HistoryList from "@/components/HistoryList";
 import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
-import SideNavigationLayout from "@/components/SideNavigationLayout";
+import SideNavigationLayout from "@/pages/SideNavigationLayout";
 
 const HistoryPage = () => {
   const { userHistoryData } = useHistoryData();
