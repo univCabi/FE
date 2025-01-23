@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import { BuildingData } from "@/interface";
+import { BuildingData } from "types/interface";
 import buildingData from "@/mocks/buildingData.json";
 
 export const useBuildingState = () => {
   const [buildingList, setBuildingList] =
     useState<BuildingData[]>(buildingData);
   const [selectedBuilding, setSelectedBuilding] = useState<string | null>(null); // 선택한 건물의 인덱스를 저장하는 상태
-  const [selectedFloor, setSelectedFloor] = useState<string | null>(null); // 선택한 층수의 인덱스를 저장하는 상태
+  const [selectedFloor, setSelectedFloor] = useState<number | null>(null); // 선택한 층수의 인덱스를 저장하는 상태
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false); // 드롭다운 상태
   const dropdownOutsideRef = useRef<HTMLDivElement | null>(null);
 
@@ -17,7 +17,7 @@ export const useBuildingState = () => {
   };
 
   // 선택된 층수의 인덱스를 변경하는 함수
-  const toggleFloor = (floor: string) => {
+  const toggleFloor = (floor: number) => {
     setSelectedFloor(floor);
   };
 

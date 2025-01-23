@@ -1,4 +1,4 @@
-import { UserInfo } from "@/interface";
+import { UserInfo } from "types/interface";
 interface ProfileInfoCardProps extends UserInfo {
   toggleSwitch: () => void;
   userIsVisible: boolean;

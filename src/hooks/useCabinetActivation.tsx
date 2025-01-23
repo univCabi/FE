@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { cabinetCallApi } from "@/api/cabinetCallApi";
 
 interface CabinetData {
-  floor: string;
+  floor: number;
   section: string;
   building: string;
   id: number;
@@ -20,7 +20,7 @@ interface CabinetData {
 
 interface UseCabinetActivationProps {
   selectedBuilding: { building: string } | null;
-  selectedFloor: string | null;
+  selectedFloor: number | null;
   isMyCabinet: boolean;
 }
 
@@ -33,7 +33,7 @@ export const useCabinetActivation = ({
 
   const fetchCabinetButtonActivation = async (
     building: string,
-    floor: string
+    floor: number
   ) => {
     try {
       const response = await cabinetCallApi(building, floor);

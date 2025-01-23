@@ -1,6 +1,6 @@
 export interface BuildingData {
   building: string;
-  floor: string[];
+  floor: number[];
   section: string;
 }
 
@@ -18,7 +18,7 @@ export interface UserInfo {
 
 export interface RentCabinetInfo {
   building: string | null;
-  floor: string | null;
+  floor: number | null;
   cabinetNumber: number | null;
   status: string | null;
   startDate: string | null;

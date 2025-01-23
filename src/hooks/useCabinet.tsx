@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { SelectedCabinet } from "@/interface";
+import { SelectedCabinet } from "types/interface";
 import { cabinetDetailInfoApi } from "@/api/cabinetDetailInfoApi";
 import { cabinetCallApi } from "@/api/cabinetCallApi";
 
@@ -11,7 +11,7 @@ export const useCabinet = () => {
   const [isMyCabinet, setIsMyCabinet] = useState<boolean>(); // 본인 사물함 여부
 
   // 사물함 API 호출
-  const fetchCabinetData = async (building: string, floor: string) => {
+  const fetchCabinetData = async (building: string, floor: number) => {
     try {
       const response = await cabinetCallApi(building, floor);
       console.log(200);

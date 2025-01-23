@@ -1,4 +1,4 @@
-import { SelectedCabinet } from "@/interface";
+import { SelectedCabinet } from "types/interface";
 import { useConfirmModalState } from "@/hooks/useConfirmModalState";
 import { useCabinetRental } from "@/hooks/useCabinetRental";
 import { useCabinetReturn } from "@/hooks/useCabinetReturn";
@@ -10,7 +10,7 @@ import CabinetSVG from "@/icons/cabinet.svg?react";
 // 선택된 사물함 정보
 interface SelectedCabinetInformationProps {
   selectedBuilding: string | null;
-  selectedFloor: string | null;
+  selectedFloor: number | null;
   selectedCabinet: { cabinetId: number; cabinetNumber: number } | null;
   setSelectedCabinet: (cabinet: SelectedCabinet | null) => void;
   selectedStatus: string;

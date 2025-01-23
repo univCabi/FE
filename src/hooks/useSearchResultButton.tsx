@@ -6,7 +6,7 @@ import { cabinetCallApi } from "@/api/cabinetCallApi";
 
 interface filteredCabinetDetailProps {
   building: string;
-  floor: string;
+  floor: number;
 }
 
 export const useSearchResultButton = () => {
@@ -17,7 +17,7 @@ export const useSearchResultButton = () => {
   // 검색 결과 버튼 클릭 시 사물함 API 호출
   const fetchClickResultButton = async (
     building: string,
-    floor: string,
+    floor: number,
     keyword?: number
   ) => {
     try {
