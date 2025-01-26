@@ -18,6 +18,7 @@ export const useHistoryData = () => {
     null
   );
   const pageSize: number = 10;
+  const scrollPendingTime: number = 800;
   useEffect(() => {
     const fetchHistoryData = async () => {
       try {
@@ -41,7 +42,7 @@ export const useHistoryData = () => {
         if (entries[0].isIntersecting && hasMoreResults) {
           setPage((prev) => prev + 1);
         }
-      }, 800), // 스크롤 내린지 0.8초 뒤에 api 호출되도록 설정
+      }, scrollPendingTime), // 스크롤 내린지 0.8초 뒤에 api 호출되도록 설정
       { threshold: 0.8 }
     );
     observer.observe(lastElement);
