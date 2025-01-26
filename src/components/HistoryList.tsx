@@ -7,12 +7,13 @@ interface HistoryListProp {
     startDate: string | null;
     endDate: string | null;
   }[];
+  setObserverRef: (node: HTMLTableRowElement) => void;
 }
 
-const HistoryList = ({ userHistoryData }: HistoryListProp) => {
+const HistoryList = ({ userHistoryData, setObserverRef }: HistoryListProp) => {
   return (
     <table className="w-full">
-      <thead className="bg-blue-500 text-white text-xl rounded-t-lg sticky top-0">
+      <thead className="bg-blue-500 text-white text-xl rounded-t-lg sticky z-10 top-0">
         <tr>
           <th className="w-80 table-cell text-center p-5">위치</th>
           <th className="w-1/3 table-cell text-center p-5">대여일</th>
@@ -21,7 +22,11 @@ const HistoryList = ({ userHistoryData }: HistoryListProp) => {
       </thead>
       <tbody>
         {userHistoryData.map((item, index) => (
-          <tr key={index} className="even:bg-white">
+          <tr
+            key={index}
+            ref={index === userHistoryData.length - 1 ? setObserverRef : null}
+            className="even:bg-white"
+          >
             <td className="w-80 table-cell text-center p-5 ">
               {item.building}-{item.section}-{item.cabinetNumber}-{item.floor}F
             </td>
