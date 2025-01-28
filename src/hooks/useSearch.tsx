@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { debounce, throttle } from "lodash";
+import { log } from "@/utils/logger";
 import { searchResultsApi } from "@/api/searchResultsApi";
 import { searchKeywordApi } from "@/api/searchKeywordApi";
 
@@ -47,8 +48,9 @@ export const useSearch = () => {
         const response = await searchKeywordApi(keyword);
         setSearchResults(response);
         setShowGridResults(false);
+        log.info("API 호출 성공: searchKeywordApi");
       } catch (error) {
-        console.error(error);
+        log.error("API 호출 중 에러 발생: searchKeywordApi");
       }
     }
   };
@@ -76,9 +78,9 @@ export const useSearch = () => {
       } else {
         setIsLoading(false); // 마지막 페이지인 경우 로딩 종료
       }
-      console.log("현재 페이지", page);
+      log.info("API 호출 성공: searchResultsApi");
     } catch (error) {
-      console.error("검색 실패:", error);
+      log.error("API 호출 중 에러 발생: searchResultsApi");
     } finally {
       setIsLoading(false); // 로딩 상태 해제
     }

@@ -1,4 +1,5 @@
 import { rentApi } from "@/api/rentApi";
+import { log } from "@/utils/logger";
 
 interface UseCabinetRentalProps {
   selectedCabinet: { cabinetId: number; cabinetNumber: number } | null;
@@ -23,11 +24,11 @@ export const useCabinetRental = ({
         setSelectedStatus(response.data.status);
         setExpiredAt(response.data.expiredAt);
         setIsMyCabinet(response.data.isMine);
+        closeRentalModal();
       }
+      log.info("API 호출 성공: rentApi");
     } catch (error) {
-      console.error(error);
-    } finally {
-      closeRentalModal();
+      log.error("API 호출 중 에러 발생: rentApi");
     }
   };
 

@@ -6,6 +6,6 @@ export const cabinetDetailInfoApi = async (cabinetId: number) => {
     const response = await api.get(`/cabinet/detail?cabinetId=${cabinetId}`);
     return response.data;
   } catch (error) {
-    console.error(error);
+    throw error;
   }
 };
