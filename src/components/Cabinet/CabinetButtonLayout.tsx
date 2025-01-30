@@ -1,5 +1,5 @@
 // 사물함 배열 관련
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useCabinet } from "@/hooks/useCabinet";
 import { useCabinetActivation } from "@/hooks/useCabinetActivation";
 import CabinetButtonSkeleton from "../Skeleton/CabinetButtonSkeleton";
