@@ -1,6 +1,5 @@
 // 건물, 층 선택 버튼
 import { BuildingData, SelectedCabinet } from "types/CabinetType";
-import { useCabinet } from "@/hooks/useCabinet";
 import { useSearch } from "@/hooks/useSearch";
 import { useSearchToMain } from "@/hooks/useSearchToMain";
 
@@ -24,7 +23,6 @@ const BuildingSelectButton = ({
   // search result와 동일한 쿼리스트링 페이지로 이동
   useSearchToMain(selectedBuilding, setSelectedBuilding, setSelectedFloor);
   const { setSearchParams } = useSearch();
-  const { fetchCabinetData } = useCabinet();
 
   return (
     <div>
@@ -59,7 +57,6 @@ const BuildingSelectButton = ({
                     onClick={() => {
                       setSelectedFloor(floor);
                       setSelectedCabinet(null);
-                      fetchCabinetData(buildingData.building, floor);
                       setSearchParams({
                         building: buildingData.building,
                         floor: floor.toString(),

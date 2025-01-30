@@ -15,7 +15,7 @@ export const useSearchInput = ({
   const slicedSearchResults = 6;
 
   // searchInput 변경 시마다 디바운스 적용된 API 호출
-  const handleInputRelatedSearch = (e) => {
+  const handleInputRelatedSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const keyword = e.target.value;
     setSearchInput(keyword);
     debouncedSearchKeywordApi(keyword);
