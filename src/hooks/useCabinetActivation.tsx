@@ -30,12 +30,14 @@ export const useCabinetActivation = ({
   isMyCabinet,
 }: UseCabinetActivationProps) => {
   const [cabinetData, setCabinetData] = useState<CabinetData[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const fetchCabinetButtonActivation = async (
     building: string,
     floor: number
   ) => {
     try {
+      setLoading(true);
       const response = await cabinetCallApi(building, floor);
       setCabinetData(response.cabinets);
 
@@ -44,6 +46,8 @@ export const useCabinetActivation = ({
       if (error === 404) {
         console.error(404);
       }
+    } finally {
+      setLoading(false);
     }
   };
   useEffect(() => {
@@ -56,5 +60,6 @@ export const useCabinetActivation = ({
     cabinetData,
     setCabinetData,
     fetchCabinetButtonActivation,
+    loading,
   };
 };
