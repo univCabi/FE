@@ -12,7 +12,7 @@ const ProfileInfoCard = ({
   phoneNumber,
 }: ProfileInfoCardProps) => {
   return (
-    <div className="p-10 w-96 sl:w-full bg-neutral-100 rounded-2xl flex-col justify-start items-start gap-5 inline-flex shadow-md">
+    <div className="p-10 w-96 sl:w-full bg-neutral-150 rounded-2xl flex-col justify-start items-start gap-5 inline-flex shadow-md">
       <div className="justify-start items-start inline-flex text-black text-lg sl:text-xl font-bold">
         프로필
       </div>
@@ -46,7 +46,7 @@ const ProfileInfoCard = ({
           />
         </div>
       </div>
-      <div className="px-5 py-5 w-80 text-black  bg-white rounded-lg flex flex-col justify-start items-start gap-5 sl:gap-8 shadow">
+      <div className="px-5 py-5 w-80 h-32 text-black  bg-white rounded-lg flex flex-col justify-start items-start gap-5 sl:gap-8 shadow">
         <div className="justify-between text-sm sl:text-base inline-flex w-full">
           <div>학번</div>
           <div className="font-bold">

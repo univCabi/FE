@@ -5,7 +5,7 @@ interface RentalInfoCardProp {
 }
 const RentalInfoCard = ({ rentCabinetInfo }: RentalInfoCardProp) => {
   return (
-    <div className="p-10 w-96 sl:w-full bg-neutral-100 rounded-2xl flex-col justify-start items-start gap-5 inline-flex shadow-md">
+    <div className="p-10 w-96 sl:w-full bg-neutral-150 rounded-2xl flex-col justify-start items-start gap-5 inline-flex shadow-md">
       <div className="justify-start items-start inline-flex text-black text-xl font-bold">
         대여정보
       </div>
@@ -29,7 +29,7 @@ const RentalInfoCard = ({ rentCabinetInfo }: RentalInfoCardProp) => {
             </div>
           </div>
         </div>
-        <div className="px-5 py-5 w-80 text-black  bg-white rounded-lg flex flex-col justify-start items-start gap-5 shadow">
+        <div className="px-5 py-5 w-80 mt-3 h-32 text-black   bg-white rounded-lg flex flex-col justify-start items-start gap-5 shadow">
           <div className="justify-between items-start inline-flex w-full">
             <div>시작일</div>
             <div className="font-bold">{`${
