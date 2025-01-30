@@ -5,26 +5,12 @@ export const returnApi = async (cabinetId: number) => {
     const response = await api.post("/cabinet/return", { cabinetId });
 
     if (response.status === 200) {
-      console.log(response.status);
       return {
-        success: true,
-        message: "Cabinet Return Successful",
+        message: "반납 성공",
         data: response.data,
       };
     }
-  } catch (error: any) {
-    if (error) {
-      if (error === 400) {
-        console.error("Cabinet is already rented");
-        return { success: false, message: "Cabinet is already rented" };
-      }
-
-      if (error === 404) {
-        console.error("Cabinet not found");
-        return { success: false, message: "Cabinet not found" };
-      }
-    }
-    console.error("Unexpected error:", error);
-    return { success: false, message: "Unexpected error occurred" };
+  } catch (error) {
+    throw error;
   }
 };

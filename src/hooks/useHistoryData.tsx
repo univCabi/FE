@@ -1,6 +1,8 @@
 import { useEffect, useState, useCallback } from "react";
 import { throttle } from "lodash";
+import { log } from "@/utils/logger";
 import { userHistoryDataApi } from "@/api/userHistoryDataApi";
+
 interface HistoryData {
   building: string;
   floor: number;
@@ -28,8 +30,16 @@ export const useHistoryData = () => {
         } else {
           setUserHistoryData((prev) => [...prev, ...response.data.results]);
         }
+        log.info(
+          `API 호출 성공: userHistoryDataApi, ${JSON.stringify(
+            response,
+            null,
+            2
+          )}`
+        );
       } catch (error) {
-        console.log(error.response?.status || "오류를 알 수 없습니다.");
+        // console.log(error.response?.status || "오류를 알 수 없습니다.");
+        log.error("API 호출 중 에러 발생: userHistoryDataApi");
       }
     };
     if (hasMoreResults) fetchHistoryData();

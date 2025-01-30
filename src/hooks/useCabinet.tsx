@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { SelectedCabinet } from "types/CabinetType";
+import { log } from "@/utils/logger";
 import { cabinetDetailInfoApi } from "@/api/cabinetDetailInfoApi";
-import { cabinetCallApi } from "@/api/cabinetCallApi";
 
 export const useCabinet = () => {
   const [selectedCabinet, setSelectedCabinet] =
@@ -9,19 +9,6 @@ export const useCabinet = () => {
   const [selectedStatus, setSelectedStatus] = useState<string>(); // 사물함 status
   const [expiredAt, setExpiredAt] = useState<string | null>(null); // 반납 기한
   const [isMyCabinet, setIsMyCabinet] = useState<boolean>(); // 본인 사물함 여부
-
-  // 사물함 API 호출
-  const fetchCabinetData = async (building: string, floor: number) => {
-    try {
-      const response = await cabinetCallApi(building, floor);
-      console.log(200);
-      return response;
-    } catch (error) {
-      if (error === 404) {
-        console.error(404);
-      }
-    }
-  };
 
   // 사물함 세부 정보 API 호출
   const fetchCabinetDetailInformation = async (
@@ -34,10 +21,16 @@ export const useCabinet = () => {
       setSelectedStatus(response.status);
       setIsMyCabinet(response.isMine);
       setExpiredAt(response.expiredAt);
-      console.log(200);
+      log.info(
+        `API 호출 성공: cabinetDetailInfoApi, ${JSON.stringify(
+          response,
+          null,
+          2
+        )}`
+      );
       return response;
     } catch (error) {
-      console.error(error);
+      log.error("API 호출 중 에러 발생: cabinetDetailInfoApi");
     }
   };
 
@@ -72,6 +65,5 @@ export const useCabinet = () => {
     setIsMyCabinet,
     getStatusColor,
     fetchCabinetDetailInformation,
-    fetchCabinetData,
   };
 };

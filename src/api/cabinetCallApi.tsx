@@ -8,8 +8,6 @@ export const cabinetCallApi = async (building: string, floor: number) => {
     );
     return response.data;
   } catch (error) {
-    if (error === 404) {
-      console.log(error);
-    }
+    throw error;
   }
 };
