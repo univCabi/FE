@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import { useCabinet } from "@/hooks/useCabinet";
 import { useCabinetActivation } from "@/hooks/useCabinetActivation";
-import CabinetButtonSkeleton from "../Skeleton/CabinetButtonSkeleton";
+import CabinetButtonSkeleton from "@/components/Skeleton/CabinetButtonSkeleton";
 
 interface CabinetButtonLayoutProps {
   selectedBuilding: { building: string } | null;
