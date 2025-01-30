@@ -9,8 +9,9 @@ export const useLogout = () => {
     try {
       const response = await logoutApi();
       navigate(loginUrl);
-      // console.log(response.status);
-      log.info("API 호출 성공: logoutApi");
+      log.info(
+        `API 호출 성공: logoutApi, ${JSON.stringify(response, null, 2)}`
+      );
     } catch (error) {
       // console.error("로그아웃 중 오류가 발생했습니다:", error);
       // console.log(error.response?.status || "오류를 알 수 없습니다.");

@@ -34,10 +34,10 @@ export const useUserData = () => {
           rentCabinetInfo:
             data.rentCabinetInfo || defaultUserData.rentCabinetInfo,
         });
-        // console.log(data);
         setUserIsVisible(data.isVisible);
-        // console.log(response.status);
-        log.info("API 호출 성공: userDataApi");
+        log.info(
+          `API 호출 성공: userDataApi, ${JSON.stringify(response, null, 2)}`
+        );
       } catch (error) {
         if (error.response?.status === 401) {
           navigate("/login");

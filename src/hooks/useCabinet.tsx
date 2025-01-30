@@ -21,7 +21,13 @@ export const useCabinet = () => {
       setSelectedStatus(response.status);
       setIsMyCabinet(response.isMine);
       setExpiredAt(response.expiredAt);
-      log.info("API 호출 성공: cabinetDetailInfoApi");
+      log.info(
+        `API 호출 성공: cabinetDetailInfoApi, ${JSON.stringify(
+          response,
+          null,
+          2
+        )}`
+      );
       return response;
     } catch (error) {
       log.error("API 호출 중 에러 발생: cabinetDetailInfoApi");

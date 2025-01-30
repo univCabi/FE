@@ -5,7 +5,7 @@ export const rentApi = async (cabinetId: number) => {
     const response = await api.post("/cabinet/rent", { cabinetId });
 
     if (response.status === 200) {
-      return { success: true, message: "대여 성공", data: response.data };
+      return { message: "대여 성공", data: response.data };
     }
   } catch (error) {
     throw error;

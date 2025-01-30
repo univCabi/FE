@@ -30,7 +30,13 @@ export const useHistoryData = () => {
         } else {
           setUserHistoryData((prev) => [...prev, ...response.data.results]);
         }
-        log.info("API 호출 성공: userHistoryDataApi");
+        log.info(
+          `API 호출 성공: userHistoryDataApi, ${JSON.stringify(
+            response,
+            null,
+            2
+          )}`
+        );
       } catch (error) {
         // console.log(error.response?.status || "오류를 알 수 없습니다.");
         log.error("API 호출 중 에러 발생: userHistoryDataApi");

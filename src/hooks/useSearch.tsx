@@ -48,7 +48,13 @@ export const useSearch = () => {
         const response = await searchKeywordApi(keyword);
         setSearchResults(response);
         setShowGridResults(false);
-        log.info("API 호출 성공: searchKeywordApi");
+        log.info(
+          `API 호출 성공: searchKeywordApi, ${JSON.stringify(
+            response,
+            null,
+            2
+          )}`
+        );
       } catch (error) {
         log.error("API 호출 중 에러 발생: searchKeywordApi");
       }
@@ -78,7 +84,9 @@ export const useSearch = () => {
       } else {
         setIsLoading(false); // 마지막 페이지인 경우 로딩 종료
       }
-      log.info("API 호출 성공: searchResultsApi");
+      log.info(
+        `API 호출 성공: searchResultsApi, ${JSON.stringify(data, null, 2)}`
+      );
     } catch (error) {
       log.error("API 호출 중 에러 발생: searchResultsApi");
     } finally {

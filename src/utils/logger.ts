@@ -1,6 +1,6 @@
-type LogLevel = "DEBUG" | "INFO" | "WARN" | "ERROR" | "FATAL";
+type LogLevel = "DEBUG" | "INFO" | "WARN" | "ERROR";
 const LOG_LEVEL: LogLevel = "INFO"; // 현재 로그 레벨을 정의 (레벨에 따라 보여지는 로그가 정해짐)
-const levels: LogLevel[] = ["DEBUG", "INFO", "WARN", "ERROR", "FATAL"];
+const levels: LogLevel[] = ["DEBUG", "INFO", "WARN", "ERROR"];
 
 /**
  * 로그를 출력하는 함수
@@ -21,7 +21,6 @@ export const log = (level: LogLevel, message: string): void => {
         console.warn(`[WARN] - ${message}`);
         break;
       case "ERROR":
-      case "FATAL": // ERROR와 FATAL은 동일하게 처리
         console.error(`[${level}] - ${message}`);
         break;
       default:
@@ -35,4 +34,3 @@ log.debug = (message: string) => log("DEBUG", message);
 log.info = (message: string) => log("INFO", message);
 log.warn = (message: string) => log("WARN", message);
 log.error = (message: string) => log("ERROR", message);
-log.fatal = (message: string) => log("FATAL", message);

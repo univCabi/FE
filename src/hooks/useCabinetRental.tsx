@@ -20,13 +20,13 @@ export const useCabinetRental = ({
     if (!selectedCabinet) return;
     try {
       const response = await rentApi(selectedCabinet.cabinetId);
-      if (response?.success) {
+      if (response) {
         setSelectedStatus(response.data.status);
         setExpiredAt(response.data.expiredAt);
         setIsMyCabinet(response.data.isMine);
         closeRentalModal();
       }
-      log.info("API 호출 성공: rentApi");
+      log.info(`API 호출 성공: rentApi, ${JSON.stringify(response, null, 2)}`);
     } catch (error) {
       log.error("API 호출 중 에러 발생: rentApi");
     }

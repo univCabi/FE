@@ -36,7 +36,9 @@ export const useSearchResultButton = () => {
           floor,
         });
       }
-      log.info("API 호출 성공: cabinetCallApi");
+      log.info(
+        `API 호출 성공: cabinetCallApi, ${JSON.stringify(response, null, 2)}`
+      );
     } catch (error) {
       log.error("API 호출 중 에러 발생: cabinetCallApi");
     }

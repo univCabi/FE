@@ -13,8 +13,7 @@ export const useHandleLogin = () => {
       const response = await loginApi({ studentNumber, password });
       navigate("/main");
       setLoginSuccess(true); // 로그인 성공
-      // console.log(response.status); // 로그인 상태 코드 로그
-      log.info("API 호출 성공: loginApi");
+      log.info(`API 호출 성공: loginApi, ${JSON.stringify(response, null, 2)}`);
     } catch (error) {
       // console.error("로그인 중 오류가 발생했습니다:", error);
       // console.log(error.response?.status || "오류를 알 수 없습니다.");
