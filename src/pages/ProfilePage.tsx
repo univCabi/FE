@@ -8,10 +8,11 @@ import RentalInfoCard from "@/components/Profile/RentalInfoCard";
 import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
 import SubmitAndNavigateButton from "@/components/SubmitAndNavigateButton";
 import ConfirmModalView from "@/components/ConfirmModalView";
+import ProfileSkeleton from "@/components/Skeleton/ProfileSkeleton";
 import SideNavigationLayout from "@/pages/SideNavigationLayout";
 
 const ProfilePage = () => {
-  const { userData, userIsVisible, setUserIsVisible } = useUserData();
+  const { userData, userIsVisible, setUserIsVisible, loading } = useUserData();
 
   const { handleProfileSave } = useProfileSave(
     userIsVisible,
@@ -71,16 +72,24 @@ const ProfilePage = () => {
         <main className="ml-0 md:ml-40 flex-grow flex flex-col items-center justify-center">
           <div className="flex flex-col md:flex-row gap-20 ">
             {/* 프로필 */}
-            <ProfileInfoCard
-              toggleSwitch={toggleSwitch}
-              name={userData.name}
-              userIsVisible={userIsVisible}
-              affiliation={userData.affiliation}
-              studentNumber={userData.studentNumber}
-              phoneNumber={userData.phoneNumber}
-            />
-            {/* 대여정보 */}
-            <RentalInfoCard rentCabinetInfo={userData.rentCabinetInfo} />
+            {loading ? (
+              <ProfileSkeleton />
+            ) : (
+              <ProfileInfoCard
+                toggleSwitch={toggleSwitch}
+                name={userData.name}
+                userIsVisible={userIsVisible}
+                affiliation={userData.affiliation}
+                studentNumber={userData.studentNumber}
+                phoneNumber={userData.phoneNumber}
+              />
+            )}
+
+            {loading ? (
+              <ProfileSkeleton />
+            ) : (
+              <RentalInfoCard rentCabinetInfo={userData.rentCabinetInfo} />
+            )}
           </div>
           <SubmitAndNavigateButton
             className={`mt-10 mb-10 w-40 h-16 ${

@@ -31,10 +31,12 @@ export const useCabinetActivation = ({
   isMyCabinet,
 }: UseCabinetActivationProps) => {
   const [cabinetData, setCabinetData] = useState<CabinetData[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   // 사물함 API 호출
   const fetchCabinetData = async (building: string, floor: number) => {
     try {
+      setLoading(true);
       const response = await cabinetCallApi(building, floor);
       setCabinetData(response.cabinets);
       log.info(
@@ -43,6 +45,8 @@ export const useCabinetActivation = ({
       return response;
     } catch (error) {
       log.error("API 호출 중 에러 발생: cabinetCallApi");
+    } finally {
+      setLoading(false);
     }
   };
   useEffect(() => {
@@ -54,6 +58,7 @@ export const useCabinetActivation = ({
   return {
     cabinetData,
     setCabinetData,
-    fetchCabinetData,
+    fetchCabinetData, 
+    loading,
   };
 };

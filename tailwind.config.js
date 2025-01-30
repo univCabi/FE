@@ -8,6 +8,7 @@ module.exports = {
         subText: "#767676",
         accentText: "#EB5757",
         background: "#f2f2f2",
+        "neutral-150": "#f0f0f0",
       },
       fontFamily: {
         sans: ["Pretendard", "sans-serif"],

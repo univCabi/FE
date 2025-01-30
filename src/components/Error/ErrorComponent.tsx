@@ -8,7 +8,7 @@ const ErrorCompoenent = () => {
         404 Not Found
       </h1>
       {/* SVG 아이콘 크기 조정 */}
-      <LogoSVG className="w-32 h-32 sl:w-64 sl:h-64 mb-5" />
+      <LogoSVG className="w-32 h-32 sl:w-64 sl:h-64 mb-5 animate-spin" />
       <p className="text-lg sl:text-xl text-white mb-2">
         원하시는 페이지를 찾을 수 없습니다.
       </p>

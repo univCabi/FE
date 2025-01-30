@@ -2,6 +2,7 @@
 import { useEffect } from "react";
 import { useCabinet } from "@/hooks/useCabinet";
 import { useCabinetActivation } from "@/hooks/useCabinetActivation";
+import CabinetButtonSkeleton from "@/components/Skeleton/CabinetButtonSkeleton";
 
 interface CabinetButtonLayoutProps {
   selectedBuilding: { building: string } | null;
@@ -22,7 +23,7 @@ const CabinetButtonLayout = ({
   fetchCabinetDetailInformation,
 }: CabinetButtonLayoutProps) => {
   const { getStatusColor } = useCabinet();
-  const { cabinetData } = useCabinetActivation({
+  const { cabinetData, loading } = useCabinetActivation({
     selectedBuilding,
     selectedFloor,
     isMyCabinet,
@@ -39,31 +40,35 @@ const CabinetButtonLayout = ({
 
   return (
     <div className="w-full h-[80%] flex items-center justify-center">
-      <div className="relative h-[30rem] overflow-scroll lg:w-[67rem] md:w-[80%] sm:w-[75%] w-[100%]">
-        {cabinetData.map((cabinet) => {
-          return (
-            <button
-              key={cabinet.cabinetNumber}
-              className={`absolute w-16 h-20 rounded-md hover:bg-opacity-80 flex items-end text-sm p-2
+      {loading ? (
+        <CabinetButtonSkeleton />
+      ) : (
+        <div className="relative h-[30rem] overflow-scroll lg:w-[67rem] md:w-[80%] sm:w-[75%] w-[100%]">
+          {cabinetData.map((cabinet) => {
+            return (
+              <button
+                key={cabinet.cabinetNumber}
+                className={`absolute w-16 h-20 rounded-md hover:bg-opacity-80 flex items-end text-sm p-2
                 ${getStatusColor(cabinet.status, cabinet.isMine)} 
                 
               `}
-              style={{
-                top: `${350 - cabinet.cabinetYPos * 100}px`, // API에서 받은 yPos 사용
-                left: `${cabinet.cabinetXPos * 90}px`, // API에서 받은 xPos 사용
-              }}
-              onClick={() => {
-                fetchCabinetDetailInformation(
-                  cabinet.id,
-                  cabinet.cabinetNumber
-                );
-              }}
-            >
-              {cabinet.cabinetNumber}
-            </button>
-          );
-        })}
-      </div>
+                style={{
+                  top: `${350 - cabinet.cabinetYPos * 100}px`, // API에서 받은 yPos 사용
+                  left: `${cabinet.cabinetXPos * 90}px`, // API에서 받은 xPos 사용
+                }}
+                onClick={() => {
+                  fetchCabinetDetailInformation(
+                    cabinet.id,
+                    cabinet.cabinetNumber
+                  );
+                }}
+              >
+                {cabinet.cabinetNumber}
+              </button>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 };
