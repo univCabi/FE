@@ -6,7 +6,7 @@ import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
 import SideNavigationLayout from "@/pages/SideNavigationLayout";
 
 const HistoryPage = () => {
-  const { userHistoryData, setObserverRef } = useHistoryData();
+  const { userHistoryData, setObserverRef, scrollLoading } = useHistoryData();
   const {
     buildingList,
     selectedBuilding,
@@ -42,10 +42,11 @@ const HistoryPage = () => {
           </div>
 
           {/* 히스토리 리스트 */}
-          <div className="max-w-[60rem] w-[70%] max-h-[80vh] h-[90%] bg-gray-100 mt-5 border rounded-xl overflow-y-auto hidden-scrollbar shadow-lg">
+          <div className="max-w-[60rem] w-[70%] max-h-[80vh] h-[90%] bg-gray-100 mt-5 border rounded-xl overflow-y-auto hidden-scrollbar shadow-lg ">
             <HistoryList
               userHistoryData={userHistoryData}
               setObserverRef={setObserverRef}
+              scrollLoading={scrollLoading}
             />
           </div>
         </main>

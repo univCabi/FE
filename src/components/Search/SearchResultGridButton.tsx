@@ -7,7 +7,6 @@ interface SearchResultGridButtonProps {
     floor: number,
     cabinetNumber: number
   ) => void;
-
   isLoading: boolean;
   hasMoreResults: boolean;
 }
