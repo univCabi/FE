@@ -7,18 +7,20 @@ export const useHandleLogin = () => {
   const [studentNumber, setStudentNumber] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [loginSuccess, setLoginSuccess] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   const handleLogin = async () => {
     try {
+      setLoading(true);
       const response = await loginApi({ studentNumber, password });
       navigate("/main");
       setLoginSuccess(true); // 로그인 성공
       log.info(`API 호출 성공: loginApi, ${JSON.stringify(response, null, 2)}`);
     } catch (error) {
-      // console.error("로그인 중 오류가 발생했습니다:", error);
-      // console.log(error.response?.status || "오류를 알 수 없습니다.");
       log.error("API 호출 중 에러 발생: loginApi");
       setLoginSuccess(false); // 로그인 실패
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -30,5 +32,6 @@ export const useHandleLogin = () => {
     setPassword,
     loginSuccess,
     setLoginSuccess,
+    loading,
   };
 };
