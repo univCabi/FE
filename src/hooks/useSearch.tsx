@@ -70,8 +70,8 @@ export const useSearch = () => {
   // 검색 결과를 가져오는 함수
   const fetchSearchResults = async (page: number) => {
     if (isLoading || (!hasMoreResults && page !== 1)) return;
-    setIsLoading(true);
     try {
+      setIsLoading(true);
       const response = await searchResultsApi(searchInput, page);
       const data = response.data;
 
@@ -82,7 +82,8 @@ export const useSearch = () => {
       if (data.next !== null) {
         setPage((prevPage) => prevPage + 1); // next가 있으면, 다음 페이지로 이동
       } else {
-        setIsLoading(false); // 마지막 페이지인 경우 로딩 종료
+        setIsLoading(false);
+        // 마지막 페이지인 경우 로딩 종료
       }
       log.info(
         `API 호출 성공: searchResultsApi, ${JSON.stringify(data, null, 2)}`
@@ -90,7 +91,7 @@ export const useSearch = () => {
     } catch (error) {
       log.error("API 호출 중 에러 발생: searchResultsApi");
     } finally {
-      setIsLoading(false); // 로딩 상태 해제
+      setTimeout(() => setIsLoading(false), 1000); // 로딩 상태 해제
     }
   };
 
@@ -98,9 +99,9 @@ export const useSearch = () => {
     const container = scrollContainerRef.current;
     if (!container) return;
 
-    const handleScroll = throttle((keyword) => {
+    const handleScroll = throttle(() => {
       const { scrollTop, scrollHeight, clientHeight } = container;
-      if (scrollHeight - scrollTop - clientHeight < 100) {
+      if (scrollHeight - scrollTop - clientHeight < 50) {
         fetchSearchResults(page);
       }
     }, 800); // 스크롤 내린지 0.8초 뒤에 api 호출

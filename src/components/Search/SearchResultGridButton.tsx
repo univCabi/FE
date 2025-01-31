@@ -1,3 +1,4 @@
+import LogoSVG from "@/icons/cabiLogo.svg?react";
 // 검색 결과 - 결과 grid에 대한 컴포넌트
 
 interface SearchResultGridButtonProps {
@@ -7,7 +8,6 @@ interface SearchResultGridButtonProps {
     floor: number,
     cabinetNumber: number
   ) => void;
-
   isLoading: boolean;
   hasMoreResults: boolean;
 }
@@ -38,8 +38,11 @@ const SearchResultGridButton = ({
         ))}
       </div>
       <div className="flex justify-center mt-3">
-        {isLoading && <p>Loading...</p>}
-        {!hasMoreResults && <p>No More Results</p>}
+        {isLoading && (
+          <div className="flex justify-center bg-white items-center">
+            <LogoSVG className="animate-spin" />
+          </div>
+        )}
       </div>
     </>
   );

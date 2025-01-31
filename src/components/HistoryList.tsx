@@ -1,3 +1,5 @@
+import LogoSVG from "@/icons/cabiLogo.svg?react";
+
 interface HistoryListProp {
   userHistoryData: {
     building: string;
@@ -8,11 +10,16 @@ interface HistoryListProp {
     endDate: string | null;
   }[];
   setObserverRef: (node: HTMLTableRowElement) => void;
+  scrollLoading: boolean;
 }
 
-const HistoryList = ({ userHistoryData, setObserverRef }: HistoryListProp) => {
+const HistoryList = ({
+  userHistoryData,
+  setObserverRef,
+  scrollLoading,
+}: HistoryListProp) => {
   return (
-    <table className="w-full">
+    <table className="w-full ">
       <thead className="bg-blue-500 text-white text-xl rounded-t-lg sticky z-10 top-0">
         <tr>
           <th className="w-80 table-cell text-center p-5">위치</th>
@@ -54,6 +61,11 @@ const HistoryList = ({ userHistoryData, setObserverRef }: HistoryListProp) => {
             </td>
           </tr>
         ))}
+        {scrollLoading && (
+          <div className="flex justify-center bg-white items-center">
+            <LogoSVG className="animate-spin" />
+          </div>
+        )}
       </tbody>
     </table>
   );
