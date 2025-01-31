@@ -22,7 +22,7 @@ const LoginForm = () => {
     <>
       {loading && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
-          <LogoSVG className="w-[80%] h-[30%] sl:w-[60%] animate-spin  mb-5" />
+          <LogoSVG className="w-[80%] h-[15%] sl:w-[60%] animate-spin  mb-5" />
         </div>
       )}
       <form className="sl:w-[60%] w-[70%] sl:max-w-[22.5rem]  flex flex-col items-center p-12 sl:p-10 bg-white rounded-lg shadow-lg">
