@@ -91,7 +91,7 @@ export const useSearch = () => {
     } catch (error) {
       log.error("API 호출 중 에러 발생: searchResultsApi");
     } finally {
-      setIsLoading(false); // 로딩 상태 해제
+      setTimeout(() => setIsLoading(false), 1000); // 로딩 상태 해제
     }
   };
 
@@ -101,7 +101,7 @@ export const useSearch = () => {
 
     const handleScroll = throttle(() => {
       const { scrollTop, scrollHeight, clientHeight } = container;
-      if (scrollHeight - scrollTop - clientHeight < 100) {
+      if (scrollHeight - scrollTop - clientHeight < 50) {
         fetchSearchResults(page);
       }
     }, 800); // 스크롤 내린지 0.8초 뒤에 api 호출
