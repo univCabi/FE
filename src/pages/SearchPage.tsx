@@ -1,4 +1,3 @@
-import SideNavigationLayout from "@/pages/SideNavigationLayout";
 import SelectedCabinetInformation from "@/components/Cabinet/SelectedCabinetInformation";
 import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
 import DefaultSearchLayout from "@/components/Search/DefaultSearchLayout";
@@ -13,11 +12,8 @@ import { useSearchResultButton } from "@/hooks/useSearchResultButton";
 
 const SearchPage = () => {
   const {
-    buildingList,
     selectedBuilding,
-    setSelectedBuilding,
     selectedFloor,
-    setSelectedFloor,
     isDropdownOpen,
     setIsDropdownOpen,
     dropdownOutsideRef,
@@ -59,15 +55,6 @@ const SearchPage = () => {
 
   return (
     <>
-      <SideNavigationLayout
-        buildingList={buildingList}
-        selectedBuilding={selectedBuilding}
-        setSelectedBuilding={setSelectedBuilding}
-        setSelectedFloor={setSelectedFloor}
-        setSelectedCabinet={setSelectedCabinet}
-      />
-
-      {/* 검색 관련 */}
       <>
         {/* 검색 입력창 */}
         <div className="flex flex-col items-center" ref={dropdownOutsideRef}>

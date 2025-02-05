@@ -1,5 +1,4 @@
 import { useLocation } from "react-router";
-import SideNavigationLayout from "@/pages/SideNavigationLayout";
 import BuildingSelectButton from "@/components/BuildingSelectButton";
 import CabinetButtonLayout from "@/components/Cabinet/CabinetButtonLayout";
 import CabinetStatusInformation from "@/components/Cabinet/CabinetStatusInformation";
@@ -33,15 +32,6 @@ const MainPage = () => {
 
   return (
     <>
-      {/* 상단 네비게이션바(화면 크기 상관없이 표시) */}
-      <SideNavigationLayout
-        buildingList={buildingList}
-        selectedBuilding={selectedBuilding}
-        setSelectedBuilding={setSelectedBuilding}
-        setSelectedFloor={setSelectedFloor}
-        setSelectedCabinet={setSelectedCabinet}
-      />
-
       {/* 화면 크기 = 768px 이상일 때 */}
       <div className="md:flex">
         {/* 건물 정보(좌측) */}

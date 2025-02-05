@@ -1,12 +1,9 @@
-import SideNavigationLayout from "@/pages/SideNavigationLayout";
 import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
 import ConfirmModalView from "@/components/ConfirmModalView";
 import ProfileInfoCard from "@/components/Profile/ProfileInfoCard";
 import RentalInfoCard from "@/components/Profile/RentalInfoCard";
 import ProfileSkeleton from "@/components/Skeleton/ProfileSkeleton";
 import SubmitAndNavigateButton from "@/components/SubmitAndNavigateButton";
-import { useBuildingState } from "@/hooks/useBuildingState";
-import { useCabinet } from "@/hooks/useCabinet";
 import { useConfirmModalState } from "@/hooks/useConfirmModalState";
 import { useProfileSave } from "@/hooks/useProfileSave";
 import { useUserData } from "@/hooks/useUserData";
@@ -18,15 +15,6 @@ const ProfilePage = () => {
     userIsVisible,
     userData.isVisible,
   );
-
-  const {
-    buildingList,
-    selectedBuilding,
-    setSelectedBuilding,
-    setSelectedFloor,
-  } = useBuildingState();
-
-  const { setSelectedCabinet } = useCabinet();
 
   const { openProfileSaveButtonModal, setOpenProfileSaveButtonModal } =
     useConfirmModalState();
@@ -52,21 +40,13 @@ const ProfilePage = () => {
           setModalCancelState={setOpenProfileSaveButtonModal}
         />
       )}
-      {/* 상단 네비게이션바(화면 크기 상관없이 표시) */}
-      <SideNavigationLayout
-        buildingList={buildingList}
-        selectedBuilding={selectedBuilding}
-        setSelectedBuilding={setSelectedBuilding}
-        setSelectedFloor={setSelectedFloor}
-        setSelectedCabinet={setSelectedCabinet}
-      />
-
       {/* 메인 레이아웃 */}
       <div className="flex flex-grow pt-24">
         {/* 좌측 사이드바 */}
-        <aside className="hidden md:flex fixed left-0 top-16 w-40 h-[calc(100%-4rem)] border-r-2 border-gray-400 flex-col bg-white">
+        <div className="absolute inset-y-0 left-0 w-40 border-r-2 border-gray-400 flex-col pt-20 hidden md:flex">
+          {/* 하단 메뉴(좌측) */}
           <CabinetFooterMenuButton />
-        </aside>
+        </div>
 
         {/* 메인 콘텐츠 */}
         <main className="ml-0 md:ml-40 flex-grow flex flex-col items-center justify-center">

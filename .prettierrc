@@ -12,8 +12,11 @@
   "importOrder": [
     "^react$",
     "<THIRD_PARTY_MODULES>",
+    "^@/.*\\.css$",
+    "^@/App",
     "^@/api",
     "^@/pages",
+    "^@/layouts",
     "^@/components",
     "^@/types",
     "^@/utils",
