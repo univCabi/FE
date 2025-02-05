@@ -1,22 +1,22 @@
-import { useBuildingState } from "@/hooks/useBuildingState";
-import { useUserData } from "@/hooks/useUserData";
-import { useConfirmModalState } from "@/hooks/useConfirmModalState";
-import { useCabinet } from "@/hooks/useCabinet";
-import { useProfileSave } from "@/hooks/useProfileSave";
+import SideNavigationLayout from "@/pages/SideNavigationLayout";
+import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
+import ConfirmModalView from "@/components/ConfirmModalView";
 import ProfileInfoCard from "@/components/Profile/ProfileInfoCard";
 import RentalInfoCard from "@/components/Profile/RentalInfoCard";
-import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
-import SubmitAndNavigateButton from "@/components/SubmitAndNavigateButton";
-import ConfirmModalView from "@/components/ConfirmModalView";
 import ProfileSkeleton from "@/components/Skeleton/ProfileSkeleton";
-import SideNavigationLayout from "@/pages/SideNavigationLayout";
+import SubmitAndNavigateButton from "@/components/SubmitAndNavigateButton";
+import { useBuildingState } from "@/hooks/useBuildingState";
+import { useCabinet } from "@/hooks/useCabinet";
+import { useConfirmModalState } from "@/hooks/useConfirmModalState";
+import { useProfileSave } from "@/hooks/useProfileSave";
+import { useUserData } from "@/hooks/useUserData";
 
 const ProfilePage = () => {
   const { userData, userIsVisible, setUserIsVisible, loading } = useUserData();
 
   const { handleProfileSave } = useProfileSave(
     userIsVisible,
-    userData.isVisible
+    userData.isVisible,
   );
 
   const {

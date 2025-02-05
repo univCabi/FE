@@ -1,8 +1,7 @@
 // 사물함 버튼 활성화 -> cabinetData 저장
-
-import { useState, useEffect } from "react";
-import { log } from "@/utils/logger";
+import { useEffect, useState } from "react";
 import { cabinetCallApi } from "@/api/cabinetCallApi";
+import { log } from "@/utils/logger";
 
 interface CabinetData {
   floor: number;
@@ -40,7 +39,7 @@ export const useCabinetActivation = ({
       const response = await cabinetCallApi(building, floor);
       setCabinetData(response.cabinets);
       log.info(
-        `API 호출 성공: cabinetCallApi, ${JSON.stringify(response, null, 2)}`
+        `API 호출 성공: cabinetCallApi, ${JSON.stringify(response, null, 2)}`,
       );
       return response;
     } catch (error) {
@@ -58,7 +57,7 @@ export const useCabinetActivation = ({
   return {
     cabinetData,
     setCabinetData,
-    fetchCabinetData, 
+    fetchCabinetData,
     loading,
   };
 };

@@ -1,5 +1,5 @@
 // 건물, 층 선택 버튼
-import { BuildingData, SelectedCabinet } from "types/CabinetType";
+import { BuildingData, SelectedCabinet } from "@/types/CabinetType";
 import { useSearch } from "@/hooks/useSearch";
 import { useSearchToMain } from "@/hooks/useSearchToMain";
 

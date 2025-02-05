@@ -1,9 +1,9 @@
-import { useCabinet } from "@/hooks/useCabinet";
-import { useBuildingState } from "@/hooks/useBuildingState";
-import { useHistoryData } from "@/hooks/useHistoryData";
-import HistoryList from "@/components/HistoryList";
-import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
 import SideNavigationLayout from "@/pages/SideNavigationLayout";
+import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
+import HistoryList from "@/components/HistoryList";
+import { useBuildingState } from "@/hooks/useBuildingState";
+import { useCabinet } from "@/hooks/useCabinet";
+import { useHistoryData } from "@/hooks/useHistoryData";
 
 const HistoryPage = () => {
   const { userHistoryData, setObserverRef, scrollLoading } = useHistoryData();

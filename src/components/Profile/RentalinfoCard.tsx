@@ -1,4 +1,4 @@
-import { RentCabinetInfo } from "types/UserType";
+import { RentCabinetInfo } from "@/types/UserType";
 
 interface RentalInfoCardProp {
   rentCabinetInfo: RentCabinetInfo;
@@ -53,7 +53,7 @@ const RentalInfoCard = ({ rentCabinetInfo }: RentalInfoCardProp) => {
                     const today = new Date();
                     const leftDate: number = Math.ceil(
                       (endDate.getTime() - today.getTime()) /
-                        (1000 * 60 * 60 * 24)
+                        (1000 * 60 * 60 * 24),
                     );
                     return leftDate > 0
                       ? `${leftDate}일`

@@ -1,11 +1,11 @@
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-import "./App.css";
-import MainPage from "@/pages/MainPage";
-import LoginPage from "@/pages/LoginPage";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import ErrorPage from "@/pages/ErrorPage";
-import SearchPage from "@/pages/SearchPage";
 import HistoryPage from "@/pages/HistoryPage";
+import LoginPage from "@/pages/LoginPage";
+import MainPage from "@/pages/MainPage";
 import ProfilePage from "@/pages/ProfilePage";
+import SearchPage from "@/pages/SearchPage";
+import "./App.css";
 
 function App() {
   return (

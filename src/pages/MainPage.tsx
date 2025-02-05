@@ -1,12 +1,12 @@
 import { useLocation } from "react-router";
-import { useBuildingState } from "@/hooks/useBuildingState";
-import { useCabinet } from "@/hooks/useCabinet";
 import SideNavigationLayout from "@/pages/SideNavigationLayout";
-import SelectedCabinetInformation from "@/components/Cabinet/SelectedCabinetInformation";
 import BuildingSelectButton from "@/components/BuildingSelectButton";
-import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
 import CabinetButtonLayout from "@/components/Cabinet/CabinetButtonLayout";
 import CabinetStatusInformation from "@/components/Cabinet/CabinetStatusInformation";
+import SelectedCabinetInformation from "@/components/Cabinet/SelectedCabinetInformation";
+import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
+import { useBuildingState } from "@/hooks/useBuildingState";
+import { useCabinet } from "@/hooks/useCabinet";
 
 const MainPage = () => {
   const location = useLocation();
@@ -67,7 +67,7 @@ const MainPage = () => {
               <CabinetButtonLayout
                 selectedBuilding={
                   buildingList.find(
-                    (data) => data.building === selectedBuilding
+                    (data) => data.building === selectedBuilding,
                   ) || null
                 }
                 selectedFloor={selectedFloor}
@@ -126,7 +126,7 @@ const MainPage = () => {
                 <CabinetButtonLayout
                   selectedBuilding={
                     buildingList.find(
-                      (data) => data.building === selectedBuilding
+                      (data) => data.building === selectedBuilding,
                     ) || null
                   }
                   selectedFloor={selectedFloor}

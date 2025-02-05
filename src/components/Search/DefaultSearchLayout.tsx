@@ -1,5 +1,4 @@
 // 검색 페이지 - 첫 화면 (아무 검색어도 없을 때 보이는 View)
-
 import LogoSVG from "@/icons/cabiLogo.svg?react";
 
 const DefaultSearchLayout = () => {

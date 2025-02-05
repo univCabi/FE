@@ -1,15 +1,15 @@
-import { useSearch } from "@/hooks/useSearch";
+import SideNavigationLayout from "@/pages/SideNavigationLayout";
+import SelectedCabinetInformation from "@/components/Cabinet/SelectedCabinetInformation";
+import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
+import DefaultSearchLayout from "@/components/Search/DefaultSearchLayout";
+import SearchInputComponent from "@/components/Search/SearchInputComponent";
+import SearchResultDropdownButton from "@/components/Search/SearchResultDropdownButton";
+import SearchResultGridButton from "@/components/Search/SearchResultGridButton";
 import { useBuildingState } from "@/hooks/useBuildingState";
 import { useCabinet } from "@/hooks/useCabinet";
-import { useSearchResultButton } from "@/hooks/useSearchResultButton";
+import { useSearch } from "@/hooks/useSearch";
 import { useSearchInput } from "@/hooks/useSearchInput";
-import SideNavigationLayout from "@/pages/SideNavigationLayout";
-import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
-import SelectedCabinetInformation from "@/components/Cabinet/SelectedCabinetInformation";
-import DefaultSearchLayout from "@/components/Search/DefaultSearchLayout";
-import SearchResultGridButton from "@/components/Search/SearchResultGridButton";
-import SearchResultDropdownButton from "@/components/Search/SearchResultDropdownButton";
-import SearchInputComponent from "@/components/Search/SearchInputComponent";
+import { useSearchResultButton } from "@/hooks/useSearchResultButton";
 
 const SearchPage = () => {
   const {

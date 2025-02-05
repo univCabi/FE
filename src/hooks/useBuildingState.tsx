@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { BuildingData } from "types/CabinetType";
+import { BuildingData } from "@/types/CabinetType";
 import buildingData from "@/mocks/buildingData.json";
 
 export const useBuildingState = () => {

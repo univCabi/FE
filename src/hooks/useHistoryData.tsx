@@ -1,7 +1,7 @@
-import { useEffect, useState, useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { throttle } from "lodash";
-import { log } from "@/utils/logger";
 import { userHistoryDataApi } from "@/api/userHistoryDataApi";
+import { log } from "@/utils/logger";
 
 interface HistoryData {
   building: string;
@@ -17,7 +17,7 @@ export const useHistoryData = () => {
   const [page, setPage] = useState<number>(1);
   const [hasMoreResults, setHasMoreResults] = useState<boolean>(true);
   const [lastElement, setLastElement] = useState<HTMLTableRowElement | null>(
-    null
+    null,
   );
   const [scrollLoading, setScrollLoading] = useState<boolean>(false);
   const pageSize: number = 10;
@@ -35,8 +35,8 @@ export const useHistoryData = () => {
           `API 호출 성공: userHistoryDataApi, ${JSON.stringify(
             response,
             null,
-            2
-          )}`
+            2,
+          )}`,
         );
       } catch (error) {
         log.error("API 호출 중 에러 발생: userHistoryDataApi");
@@ -56,7 +56,7 @@ export const useHistoryData = () => {
           setPage((prev) => prev + 1);
         }
       }, scrollPendingTime), // 스크롤 내린지 0.8초 뒤에 api 호출되도록 설정
-      { threshold: 0.9 }
+      { threshold: 0.9 },
     );
     observer.observe(lastElement);
     return () => observer.disconnect();

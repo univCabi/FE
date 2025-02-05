@@ -6,7 +6,7 @@ interface SearchResultDropdowndButtonProps {
   fetchClickResultButton: (
     building: string,
     floor: number,
-    cabinetNumber: number
+    cabinetNumber: number,
   ) => void; // 결과 드롭다운 버튼
   setIsDropdownOpen: (isDropdownOpen: boolean) => void; // 드롭다운 상태
 }
@@ -28,7 +28,7 @@ const SearchResultDropdowndButton = ({
               fetchClickResultButton(
                 result.building,
                 result.floor,
-                result.cabinetNumber
+                result.cabinetNumber,
               );
               setIsDropdownOpen(false);
             }}
