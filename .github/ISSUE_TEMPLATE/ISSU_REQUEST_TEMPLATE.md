@@ -1,10 +1,9 @@
 ---
 name: 이슈생성 템플릿
 about: 작업 전 이슈를 만드시고 작업해주세요!
-title: ''
-labels: ''
-assignees: ''
-
+title: ""
+labels: ""
+assignees: ""
 ---
 
 ## 어떤 기능인가요?
@@ -18,4 +17,3 @@ assignees: ''
 - [ ] TODO
 
 ## 참고할만한 자료(선택)
-

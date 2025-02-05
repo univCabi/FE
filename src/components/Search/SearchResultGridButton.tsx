@@ -1,4 +1,5 @@
 import LogoSVG from "@/icons/cabiLogo.svg?react";
+
 // 검색 결과 - 결과 grid에 대한 컴포넌트
 
 interface SearchResultGridButtonProps {
@@ -6,7 +7,7 @@ interface SearchResultGridButtonProps {
   fetchClickResultButton: (
     building: string,
     floor: number,
-    cabinetNumber: number
+    cabinetNumber: number,
   ) => void;
   isLoading: boolean;
   hasMoreResults: boolean;
@@ -16,7 +17,6 @@ const SearchResultGridButton = ({
   searchResults,
   fetchClickResultButton,
   isLoading,
-  hasMoreResults,
 }: SearchResultGridButtonProps) => {
   return (
     <>
@@ -28,7 +28,7 @@ const SearchResultGridButton = ({
               fetchClickResultButton(
                 result.building,
                 result.floor,
-                result.cabinetNumber
+                result.cabinetNumber,
               )
             }
             className="bg-gray-300 hover:bg-gray-200 rounded-md  shadow-sm min-w-32 h-40"

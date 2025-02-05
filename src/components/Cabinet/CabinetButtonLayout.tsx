@@ -1,8 +1,8 @@
 // 사물함 배열 관련
 import { useEffect } from "react";
+import CabinetButtonSkeleton from "@/components/Skeleton/CabinetButtonSkeleton";
 import { useCabinet } from "@/hooks/useCabinet";
 import { useCabinetActivation } from "@/hooks/useCabinetActivation";
-import CabinetButtonSkeleton from "@/components/Skeleton/CabinetButtonSkeleton";
 
 interface CabinetButtonLayoutProps {
   selectedBuilding: { building: string } | null;
@@ -33,7 +33,7 @@ const CabinetButtonLayout = ({
     if (filteredCabinetDetail) {
       fetchCabinetDetailInformation(
         filteredCabinetDetail.id,
-        filteredCabinetDetail.cabinetNumber
+        filteredCabinetDetail.cabinetNumber,
       );
     }
   }, [filteredCabinetDetail]);
@@ -59,7 +59,7 @@ const CabinetButtonLayout = ({
                 onClick={() => {
                   fetchCabinetDetailInformation(
                     cabinet.id,
-                    cabinet.cabinetNumber
+                    cabinet.cabinetNumber,
                   );
                 }}
               >

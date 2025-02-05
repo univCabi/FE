@@ -18,12 +18,10 @@ const ConfirmModalView = ({
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-white p-6 rounded-lg shadow-xl w-96">
         <h2 className="text-2xl font-bold mb-5">{title}</h2>
-
         <div className="text-lg">
           <b>{boldText}</b>
           <p>{text}</p>
         </div>
-
         <div className="mt-5 flex justify-center">
           <button
             className="mr-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-500"

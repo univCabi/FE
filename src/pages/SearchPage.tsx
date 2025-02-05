@@ -1,23 +1,19 @@
-import { useSearch } from "@/hooks/useSearch";
+import SelectedCabinetInformation from "@/components/Cabinet/SelectedCabinetInformation";
+import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
+import DefaultSearchLayout from "@/components/Search/DefaultSearchLayout";
+import SearchInputComponent from "@/components/Search/SearchInputComponent";
+import SearchResultDropdownButton from "@/components/Search/SearchResultDropdownButton";
+import SearchResultGridButton from "@/components/Search/SearchResultGridButton";
 import { useBuildingState } from "@/hooks/useBuildingState";
 import { useCabinet } from "@/hooks/useCabinet";
-import { useSearchResultButton } from "@/hooks/useSearchResultButton";
+import { useSearch } from "@/hooks/useSearch";
 import { useSearchInput } from "@/hooks/useSearchInput";
-import SideNavigationLayout from "@/pages/SideNavigationLayout";
-import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
-import SelectedCabinetInformation from "@/components/Cabinet/SelectedCabinetInformation";
-import DefaultSearchLayout from "@/components/Search/DefaultSearchLayout";
-import SearchResultGridButton from "@/components/Search/SearchResultGridButton";
-import SearchResultDropdownButton from "@/components/Search/SearchResultDropdownButton";
-import SearchInputComponent from "@/components/Search/SearchInputComponent";
+import { useSearchResultButton } from "@/hooks/useSearchResultButton";
 
 const SearchPage = () => {
   const {
-    buildingList,
     selectedBuilding,
-    setSelectedBuilding,
     selectedFloor,
-    setSelectedFloor,
     isDropdownOpen,
     setIsDropdownOpen,
     dropdownOutsideRef,
@@ -59,15 +55,6 @@ const SearchPage = () => {
 
   return (
     <>
-      <SideNavigationLayout
-        buildingList={buildingList}
-        selectedBuilding={selectedBuilding}
-        setSelectedBuilding={setSelectedBuilding}
-        setSelectedFloor={setSelectedFloor}
-        setSelectedCabinet={setSelectedCabinet}
-      />
-
-      {/* 검색 관련 */}
       <>
         {/* 검색 입력창 */}
         <div className="flex flex-col items-center" ref={dropdownOutsideRef}>

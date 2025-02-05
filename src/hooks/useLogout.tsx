@@ -10,7 +10,7 @@ export const useLogout = () => {
       const response = await logoutApi();
       navigate(loginUrl);
       log.info(
-        `API 호출 성공: logoutApi, ${JSON.stringify(response, null, 2)}`
+        `API 호출 성공: logoutApi, ${JSON.stringify(response, null, 2)}`,
       );
     } catch (error) {
       // console.error("로그아웃 중 오류가 발생했습니다:", error);

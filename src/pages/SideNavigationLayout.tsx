@@ -1,11 +1,11 @@
 import { useLocation, useNavigate } from "react-router";
-import { BuildingData } from "types/CabinetType";
-import { useBuildingState } from "@/hooks/useBuildingState";
+import { BuildingData } from "@/types/CabinetType";
 import SubmitAndNavigateButton from "@/components/SubmitAndNavigateButton";
-import LogoSVG from "@/icons/cabiLogo.svg?react";
+import { useBuildingState } from "@/hooks/useBuildingState";
 import AngleDownSVG from "@/icons/angleDown.svg?react";
-import SearchSVG from "@/icons/search.svg?react";
+import LogoSVG from "@/icons/cabiLogo.svg?react";
 import ProfileSVG from "@/icons/profile.svg?react";
+import SearchSVG from "@/icons/search.svg?react";
 
 interface NavBuildingProps {
   buildingList: BuildingData[]; // 건물 배열 (name과 floors 포함)
@@ -17,7 +17,7 @@ interface NavBuildingProps {
     cabinet: {
       cabinetId: number;
       cabinetNumber: number;
-    } | null
+    } | null,
   ) => void;
 }
 

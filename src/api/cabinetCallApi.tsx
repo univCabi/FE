@@ -4,7 +4,7 @@ import api from "@/api/axiosInterceptApi";
 export const cabinetCallApi = async (building: string, floor: number) => {
   try {
     const response = await api.get(
-      `/cabinet?building=${building}&floor=${floor}`
+      `/cabinet?building=${building}&floor=${floor}`,
     );
     return response.data;
   } catch (error) {

@@ -1,5 +1,5 @@
-import { userProfileInfoUpdateApi } from "@/api/userProfileInfoUpdateApi";
 import { log } from "@/utils/logger";
+import { userProfileInfoUpdateApi } from "@/api/userProfileInfoUpdateApi";
 
 export const useProfileSave = (userIsVisible: boolean, saveState: boolean) => {
   const handleProfileSave = async () => {
@@ -12,8 +12,8 @@ export const useProfileSave = (userIsVisible: boolean, saveState: boolean) => {
           `API 호출 성공: userProfileInfoUpdateApi, ${JSON.stringify(
             response,
             null,
-            2
-          )}`
+            2,
+          )}`,
         );
       } catch (error) {
         // console.error(error);

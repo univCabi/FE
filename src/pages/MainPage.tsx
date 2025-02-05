@@ -1,12 +1,11 @@
 import { useLocation } from "react-router";
-import { useBuildingState } from "@/hooks/useBuildingState";
-import { useCabinet } from "@/hooks/useCabinet";
-import SideNavigationLayout from "@/pages/SideNavigationLayout";
-import SelectedCabinetInformation from "@/components/Cabinet/SelectedCabinetInformation";
 import BuildingSelectButton from "@/components/BuildingSelectButton";
-import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
 import CabinetButtonLayout from "@/components/Cabinet/CabinetButtonLayout";
 import CabinetStatusInformation from "@/components/Cabinet/CabinetStatusInformation";
+import SelectedCabinetInformation from "@/components/Cabinet/SelectedCabinetInformation";
+import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
+import { useBuildingState } from "@/hooks/useBuildingState";
+import { useCabinet } from "@/hooks/useCabinet";
 
 const MainPage = () => {
   const location = useLocation();
@@ -33,15 +32,6 @@ const MainPage = () => {
 
   return (
     <>
-      {/* 상단 네비게이션바(화면 크기 상관없이 표시) */}
-      <SideNavigationLayout
-        buildingList={buildingList}
-        selectedBuilding={selectedBuilding}
-        setSelectedBuilding={setSelectedBuilding}
-        setSelectedFloor={setSelectedFloor}
-        setSelectedCabinet={setSelectedCabinet}
-      />
-
       {/* 화면 크기 = 768px 이상일 때 */}
       <div className="md:flex">
         {/* 건물 정보(좌측) */}
@@ -67,7 +57,7 @@ const MainPage = () => {
               <CabinetButtonLayout
                 selectedBuilding={
                   buildingList.find(
-                    (data) => data.building === selectedBuilding
+                    (data) => data.building === selectedBuilding,
                   ) || null
                 }
                 selectedFloor={selectedFloor}
@@ -126,7 +116,7 @@ const MainPage = () => {
                 <CabinetButtonLayout
                   selectedBuilding={
                     buildingList.find(
-                      (data) => data.building === selectedBuilding
+                      (data) => data.building === selectedBuilding,
                     ) || null
                   }
                   selectedFloor={selectedFloor}

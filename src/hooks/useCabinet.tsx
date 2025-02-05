@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { SelectedCabinet } from "types/CabinetType";
+import { SelectedCabinet } from "@/types/CabinetType";
 import { log } from "@/utils/logger";
 import { cabinetDetailInfoApi } from "@/api/cabinetDetailInfoApi";
 
@@ -13,7 +13,7 @@ export const useCabinet = () => {
   // 사물함 세부 정보 API 호출
   const fetchCabinetDetailInformation = async (
     cabinetId: number,
-    cabinetNumber: number
+    cabinetNumber: number,
   ) => {
     try {
       const response = await cabinetDetailInfoApi(cabinetId);
@@ -25,8 +25,8 @@ export const useCabinet = () => {
         `API 호출 성공: cabinetDetailInfoApi, ${JSON.stringify(
           response,
           null,
-          2
-        )}`
+          2,
+        )}`,
       );
       return response;
     } catch (error) {

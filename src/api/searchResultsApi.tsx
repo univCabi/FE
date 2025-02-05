@@ -3,7 +3,7 @@ import api from "@/api/axiosInterceptApi";
 export const searchResultsApi = async (searchInput: string, page: number) => {
   try {
     const response = await api.get(
-      `/cabinet/search/detail?keyword=${searchInput}&page=${page}`
+      `/cabinet/search/detail?keyword=${searchInput}&page=${page}`,
     );
     if (response && response.data) {
       return response;

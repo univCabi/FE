@@ -1,6 +1,7 @@
-import { useHandleLogin } from "@/hooks/useHandleLogin";
 import SubmitAndNavigateButton from "@/components/SubmitAndNavigateButton";
+import { useHandleLogin } from "@/hooks/useHandleLogin";
 import LogoSVG from "@/icons/cabiLogo.svg?react";
+
 const LoginForm = () => {
   const {
     handleLogin,

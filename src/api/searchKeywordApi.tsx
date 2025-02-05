@@ -5,7 +5,7 @@ export const searchKeywordApi = async (keyword) => {
     const response = await api.get(`/cabinet/search?keyword=${keyword}`);
 
     const filterData = response.data.filter((inputValue) =>
-      inputValue.cabinetNumber?.toString().includes(keyword)
+      inputValue.cabinetNumber?.toString().includes(keyword),
     );
     return filterData;
   } catch (error) {

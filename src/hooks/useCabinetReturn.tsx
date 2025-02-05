@@ -1,5 +1,5 @@
-import { returnApi } from "@/api/returnApi";
 import { log } from "@/utils/logger";
+import { returnApi } from "@/api/returnApi";
 
 interface UseCabinetReturnProps {
   selectedCabinet: { cabinetId: number; cabinetNumber: number } | null;
@@ -26,7 +26,7 @@ export const useCabinetReturn = ({
         closeReturnModal();
         setExpiredAt(null); // 반납 기간 초기화
         log.info(
-          `API 호출 성공: returnApi, ${JSON.stringify(response, null, 2)}`
+          `API 호출 성공: returnApi, ${JSON.stringify(response, null, 2)}`,
         );
         return response.data;
       } else {

@@ -1,17 +1,20 @@
 // search에 대한 hook (submit, API, 무한스크롤)
-
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useSearchParams } from "react-router-dom";
 import { debounce, throttle } from "lodash";
+import { useSearchParams } from "react-router-dom";
 import { log } from "@/utils/logger";
-import { searchResultsApi } from "@/api/searchResultsApi";
 import { searchKeywordApi } from "@/api/searchKeywordApi";
+import { searchResultsApi } from "@/api/searchResultsApi";
 
 export const useSearch = () => {
   const [searchInput, setSearchInput] = useState("");
   const [searchParams, setSearchParams] = useSearchParams(); // searchInput 값에 대한 쿼리스트링
   const [searchResults, setSearchResults] = useState<
-    { building: string; floor: number; cabinetNumber: number }[]
+    {
+      building: string;
+      floor: number;
+      cabinetNumber: number;
+    }[]
   >([]); // 검색 결과 저장
   const [showGridResults, setShowGridResults] = useState(false); // 검색 결과 그리드 표시 여부
   const inputRef = useRef<HTMLInputElement | null>(null); // input focus에 대한 참조
@@ -42,7 +45,9 @@ export const useSearch = () => {
   // API
   // 검색 API 호출
   const fetchSearchKeyword = async (keyword: string) => {
-    setSearchParams({ keyword });
+    setSearchParams({
+      keyword,
+    });
     if (keyword) {
       try {
         const response = await searchKeywordApi(keyword);
@@ -52,8 +57,8 @@ export const useSearch = () => {
           `API 호출 성공: searchKeywordApi, ${JSON.stringify(
             response,
             null,
-            2
-          )}`
+            2,
+          )}`,
         );
       } catch (error) {
         log.error("API 호출 중 에러 발생: searchKeywordApi");
@@ -63,7 +68,7 @@ export const useSearch = () => {
   // debounce 적용된 API 호출 함수
   const debouncedSearchKeywordApi = useCallback(
     debounce((keyword) => fetchSearchKeyword(keyword), 200),
-    []
+    [],
   );
 
   // 무한스크롤
@@ -86,7 +91,7 @@ export const useSearch = () => {
         // 마지막 페이지인 경우 로딩 종료
       }
       log.info(
-        `API 호출 성공: searchResultsApi, ${JSON.stringify(data, null, 2)}`
+        `API 호출 성공: searchResultsApi, ${JSON.stringify(data, null, 2)}`,
       );
     } catch (error) {
       log.error("API 호출 중 에러 발생: searchResultsApi");

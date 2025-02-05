@@ -18,7 +18,7 @@ api.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 api.interceptors.response.use(
@@ -27,7 +27,7 @@ api.interceptors.response.use(
     const Request = error.config;
     const objectErrorStatus = Number(JSON.stringify(error.response.status));
     const objectErrorTokenClass = JSON.stringify(
-      error.response.data.messages[0].token_class
+      error.response.data.messages[0].token_class,
     );
 
     if (
@@ -61,7 +61,7 @@ api.interceptors.response.use(
       return Promise.reject(error);
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 export default api;

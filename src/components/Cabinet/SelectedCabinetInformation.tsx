@@ -1,10 +1,10 @@
-import { SelectedCabinet } from "types/CabinetType";
-import { useConfirmModalState } from "@/hooks/useConfirmModalState";
+import { SelectedCabinet } from "@/types/CabinetType";
+import CabinetActionButtons from "@/components/Cabinet/CabinetActionButtons";
+import CabinetInformationDisplay from "@/components/Cabinet/CabinetInformationDisplay";
+import ConfirmModalView from "@/components/ConfirmModalView";
 import { useCabinetRental } from "@/hooks/useCabinetRental";
 import { useCabinetReturn } from "@/hooks/useCabinetReturn";
-import ConfirmModalView from "@/components/ConfirmModalView";
-import CabinetInformationDisplay from "@/components/Cabinet/CabinetInformationDisplay";
-import CabinetActionButtons from "@/components/Cabinet/CabinetActionButtons";
+import { useConfirmModalState } from "@/hooks/useConfirmModalState";
 import CabinetSVG from "@/icons/cabinet.svg?react";
 
 // 선택된 사물함 정보

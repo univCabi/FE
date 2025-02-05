@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { UserData } from "types/UserType";
+import { UserData } from "@/types/UserType";
 import { log } from "@/utils/logger";
 import { userDataApi } from "@/api/userDataApi";
 
@@ -38,7 +38,7 @@ export const useUserData = () => {
         });
         setUserIsVisible(data.isVisible);
         log.info(
-          `API 호출 성공: userDataApi, ${JSON.stringify(response, null, 2)}`
+          `API 호출 성공: userDataApi, ${JSON.stringify(response, null, 2)}`,
         );
       } catch (error) {
         if (error.response?.status === 401) {
@@ -48,7 +48,6 @@ export const useUserData = () => {
         log.error("로그인 중 오류가 발생했습니다:");
       } finally {
         setLoding(false);
-
       }
     };
     getData();

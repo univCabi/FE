@@ -1,5 +1,4 @@
 // 검색 페이지 - input에 대한 컴포넌트
-
 import SearchSVG from "@/icons/search.svg?react";
 
 interface SearchInputComponentProps {
