@@ -3,6 +3,7 @@ import { RentCabinetInfo } from "types/UserType";
 interface RentalInfoCardProp {
   rentCabinetInfo: RentCabinetInfo;
 }
+
 const RentalInfoCard = ({ rentCabinetInfo }: RentalInfoCardProp) => {
   return (
     <div className="p-10 w-96 sl:w-full bg-neutral-150 rounded-2xl flex-col justify-start items-start gap-5 inline-flex shadow-md">
