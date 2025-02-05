@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { logoutApi } from "@/api/logoutApi";
 import { log } from "@/utils/logger";
+import { logoutApi } from "@/api/logoutApi";
 
 export const useLogout = () => {
   const navigate = useNavigate();

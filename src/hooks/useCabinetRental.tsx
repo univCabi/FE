@@ -1,5 +1,5 @@
-import { rentApi } from "@/api/rentApi";
 import { log } from "@/utils/logger";
+import { rentApi } from "@/api/rentApi";
 
 interface UseCabinetRentalProps {
   selectedCabinet: { cabinetId: number; cabinetNumber: number } | null;

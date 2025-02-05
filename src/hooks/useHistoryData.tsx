@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { throttle } from "lodash";
-import { userHistoryDataApi } from "@/api/userHistoryDataApi";
 import { log } from "@/utils/logger";
+import { userHistoryDataApi } from "@/api/userHistoryDataApi";
 
 interface HistoryData {
   building: string;

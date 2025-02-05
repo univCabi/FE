@@ -1,8 +1,8 @@
 // 검색 결과 버튼 클릭 시 cabinet에 대한 API 요청을 위한 hook
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { cabinetCallApi } from "@/api/cabinetCallApi";
 import { log } from "@/utils/logger";
+import { cabinetCallApi } from "@/api/cabinetCallApi";
 
 interface filteredCabinetDetailProps {
   building: string;

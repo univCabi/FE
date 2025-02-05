@@ -2,9 +2,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { debounce, throttle } from "lodash";
 import { useSearchParams } from "react-router-dom";
+import { log } from "@/utils/logger";
 import { searchKeywordApi } from "@/api/searchKeywordApi";
 import { searchResultsApi } from "@/api/searchResultsApi";
-import { log } from "@/utils/logger";
 
 export const useSearch = () => {
   const [searchInput, setSearchInput] = useState("");

@@ -1,5 +1,5 @@
-import { userProfileInfoUpdateApi } from "@/api/userProfileInfoUpdateApi";
 import { log } from "@/utils/logger";
+import { userProfileInfoUpdateApi } from "@/api/userProfileInfoUpdateApi";
 
 export const useProfileSave = (userIsVisible: boolean, saveState: boolean) => {
   const handleProfileSave = async () => {

@@ -1,7 +1,7 @@
 // 사물함 버튼 활성화 -> cabinetData 저장
 import { useEffect, useState } from "react";
-import { cabinetCallApi } from "@/api/cabinetCallApi";
 import { log } from "@/utils/logger";
+import { cabinetCallApi } from "@/api/cabinetCallApi";
 
 interface CabinetData {
   floor: number;

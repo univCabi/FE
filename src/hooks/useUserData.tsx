@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { userDataApi } from "@/api/userDataApi";
 import { UserData } from "@/types/UserType";
 import { log } from "@/utils/logger";
+import { userDataApi } from "@/api/userDataApi";
 
 const defaultUserData: UserData = {
   name: null,

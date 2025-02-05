@@ -1,7 +1,7 @@
+import { SelectedCabinet } from "@/types/CabinetType";
 import CabinetActionButtons from "@/components/Cabinet/CabinetActionButtons";
 import CabinetInformationDisplay from "@/components/Cabinet/CabinetInformationDisplay";
 import ConfirmModalView from "@/components/ConfirmModalView";
-import { SelectedCabinet } from "@/types/CabinetType";
 import { useCabinetRental } from "@/hooks/useCabinetRental";
 import { useCabinetReturn } from "@/hooks/useCabinetReturn";
 import { useConfirmModalState } from "@/hooks/useConfirmModalState";
