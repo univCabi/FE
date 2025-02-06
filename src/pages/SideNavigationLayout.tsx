@@ -116,9 +116,7 @@ const SideNavigationLayout = ({
         {/* 프로필 페이지로 들어갈 수 있는 아이콘 */}
         <SubmitAndNavigateButton
           onClick={clickedProfileLogo}
-          className={`mr-5 p-2 rounded-md focus:outline-none hover:bg-blue-500 ${
-            isProfilePage ? "bg-blue-500" : "bg-blue-600"
-          }`}
+          className={`btn-top-icon-basic ${isProfilePage ? "btn-top-icon-after" : "btn-top-icon-before"}`}
           svgComponent={<ProfileSVG />}
         ></SubmitAndNavigateButton>
       </div>
