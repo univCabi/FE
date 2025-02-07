@@ -76,7 +76,7 @@ const ProfilePage = () => {
               userIsVisible === userData.isVisible
                 ? "bg-gray-400 "
                 : "hover:text-blue-900"
-            } btn-submit justify-center items-center inline-flex text-center text-xl`}
+            } button-submit justify-center items-center inline-flex text-center text-xl`}
             onClick={() => setOpenProfileSaveButtonModal(true)}
             text={"저장"}
             disabled={userIsVisible === userData.isVisible}

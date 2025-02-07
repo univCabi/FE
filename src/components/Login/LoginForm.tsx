@@ -57,7 +57,7 @@ const LoginForm = () => {
         <SubmitAndNavigateButton
           text={"L  o  g  i  n"}
           className={
-            "btn-submit whitespace-pre text-sm sm:text-base w-[60%] sl:w-[70%]  text-white py-2.5 sl:py-3.5"
+            "button-submit whitespace-pre text-sm sm:text-base w-[60%] sl:w-[70%]  text-white py-2.5 sl:py-3.5"
           }
           onClick={(e) => onSubmit(e as React.FormEvent)}
         ></SubmitAndNavigateButton>

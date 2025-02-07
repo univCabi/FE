@@ -137,35 +137,36 @@ body {
   }*/
 
   /* 버튼 색상 */
-  .btn-submit {
+  .button-submit {
     @apply bg-blue-600 rounded-lg text-white shadow-lg;
   }
 
   /* 측면 아이콘 */
-  .btn-side-icon-basic {
+  .button-side-icon-basic {
     @apply flex flex-col items-center p-4 rounded-md transition-all duration-150;
   }
 
-  .btn-side-icon-before {
+  .button-side-icon-before {
     @apply hover:bg-blue-600 hover:text-white;
   }
 
-  .btn-side-icon-after {
+  .button-side-icon-after {
     @apply bg-blue-50 text-blue-600;
   }
 
   /* 상단 아이콘 */
-  .btn-top-icon-basic {
+  .button-top-icon-basic {
     @apply mr-3 p-2 rounded-md focus:outline-none hover:bg-blue-500;
   }
 
-  .btn-top-icon-before {
+  .button-top-icon-before {
     @apply bg-blue-600;
   }
 
-  .btn-top-icon-after {
+  .button-top-icon-after {
     @apply bg-blue-500;
   }
+
   h2 {
     font-size: 1.2rem;
     font-weight: 600;
