@@ -65,36 +65,41 @@ const SideNavigationLayout = ({
           </button>
 
           {/* 건물 목록 드롭다운 */}
-          <div className="relative min-w-[10rem]" ref={dropdownOutsideRef}>
-            <button
-              className="flex justify-center py-2 px-4 bg-blue-600 hover:bg-blue-500 rounded-md"
-              onClick={toggleDropdown}
-            >
-              {selectedBuilding ?? "가온관"}
-              <AngleDownSVG className="ml-2" fill="#ffffff" />
-            </button>
+          {location.pathname === "/main" ? (
+            <div className="relative min-w-[10rem]" ref={dropdownOutsideRef}>
+              <button
+                className="flex justify-center py-2 px-4 bg-blue-600 hover:bg-blue-500 rounded-md"
+                onClick={toggleDropdown}
+              >
+                {selectedBuilding ?? "가온관"}
+                <AngleDownSVG className="ml-2" fill="#ffffff" />
+              </button>
 
-            {/* 드롭다운 상태일 때 */}
-            {isDropdownOpen && (
-              <div className="absolute w-40 bg-white text-black rounded-md shadow-lg">
-                {buildingList.map((buildingData) => (
-                  <button
-                    key={buildingData.building}
-                    className="block my-1 p-3 w-full text-center hover:bg-blue-400 hover:text-white rounded-md"
-                    onClick={() => {
-                      setSelectedBuilding(buildingData.building); // 선택한 건물 업데이트
-                      setSelectedFloor(null); // 건물 층수 초기화
-                      setSelectedCabinet(null);
-                      setIsDropdownOpen(false); // 드롭다운 닫기
-                    }}
-                  >
-                    {buildingData.building}
-                  </button>
-                ))}
-              </div>
+              {/* 드롭다운 상태일 때 */}
+              {isDropdownOpen && (
+                <div className="absolute w-40 bg-white text-black rounded-md shadow-lg">
+                  {buildingList.map((buildingData) => (
+                    <button
+                      key={buildingData.building}
+                      className="block my-1 p-3 w-full text-center hover:bg-blue-400 hover:text-white rounded-md"
+                      onClick={() => {
+                        setSelectedBuilding(buildingData.building); // 선택한 건물 업데이트
+                        setSelectedFloor(null); // 건물 층수 초기화
+                        setSelectedCabinet(null);
+                        setIsDropdownOpen(false); // 드롭다운 닫기
+                      }}
+                    >
+                      {buildingData.building}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+            ) : (
+              <div className="relative min-w-[10rem]"></div>
             )}
           </div>
-        </div>
+          
         {/* 검색 입력창 */}
         {/* 검색 입력창 (경로가 /search가 아닐 때만 렌더링) */}
         {location.pathname !== "/search" && (
