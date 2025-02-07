@@ -72,11 +72,11 @@ const ProfilePage = () => {
             )}
           </div>
           <SubmitAndNavigateButton
-            className={`mt-10 mb-10 w-40 h-16 ${
+            className={`mt-10 mb-10 w-44 h-16 ${
               userIsVisible === userData.isVisible
                 ? "bg-gray-400 "
-                : "bg-blue-600 hover:text-blue-900"
-            } rounded-lg justify-center items-center inline-flex text-center text-white text-xl shadow-2xl`}
+                : "hover:text-blue-900"
+            } button-submit justify-center items-center inline-flex text-center text-xl`}
             onClick={() => setOpenProfileSaveButtonModal(true)}
             text={"저장"}
             disabled={userIsVisible === userData.isVisible}
