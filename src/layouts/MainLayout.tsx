@@ -7,7 +7,6 @@ const MainLayout = () => {
   const {
     buildingList,
     selectedBuilding,
-    setSelectedBuilding,
     setSelectedFloor,
   } = useBuildingState();
   const { setSelectedCabinet } = useCabinet();
@@ -17,7 +16,6 @@ const MainLayout = () => {
       <SideNavigationLayout
         buildingList={buildingList}
         selectedBuilding={selectedBuilding}
-        setSelectedBuilding={setSelectedBuilding}
         setSelectedFloor={setSelectedFloor}
         setSelectedCabinet={setSelectedCabinet}
       />

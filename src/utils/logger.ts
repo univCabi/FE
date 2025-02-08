@@ -1,5 +1,5 @@
 type LogLevel = "DEBUG" | "INFO" | "WARN" | "ERROR";
-const LOG_LEVEL: LogLevel = "INFO"; // 현재 로그 레벨을 정의 (레벨에 따라 보여지는 로그가 정해짐)
+const LOG_LEVEL: LogLevel = "WARN"; // 현재 로그 레벨을 정의 (레벨에 따라 보여지는 로그가 정해짐)
 const levels: LogLevel[] = ["DEBUG", "INFO", "WARN", "ERROR"];
 
 /**

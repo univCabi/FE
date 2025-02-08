@@ -10,7 +10,6 @@ import SearchSVG from "@/icons/search.svg?react";
 interface NavBuildingProps {
   buildingList: BuildingData[]; // 건물 배열 (name과 floors 포함)
   selectedBuilding: string | null; // 선택된 건물의 인덱스 또는 null
-  setSelectedBuilding: (building: string | null) => void; // 선택된 건물을 설정하는 함수
   setSelectedFloor: (floor: number | null) => void; // 선택된 층을 설정하는 함수
   selectedCabinet?: { cabinetId: number; cabinetNumber: number } | null;
   setSelectedCabinet: (
@@ -24,7 +23,6 @@ interface NavBuildingProps {
 const SideNavigationLayout = ({
   buildingList,
   selectedBuilding,
-  setSelectedBuilding,
   setSelectedFloor,
   setSelectedCabinet,
 }: NavBuildingProps) => {
@@ -54,6 +52,11 @@ const SideNavigationLayout = ({
     setIsDropdownOpen(!isDropdownOpen);
   };
 
+  const dropdownBuildingSelect = (building: string) => {
+    navigate("/main", { state: {selectedBuilding: building} });
+    setIsDropdownOpen(false);
+  };
+
   return (
     <nav className="bg-blue-600 fixed w-full h-16 z-20 top-0 start-0 border-b border-blue-600 text-white">
       <div className="max-w-screen-xl h-full flex items-center justify-between mx-auto">
@@ -70,7 +73,7 @@ const SideNavigationLayout = ({
               className="flex justify-center py-2 px-4 bg-blue-600 hover:bg-blue-500 rounded-md"
               onClick={toggleDropdown}
             >
-              {selectedBuilding ?? "가온관"}
+              {selectedBuilding ?? buildingList[0].building}
               <AngleDownSVG className="ml-2" fill="#ffffff" />
             </button>
 
@@ -82,7 +85,7 @@ const SideNavigationLayout = ({
                     key={buildingData.building}
                     className="block my-1 p-3 w-full text-center hover:bg-blue-400 hover:text-white rounded-md"
                     onClick={() => {
-                      setSelectedBuilding(buildingData.building); // 선택한 건물 업데이트
+                      dropdownBuildingSelect(buildingData.building);
                       setSelectedFloor(null); // 건물 층수 초기화
                       setSelectedCabinet(null);
                       setIsDropdownOpen(false); // 드롭다운 닫기
@@ -95,6 +98,7 @@ const SideNavigationLayout = ({
             )}
           </div>
         </div>
+          
         {/* 검색 입력창 */}
         {/* 검색 입력창 (경로가 /search가 아닐 때만 렌더링) */}
         {location.pathname !== "/search" && (

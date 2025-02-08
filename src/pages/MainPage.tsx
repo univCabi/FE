@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import { useLocation } from "react-router";
+import SideNavigationLayout from "@/pages/SideNavigationLayout";
 import BuildingSelectButton from "@/components/BuildingSelectButton";
 import CabinetButtonLayout from "@/components/Cabinet/CabinetButtonLayout";
 import CabinetStatusInformation from "@/components/Cabinet/CabinetStatusInformation";
@@ -10,7 +12,6 @@ import { useCabinet } from "@/hooks/useCabinet";
 const MainPage = () => {
   const location = useLocation();
   const filteredCabinetDetail = location.state?.filteredCabinetDetail;
-
   const {
     buildingList,
     selectedBuilding,
@@ -30,8 +31,21 @@ const MainPage = () => {
     fetchCabinetDetailInformation,
   } = useCabinet();
 
+  useEffect(() => {
+    if (location.state?.selectedBuilding) {
+      setSelectedBuilding(location.state.selectedBuilding);
+    }
+  }, [location.state]);
+
   return (
     <>
+      <SideNavigationLayout
+        buildingList={buildingList}
+        selectedBuilding={selectedBuilding}
+        setSelectedFloor={setSelectedFloor}
+        setSelectedCabinet={setSelectedCabinet}
+      />
+
       {/* 화면 크기 = 768px 이상일 때 */}
       <div className="md:flex">
         {/* 건물 정보(좌측) */}

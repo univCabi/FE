@@ -1,7 +1,7 @@
 import { useState } from "react";
+import { cabinetDetailInfoApi } from "@/api/cabinetDetailInfoApi";
 import { SelectedCabinet } from "@/types/CabinetType";
 import { log } from "@/utils/logger";
-import { cabinetDetailInfoApi } from "@/api/cabinetDetailInfoApi";
 
 export const useCabinet = () => {
   const [selectedCabinet, setSelectedCabinet] =

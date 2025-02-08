@@ -18,7 +18,7 @@ const SearchResultDropdowndButton = ({
   setIsDropdownOpen,
 }: SearchResultDropdowndButtonProps) => {
   return (
-    <div className="relative top-full left-[4.5rem] w-80 mt-2 bg-white rounded-md shadow-lg z-30">
+    <div className="relative top-full left-[4.5rem] w-80 ml-5 mt-2 bg-white rounded-md shadow-lg z-30">
       {searchResults.length > 0 ? (
         // 검색 결과 보여줄 때 6개씩 보이게 구현
         searchResults.slice(0, slicedSearchResults).map((result, index) => (
