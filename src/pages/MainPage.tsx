@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useLocation } from "react-router";
 import SideNavigationLayout from "@/pages/SideNavigationLayout";
 import BuildingSelectButton from "@/components/BuildingSelectButton";
@@ -8,11 +9,9 @@ import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
 import { useBuildingState } from "@/hooks/useBuildingState";
 import { useCabinet } from "@/hooks/useCabinet";
 
-
 const MainPage = () => {
   const location = useLocation();
   const filteredCabinetDetail = location.state?.filteredCabinetDetail;
-
   const {
     buildingList,
     selectedBuilding,
@@ -32,12 +31,17 @@ const MainPage = () => {
     fetchCabinetDetailInformation,
   } = useCabinet();
 
+  useEffect(() => {
+    if (location.state?.selectedBuilding) {
+      setSelectedBuilding(location.state.selectedBuilding);
+    }
+  }, [location.state]);
+
   return (
     <>
       <SideNavigationLayout
         buildingList={buildingList}
         selectedBuilding={selectedBuilding}
-        setSelectedBuilding={setSelectedBuilding}
         setSelectedFloor={setSelectedFloor}
         setSelectedCabinet={setSelectedCabinet}
       />
