@@ -39,7 +39,7 @@ const MainPage = () => {
       setSelectedFloor(null);
       setSelectedCabinet(null);
     }
-  }, [location.state, selectedBuilding]);
+  }, [location.state]);
 
   return (
     <>
