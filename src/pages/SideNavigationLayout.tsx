@@ -1,35 +1,31 @@
+import { useContext, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router";
-import { BuildingData } from "@/types/CabinetType";
+import { SideNavigationLayoutContext } from "@/contexts/SideNavigationLayoutContext";
 import SubmitAndNavigateButton from "@/components/SubmitAndNavigateButton";
 import { useBuildingState } from "@/hooks/useBuildingState";
+import { useCabinet } from "@/hooks/useCabinet";
 import AngleDownSVG from "@/icons/angleDown.svg?react";
 import LogoSVG from "@/icons/cabiLogo.svg?react";
 import ProfileSVG from "@/icons/profile.svg?react";
 import SearchSVG from "@/icons/search.svg?react";
 
-interface NavBuildingProps {
-  buildingList: BuildingData[]; // 건물 배열 (name과 floors 포함)
-  selectedBuilding: string | null; // 선택된 건물의 인덱스 또는 null
-  setSelectedFloor: (floor: number | null) => void; // 선택된 층을 설정하는 함수
-  selectedCabinet?: { cabinetId: number; cabinetNumber: number } | null;
-  setSelectedCabinet: (
-    cabinet: {
-      cabinetId: number;
-      cabinetNumber: number;
-    } | null,
-  ) => void;
-}
+const SideNavigationLayout = () => {
+  const { 
+    buildingList,
+    selectedBuilding,
+    setSelectedBuilding
+  } = useContext(SideNavigationLayoutContext);
 
-const SideNavigationLayout = ({
-  buildingList,
-  selectedBuilding,
-  setSelectedFloor,
-  setSelectedCabinet,
-}: NavBuildingProps) => {
-  const { isDropdownOpen, setIsDropdownOpen, dropdownOutsideRef } =
-    useBuildingState();
+  const { 
+    isDropdownOpen, 
+    setIsDropdownOpen, 
+    dropdownOutsideRef, 
+    setSelectedFloor
+  } = useBuildingState();
+
+  const { setSelectedCabinet } = useCabinet();
   const location = useLocation();
-  const navigate = useNavigate(); // 한 번만 선언하면 된다.
+  const navigate = useNavigate();
   // 로고 클릭 시 '/main'으로 이동 & 위치가 '/main'일 경우 새로고침 -> 민웅기: clikendLogo에서 clickedMainLogo로 변경하였습니다.
   const isProfilePage: boolean = location.pathname === "/profile";
   const clickedMainLogo = () => {
@@ -57,6 +53,10 @@ const SideNavigationLayout = ({
     setIsDropdownOpen(false);
   };
 
+  useEffect(() => {
+    setSelectedBuilding(null);
+  }, [location.pathname, setSelectedBuilding]);
+  
   return (
     <nav className="bg-blue-600 fixed w-full h-16 z-20 top-0 start-0 border-b border-blue-600 text-white">
       <div className="max-w-screen-xl h-full flex items-center justify-between mx-auto">
