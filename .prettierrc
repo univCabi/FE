@@ -16,6 +16,7 @@
     "^@/App",
     "^@/types",
     "^@/utils",
+    "^@/contexts",
     "^@/api",
     "^@/pages",
     "^@/layouts",
