@@ -1,5 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "@/App.css";
+import AdminLoginPage from "@/pages/Admin/AdminLoginPage";
+import AdminMainPage from "@/pages/Admin/AdminMainPage";
 import ErrorPage from "@/pages/ErrorPage";
 import HistoryPage from "@/pages/HistoryPage";
 import LoginPage from "@/pages/LoginPage";
@@ -13,6 +15,7 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
+          {/* 일반 사용자 라우터 */}
           <Route path="/" element={<Navigate to="/login" replace />} />
           <Route path="/login" element={<LoginPage />} />
           <Route element={<MainLayout />}>
@@ -22,6 +25,16 @@ function App() {
             <Route path="/profile" element={<ProfilePage />} />
           </Route>
           <Route path="*" element={<ErrorPage />} />
+
+          {/* Admin 라우터 */}
+          <Route
+            path="/admin"
+            element={<Navigate to="/admin/login" replace />}
+          />
+          <Route path="/admin/login" element={<AdminLoginPage />} />
+          <Route element={<MainLayout />}>
+            <Route path="/admin/main" element={<AdminMainPage />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </>

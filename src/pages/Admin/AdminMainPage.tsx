@@ -1,6 +1,7 @@
 import { useContext, useEffect } from "react";
 import { useLocation } from "react-router";
 import { SideNavigationLayoutContext } from "@/contexts/SideNavigationLayoutContext";
+import AdminInfoChart from "@/components/Admin/AdminInfoChart";
 import BuildingSelectButton from "@/components/BuildingSelectButton";
 import CabinetButtonLayout from "@/components/Cabinet/CabinetButtonLayout";
 import CabinetStatusInformation from "@/components/Cabinet/CabinetStatusInformation";
@@ -9,7 +10,7 @@ import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
 import { useBuildingState } from "@/hooks/useBuildingState";
 import { useCabinet } from "@/hooks/useCabinet";
 
-const MainPage = () => {
+const AdminMainPage = () => {
   const { buildingList, selectedBuilding, setSelectedBuilding } = useContext(
     SideNavigationLayoutContext,
   );
@@ -58,6 +59,7 @@ const MainPage = () => {
         {/* 사물함 위치(중앙) */}
         <div className="absolute inset-y-0 left-0 right-0 md:left-64 md:right-80 border-gray-400 pt-16 hidden md:flex">
           {/* 건물 선택 후, 층수 선택을 둘 다 해야 사물함 컴포넌트가 보임 */}
+          {selectedBuilding === null && <AdminInfoChart />}
           {selectedBuilding !== null && selectedFloor !== null && (
             <>
               <CabinetButtonLayout
@@ -161,4 +163,4 @@ const MainPage = () => {
   );
 };
 
-export default MainPage;
+export default AdminMainPage;

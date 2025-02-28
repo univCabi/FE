@@ -21,7 +21,7 @@ const SearchInputComponent = ({
   return (
     <form
       onSubmit={handleSearchSubmit}
-      className="flex space-x-2 mt-[0.88rem] z-20 items-center relative left-[6.05rem]"
+      className="flex space-x-2 mt-[0.88rem] z-20 items-center relative left-[6.3rem]"
     >
       <input
         type="text"
