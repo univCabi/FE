@@ -8,7 +8,11 @@ export const useLogout = () => {
   const handleLogout = async () => {
     try {
       const response = await logoutApi();
-      navigate(loginUrl);
+      const redirectPath = location.pathname.startsWith("/admin")
+        ? "/admin/"
+        : loginUrl;
+      // navigate(loginUrl);
+      navigate(redirectPath);
       log.info(
         `API 호출 성공: logoutApi, ${JSON.stringify(response, null, 2)}`,
       );

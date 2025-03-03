@@ -17,7 +17,7 @@ const CabinetActionButtons = ({
     {onRentalClick && (
       <button
         onClick={onRentalClick}
-        className="p-4 w-60 bg-blue-600 text-white border border-blue-600 rounded-lg hover:bg-blue-500 hover:text-white transition-all duration-150"
+        className="p-4 w-60 button-cabinet-action"
       >
         {text}
       </button>
@@ -25,7 +25,7 @@ const CabinetActionButtons = ({
     {onReturnClick && (
       <button
         onClick={onReturnClick}
-        className="mt-4 p-4 w-60 bg-blue-600 text-white border border-blue-600 rounded-lg hover:bg-blue-500 hover:text-white transition-all duration-150"
+        className="mt-4 p-4 w-60 button-cabinet-action"
       >
         {text}
       </button>

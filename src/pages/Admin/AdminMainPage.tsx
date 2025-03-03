@@ -1,6 +1,7 @@
 import { useContext, useEffect } from "react";
 import { useLocation } from "react-router";
 import { SideNavigationLayoutContext } from "@/contexts/SideNavigationLayoutContext";
+import AdminCabinetLayout from "@/components/Admin/AdminCabinetLayout";
 import AdminInfoChart from "@/components/Admin/AdminInfoChart";
 import BuildingSelectButton from "@/components/BuildingSelectButton";
 import CabinetButtonLayout from "@/components/Cabinet/CabinetButtonLayout";
@@ -58,11 +59,9 @@ const AdminMainPage = () => {
 
         {/* 사물함 위치(중앙) */}
         <div className="absolute inset-y-0 left-0 right-0 md:left-64 md:right-80 border-gray-400 pt-16 hidden md:flex">
-          {/* 건물 선택 후, 층수 선택을 둘 다 해야 사물함 컴포넌트가 보임 */}
-          {selectedBuilding === null && <AdminInfoChart />}
           {selectedBuilding !== null && selectedFloor !== null && (
             <>
-              <CabinetButtonLayout
+              <AdminCabinetLayout
                 selectedBuilding={
                   buildingList.find(
                     (data) => data.building === selectedBuilding,
@@ -77,26 +76,35 @@ const AdminMainPage = () => {
             </>
           )}
         </div>
-        {/* 선택한 사물함 정보(우측) */}
-        <div className="absolute inset-y-0 right-0 w-80 border-gray-400 border-l-2 pt-20 hidden md:flex">
-          <SelectedCabinetInformation
-            selectedBuilding={selectedBuilding}
-            selectedFloor={selectedFloor}
-            selectedCabinet={selectedCabinet}
-            selectedStatus={selectedStatus as string}
-            setSelectedStatus={setSelectedStatus}
-            setExpiredAt={setExpiredAt}
-            setSelectedCabinet={setSelectedCabinet}
-            expiredAt={expiredAt}
-            isMyCabinet={isMyCabinet as boolean}
-            setIsMyCabinet={setIsMyCabinet}
-          />
+
+        {/* 통계 */}
+        <div className="absolute inset-y-0 left-0 right-0 md:left-64 border-gray-400 pt-16 hidden md:flex">
+          {selectedBuilding === null && <AdminInfoChart />}
         </div>
+
+        {/* 선택한 사물함 정보(우측) */}
+        {selectedBuilding && (
+          <div className="absolute inset-y-0 right-0 w-80 border-gray-400 border-l-2 pt-20 hidden md:flex">
+            <SelectedCabinetInformation
+              selectedBuilding={selectedBuilding}
+              selectedFloor={selectedFloor}
+              selectedCabinet={selectedCabinet}
+              selectedStatus={selectedStatus as string}
+              setSelectedStatus={setSelectedStatus}
+              setExpiredAt={setExpiredAt}
+              setSelectedCabinet={setSelectedCabinet}
+              expiredAt={expiredAt}
+              isMyCabinet={isMyCabinet as boolean}
+              setIsMyCabinet={setIsMyCabinet}
+            />
+          </div>
+        )}
       </div>
 
       {/* 화면 크기 = 768px 이하일 때 */}
       <div className="md:hidden">
         {/* 건물 & 층 선택 안했을 때 -> 건물 & 층 선택하는 컴포넌트만 표시 */}
+        {/* {selectedBuilding === null && <AdminInfoChart />} */}
         {selectedFloor === null && (
           <div className="absolute inset-y-0 left-0 w-40 border-r-2 border-gray-400 flex">
             <BuildingSelectButton
