@@ -104,7 +104,6 @@ const AdminMainPage = () => {
       {/* 화면 크기 = 768px 이하일 때 */}
       <div className="md:hidden">
         {/* 건물 & 층 선택 안했을 때 -> 건물 & 층 선택하는 컴포넌트만 표시 */}
-        {/* {selectedBuilding === null && <AdminInfoChart />} */}
         {selectedFloor === null && (
           <div className="absolute inset-y-0 left-0 w-40 border-r-2 border-gray-400 flex">
             <BuildingSelectButton
@@ -148,6 +147,10 @@ const AdminMainPage = () => {
             </>
           </div>
         )}
+
+        <div className="absolute inset-y-0 left-64 border-gray-400 pt-16 flex">
+          {selectedBuilding === null && <AdminInfoChart />}
+        </div>
 
         {/* 사물함 선택 완료 -> cabinetRental 컴포넌트 표시 */}
         {selectedCabinet && (

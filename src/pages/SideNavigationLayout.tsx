@@ -21,17 +21,28 @@ const SideNavigationLayout = () => {
     setSelectedFloor,
   } = useBuildingState();
 
+  const PATHS = {
+    MAIN: "/main",
+    ADMIN_MAIN: "/admin/main",
+    SEARCH: "/search",
+    ADMIN_SEARCH: "/admin/search",
+  };
+
   const { setSelectedCabinet } = useCabinet();
   const location = useLocation();
   const navigate = useNavigate();
   const isProfilePage: boolean = location.pathname === "/profile";
 
-  const clickedMainLogo = () => {
-    const redirectPath = location.pathname.startsWith("/admin")
-      ? "/admin/main"
-      : "/main"; // 이 코드에서 main을 변경시켜야 함
+  const getRedirectPath = (basePath: string) => {
+    return location.pathname.startsWith("/admin")
+      ? `/admin${basePath}`
+      : basePath;
+  };
+  const searchRedirectPath = getRedirectPath(PATHS.SEARCH);
+  const mainRedirectPath = getRedirectPath(PATHS.MAIN);
 
-    navigate(redirectPath);
+  const clickedMainLogo = () => {
+    navigate(mainRedirectPath);
     if (location.pathname === "/main" || location.pathname === "/admin/main") {
       window.location.reload();
     }
@@ -51,7 +62,7 @@ const SideNavigationLayout = () => {
   };
 
   const dropdownBuildingSelect = (building: string) => {
-    navigate("/main", { state: { selectedBuilding: building } });
+    navigate(mainRedirectPath, { state: { selectedBuilding: building } });
     setIsDropdownOpen(false);
   };
 
@@ -108,7 +119,7 @@ const SideNavigationLayout = () => {
             <form className="flex items-center space-x-2 ml-1">
               <input
                 type="text"
-                onClick={() => navigate("/search")}
+                onClick={() => navigate(searchRedirectPath)}
                 placeholder="사물함 번호를 입력하세요"
                 className="p-2 rounded-md bg-white text-black focus:outline-none w-80"
               />

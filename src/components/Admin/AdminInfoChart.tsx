@@ -13,7 +13,7 @@ const AdminInfoChart = () => {
         <div className="w-1/2 p-4">
           <p className="font-bold text-2xl">연체 사물함</p>
           <table className="w-full border-collapse bg-gray-100 mt-3 border rounded-xl overflow-y-auto hidden-scrollbar shadow-lg">
-            <thead className="bg-blue-500 text-white text-md rounded-t-lg sticky z-10 top-0">
+            <thead className="bg-blue-500 text-white text-md rounded-t-lg sticky top-0">
               <tr>
                 <th className="w-80 table-cell text-center p-4">위치</th>
                 <th className="w-1/3 table-cell text-center p-4">
@@ -38,7 +38,7 @@ const AdminInfoChart = () => {
         <div className="w-1/2 p-4">
           <p className="font-bold text-2xl">고장 사물함</p>
           <table className="w-full border-collapse bg-gray-100 mt-3 border rounded-xl overflow-y-auto hidden-scrollbar shadow-lg">
-            <thead className="bg-blue-500 text-white text-md rounded-t-lg sticky z-10 top-0">
+            <thead className="bg-blue-500 text-white text-md rounded-t-lg sticky top-0">
               <tr>
                 <th className="w-80 table-cell text-center p-4">위치</th>
                 <th className="w-1/3 table-cell text-center p-4">고장일</th>

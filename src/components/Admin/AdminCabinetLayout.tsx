@@ -49,12 +49,11 @@ const AdminCabinetLayout = ({
         <SubmitAndNavigateButton
           text={"복수 선택 기능"}
           className={
-            "flex-col mt-4 w-28 h-8 bg-white text-blue-600 border border-blue-600 rounded-md hover:bg-blue-200 hover:text-blue-600 transition-all duration-150"
+            "flex-col mt-4 mr-3 w-28 h-8 bg-white text-blue-600 border border-blue-600 rounded-md hover:bg-blue-200 hover:text-blue-600 transition-all duration-150 z-10"
           }
-          // 위에꺼 css 컴포넌트로 ㄱㄱ
           onClick={submitTest}
         />
-        <div className="flex items-end mt-2">
+        <div className="flex items-end mt-2 mr-3 z-10">
           <input
             type="checkbox"
             className="flex-row mr-1 w-4 h-4 appearance-none checked:bg-blue-600 checked:border-0 border border-gray-400 rounded-sm"
@@ -63,12 +62,11 @@ const AdminCabinetLayout = ({
         </div>
       </div>
 
-      {/* <div className="w-full h-[80%] flex items-center justify-center"> */}
       <div className="h-[74%] flex items-center justify-center">
         {loading ? (
           <CabinetButtonSkeleton />
         ) : (
-          <div className="relative h-[30rem] overflow-scroll lg:w-[67rem] md:w-[80%] sm:w-[75%] w-[100%]">
+          <div className="relative h-[30rem] overflow-scroll lg:w-[67rem] md:w-[80%] sm:w-[75%] w-[100%] z-10">
             {cabinetData.map((cabinet) => {
               return (
                 <button

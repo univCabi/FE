@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "@/App.css";
 import AdminLoginPage from "@/pages/Admin/AdminLoginPage";
 import AdminMainPage from "@/pages/Admin/AdminMainPage";
+import AdminSearchPage from "@/pages/Admin/AdminSearchPage";
 import ErrorPage from "@/pages/ErrorPage";
 import HistoryPage from "@/pages/HistoryPage";
 import LoginPage from "@/pages/LoginPage";
@@ -34,6 +35,7 @@ function App() {
           <Route path="/admin/login" element={<AdminLoginPage />} />
           <Route element={<MainLayout />}>
             <Route path="/admin/main" element={<AdminMainPage />} />
+            <Route path="/admin/search" element={<AdminSearchPage />} />
           </Route>
         </Routes>
       </BrowserRouter>
