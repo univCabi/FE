@@ -10,27 +10,40 @@ import ProfileSVG from "@/icons/profile.svg?react";
 import SearchSVG from "@/icons/search.svg?react";
 
 const SideNavigationLayout = () => {
-  const { 
-    buildingList,
-    selectedBuilding,
-    setSelectedBuilding
-  } = useContext(SideNavigationLayoutContext);
+  const { buildingList, selectedBuilding, setSelectedBuilding } = useContext(
+    SideNavigationLayoutContext,
+  );
 
-  const { 
-    isDropdownOpen, 
-    setIsDropdownOpen, 
-    dropdownOutsideRef, 
-    setSelectedFloor
+  const {
+    isDropdownOpen,
+    setIsDropdownOpen,
+    dropdownOutsideRef,
+    setSelectedFloor,
   } = useBuildingState();
+
+  const PATHS = {
+    MAIN: "/main",
+    ADMIN_MAIN: "/admin/main",
+    SEARCH: "/search",
+    ADMIN_SEARCH: "/admin/search",
+  };
 
   const { setSelectedCabinet } = useCabinet();
   const location = useLocation();
   const navigate = useNavigate();
-  // 로고 클릭 시 '/main'으로 이동 & 위치가 '/main'일 경우 새로고침 -> 민웅기: clikendLogo에서 clickedMainLogo로 변경하였습니다.
   const isProfilePage: boolean = location.pathname === "/profile";
+
+  const getRedirectPath = (basePath: string) => {
+    return location.pathname.startsWith("/admin")
+      ? `/admin${basePath}`
+      : basePath;
+  };
+  const searchRedirectPath = getRedirectPath(PATHS.SEARCH);
+  const mainRedirectPath = getRedirectPath(PATHS.MAIN);
+
   const clickedMainLogo = () => {
-    navigate("/main");
-    if (location.pathname === "/main") {
+    navigate(mainRedirectPath);
+    if (location.pathname === "/main" || location.pathname === "/admin/main") {
       window.location.reload();
     }
   };
@@ -49,14 +62,14 @@ const SideNavigationLayout = () => {
   };
 
   const dropdownBuildingSelect = (building: string) => {
-    navigate("/main", { state: {selectedBuilding: building} });
+    navigate(mainRedirectPath, { state: { selectedBuilding: building } });
     setIsDropdownOpen(false);
   };
 
   useEffect(() => {
     setSelectedBuilding(null);
   }, [location.pathname, setSelectedBuilding]);
-  
+
   return (
     <nav className="bg-blue-600 fixed w-full h-16 z-20 top-0 start-0 border-b border-blue-600 text-white">
       <div className="max-w-screen-xl h-full flex items-center justify-between mx-auto">
@@ -98,7 +111,7 @@ const SideNavigationLayout = () => {
             )}
           </div>
         </div>
-          
+
         {/* 검색 입력창 */}
         {/* 검색 입력창 (경로가 /search가 아닐 때만 렌더링) */}
         {location.pathname !== "/search" && (
@@ -106,7 +119,7 @@ const SideNavigationLayout = () => {
             <form className="flex items-center space-x-2 ml-1">
               <input
                 type="text"
-                onClick={() => navigate("/search")}
+                onClick={() => navigate(searchRedirectPath)}
                 placeholder="사물함 번호를 입력하세요"
                 className="p-2 rounded-md bg-white text-black focus:outline-none w-80"
               />
