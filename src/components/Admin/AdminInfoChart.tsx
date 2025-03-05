@@ -1,10 +1,12 @@
+import CabinetBarChart from "./CabinetBarChart";
+
 const AdminInfoChart = () => {
   return (
     <div className="flex-col w-full h-full mr-24">
       <div className="h-[52%] pt-7 flex flex-col">
         <div className="font-bold text-2xl mb-4">건물별 사물함 사용 현황</div>
-        <div className="bg-red-200 h-[85%] w-[90%] flex items-center justify-center self-center">
-          통계 들어갈 공간
+        <div className="h-[85%] w-[90%] flex items-center justify-center self-center">
+          <CabinetBarChart></CabinetBarChart>
         </div>
       </div>
 
