@@ -119,7 +119,7 @@ const AdminCabinetLayout = ({
             }}
             type="checkbox"
             disabled={!multiButtonActive}
-            className={`flex-row mr-1 w-4 h-4 appearance-none border rounded-sm
+            className={`flex-row mr-1 w-4 h-4 appearance-none border rounded-sm bg-no-repeat bg-center
               ${
                 multiButtonActive
                   ? `border-blue-600 checked:bg-blue-600 checked:border-0 ${
@@ -133,14 +133,6 @@ const AdminCabinetLayout = ({
                   : "border-gray-400 checked:bg-transparent checked:border-gray-400"
               }
             `}
-            style={
-              multiButtonActive
-                ? {
-                    backgroundRepeat: "no-repeat",
-                    backgroundPosition: "center",
-                  }
-                : undefined
-            }
           />
           <label
             className={`flex-row ${
