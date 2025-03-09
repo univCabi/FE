@@ -74,6 +74,8 @@ const AdminCabinetLayout = ({
           ? prevSelectedCabinet.filter((num) => num !== cabinetNumber) // 이미 선택된 경우 제거
           : [...prevSelectedCabinet, cabinetNumber], // 선택되지 않은 경우 추가
     );
+    if (multiButtonActive) {
+    }
   };
 
   const [checkedCabinet, setCheckedCabinet] = useState(false); // 전체선택 여부 나타내는 변수
@@ -117,21 +119,20 @@ const AdminCabinetLayout = ({
             }}
             type="checkbox"
             disabled={!multiButtonActive}
-            className={`flex-row mr-1 w-4 h-4 appearance-none border rounded-sm 
+            className={`flex-row mr-1 w-4 h-4 appearance-none border rounded-sm
               ${
                 multiButtonActive
-                  ? "border-blue-600 checked:bg-blue-600 checked:border-0"
+                  ? `border-blue-600 checked:bg-blue-600 checked:border-0 ${
+                      selectedMultiCabinets.length === cabinetData.length
+                        ? "bg-[url('./icons/check.svg')] bg-blue-600"
+                        : selectedMultiCabinets.length > 0 &&
+                            selectedMultiCabinets.length < cabinetData.length
+                          ? "bg-[url('/src/icons/eachCheck.svg')] bg-blue-600"
+                          : ""
+                    }`
                   : "border-gray-400 checked:bg-transparent checked:border-gray-400"
               }
-            ${
-              multiButtonActive
-                ? selectedMultiCabinets.length === cabinetData.length
-                  ? "bg-[url('/src/icons/check.svg')]"
-                  : selectedMultiCabinets.length > 0
-                    ? "bg-[url('/src/icons/eachCheck.svg')]"
-                    : "bg-[url('/src/icons/check.svg')]"
-                : "bg-[url('/src/icons/check.svg')]"
-            }`}
+            `}
             style={
               multiButtonActive
                 ? {
