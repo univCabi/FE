@@ -1,8 +1,9 @@
 // 사물함 배열 관련
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { SelectedCabinet } from "@/types/CabinetType";
 import CabinetButtonSkeleton from "@/components/Skeleton/CabinetButtonSkeleton";
 import SubmitAndNavigateButton from "@/components/SubmitAndNavigateButton";
+import { useAdminCabinet } from "@/hooks/useAdminCabinet";
 import { useCabinet } from "@/hooks/useCabinet";
 import { useCabinetActivation } from "@/hooks/useCabinetActivation";
 
@@ -34,23 +35,14 @@ const AdminCabinetLayout = ({
   multiButtonActive,
   setMultiButtonActive,
   setSelectedCabinet,
-  selectedCabinet,
 }: AdminCabinetLayoutProps) => {
   const { getStatusColor } = useCabinet();
-  const { cabinetData, loading, setCabinetData } = useCabinetActivation({
+  const { cabinetData, loading } = useCabinetActivation({
     selectedBuilding,
     selectedFloor,
     isMyCabinet,
   });
-  // 검색 결과에 해당하는 사물함이 있을 경우에만 실행
-  useEffect(() => {
-    if (filteredCabinetDetail) {
-      fetchCabinetDetailInformation(
-        filteredCabinetDetail.id,
-        filteredCabinetDetail.cabinetNumber,
-      );
-    }
-  }, [filteredCabinetDetail]);
+  const { checkedCabinet, setCheckedCabinet } = useAdminCabinet();
 
   const MultipleSelectButtonActive = () => {
     if (multiButtonActive) {
@@ -66,7 +58,6 @@ const AdminCabinetLayout = ({
       setSelectedMultiCabinets([cabinetNumber]);
       return;
     }
-
     // 복수 선택 모드에서는 선택된 상태를 토글
     setSelectedMultiCabinets(
       (prevSelectedCabinet) =>
@@ -74,11 +65,8 @@ const AdminCabinetLayout = ({
           ? prevSelectedCabinet.filter((num) => num !== cabinetNumber) // 이미 선택된 경우 제거
           : [...prevSelectedCabinet, cabinetNumber], // 선택되지 않은 경우 추가
     );
-    if (multiButtonActive) {
-    }
   };
 
-  const [checkedCabinet, setCheckedCabinet] = useState(false); // 전체선택 여부 나타내는 변수
   // 전체선택
   const handleSelectAllCabinets = () => {
     if (checkedCabinet) {
@@ -98,6 +86,16 @@ const AdminCabinetLayout = ({
       setCheckedCabinet(false);
     }
   }, [multiButtonActive, selectedBuilding, selectedFloor]);
+
+  // 검색 결과에 해당하는 사물함이 있을 경우에만 실행
+  useEffect(() => {
+    if (filteredCabinetDetail) {
+      fetchCabinetDetailInformation(
+        filteredCabinetDetail.id,
+        filteredCabinetDetail.cabinetNumber,
+      );
+    }
+  }, [filteredCabinetDetail]);
 
   return (
     <div className="w-full">

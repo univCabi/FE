@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { useLocation } from "react-router";
 import { SideNavigationLayoutContext } from "@/contexts/SideNavigationLayoutContext";
 import AdminInfoChart from "@/components/Admin/AdminInfoChart";
@@ -29,7 +29,6 @@ const AdminMainPage = () => {
     setIsMyCabinet,
     fetchCabinetDetailInformation,
     username,
-    setUsername,
   } = useCabinet();
   const {
     selectedMultiCabinets,
@@ -85,7 +84,6 @@ const AdminMainPage = () => {
                 setMultiButtonActive={setMultiButtonActive}
                 setSelectedCabinet={setSelectedCabinet}
                 selectedCabinet={selectedCabinet}
-                // selectedStatus={selectedStatus}
               />
               <CabinetStatusInformation />
             </>
@@ -109,7 +107,6 @@ const AdminMainPage = () => {
               setExpiredAt={setExpiredAt}
               setSelectedCabinet={setSelectedCabinet}
               expiredAt={expiredAt}
-              // isMyCabinet={isMyCabinet as boolean}
               setIsMyCabinet={setIsMyCabinet}
               selectedMultiCabinets={selectedMultiCabinets}
               multiButtonActive={multiButtonActive}
@@ -162,7 +159,6 @@ const AdminMainPage = () => {
                   setMultiButtonActive={setMultiButtonActive}
                   setSelectedCabinet={setSelectedCabinet}
                   selectedCabinet={selectedCabinet}
-                  // selectedStatus={selectedStatus}
                 />
               </div>
               {/* 화면 크기 = 768px 이하일 때 사물함 정보 숨김 */}
@@ -189,7 +185,6 @@ const AdminMainPage = () => {
               setExpiredAt={setExpiredAt}
               setSelectedCabinet={setSelectedCabinet}
               expiredAt={expiredAt}
-              // isMyCabinet={isMyCabinet as boolean}
               setIsMyCabinet={setIsMyCabinet}
               selectedMultiCabinets={selectedMultiCabinets}
               multiButtonActive={multiButtonActive}

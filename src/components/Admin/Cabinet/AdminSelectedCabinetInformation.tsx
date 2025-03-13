@@ -1,14 +1,11 @@
-import { useState } from "react";
 import { SelectedCabinet } from "@/types/CabinetType";
 import AdminCabinetInformationDisplay from "@/components/Admin/Cabinet/AdminCabinetInformationDisplay";
 import AdminStateManagementModal from "@/components/Admin/Cabinet/AdminStateManagementModal";
 import CabinetActionButtons from "@/components/Cabinet/CabinetActionButtons";
 import ConfirmModalView from "@/components/ConfirmModalView";
 import { useAdminCabinet } from "@/hooks/useAdminCabinet";
-import { useBuildingState } from "@/hooks/useBuildingState";
 import { useCabinetReturn } from "@/hooks/useCabinetReturn";
 import { useConfirmModalState } from "@/hooks/useConfirmModalState";
-import AngleDownSVG from "@/icons/angleDown.svg?react";
 import CabinetSVG from "@/icons/cabinet.svg?react";
 
 // 선택된 사물함 정보
@@ -56,8 +53,6 @@ const AdminSelectedCabinetInformation = ({
   const { openReturnModal, setOpenReturnModal } = useConfirmModalState();
   const { openStateManagementModal, setOpenStateManagementModal } =
     useAdminCabinet();
-  const { isDropdownOpen, setIsDropdownOpen, dropdownOutsideRef } =
-    useBuildingState();
 
   // 반납 버튼 클릭 -> 반납 모달창 생성
   const clickedReturnButton = () => {
@@ -75,22 +70,8 @@ const AdminSelectedCabinetInformation = ({
   // 취소 버튼 -> 사물함 선택 해제
   const cancelButton = () => {
     setSelectedCabinet(null);
-    console.log(selectedCabinet);
-  };
-  // 상태관리 드롭다운
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
   };
 
-  const getStatusLabel = (status: string) => {
-    return status === "BROKEN" ? "사용 불가" : "사용 가능";
-  };
-
-  // 상태관리 함수
-  const handleStatusChange = (status: string) => {
-    setSelectedStatus(status);
-    setIsDropdownOpen(false);
-  };
   // 상태관리 api 호출 함수
   const fetchCabinetStateManage = () => {
     console.log("상태관리 api 호출 함수");
@@ -158,7 +139,8 @@ const AdminSelectedCabinetInformation = ({
               <AdminStateManagementModal
                 onClick={fetchCabinetStateManage}
                 setModalCancelState={setOpenStateManagementModal}
-                title={"상태 관리"}
+                selectedStatus={selectedStatus}
+                setSelectedStatus={setSelectedStatus}
                 boldText={`${selectedBuilding} ${selectedFloor}F ${
                   multiButtonActive && selectedMultiCabinets.length > 0
                     ? "\n" +
@@ -168,37 +150,6 @@ const AdminSelectedCabinetInformation = ({
                       ? `${selectedCabinet.cabinetNumber}번`
                       : ""
                 }`}
-                stateManagementText={"고장 처리"}
-                stateManagementDropdown={
-                  <div className="relative">
-                    {/* 현재 선택된 사물함의 상태를 표시하는 버튼 */}
-                    <button
-                      className="p-4 w-full text-left flex flex-row bg-white text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-300"
-                      onClick={toggleDropdown}
-                    >
-                      {getStatusLabel(selectedStatus)}
-                      <AngleDownSVG className="ml-[70%]" fill="#2563eb" />
-                    </button>
-
-                    {/* 드롭다운 목록 */}
-                    {isDropdownOpen && (
-                      <div className="absolute mt-1 w-full bg-white text-black rounded-md shadow-lg z-10">
-                        <button
-                          className="block my-1 p-4 w-full text-left hover:bg-blue-300 hover:text-white rounded-md"
-                          onClick={() => handleStatusChange("AVAILABLE")}
-                        >
-                          사용 가능
-                        </button>
-                        <button
-                          className="block my-1 p-4 w-full text-left hover:bg-blue-300 hover:text-white rounded-md"
-                          onClick={() => handleStatusChange("BROKEN")}
-                        >
-                          사용 불가
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                }
               />
             )}
           </>
@@ -220,7 +171,8 @@ const AdminSelectedCabinetInformation = ({
               <AdminStateManagementModal
                 onClick={fetchCabinetStateManage}
                 setModalCancelState={setOpenStateManagementModal}
-                title={"상태 관리"}
+                selectedStatus={selectedStatus}
+                setSelectedStatus={setSelectedStatus}
                 boldText={`${selectedBuilding} ${selectedFloor}F ${
                   multiButtonActive && selectedMultiCabinets.length > 0
                     ? "\n" +
@@ -230,37 +182,6 @@ const AdminSelectedCabinetInformation = ({
                       ? `${selectedCabinet.cabinetNumber}번`
                       : ""
                 }`}
-                stateManagementText={"고장 처리"}
-                stateManagementDropdown={
-                  <div className="relative">
-                    {/* 현재 선택된 상태를 표시하는 버튼 */}
-                    <button
-                      className="p-4 w-full text-left flex flex-row bg-white text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-300"
-                      onClick={toggleDropdown}
-                    >
-                      {getStatusLabel(selectedStatus)}
-                      <AngleDownSVG className="ml-[70%]" fill="#2563eb" />
-                    </button>
-
-                    {/* 드롭다운 목록 */}
-                    {isDropdownOpen && (
-                      <div className="absolute mt-1 w-full bg-white text-black rounded-md shadow-lg z-10">
-                        <button
-                          className="block my-1 p-4 w-full text-left hover:bg-blue-300 hover:text-white rounded-md"
-                          onClick={() => handleStatusChange("AVAILABLE")}
-                        >
-                          사용 가능
-                        </button>
-                        <button
-                          className="block my-1 p-4 w-full text-left hover:bg-blue-300 hover:text-white rounded-md"
-                          onClick={() => handleStatusChange("BROKEN")}
-                        >
-                          사용 불가
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                }
               />
             )}
           </>
