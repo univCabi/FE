@@ -145,6 +145,10 @@ body {
     @apply bg-blue-600 text-white border border-blue-600 rounded-lg hover:bg-blue-500 hover:text-white transition-all duration-150;
   }
 
+  .button-cabinet-cancel {
+    @apply bg-white text-blue-600 border-blue-600 hover:bg-blue-200 hover:text-blue-600;
+  }
+
   /* 측면 아이콘 */
   .button-side-icon-basic {
     @apply flex flex-col items-center p-4 rounded-md transition-all duration-150;

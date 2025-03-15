@@ -13,14 +13,19 @@ const CabinetFooterMenuButton = () => {
 
   return (
     <div className="absolute bottom-4 w-full flex flex-col items-center text-gray-500">
-      <SubmitAndNavigateButton
-        onClick={() => navigate("/history")}
-        className={`button-side-icon-basic ${
-          isHistoryPage ? "button-side-icon-after" : "button-side-icon-before"
-        }`}
-        text={"History"}
-        svgComponent={<HistorySVG className="mb-1 inline-block text-center" />}
-      ></SubmitAndNavigateButton>
+      {!location.pathname.startsWith("/admin") && (
+        <SubmitAndNavigateButton
+          onClick={() => navigate("/history")}
+          className={`button-side-icon-basic ${
+            isHistoryPage ? "button-side-icon-after" : "button-side-icon-before"
+          }`}
+          text={"History"}
+          svgComponent={
+            <HistorySVG className="mb-1 inline-block text-center" />
+          }
+        ></SubmitAndNavigateButton>
+      )}
+
       <SubmitAndNavigateButton
         onClick={handleLogout}
         className={"button-side-icon-basic button-side-icon-before"}

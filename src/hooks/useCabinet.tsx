@@ -9,6 +9,7 @@ export const useCabinet = () => {
   const [selectedStatus, setSelectedStatus] = useState<string>(); // 사물함 status
   const [expiredAt, setExpiredAt] = useState<string | null>(null); // 반납 기한
   const [isMyCabinet, setIsMyCabinet] = useState<boolean>(); // 본인 사물함 여부
+  const [username, setUsername] = useState<string | null>(null);
 
   // 사물함 세부 정보 API 호출
   const fetchCabinetDetailInformation = async (
@@ -20,6 +21,7 @@ export const useCabinet = () => {
       setSelectedCabinet({ cabinetId, cabinetNumber });
       setSelectedStatus(response.status);
       setIsMyCabinet(response.isMine);
+      setUsername(response.username);
       setExpiredAt(response.expiredAt);
       log.info(
         `API 호출 성공: cabinetDetailInfoApi, ${JSON.stringify(
@@ -65,5 +67,7 @@ export const useCabinet = () => {
     setIsMyCabinet,
     getStatusColor,
     fetchCabinetDetailInformation,
+    username,
+    setUsername,
   };
 };

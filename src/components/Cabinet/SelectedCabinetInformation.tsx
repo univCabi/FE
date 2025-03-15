@@ -112,7 +112,7 @@ const SelectedCabinetInformation = ({
                 onClick={fetchCabinetRental}
                 setModalCancelState={setOpenRentalModal}
                 title={"대여 확인"}
-                boldText={`${selectedBuilding} ${selectedFloor}F ${selectedCabinet?.cabinetNumber}번 사물함`}
+                cabinetInfo={`${selectedBuilding} ${selectedFloor}F ${selectedCabinet?.cabinetNumber}번 사물함`}
                 text={"이 사물함을 대여하시겠습니까?"}
               />
             )}

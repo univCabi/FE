@@ -1,6 +1,6 @@
 // 검색 결과 버튼 클릭 시 cabinet에 대한 API 요청을 위한 hook
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { log } from "@/utils/logger";
 import { cabinetCallApi } from "@/api/cabinetCallApi";
 
@@ -11,6 +11,7 @@ interface filteredCabinetDetailProps {
 
 export const useSearchResultButton = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [filteredCabinetDetail, setFilteredCabinetDetail] =
     useState<filteredCabinetDetailProps | null>(null); // 상세 데이터 저장
 
@@ -46,12 +47,11 @@ export const useSearchResultButton = () => {
   // 상태 변경 시 navigate 호출
   useEffect(() => {
     if (filteredCabinetDetail) {
-      navigate(
-        `/main?building=${filteredCabinetDetail.building}&floor=${filteredCabinetDetail.floor}`,
-        {
-          state: { filteredCabinetDetail },
-        },
-      );
+      const basePath = location.pathname.startsWith("/admin")
+        ? "/admin/main"
+        : "/main";
+      const searchResultPath = `${basePath}?building=${filteredCabinetDetail.building}&floor=${filteredCabinetDetail.floor}`;
+      navigate(searchResultPath, { state: { filteredCabinetDetail } });
     }
   }, [filteredCabinetDetail]);
 

@@ -43,13 +43,17 @@ const SideNavigationLayout = () => {
 
   const clickedMainLogo = () => {
     navigate(mainRedirectPath);
-    if (location.pathname === "/main" || location.pathname === "/admin/main") {
+    if (
+      location.pathname === PATHS.MAIN ||
+      location.pathname === PATHS.ADMIN_MAIN
+    ) {
       window.location.reload();
     }
   };
 
-  // 로고 클릭시 '/profile'로 이동 $ 위치가 '/profile'일 경우 새로고침
+  // 로고 클릭시 '/profile'로 이동 & 위치가 '/profile'일 경우 새로고침 & Admin인 경우 작동 x
   const clickedProfileLogo = () => {
+    if (location.pathname.startsWith("/admin")) return;
     navigate("/profile");
     if (location.pathname === "/profile") {
       window.location.reload();
