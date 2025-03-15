@@ -123,7 +123,7 @@ const AdminSelectedCabinetInformation = ({
                       ? "반납 처리"
                       : ""
                 }`}
-                boldText={`${selectedBuilding} ${selectedFloor}F ${
+                cabinetInfo={`${selectedBuilding} ${selectedFloor}F ${
                   multiButtonActive && selectedMultiCabinets.length > 0
                     ? "\n" +
                       selectedMultiCabinets.sort((a, b) => a - b).join(",") +
@@ -141,7 +141,7 @@ const AdminSelectedCabinetInformation = ({
                 setModalCancelState={setOpenStateManagementModal}
                 selectedStatus={selectedStatus}
                 setSelectedStatus={setSelectedStatus}
-                boldText={`${selectedBuilding} ${selectedFloor}F ${
+                cabinetInfo={`${selectedBuilding} ${selectedFloor}F ${
                   multiButtonActive && selectedMultiCabinets.length > 0
                     ? "\n" +
                       selectedMultiCabinets.sort((a, b) => a - b).join(",") +
@@ -173,7 +173,7 @@ const AdminSelectedCabinetInformation = ({
                 setModalCancelState={setOpenStateManagementModal}
                 selectedStatus={selectedStatus}
                 setSelectedStatus={setSelectedStatus}
-                boldText={`${selectedBuilding} ${selectedFloor}F ${
+                cabinetInfo={`${selectedBuilding} ${selectedFloor}F ${
                   multiButtonActive && selectedMultiCabinets.length > 0
                     ? "\n" +
                       selectedMultiCabinets.sort((a, b) => a - b).join(",") +

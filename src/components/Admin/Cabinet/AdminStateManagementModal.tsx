@@ -8,7 +8,7 @@ interface HadleModalProps {
   setModalCancelState: React.Dispatch<React.SetStateAction<boolean>>;
   selectedStatus: string;
   setSelectedStatus: (status: string) => void;
-  boldText?: string;
+  cabinetInfo?: string;
 }
 
 const AdminStateManagementModal = ({
@@ -16,7 +16,7 @@ const AdminStateManagementModal = ({
   setModalCancelState,
   selectedStatus,
   setSelectedStatus,
-  boldText,
+  cabinetInfo,
 }: HadleModalProps) => {
   const { selectedBrokenReason, handleReasonClick } = useAdminCabinet();
   const { isDropdownOpen, setIsDropdownOpen, dropdownOutsideRef } =
@@ -42,7 +42,7 @@ const AdminStateManagementModal = ({
       <div className="bg-white p-6 rounded-lg shadow-xl w-96">
         <h2 className="text-2xl font-bold mb-5">상태 관리</h2>
         <div className="text-lg w-full break-all">
-          <b className="whitespace-pre-line">{boldText}</b>
+          <b className="whitespace-pre-line">{cabinetInfo}</b>
         </div>
         <div className="flex flex-col justify-center items-center">
           <div className="flex flex-col w-72">
