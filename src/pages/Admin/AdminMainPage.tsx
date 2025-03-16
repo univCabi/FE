@@ -5,7 +5,6 @@ import AdminInfoChart from "@/components/Admin/AdminInfoChart";
 import AdminCabinetLayout from "@/components/Admin/Cabinet/AdminCabinetLayout";
 import AdminSelectedCabinetInformation from "@/components/Admin/Cabinet/AdminSelectedCabinetInformation";
 import BuildingSelectButton from "@/components/BuildingSelectButton";
-import CabinetStatusInformation from "@/components/Cabinet/CabinetStatusInformation";
 import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
 import { useAdminCabinet } from "@/hooks/useAdminCabinet";
 import { useBuildingState } from "@/hooks/useBuildingState";
@@ -85,7 +84,6 @@ const AdminMainPage = () => {
                 setSelectedCabinet={setSelectedCabinet}
                 selectedCabinet={selectedCabinet}
               />
-              <CabinetStatusInformation />
             </>
           )}
         </div>
@@ -160,10 +158,6 @@ const AdminMainPage = () => {
                   setSelectedCabinet={setSelectedCabinet}
                   selectedCabinet={selectedCabinet}
                 />
-              </div>
-              {/* 화면 크기 = 768px 이하일 때 사물함 정보 숨김 */}
-              <div className="hidden sl:flex">
-                <CabinetStatusInformation />
               </div>
             </>
           </div>

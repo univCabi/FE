@@ -1,6 +1,7 @@
 // 사물함 배열 관련
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { SelectedCabinet } from "@/types/CabinetType";
+import CabinetStatusInformation from "@/components/Cabinet/CabinetStatusInformation";
 import CabinetButtonSkeleton from "@/components/Skeleton/CabinetButtonSkeleton";
 import SubmitAndNavigateButton from "@/components/SubmitAndNavigateButton";
 import { useAdminCabinet } from "@/hooks/useAdminCabinet";
@@ -44,13 +45,13 @@ const AdminCabinetLayout = ({
   });
   const { checkedCabinet, setCheckedCabinet } = useAdminCabinet();
 
-  const MultipleSelectButtonActive = () => {
+  const MultipleSelectButtonActive = useCallback(() => {
     if (multiButtonActive) {
       setMultiButtonActive(false);
     } else {
       setMultiButtonActive(true);
     }
-  };
+  }, [multiButtonActive]);
 
   // 사물함 선택 핸들링
   const handleCabinetClick = (cabinetNumber: number) => {
@@ -176,6 +177,9 @@ const AdminCabinetLayout = ({
             })}
           </div>
         )}
+      </div>
+      <div className="hidden sl:flex">
+        <CabinetStatusInformation />
       </div>
     </div>
   );

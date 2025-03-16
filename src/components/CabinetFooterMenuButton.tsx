@@ -1,10 +1,11 @@
+import React from "react";
 import { useLocation, useNavigate } from "react-router";
 import SubmitAndNavigateButton from "@/components/SubmitAndNavigateButton";
 import { useLogout } from "@/hooks/useLogout";
 import HistorySVG from "@/icons/log.svg?react";
 import LogoutSVG from "@/icons/logout.svg?react";
 
-const CabinetFooterMenuButton = () => {
+const CabinetFooterMenuButton = React.memo(() => {
   const navigate = useNavigate();
   const locatedPage = useLocation();
   const isHistoryPage: boolean = locatedPage.pathname === "/history";
@@ -34,6 +35,6 @@ const CabinetFooterMenuButton = () => {
       ></SubmitAndNavigateButton>
     </div>
   );
-};
+});
 
 export default CabinetFooterMenuButton;
