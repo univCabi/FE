@@ -2,7 +2,11 @@ import SubmitAndNavigateButton from "@/components/SubmitAndNavigateButton";
 import { useHandleLogin } from "@/hooks/useHandleLogin";
 import LogoSVG from "@/icons/cabiLogo.svg?react";
 
-const LoginForm = () => {
+interface LoginFormProps {
+  idInputLabel: string;
+}
+
+const LoginForm = ({ idInputLabel }: LoginFormProps) => {
   const {
     handleLogin,
     studentNumber,
@@ -32,7 +36,7 @@ const LoginForm = () => {
           여러분의 일상을 가볍게
         </p>
         <LogoSVG className="w-[80%] h-[50%] sl:w-[60%]  mb-5" />
-        <label className="sm:text-xl mb-2">학번</label>
+        <label className="sm:text-xl mb-2">{idInputLabel}</label>
         <input
           className="text-sm sm:text-base w-[120%] sl:w-[90%] px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 mb-2"
           type="text"
