@@ -8,7 +8,9 @@ import { useConfirmModalState } from "@/hooks/useConfirmModalState";
 import CabinetSVG from "@/icons/cabinet.svg?react";
 
 // 선택된 사물함 정보
-interface SelectedCabinetInformationProps extends SelectedCabinetInfo {}
+interface SelectedCabinetInformationProps extends SelectedCabinetInfo {
+  isMyCabinet: boolean;
+}
 
 // 날짜 포맷팅 함수
 const formatDate = (isoString: string | null): string => {

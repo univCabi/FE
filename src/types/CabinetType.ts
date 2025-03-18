@@ -29,7 +29,6 @@ export interface SelectedCabinetInfo {
   expiredAt: string | null;
   setSelectedStatus: (status: string) => void;
   setExpiredAt: (expiredAt: string | null) => void;
-  isMyCabinet: boolean;
   setIsMyCabinet: (isMine: boolean) => void;
 }
 
