@@ -1,18 +1,16 @@
+import { CabinetInfoDisplay } from "@/types/CabinetType";
 import CabinetActionButtons from "@/components/Cabinet/CabinetActionButtons";
 import CabinetSVG from "@/icons/cabinet.svg?react";
 
-interface CabinetInformationDisplayProps {
-  selectedBuilding: string | null;
-  selectedFloor: number | null;
-  selectedCabinet: number | null;
+interface AdminCabinetInformationDisplayProps extends CabinetInfoDisplay {
   selectedMultiCabinets: number[];
   multiButtonActive: boolean;
+  username: string | null;
   clickedReturnButton: () => void;
   clickedStateManagementButton: () => void;
   cancelButton: () => void;
-  username: string | null;
-  expiredAt: string | null;
   selectedStatus: string;
+  expiredAt: string | null;
 }
 
 const formatDate = (isoString: string | null): string => {
@@ -30,15 +28,15 @@ const AdminCabinetInformationDisplay = ({
   selectedBuilding,
   selectedFloor,
   selectedCabinet,
+  username,
+  expiredAt,
+  selectedStatus,
   selectedMultiCabinets,
   multiButtonActive,
   clickedReturnButton,
   clickedStateManagementButton,
   cancelButton,
-  username,
-  expiredAt,
-  selectedStatus,
-}: CabinetInformationDisplayProps) => {
+}: AdminCabinetInformationDisplayProps) => {
   return (
     <>
       <div className="text-center w-[17rem]">
@@ -53,7 +51,7 @@ const AdminCabinetInformationDisplay = ({
               {selectedMultiCabinets.sort((a, b) => a - b).join(",")}번
             </>
           ) : (
-            selectedCabinet && `${selectedCabinet}번`
+            selectedCabinet && `${selectedCabinet.cabinetNumber}번`
           )}
         </h2>
       </div>

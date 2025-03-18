@@ -1,6 +1,6 @@
 // 사물함 배열 관련
 import { useCallback, useEffect } from "react";
-import { SelectedCabinet } from "@/types/CabinetType";
+import { CabinetLayout, SelectedCabinet } from "@/types/CabinetType";
 import CabinetStatusInformation from "@/components/Cabinet/CabinetStatusInformation";
 import CabinetButtonSkeleton from "@/components/Skeleton/CabinetButtonSkeleton";
 import SubmitAndNavigateButton from "@/components/SubmitAndNavigateButton";
@@ -8,20 +8,12 @@ import { useAdminCabinet } from "@/hooks/useAdminCabinet";
 import { useCabinet } from "@/hooks/useCabinet";
 import { useCabinetActivation } from "@/hooks/useCabinetActivation";
 
-interface AdminCabinetLayoutProps {
-  selectedBuilding: { building: string } | null;
-  selectedFloor: number | null;
-  isMyCabinet: boolean;
-  filteredCabinetDetail: {
-    id: number;
-    cabinetNumber: number;
-  } | null;
-  fetchCabinetDetailInformation: (id: number, cabientNumber: number) => void;
+interface AdminCabinetLayoutProps extends CabinetLayout {
   selectedMultiCabinets: number[];
   setSelectedMultiCabinets: React.Dispatch<React.SetStateAction<number[]>>;
   multiButtonActive: boolean;
   setMultiButtonActive: (value: boolean) => void;
-  selectedCabinet: { cabinetId: number; cabinetNumber: number } | null;
+  selectedCabinet: SelectedCabinet | null;
   setSelectedCabinet: (cabinet: SelectedCabinet | null) => void;
 }
 

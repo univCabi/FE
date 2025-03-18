@@ -1,19 +1,11 @@
 // 사물함 배열 관련
 import { useEffect } from "react";
+import { CabinetLayout } from "@/types/CabinetType";
 import CabinetButtonSkeleton from "@/components/Skeleton/CabinetButtonSkeleton";
 import { useCabinet } from "@/hooks/useCabinet";
 import { useCabinetActivation } from "@/hooks/useCabinetActivation";
 
-interface CabinetButtonLayoutProps {
-  selectedBuilding: { building: string } | null;
-  selectedFloor: number | null;
-  isMyCabinet: boolean;
-  filteredCabinetDetail: {
-    id: number;
-    cabinetNumber: number;
-  } | null;
-  fetchCabinetDetailInformation: (id: number, cabientNumber: number) => void;
-}
+interface CabinetButtonLayoutProps extends CabinetLayout {}
 
 const CabinetButtonLayout = ({
   selectedBuilding,

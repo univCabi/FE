@@ -1,4 +1,4 @@
-import { SelectedCabinet } from "@/types/CabinetType";
+import { SelectedCabinetInfo } from "@/types/CabinetType";
 import AdminCabinetInformationDisplay from "@/components/Admin/Cabinet/AdminCabinetInformationDisplay";
 import AdminStateManagementModal from "@/components/Admin/Cabinet/AdminStateManagementModal";
 import ConfirmModalView from "@/components/ConfirmModalView";
@@ -8,16 +8,7 @@ import { useConfirmModalState } from "@/hooks/useConfirmModalState";
 import CabinetSVG from "@/icons/cabinet.svg?react";
 
 // 선택된 사물함 정보
-interface SelectedCabinetInformationProps {
-  selectedBuilding: string | null;
-  selectedFloor: number | null;
-  selectedCabinet: { cabinetId: number; cabinetNumber: number } | null;
-  setSelectedCabinet: (cabinet: SelectedCabinet | null) => void;
-  selectedStatus: string;
-  setSelectedStatus: (status: string) => void;
-  expiredAt: string | null;
-  setExpiredAt: (expiredAt: string | null) => void;
-  setIsMyCabinet: (isMine: boolean) => void;
+interface AdminSelectedCabinetInformationProps extends SelectedCabinetInfo {
   selectedMultiCabinets: number[];
   multiButtonActive: boolean;
   username: string | null;
@@ -36,7 +27,7 @@ const AdminSelectedCabinetInformation = ({
   selectedMultiCabinets,
   multiButtonActive,
   username,
-}: SelectedCabinetInformationProps) => {
+}: AdminSelectedCabinetInformationProps) => {
   const { openReturnModal, setOpenReturnModal } = useConfirmModalState();
   const { openStateManagementModal, setOpenStateManagementModal } =
     useAdminCabinet();
@@ -88,7 +79,7 @@ const AdminSelectedCabinetInformation = ({
             <AdminCabinetInformationDisplay
               selectedBuilding={selectedBuilding}
               selectedFloor={selectedFloor}
-              selectedCabinet={selectedCabinet.cabinetNumber}
+              selectedCabinet={selectedCabinet}
               selectedMultiCabinets={selectedMultiCabinets}
               multiButtonActive={multiButtonActive}
               clickedReturnButton={clickedReturnButton}
@@ -126,7 +117,7 @@ const AdminSelectedCabinetInformation = ({
             <AdminCabinetInformationDisplay
               selectedBuilding={selectedBuilding}
               selectedFloor={selectedFloor}
-              selectedCabinet={selectedCabinet.cabinetNumber}
+              selectedCabinet={selectedCabinet}
               selectedMultiCabinets={selectedMultiCabinets}
               multiButtonActive={multiButtonActive}
               clickedReturnButton={clickedReturnButton}

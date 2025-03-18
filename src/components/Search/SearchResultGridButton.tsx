@@ -1,9 +1,10 @@
+import { SearchResult } from "@/types/SearchType";
 import LogoSVG from "@/icons/cabiLogo.svg?react";
 
 // 검색 결과 - 결과 grid에 대한 컴포넌트
 
 interface SearchResultGridButtonProps {
-  searchResults: { building: string; floor: number; cabinetNumber: number }[];
+  searchResults: SearchResult[];
   fetchClickResultButton: (
     building: string,
     floor: number,

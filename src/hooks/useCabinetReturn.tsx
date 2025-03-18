@@ -1,8 +1,9 @@
+import { SelectedCabinet } from "@/types/CabinetType";
 import { log } from "@/utils/logger";
 import { returnApi } from "@/api/returnApi";
 
 interface UseCabinetReturnProps {
-  selectedCabinet: { cabinetId: number; cabinetNumber: number } | null;
+  selectedCabinet: SelectedCabinet | null;
   closeReturnModal: () => void;
   setSelectedStatus: (status: string) => void;
   setExpiredAt: (expiredAt: string | null) => void;
