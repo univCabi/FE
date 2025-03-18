@@ -3,7 +3,7 @@ import { useAdminCabinet } from "@/hooks/useAdminCabinet";
 import { useBuildingState } from "@/hooks/useBuildingState";
 import AngleDownSVG from "@/icons/angleDown.svg?react";
 
-interface HadleModalProps {
+interface HandleModalProps {
   onClick: () => void;
   setModalCancelState: React.Dispatch<React.SetStateAction<boolean>>;
   selectedStatus: string;
@@ -17,7 +17,7 @@ const AdminStateManagementModal = ({
   selectedStatus,
   setSelectedStatus,
   cabinetInfo,
-}: HadleModalProps) => {
+}: HandleModalProps) => {
   const { selectedBrokenReason, handleReasonClick } = useAdminCabinet();
   const { isDropdownOpen, setIsDropdownOpen, dropdownOutsideRef } =
     useBuildingState();

@@ -1,7 +1,6 @@
 import { SelectedCabinet } from "@/types/CabinetType";
 import AdminCabinetInformationDisplay from "@/components/Admin/Cabinet/AdminCabinetInformationDisplay";
 import AdminStateManagementModal from "@/components/Admin/Cabinet/AdminStateManagementModal";
-import CabinetActionButtons from "@/components/Cabinet/CabinetActionButtons";
 import ConfirmModalView from "@/components/ConfirmModalView";
 import { useAdminCabinet } from "@/hooks/useAdminCabinet";
 import { useCabinetReturn } from "@/hooks/useCabinetReturn";
@@ -23,18 +22,6 @@ interface SelectedCabinetInformationProps {
   multiButtonActive: boolean;
   username: string | null;
 }
-
-// 날짜 포맷팅 함수
-const formatDate = (isoString: string | null): string => {
-  if (!isoString) return "날짜 정보 없음";
-  const date = new Date(isoString);
-  const options: Intl.DateTimeFormatOptions = {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  };
-  return date.toLocaleDateString("ko-KR", options);
-};
 
 const AdminSelectedCabinetInformation = ({
   selectedCabinet,
@@ -85,6 +72,14 @@ const AdminSelectedCabinetInformation = ({
     setIsMyCabinet,
   });
 
+  const cabinetNumbersSort =
+    multiButtonActive && selectedMultiCabinets.length > 0
+      ? `\n${selectedMultiCabinets.sort((a, b) => a - b).join(",")}번`
+      : selectedCabinet?.cabinetNumber
+        ? `${selectedCabinet.cabinetNumber}번`
+        : "";
+  const cabinetInformation = `${selectedBuilding} ${selectedFloor}F ${cabinetNumbersSort}`;
+
   return (
     <div className="absolute inset-y-0 right-0 w-80 pt-20 flex flex-col justify-center items-center bg-white border-l-2 border-gray-400">
       {selectedCabinet !== null ? (
@@ -96,22 +91,13 @@ const AdminSelectedCabinetInformation = ({
               selectedCabinet={selectedCabinet.cabinetNumber}
               selectedMultiCabinets={selectedMultiCabinets}
               multiButtonActive={multiButtonActive}
+              clickedReturnButton={clickedReturnButton}
+              clickedStateManagementButton={clickedStateManagementButton}
+              cancelButton={cancelButton}
+              username={username}
+              expiredAt={expiredAt}
+              selectedStatus={selectedStatus}
             />
-            <CabinetActionButtons
-              onReturnClick={clickedReturnButton}
-              onStateManagementClick={clickedStateManagementButton}
-              onCancelClick={cancelButton}
-              text="반납"
-              stateManagementText="상태 관리"
-            />
-            <div className="text-lg">
-              <p>
-                사용자: <strong>{username}</strong>
-              </p>
-              <p>
-                반납 기한: <strong>{formatDate(expiredAt)}</strong>
-              </p>
-            </div>
             {openReturnModal && (
               <ConfirmModalView
                 onClick={fetchCabinetReturn}
@@ -119,19 +105,9 @@ const AdminSelectedCabinetInformation = ({
                 title={`${
                   multiButtonActive && selectedMultiCabinets.length > 0
                     ? "일괄 반납 처리"
-                    : selectedCabinet
-                      ? "반납 처리"
-                      : ""
+                    : "반납 처리"
                 }`}
-                cabinetInfo={`${selectedBuilding} ${selectedFloor}F ${
-                  multiButtonActive && selectedMultiCabinets.length > 0
-                    ? "\n" +
-                      selectedMultiCabinets.sort((a, b) => a - b).join(",") +
-                      "번"
-                    : selectedCabinet
-                      ? `${selectedCabinet.cabinetNumber}번`
-                      : ""
-                }`}
+                cabinetInfo={cabinetInformation}
                 text={"이 사물함을 반납 처리하시겠습니까?"}
               />
             )}
@@ -141,15 +117,7 @@ const AdminSelectedCabinetInformation = ({
                 setModalCancelState={setOpenStateManagementModal}
                 selectedStatus={selectedStatus}
                 setSelectedStatus={setSelectedStatus}
-                cabinetInfo={`${selectedBuilding} ${selectedFloor}F ${
-                  multiButtonActive && selectedMultiCabinets.length > 0
-                    ? "\n" +
-                      selectedMultiCabinets.sort((a, b) => a - b).join(",") +
-                      "번"
-                    : selectedCabinet
-                      ? `${selectedCabinet.cabinetNumber}번`
-                      : ""
-                }`}
+                cabinetInfo={cabinetInformation}
               />
             )}
           </>
@@ -161,11 +129,12 @@ const AdminSelectedCabinetInformation = ({
               selectedCabinet={selectedCabinet.cabinetNumber}
               selectedMultiCabinets={selectedMultiCabinets}
               multiButtonActive={multiButtonActive}
-            />
-            <CabinetActionButtons
-              onStateManagementClick={clickedStateManagementButton}
-              onCancelClick={cancelButton}
-              stateManagementText="상태 관리"
+              clickedReturnButton={clickedReturnButton}
+              clickedStateManagementButton={clickedStateManagementButton}
+              cancelButton={cancelButton}
+              username={username}
+              expiredAt={expiredAt}
+              selectedStatus={selectedStatus}
             />
             {openStateManagementModal && (
               <AdminStateManagementModal
@@ -173,15 +142,7 @@ const AdminSelectedCabinetInformation = ({
                 setModalCancelState={setOpenStateManagementModal}
                 selectedStatus={selectedStatus}
                 setSelectedStatus={setSelectedStatus}
-                cabinetInfo={`${selectedBuilding} ${selectedFloor}F ${
-                  multiButtonActive && selectedMultiCabinets.length > 0
-                    ? "\n" +
-                      selectedMultiCabinets.sort((a, b) => a - b).join(",") +
-                      "번"
-                    : selectedCabinet
-                      ? `${selectedCabinet.cabinetNumber}번`
-                      : ""
-                }`}
+                cabinetInfo={cabinetInformation}
               />
             )}
           </>
