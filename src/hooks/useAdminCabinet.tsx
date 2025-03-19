@@ -1,9 +1,10 @@
 import { useState } from "react";
+import { SelectedMultiCabinetsData } from "@/types/CabinetType";
 
 export const useAdminCabinet = () => {
-  const [selectedMultiCabinets, setSelectedMultiCabinets] = useState<number[]>(
-    [],
-  ); // 사물함 복수 선택
+  const [selectedMultiCabinets, setSelectedMultiCabinets] = useState<
+    SelectedMultiCabinetsData[]
+  >([]); // 사물함 복수 선택
   const [multiButtonActive, setMultiButtonActive] = useState(false);
   const [openStateManagementModal, setOpenStateManagementModal] =
     useState(false); // 상태관리 모달

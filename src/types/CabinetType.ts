@@ -37,3 +37,10 @@ export interface CabinetInfoDisplay {
   selectedFloor: number | null;
   selectedCabinet: SelectedCabinet | null;
 }
+
+// admin 전용
+export interface SelectedMultiCabinetsData {
+  cabinetNumber: number;
+  id: number;
+  status: string;
+}

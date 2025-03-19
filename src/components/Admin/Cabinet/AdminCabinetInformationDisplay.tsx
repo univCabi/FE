@@ -1,9 +1,12 @@
-import { CabinetInfoDisplay } from "@/types/CabinetType";
+import {
+  CabinetInfoDisplay,
+  SelectedMultiCabinetsData,
+} from "@/types/CabinetType";
 import CabinetActionButtons from "@/components/Cabinet/CabinetActionButtons";
 import CabinetSVG from "@/icons/cabinet.svg?react";
 
 interface AdminCabinetInformationDisplayProps extends CabinetInfoDisplay {
-  selectedMultiCabinets: number[];
+  selectedMultiCabinets: SelectedMultiCabinetsData[];
   multiButtonActive: boolean;
   username: string | null;
   clickedReturnButton: () => void;
@@ -37,6 +40,14 @@ const AdminCabinetInformationDisplay = ({
   clickedStateManagementButton,
   cancelButton,
 }: AdminCabinetInformationDisplayProps) => {
+  const hasUsingOrOverdue = selectedMultiCabinets.some(
+    (cabinet) => cabinet.status === "USING" || cabinet.status === "OVERDUE",
+  );
+
+  const hasAvailableOrBroken = selectedMultiCabinets.some(
+    (cabinet) => cabinet.status === "AVAILABLE" || cabinet.status === "BROKEN",
+  );
+
   return (
     <>
       <div className="text-center w-[17rem]">
@@ -48,7 +59,11 @@ const AdminCabinetInformationDisplay = ({
           {multiButtonActive && selectedMultiCabinets.length > 0 ? (
             <>
               <br />
-              {selectedMultiCabinets.sort((a, b) => a - b).join(",")}번
+              {selectedMultiCabinets
+                .map((cabinet) => cabinet.cabinetNumber)
+                .sort((a, b) => a - b)
+                .join(",")}
+              번
             </>
           ) : (
             selectedCabinet && `${selectedCabinet.cabinetNumber}번`
@@ -56,7 +71,8 @@ const AdminCabinetInformationDisplay = ({
         </h2>
       </div>
 
-      {(selectedStatus === "USING" || selectedStatus === "OVERDUE") && (
+      {/* selectedMultCabinets 배열에 데이터에서 using or overude가 있고, available or broken이 하나라도 없다면 반납 버튼 활성화 */}
+      {hasUsingOrOverdue && !hasAvailableOrBroken && (
         <>
           <CabinetActionButtons
             onReturnClick={clickedReturnButton}
@@ -75,7 +91,9 @@ const AdminCabinetInformationDisplay = ({
           </div>
         </>
       )}
-      {(selectedStatus === "AVAILABLE" || selectedStatus === "BROKEN") && (
+
+      {/* selectedMultCabinets 배열에 데이터에서 available or broken이 하나라도 있으면 상태관리 버튼만 활성화 */}
+      {hasAvailableOrBroken && (
         <CabinetActionButtons
           onStateManagementClick={clickedStateManagementButton}
           onCancelClick={cancelButton}

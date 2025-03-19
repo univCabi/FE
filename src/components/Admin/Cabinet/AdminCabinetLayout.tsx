@@ -1,6 +1,10 @@
 // 사물함 배열 관련
 import { useCallback, useEffect } from "react";
-import { CabinetLayout, SelectedCabinet } from "@/types/CabinetType";
+import {
+  CabinetLayout,
+  SelectedCabinet,
+  SelectedMultiCabinetsData,
+} from "@/types/CabinetType";
 import CabinetStatusInformation from "@/components/Cabinet/CabinetStatusInformation";
 import CabinetButtonSkeleton from "@/components/Skeleton/CabinetButtonSkeleton";
 import SubmitAndNavigateButton from "@/components/SubmitAndNavigateButton";
@@ -9,8 +13,10 @@ import { useCabinet } from "@/hooks/useCabinet";
 import { useCabinetActivation } from "@/hooks/useCabinetActivation";
 
 interface AdminCabinetLayoutProps extends CabinetLayout {
-  selectedMultiCabinets: number[];
-  setSelectedMultiCabinets: React.Dispatch<React.SetStateAction<number[]>>;
+  selectedMultiCabinets: SelectedMultiCabinetsData[];
+  setSelectedMultiCabinets: React.Dispatch<
+    React.SetStateAction<SelectedMultiCabinetsData[]>
+  >;
   multiButtonActive: boolean;
   setMultiButtonActive: (value: boolean) => void;
   selectedCabinet: SelectedCabinet | null;
@@ -37,6 +43,7 @@ const AdminCabinetLayout = ({
   });
   const { checkedCabinet, setCheckedCabinet } = useAdminCabinet();
 
+  // 복수선택기능 버튼 활성화
   const MultipleSelectButtonActive = useCallback(() => {
     if (multiButtonActive) {
       setMultiButtonActive(false);
@@ -46,18 +53,33 @@ const AdminCabinetLayout = ({
   }, [multiButtonActive]);
 
   // 사물함 선택 핸들링
-  const handleCabinetClick = (cabinetNumber: number) => {
+  const handleCabinetClick = (
+    cabinetNumber: number,
+    id: number,
+    status: string,
+  ) => {
+    const selectedMultiCabinet: SelectedMultiCabinetsData = {
+      cabinetNumber,
+      id,
+      status,
+    };
+
     if (!multiButtonActive) {
-      setSelectedMultiCabinets([cabinetNumber]);
+      setSelectedMultiCabinets([selectedMultiCabinet]); // 여기에 cabinet 정보를 담아야 함
       return;
     }
     // 복수 선택 모드에서는 선택된 상태를 토글
     setSelectedMultiCabinets(
-      (prevSelectedCabinet) =>
-        prevSelectedCabinet.includes(cabinetNumber)
-          ? prevSelectedCabinet.filter((num) => num !== cabinetNumber) // 이미 선택된 경우 제거
-          : [...prevSelectedCabinet, cabinetNumber], // 선택되지 않은 경우 추가
+      (prevSelectedCabinets) =>
+        prevSelectedCabinets.some(
+          (cabinet) => cabinet.cabinetNumber === cabinetNumber,
+        )
+          ? prevSelectedCabinets.filter(
+              (cabinet) => cabinet.cabinetNumber !== cabinetNumber,
+            ) // 이미 선택된 경우 제거
+          : [...prevSelectedCabinets, selectedMultiCabinet], // 선택되지 않은 경우 추가
     );
+    console.log(selectedMultiCabinets);
   };
 
   // 전체선택
@@ -66,7 +88,11 @@ const AdminCabinetLayout = ({
       setSelectedMultiCabinets([]);
     } else {
       setSelectedMultiCabinets(
-        cabinetData.map((cabinet) => cabinet.cabinetNumber),
+        cabinetData.map((cabinet) => ({
+          cabinetNumber: cabinet.cabinetNumber,
+          id: cabinet.id,
+          status: cabinet.status,
+        })),
       );
     }
     setCheckedCabinet(!checkedCabinet);
@@ -141,12 +167,15 @@ const AdminCabinetLayout = ({
         ) : (
           <div className="relative h-[30rem] overflow-scroll lg:w-[67rem] md:w-[80%] sm:w-[75%] w-[100%] z-10">
             {cabinetData.map((cabinet) => {
+              const isSelected = selectedMultiCabinets.some(
+                (selected) => selected.cabinetNumber === cabinet.cabinetNumber,
+              );
               return (
                 <button
                   key={cabinet.cabinetNumber}
                   className={`absolute w-16 h-20 rounded-md hover:bg-opacity-80 flex items-end text-sm p-2
                   ${
-                    selectedMultiCabinets.includes(cabinet.cabinetNumber)
+                    isSelected
                       ? `${getStatusColor(cabinet.status, cabinet.isMine)} opacity-100`
                       : `${getStatusColor(cabinet.status, cabinet.isMine)} ${multiButtonActive ? "opacity-35" : ""}`
                   }
@@ -160,7 +189,11 @@ const AdminCabinetLayout = ({
                       cabinet.id,
                       cabinet.cabinetNumber,
                     );
-                    handleCabinetClick(cabinet.cabinetNumber);
+                    handleCabinetClick(
+                      cabinet.cabinetNumber,
+                      cabinet.id,
+                      cabinet.status,
+                    );
                   }}
                 >
                   {cabinet.cabinetNumber}

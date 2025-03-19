@@ -1,4 +1,7 @@
-import { SelectedCabinetInfo } from "@/types/CabinetType";
+import {
+  SelectedCabinetInfo,
+  SelectedMultiCabinetsData,
+} from "@/types/CabinetType";
 import AdminCabinetInformationDisplay from "@/components/Admin/Cabinet/AdminCabinetInformationDisplay";
 import AdminStateManagementModal from "@/components/Admin/Cabinet/AdminStateManagementModal";
 import ConfirmModalView from "@/components/ConfirmModalView";
@@ -9,7 +12,7 @@ import CabinetSVG from "@/icons/cabinet.svg?react";
 
 // 선택된 사물함 정보
 interface AdminSelectedCabinetInformationProps extends SelectedCabinetInfo {
-  selectedMultiCabinets: number[];
+  selectedMultiCabinets: SelectedMultiCabinetsData[];
   multiButtonActive: boolean;
   username: string | null;
 }
@@ -65,7 +68,10 @@ const AdminSelectedCabinetInformation = ({
 
   const cabinetNumbersSort =
     multiButtonActive && selectedMultiCabinets.length > 0
-      ? `\n${selectedMultiCabinets.sort((a, b) => a - b).join(",")}번`
+      ? `\n${selectedMultiCabinets
+          .map((cabinet) => cabinet.cabinetNumber)
+          .sort((a, b) => a - b)
+          .join(",")}번`
       : selectedCabinet?.cabinetNumber
         ? `${selectedCabinet.cabinetNumber}번`
         : "";
