@@ -1,8 +1,8 @@
 // 클릭했을 때 사물함 status에 따른 사물함 정보 화면
-import { CabinetInfoDisplay, SelectedCabinet } from "@/types/CabinetType";
+import { CabinetInfo } from "@/types/CabinetType";
 import CabinetSVG from "@/icons/cabinet.svg?react";
 
-interface CabinetInformationDisplayProps extends CabinetInfoDisplay {
+interface CabinetInformationDisplayProps extends CabinetInfo {
   statusMessage: string;
 }
 

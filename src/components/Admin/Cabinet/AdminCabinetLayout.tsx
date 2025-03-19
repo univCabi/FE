@@ -5,6 +5,7 @@ import {
   SelectedCabinet,
   SelectedMultiCabinetsData,
 } from "@/types/CabinetType";
+import AdminAllSelectButton from "@/components/Admin/Cabinet/AdminAllSelectButton";
 import CabinetStatusInformation from "@/components/Cabinet/CabinetStatusInformation";
 import CabinetButtonSkeleton from "@/components/Skeleton/CabinetButtonSkeleton";
 import SubmitAndNavigateButton from "@/components/SubmitAndNavigateButton";
@@ -45,14 +46,13 @@ const AdminCabinetLayout = ({
 
   // 복수선택기능 버튼 활성화
   const MultipleSelectButtonActive = useCallback(() => {
-    if (multiButtonActive) {
-      setMultiButtonActive(false);
-    } else {
-      setMultiButtonActive(true);
+    {
+      multiButtonActive
+        ? setMultiButtonActive(false)
+        : setMultiButtonActive(true);
     }
   }, [multiButtonActive]);
 
-  // 사물함 선택 핸들링
   const handleCabinetClick = (
     cabinetNumber: number,
     id: number,
@@ -63,12 +63,10 @@ const AdminCabinetLayout = ({
       id,
       status,
     };
-
     if (!multiButtonActive) {
-      setSelectedMultiCabinets([selectedMultiCabinet]); // 여기에 cabinet 정보를 담아야 함
+      setSelectedMultiCabinets([selectedMultiCabinet]);
       return;
     }
-    // 복수 선택 모드에서는 선택된 상태를 토글
     setSelectedMultiCabinets(
       (prevSelectedCabinets) =>
         prevSelectedCabinets.some(
@@ -76,10 +74,9 @@ const AdminCabinetLayout = ({
         )
           ? prevSelectedCabinets.filter(
               (cabinet) => cabinet.cabinetNumber !== cabinetNumber,
-            ) // 이미 선택된 경우 제거
+            )
           : [...prevSelectedCabinets, selectedMultiCabinet], // 선택되지 않은 경우 추가
     );
-    console.log(selectedMultiCabinets);
   };
 
   // 전체선택
@@ -128,37 +125,12 @@ const AdminCabinetLayout = ({
           }`}
           onClick={MultipleSelectButtonActive}
         />
-        <div className="flex items-end mt-2 mr-3 z-10">
-          <input
-            key={multiButtonActive ? "active" : "inactive"}
-            onChange={() => {
-              handleSelectAllCabinets();
-            }}
-            type="checkbox"
-            disabled={!multiButtonActive}
-            className={`flex-row mr-1 w-4 h-4 appearance-none border rounded-sm bg-no-repeat bg-center
-              ${
-                multiButtonActive
-                  ? `border-blue-600 checked:bg-blue-600 checked:border-0 ${
-                      selectedMultiCabinets.length === cabinetData.length
-                        ? "bg-[url('./icons/check.svg')] bg-blue-600"
-                        : selectedMultiCabinets.length > 0 &&
-                            selectedMultiCabinets.length < cabinetData.length
-                          ? "bg-[url('/src/icons/eachCheck.svg')] bg-blue-600"
-                          : ""
-                    }`
-                  : "border-gray-400 checked:bg-transparent checked:border-gray-400"
-              }
-            `}
-          />
-          <label
-            className={`flex-row ${
-              multiButtonActive ? "text-blue-600" : "text-gray-400"
-            }`}
-          >
-            전체 선택
-          </label>
-        </div>
+        <AdminAllSelectButton
+          selectedMultiCabinets={selectedMultiCabinets}
+          multiButtonActive={multiButtonActive}
+          handleSelectAllCabinets={handleSelectAllCabinets}
+          cabinetData={cabinetData}
+        />
       </div>
 
       <div className="h-[74%] flex items-center justify-center">

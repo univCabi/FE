@@ -1,11 +1,8 @@
-import {
-  CabinetInfoDisplay,
-  SelectedMultiCabinetsData,
-} from "@/types/CabinetType";
+import { CabinetInfo, SelectedMultiCabinetsData } from "@/types/CabinetType";
 import CabinetActionButtons from "@/components/Cabinet/CabinetActionButtons";
 import CabinetSVG from "@/icons/cabinet.svg?react";
 
-interface AdminCabinetInformationDisplayProps extends CabinetInfoDisplay {
+interface AdminCabinetInformationDisplayProps extends CabinetInfo {
   selectedMultiCabinets: SelectedMultiCabinetsData[];
   multiButtonActive: boolean;
   username: string | null;
@@ -40,13 +37,19 @@ const AdminCabinetInformationDisplay = ({
   clickedStateManagementButton,
   cancelButton,
 }: AdminCabinetInformationDisplayProps) => {
-  const hasUsingOrOverdue = selectedMultiCabinets.some(
-    (cabinet) => cabinet.status === "USING" || cabinet.status === "OVERDUE",
-  );
+  // multiButtonActive 활성화 여부에 따른 조건
+  const hasUsingOrOverdue = multiButtonActive
+    ? selectedMultiCabinets.some(
+        (cabinet) => cabinet.status === "USING" || cabinet.status === "OVERDUE",
+      )
+    : selectedStatus === "USING" || selectedStatus === "OVERDUE";
 
-  const hasAvailableOrBroken = selectedMultiCabinets.some(
-    (cabinet) => cabinet.status === "AVAILABLE" || cabinet.status === "BROKEN",
-  );
+  const hasAvailableOrBroken = multiButtonActive
+    ? selectedMultiCabinets.some(
+        (cabinet) =>
+          cabinet.status === "AVAILABLE" || cabinet.status === "BROKEN",
+      )
+    : selectedStatus === "AVAILABLE" || selectedStatus === "BROKEN";
 
   return (
     <>
@@ -82,12 +85,16 @@ const AdminCabinetInformationDisplay = ({
             stateManagementText="상태 관리"
           />
           <div className="text-lg">
-            <p>
-              사용자: <strong>{username}</strong>
-            </p>
-            <p>
-              반납 기한: <strong>{formatDate(expiredAt)}</strong>
-            </p>
+            {multiButtonActive === false ? ( // multiButton이 비활성화일 때만 사용자, 반납기한 표시 -> 활성화되면 여러 사물함의 사용자, 반납기한이 큰 의미없기 때문
+              <>
+                <p>
+                  사용자: <strong>{username}</strong>
+                </p>
+                <p>
+                  반납 기한: <strong>{formatDate(expiredAt)}</strong>
+                </p>
+              </>
+            ) : null}
           </div>
         </>
       )}

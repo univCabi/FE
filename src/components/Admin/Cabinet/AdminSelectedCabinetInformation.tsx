@@ -79,71 +79,61 @@ const AdminSelectedCabinetInformation = ({
 
   return (
     <div className="absolute inset-y-0 right-0 w-80 pt-20 flex flex-col justify-center items-center bg-white border-l-2 border-gray-400">
-      {selectedCabinet !== null ? (
-        selectedStatus === "USING" || selectedStatus === "OVERDUE" ? (
-          <>
-            <AdminCabinetInformationDisplay
-              selectedBuilding={selectedBuilding}
-              selectedFloor={selectedFloor}
-              selectedCabinet={selectedCabinet}
-              selectedMultiCabinets={selectedMultiCabinets}
-              multiButtonActive={multiButtonActive}
-              clickedReturnButton={clickedReturnButton}
-              clickedStateManagementButton={clickedStateManagementButton}
-              cancelButton={cancelButton}
-              username={username}
-              expiredAt={expiredAt}
-              selectedStatus={selectedStatus}
-            />
-            {openReturnModal && (
-              <ConfirmModalView
-                onClick={fetchCabinetReturn}
-                setModalCancelState={setOpenReturnModal}
-                title={`${
-                  multiButtonActive && selectedMultiCabinets.length > 0
-                    ? "일괄 반납 처리"
-                    : "반납 처리"
-                }`}
-                cabinetInfo={cabinetInformation}
-                text={"이 사물함을 반납 처리하시겠습니까?"}
-              />
-            )}
-            {openStateManagementModal && (
-              <AdminStateManagementModal
-                onClick={fetchCabinetStateManage}
-                setModalCancelState={setOpenStateManagementModal}
-                selectedStatus={selectedStatus}
-                setSelectedStatus={setSelectedStatus}
-                cabinetInfo={cabinetInformation}
-              />
-            )}
-          </>
-        ) : selectedStatus === "AVAILABLE" || selectedStatus === "BROKEN" ? (
-          <>
-            <AdminCabinetInformationDisplay
-              selectedBuilding={selectedBuilding}
-              selectedFloor={selectedFloor}
-              selectedCabinet={selectedCabinet}
-              selectedMultiCabinets={selectedMultiCabinets}
-              multiButtonActive={multiButtonActive}
-              clickedReturnButton={clickedReturnButton}
-              clickedStateManagementButton={clickedStateManagementButton}
-              cancelButton={cancelButton}
-              username={username}
-              expiredAt={expiredAt}
-              selectedStatus={selectedStatus}
-            />
-            {openStateManagementModal && (
-              <AdminStateManagementModal
-                onClick={fetchCabinetStateManage}
-                setModalCancelState={setOpenStateManagementModal}
-                selectedStatus={selectedStatus}
-                setSelectedStatus={setSelectedStatus}
-                cabinetInfo={cabinetInformation}
-              />
-            )}
-          </>
-        ) : null
+      {selectedCabinet !== null &&
+      (multiButtonActive ? selectedMultiCabinets.length > 0 : true) ? (
+        <>
+          <AdminCabinetInformationDisplay
+            selectedBuilding={selectedBuilding}
+            selectedFloor={selectedFloor}
+            selectedCabinet={selectedCabinet}
+            selectedMultiCabinets={selectedMultiCabinets}
+            multiButtonActive={multiButtonActive}
+            clickedReturnButton={clickedReturnButton}
+            clickedStateManagementButton={clickedStateManagementButton}
+            cancelButton={cancelButton}
+            username={username}
+            expiredAt={expiredAt}
+            selectedStatus={selectedStatus}
+          />
+          {selectedStatus === "USING" || selectedStatus === "OVERDUE" ? (
+            <>
+              {openReturnModal && (
+                <ConfirmModalView
+                  onClick={fetchCabinetReturn}
+                  setModalCancelState={setOpenReturnModal}
+                  title={`${
+                    multiButtonActive && selectedMultiCabinets.length > 0
+                      ? "일괄 반납 처리"
+                      : "반납 처리"
+                  }`}
+                  cabinetInfo={cabinetInformation}
+                  text={"이 사물함을 반납 처리하시겠습니까?"}
+                />
+              )}
+              {openStateManagementModal && (
+                <AdminStateManagementModal
+                  onClick={fetchCabinetStateManage}
+                  setModalCancelState={setOpenStateManagementModal}
+                  selectedStatus={selectedStatus}
+                  setSelectedStatus={setSelectedStatus}
+                  cabinetInfo={cabinetInformation}
+                />
+              )}
+            </>
+          ) : selectedStatus === "AVAILABLE" || selectedStatus === "BROKEN" ? (
+            <>
+              {openStateManagementModal && (
+                <AdminStateManagementModal
+                  onClick={fetchCabinetStateManage}
+                  setModalCancelState={setOpenStateManagementModal}
+                  selectedStatus={selectedStatus}
+                  setSelectedStatus={setSelectedStatus}
+                  cabinetInfo={cabinetInformation}
+                />
+              )}
+            </>
+          ) : null}
+        </>
       ) : (
         <>
           <div className="flex justify-center pb-5">

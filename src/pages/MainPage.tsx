@@ -64,7 +64,7 @@ const MainPage = () => {
                 selectedBuilding={
                   buildingList.find(
                     (data) => data.building === selectedBuilding,
-                  ) || null
+                  )?.building || null
                 }
                 selectedFloor={selectedFloor}
                 isMyCabinet={isMyCabinet as boolean}
@@ -123,7 +123,7 @@ const MainPage = () => {
                   selectedBuilding={
                     buildingList.find(
                       (data) => data.building === selectedBuilding,
-                    ) || null
+                    )?.building || null
                   }
                   selectedFloor={selectedFloor}
                   isMyCabinet={isMyCabinet as boolean}

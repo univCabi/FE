@@ -1,26 +1,10 @@
 // 사물함 버튼 활성화 -> cabinetData 저장
 import { useEffect, useState } from "react";
+import { BuildingInfo, CabinetData } from "@/types/CabinetType";
 import { log } from "@/utils/logger";
 import { cabinetCallApi } from "@/api/cabinetCallApi";
 
-interface CabinetData {
-  floor: number;
-  section: string;
-  building: string;
-  id: number;
-  cabinetNumber: number;
-  cabinetXPos: number;
-  cabinetYPos: number;
-  status: string;
-  isVisible: boolean | null;
-  username: string | null;
-  isMine: boolean;
-  expiredAt: string | null;
-}
-
-interface UseCabinetActivationProps {
-  selectedBuilding: { building: string } | null;
-  selectedFloor: number | null;
+interface UseCabinetActivationProps extends BuildingInfo {
   isMyCabinet: boolean;
 }
 
@@ -50,7 +34,7 @@ export const useCabinetActivation = ({
   };
   useEffect(() => {
     if (selectedBuilding !== null && selectedFloor !== null) {
-      fetchCabinetData(selectedBuilding.building, selectedFloor);
+      fetchCabinetData(selectedBuilding, selectedFloor);
     }
   }, [selectedBuilding, selectedFloor, isMyCabinet]);
 
