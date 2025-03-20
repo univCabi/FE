@@ -1,4 +1,4 @@
-import { SelectedCabinet } from "@/types/CabinetType";
+import { SelectedCabinetInfo } from "@/types/CabinetType";
 import CabinetActionButtons from "@/components/Cabinet/CabinetActionButtons";
 import CabinetInformationDisplay from "@/components/Cabinet/CabinetInformationDisplay";
 import ConfirmModalView from "@/components/ConfirmModalView";
@@ -8,17 +8,8 @@ import { useConfirmModalState } from "@/hooks/useConfirmModalState";
 import CabinetSVG from "@/icons/cabinet.svg?react";
 
 // 선택된 사물함 정보
-interface SelectedCabinetInformationProps {
-  selectedBuilding: string | null;
-  selectedFloor: number | null;
-  selectedCabinet: { cabinetId: number; cabinetNumber: number } | null;
-  setSelectedCabinet: (cabinet: SelectedCabinet | null) => void;
-  selectedStatus: string;
-  setSelectedStatus: (status: string) => void;
-  expiredAt: string | null;
-  setExpiredAt: (expiredAt: string | null) => void;
+interface SelectedCabinetInformationProps extends SelectedCabinetInfo {
   isMyCabinet: boolean;
-  setIsMyCabinet: (isMine: boolean) => void;
 }
 
 // 날짜 포맷팅 함수
@@ -98,7 +89,7 @@ const SelectedCabinetInformation = ({
               <CabinetInformationDisplay
                 selectedBuilding={selectedBuilding}
                 selectedFloor={selectedFloor}
-                selectedCabinet={selectedCabinet.cabinetNumber}
+                selectedCabinet={selectedCabinet}
                 statusMessage=""
               />
               <CabinetActionButtons
@@ -112,7 +103,7 @@ const SelectedCabinetInformation = ({
                 onClick={fetchCabinetRental}
                 setModalCancelState={setOpenRentalModal}
                 title={"대여 확인"}
-                boldText={`${selectedBuilding} ${selectedFloor}F ${selectedCabinet?.cabinetNumber}번 사물함`}
+                cabinetInfo={`${selectedBuilding} ${selectedFloor}F ${selectedCabinet?.cabinetNumber}번 사물함`}
                 text={"이 사물함을 대여하시겠습니까?"}
               />
             )}
@@ -124,7 +115,7 @@ const SelectedCabinetInformation = ({
               <CabinetInformationDisplay
                 selectedBuilding={selectedBuilding}
                 selectedFloor={selectedFloor}
-                selectedCabinet={selectedCabinet.cabinetNumber}
+                selectedCabinet={selectedCabinet}
                 statusMessage=""
               />
               <CabinetActionButtons
@@ -153,14 +144,14 @@ const SelectedCabinetInformation = ({
           <CabinetInformationDisplay
             selectedBuilding={selectedBuilding}
             selectedFloor={selectedFloor}
-            selectedCabinet={selectedCabinet.cabinetNumber}
+            selectedCabinet={selectedCabinet}
             statusMessage="이미 대여중인 사물함입니다."
           />
         ) : selectedStatus === "BROKEN" || selectedStatus === "OVERDUE" ? (
           <CabinetInformationDisplay
             selectedBuilding={selectedBuilding}
             selectedFloor={selectedFloor}
-            selectedCabinet={selectedCabinet.cabinetNumber}
+            selectedCabinet={selectedCabinet}
             statusMessage="사용이 불가능한 사물함입니다."
           />
         ) : null

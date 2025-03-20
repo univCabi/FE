@@ -1,10 +1,11 @@
+import React from "react";
 import { useLocation, useNavigate } from "react-router";
 import SubmitAndNavigateButton from "@/components/SubmitAndNavigateButton";
 import { useLogout } from "@/hooks/useLogout";
 import HistorySVG from "@/icons/log.svg?react";
 import LogoutSVG from "@/icons/logout.svg?react";
 
-const CabinetFooterMenuButton = () => {
+const CabinetFooterMenuButton = React.memo(() => {
   const navigate = useNavigate();
   const locatedPage = useLocation();
   const isHistoryPage: boolean = locatedPage.pathname === "/history";
@@ -13,14 +14,19 @@ const CabinetFooterMenuButton = () => {
 
   return (
     <div className="absolute bottom-4 w-full flex flex-col items-center text-gray-500">
-      <SubmitAndNavigateButton
-        onClick={() => navigate("/history")}
-        className={`button-side-icon-basic ${
-          isHistoryPage ? "button-side-icon-after" : "button-side-icon-before"
-        }`}
-        text={"History"}
-        svgComponent={<HistorySVG className="mb-1 inline-block text-center" />}
-      ></SubmitAndNavigateButton>
+      {!location.pathname.startsWith("/admin") && (
+        <SubmitAndNavigateButton
+          onClick={() => navigate("/history")}
+          className={`button-side-icon-basic ${
+            isHistoryPage ? "button-side-icon-after" : "button-side-icon-before"
+          }`}
+          text={"History"}
+          svgComponent={
+            <HistorySVG className="mb-1 inline-block text-center" />
+          }
+        ></SubmitAndNavigateButton>
+      )}
+
       <SubmitAndNavigateButton
         onClick={handleLogout}
         className={"button-side-icon-basic button-side-icon-before"}
@@ -29,6 +35,6 @@ const CabinetFooterMenuButton = () => {
       ></SubmitAndNavigateButton>
     </div>
   );
-};
+});
 
 export default CabinetFooterMenuButton;

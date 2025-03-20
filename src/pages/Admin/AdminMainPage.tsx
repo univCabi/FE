@@ -1,13 +1,12 @@
 import { useContext, useEffect } from "react";
 import { useLocation } from "react-router";
 import { SideNavigationLayoutContext } from "@/contexts/SideNavigationLayoutContext";
-import AdminCabinetLayout from "@/components/Admin/AdminCabinetLayout";
 import AdminInfoChart from "@/components/Admin/AdminInfoChart";
+import AdminCabinetLayout from "@/components/Admin/Cabinet/AdminCabinetLayout";
+import AdminSelectedCabinetInformation from "@/components/Admin/Cabinet/AdminSelectedCabinetInformation";
 import BuildingSelectButton from "@/components/BuildingSelectButton";
-import CabinetButtonLayout from "@/components/Cabinet/CabinetButtonLayout";
-import CabinetStatusInformation from "@/components/Cabinet/CabinetStatusInformation";
-import SelectedCabinetInformation from "@/components/Cabinet/SelectedCabinetInformation";
 import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
+import { useAdminCabinet } from "@/hooks/useAdminCabinet";
 import { useBuildingState } from "@/hooks/useBuildingState";
 import { useCabinet } from "@/hooks/useCabinet";
 
@@ -28,7 +27,14 @@ const AdminMainPage = () => {
     isMyCabinet,
     setIsMyCabinet,
     fetchCabinetDetailInformation,
+    username,
   } = useCabinet();
+  const {
+    selectedMultiCabinets,
+    setSelectedMultiCabinets,
+    multiButtonActive,
+    setMultiButtonActive,
+  } = useAdminCabinet();
 
   useEffect(() => {
     if (location.state?.selectedBuilding) {
@@ -65,14 +71,19 @@ const AdminMainPage = () => {
                 selectedBuilding={
                   buildingList.find(
                     (data) => data.building === selectedBuilding,
-                  ) || null
+                  )?.building || null
                 }
                 selectedFloor={selectedFloor}
                 isMyCabinet={isMyCabinet as boolean}
                 filteredCabinetDetail={filteredCabinetDetail}
                 fetchCabinetDetailInformation={fetchCabinetDetailInformation}
+                selectedMultiCabinets={selectedMultiCabinets}
+                setSelectedMultiCabinets={setSelectedMultiCabinets}
+                multiButtonActive={multiButtonActive}
+                setMultiButtonActive={setMultiButtonActive}
+                setSelectedCabinet={setSelectedCabinet}
+                selectedCabinet={selectedCabinet}
               />
-              <CabinetStatusInformation />
             </>
           )}
         </div>
@@ -85,7 +96,7 @@ const AdminMainPage = () => {
         {/* 선택한 사물함 정보(우측) */}
         {selectedBuilding && (
           <div className="absolute inset-y-0 right-0 w-80 border-gray-400 border-l-2 pt-20 hidden md:flex">
-            <SelectedCabinetInformation
+            <AdminSelectedCabinetInformation
               selectedBuilding={selectedBuilding}
               selectedFloor={selectedFloor}
               selectedCabinet={selectedCabinet}
@@ -94,8 +105,10 @@ const AdminMainPage = () => {
               setExpiredAt={setExpiredAt}
               setSelectedCabinet={setSelectedCabinet}
               expiredAt={expiredAt}
-              isMyCabinet={isMyCabinet as boolean}
               setIsMyCabinet={setIsMyCabinet}
+              selectedMultiCabinets={selectedMultiCabinets}
+              multiButtonActive={multiButtonActive}
+              username={username}
             />
           </div>
         )}
@@ -128,21 +141,23 @@ const AdminMainPage = () => {
           >
             <>
               <div className="absolute inset-y-0 left-12 right-8 pt-16">
-                <CabinetButtonLayout
+                <AdminCabinetLayout
                   selectedBuilding={
                     buildingList.find(
                       (data) => data.building === selectedBuilding,
-                    ) || null
+                    )?.building || null
                   }
                   selectedFloor={selectedFloor}
                   isMyCabinet={isMyCabinet as boolean}
                   filteredCabinetDetail={filteredCabinetDetail}
                   fetchCabinetDetailInformation={fetchCabinetDetailInformation}
+                  selectedMultiCabinets={selectedMultiCabinets}
+                  setSelectedMultiCabinets={setSelectedMultiCabinets}
+                  multiButtonActive={multiButtonActive}
+                  setMultiButtonActive={setMultiButtonActive}
+                  setSelectedCabinet={setSelectedCabinet}
+                  selectedCabinet={selectedCabinet}
                 />
-              </div>
-              {/* 화면 크기 = 768px 이하일 때 사물함 정보 숨김 */}
-              <div className="hidden sl:flex">
-                <CabinetStatusInformation />
               </div>
             </>
           </div>
@@ -155,7 +170,7 @@ const AdminMainPage = () => {
         {/* 사물함 선택 완료 -> cabinetRental 컴포넌트 표시 */}
         {selectedCabinet && (
           <div className="absolute inset-y-0 right-0 w-80 border-gray-400 border-l-2 pt-20 flex">
-            <SelectedCabinetInformation
+            <AdminSelectedCabinetInformation
               selectedBuilding={selectedBuilding}
               selectedFloor={selectedFloor}
               selectedCabinet={selectedCabinet}
@@ -164,8 +179,10 @@ const AdminMainPage = () => {
               setExpiredAt={setExpiredAt}
               setSelectedCabinet={setSelectedCabinet}
               expiredAt={expiredAt}
-              isMyCabinet={isMyCabinet as boolean}
               setIsMyCabinet={setIsMyCabinet}
+              selectedMultiCabinets={selectedMultiCabinets}
+              multiButtonActive={multiButtonActive}
+              username={username}
             />
           </div>
         )}

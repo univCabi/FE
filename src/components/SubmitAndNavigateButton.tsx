@@ -1,3 +1,5 @@
+import React from "react";
+
 interface SubmitButtonProps {
   className: string;
   disabled?: boolean;
@@ -6,27 +8,29 @@ interface SubmitButtonProps {
   svgComponent?: React.ReactNode;
 }
 
-const SubmitAndNavigateButton = ({
-  className,
-  disabled = false,
-  text,
-  onClick,
-  svgComponent,
-}: SubmitButtonProps) => {
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
-    if (e.key === "Enter") onClick();
-  };
-  return (
-    <button
-      className={className}
-      onClick={onClick}
-      disabled={disabled}
-      onKeyDown={handleKeyDown}
-    >
-      {svgComponent && <div>{svgComponent}</div>}
-      {text}
-    </button>
-  );
-};
+const SubmitAndNavigateButton = React.memo(
+  ({
+    className,
+    disabled = false,
+    text,
+    onClick,
+    svgComponent,
+  }: SubmitButtonProps) => {
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
+      if (e.key === "Enter") onClick();
+    };
+    return (
+      <button
+        className={className}
+        onClick={onClick}
+        disabled={disabled}
+        onKeyDown={handleKeyDown}
+      >
+        {svgComponent && <div>{svgComponent}</div>}
+        {text}
+      </button>
+    );
+  },
+);
 
 export default SubmitAndNavigateButton;

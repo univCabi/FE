@@ -1,6 +1,7 @@
 // 사물함 상태 정보
+import React from "react";
 
-const CabinetStatusInformation = () => {
+const CabinetStatusInformation = React.memo(() => {
   const cabinetStatus = [
     { id: "MINE", color: "bg-lime-500", label: "내 사물함" },
     { id: "USING", color: "bg-purple-500", label: "사용 중" },
@@ -19,6 +20,6 @@ const CabinetStatusInformation = () => {
       ))}
     </div>
   );
-};
+});
 
 export default CabinetStatusInformation;

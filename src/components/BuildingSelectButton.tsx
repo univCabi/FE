@@ -1,13 +1,15 @@
 // 건물, 층 선택 버튼
-import { BuildingData, SelectedCabinet } from "@/types/CabinetType";
+import {
+  BuildingData,
+  BuildingInfo,
+  SelectedCabinet,
+} from "@/types/CabinetType";
 import { useSearch } from "@/hooks/useSearch";
 import { useSearchToMain } from "@/hooks/useSearchToMain";
 
-interface BuildingSelectButtonProps {
+interface BuildingSelectButtonProps extends BuildingInfo {
   buildingList: BuildingData[];
-  selectedBuilding: string | null;
   setSelectedBuilding: (building: string | null) => void;
-  selectedFloor: number | null;
   setSelectedFloor: (floor: number | null) => void;
   setSelectedCabinet: (cabinet: SelectedCabinet | null) => void;
 }

@@ -1,9 +1,9 @@
 //Modal을 관리하는 컴포넌트
-interface HadleModalProps {
+interface HandleModalProps {
   onClick: () => Promise<void>;
   setModalCancelState: React.Dispatch<React.SetStateAction<boolean>>;
   title?: string;
-  boldText?: string;
+  cabinetInfo?: string;
   text?: string;
 }
 
@@ -11,15 +11,15 @@ const ConfirmModalView = ({
   onClick,
   setModalCancelState,
   title,
-  boldText,
+  cabinetInfo,
   text,
-}: HadleModalProps) => {
+}: HandleModalProps) => {
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-white p-6 rounded-lg shadow-xl w-96">
         <h2 className="text-2xl font-bold mb-5">{title}</h2>
-        <div className="text-lg">
-          <b>{boldText}</b>
+        <div className="text-lg w-full break-all">
+          <b className="whitespace-pre-line">{cabinetInfo}</b>
           <p>{text}</p>
         </div>
         <div className="mt-5 flex justify-center">

@@ -1,8 +1,9 @@
+import { SelectedCabinet } from "@/types/CabinetType";
 import { log } from "@/utils/logger";
 import { rentApi } from "@/api/rentApi";
 
 interface UseCabinetRentalProps {
-  selectedCabinet: { cabinetId: number; cabinetNumber: number } | null;
+  selectedCabinet: SelectedCabinet | null;
   closeRentalModal: () => void;
   setSelectedStatus: (status: string) => void;
   setExpiredAt: (expiredAt: string | null) => void;
