@@ -5,7 +5,7 @@ const AdminInfoChart = () => {
     <div className="flex-col w-full h-full mr-24">
       <div className="h-[52%] pt-7 flex flex-col">
         <div className="font-bold text-2xl mb-4">건물별 사물함 사용 현황</div>
-        <div className="h-[85%] w-[90%] flex items-center justify-center self-center">
+        <div className="h-[85%] w-[100%] flex items-center justify-center self-center">
           <CabinetBarChart></CabinetBarChart>
         </div>
       </div>

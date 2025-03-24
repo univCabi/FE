@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { SelectedCabinet } from "@/types/CabinetType";
 import { log } from "@/utils/logger";
 import { cabinetDetailInfoApi } from "@/api/cabinetDetailInfoApi";
