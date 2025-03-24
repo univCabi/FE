@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { log } from "@/utils/logger";
 import { barChartDataApi } from "@/api/barChartDataApi";
 
-interface BarChartData {
+export interface BarChartData {
   name: string;
   total: number;
   using: number;
@@ -14,7 +14,7 @@ interface BarChartData {
 export const useBarChartData = () => {
   const [barChartData, setBarChartData] = useState<BarChartData[]>([]);
   useEffect(() => {
-    const getData = async () => {
+    const getChartData = async () => {
       try {
         const response = await barChartDataApi();
         setBarChartData(response.buildings);
@@ -25,7 +25,7 @@ export const useBarChartData = () => {
         log.error(`API 호출 중 에러 발생: barChartDataApi ${error}`);
       }
     };
-    getData();
+    getChartData();
   }, []);
 
   return { barChartData };

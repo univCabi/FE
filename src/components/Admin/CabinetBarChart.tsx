@@ -8,13 +8,13 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { useBarChartData } from "@/hooks/useBarChartData";
+import { BarChartData, useBarChartData } from "@/hooks/useBarChartData";
 
 const CabinetBarChart = () => {
   const { barChartData } = useBarChartData();
 
   // 범례를 한국어로 표기하기 위한 data 가공공
-  const convertedBarChartData = barChartData.map((data) => ({
+  const convertedBarChartData = barChartData.map((data: BarChartData) => ({
     name: data.name,
     사용중: data.using,
     반납지연: data.overdue,
