@@ -1,11 +1,16 @@
 import { useState } from "react";
-import { SelectedMultiCabinetsData } from "@/types/CabinetType";
+import { SelectedMultiCabinetsData } from "@/types/AdminType";
+import "@/types/CabinetType";
 
-export const useAdminCabinet = () => {
+interface useAdminCabinetProps {
+  selectedStatus: string;
+}
+
+export const useAdminCabinet = ({ selectedStatus }: useAdminCabinetProps) => {
   const [selectedMultiCabinets, setSelectedMultiCabinets] = useState<
-    SelectedMultiCabinetsData[]
-  >([]); // 사물함 복수 선택
-  const [multiButtonActive, setMultiButtonActive] = useState(false);
+    SelectedMultiCabinetsData[] | null
+  >(null); // 사물함 복수 선택
+  const [isMultiButtonActive, setIsMultiButtonActive] = useState(false);
   const [openStateManagementModal, setOpenStateManagementModal] =
     useState(false); // 상태관리 모달
   const [checkedCabinet, setCheckedCabinet] = useState(false); // 전체선택 여부 나타내는 변수
@@ -17,11 +22,24 @@ export const useAdminCabinet = () => {
     setSelectedBrokenReason(reason);
   };
 
+  const hasUsingOrOverdue = isMultiButtonActive
+    ? selectedMultiCabinets?.some(
+        (cabinet) => cabinet.status === "USING" || cabinet.status === "OVERDUE",
+      ) || false
+    : selectedStatus === "USING" || selectedStatus === "OVERDUE";
+
+  const hasAvailableOrBroken = isMultiButtonActive
+    ? selectedMultiCabinets?.some(
+        (cabinet) =>
+          cabinet.status === "AVAILABLE" || cabinet.status === "BROKEN",
+      ) || false
+    : selectedStatus === "AVAILABLE" || selectedStatus === "BROKEN";
+
   return {
     selectedMultiCabinets,
     setSelectedMultiCabinets,
-    multiButtonActive,
-    setMultiButtonActive,
+    isMultiButtonActive,
+    setIsMultiButtonActive,
     openStateManagementModal,
     setOpenStateManagementModal,
     checkedCabinet,
@@ -29,5 +47,7 @@ export const useAdminCabinet = () => {
     selectedBrokenReason,
     setSelectedBrokenReason,
     handleReasonClick,
+    hasUsingOrOverdue,
+    hasAvailableOrBroken,
   };
 };

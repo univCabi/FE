@@ -1,24 +1,34 @@
+import { SelectedCabinet } from "@/types/CabinetType";
+import { adminChangeStatusApi } from "@/api/adminChangeStatusApi";
 import SubmitAndNavigateButton from "@/components/SubmitAndNavigateButton";
 import { useAdminCabinet } from "@/hooks/useAdminCabinet";
 import { useBuildingState } from "@/hooks/useBuildingState";
 import AngleDownSVG from "@/icons/angleDown.svg?react";
 
 interface HandleModalProps {
-  onClick: () => void;
   setModalCancelState: React.Dispatch<React.SetStateAction<boolean>>;
   selectedStatus: string;
   setSelectedStatus: (status: string) => void;
   cabinetInfo?: string;
+  selectedCabinet: SelectedCabinet;
+}
+export enum CabinetStatus {
+  AVAILABLE = "AVAILABLE",
+  USING = "USING",
+  BROKEN = "BROKEN",
+  OVERDUE = "OVERDUE",
 }
 
 const AdminStateManagementModal = ({
-  onClick,
   setModalCancelState,
   selectedStatus,
   setSelectedStatus,
   cabinetInfo,
+  selectedCabinet,
 }: HandleModalProps) => {
-  const { selectedBrokenReason, handleReasonClick } = useAdminCabinet();
+  const { selectedBrokenReason, handleReasonClick } = useAdminCabinet({
+    selectedStatus,
+  });
   const { isDropdownOpen, setIsDropdownOpen, dropdownOutsideRef } =
     useBuildingState();
 
@@ -35,6 +45,25 @@ const AdminStateManagementModal = ({
   const handleStatusChange = (status: string) => {
     setSelectedStatus(status);
     setIsDropdownOpen(false);
+  };
+
+  const fetchAdminChangeStatus = async (
+    cabinetId: number,
+    newStatus: CabinetStatus,
+  ) => {
+    try {
+      const response = await adminChangeStatusApi(cabinetId, newStatus);
+      if (response) {
+        setSelectedStatus(response.data.status);
+        setIsDropdownOpen(false);
+        console.log("상태 변경 성공", response);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleSave = () => {
+    console.log("상태 저장");
   };
 
   return (
@@ -63,13 +92,15 @@ const AdminStateManagementModal = ({
                   <div className="absolute mt-1 w-full bg-white text-black rounded-md shadow-lg z-10">
                     <button
                       className="block my-1 p-4 w-full text-left hover:bg-blue-300 hover:text-white rounded-md"
-                      onClick={() => handleStatusChange("AVAILABLE")}
+                      onClick={() =>
+                        handleStatusChange(CabinetStatus.AVAILABLE)
+                      }
                     >
                       사용 가능
                     </button>
                     <button
                       className="block my-1 p-4 w-full text-left hover:bg-blue-300 hover:text-white rounded-md"
-                      onClick={() => handleStatusChange("BROKEN")}
+                      onClick={() => handleStatusChange(CabinetStatus.BROKEN)}
                     >
                       사용 불가
                     </button>
@@ -105,7 +136,7 @@ const AdminStateManagementModal = ({
         <div className="mt-5 flex justify-center">
           <button
             className="mr-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-500"
-            onClick={onClick}
+            onClick={handleSave}
           >
             저장
           </button>

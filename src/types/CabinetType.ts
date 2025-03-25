@@ -17,6 +17,7 @@ export interface CabinetData {
   username: string | null;
   isMine: boolean;
   expiredAt: string | null;
+  studentNumber: string;
 }
 
 export interface SelectedCabinet {
@@ -37,8 +38,6 @@ export interface SelectedCabinetInfo extends CabinetInfo {
   selectedStatus: string;
   expiredAt: string | null;
   setSelectedStatus: (status: string) => void;
-  setExpiredAt: (expiredAt: string | null) => void;
-  setIsMyCabinet: (isMine: boolean) => void;
 }
 
 export interface CabinetLayout extends BuildingInfo {
@@ -48,11 +47,4 @@ export interface CabinetLayout extends BuildingInfo {
     cabinetNumber: number;
   } | null;
   fetchCabinetDetailInformation: (id: number, cabientNumber: number) => void;
-}
-
-// admin 전용
-export interface SelectedMultiCabinetsData {
-  cabinetNumber: number;
-  id: number;
-  status: string;
 }

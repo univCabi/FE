@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useRef, useState } from "react";
 import { SelectedCabinet } from "@/types/CabinetType";
 import { log } from "@/utils/logger";
 import { cabinetDetailInfoApi } from "@/api/cabinetDetailInfoApi";
@@ -6,18 +6,22 @@ import { cabinetDetailInfoApi } from "@/api/cabinetDetailInfoApi";
 export const useCabinet = () => {
   const [selectedCabinet, setSelectedCabinet] =
     useState<SelectedCabinet | null>(null);
-  const [selectedStatus, setSelectedStatus] = useState<string>(); // 사물함 status
+  const [selectedStatus, setSelectedStatus] = useState<string>(""); // 사물함 status
   const [expiredAt, setExpiredAt] = useState<string | null>(null); // 반납 기한
-  const [isMyCabinet, setIsMyCabinet] = useState<boolean>(); // 본인 사물함 여부
+  const [isMyCabinet, setIsMyCabinet] = useState<boolean>(false); // 본인 사물함 여부
   const [username, setUsername] = useState<string | null>(null);
+  const prevCabinetNumberRef = useRef<number | null>(null);
 
   // 사물함 세부 정보 API 호출
   const fetchCabinetDetailInformation = async (
     cabinetId: number,
     cabinetNumber: number,
   ) => {
+    if (prevCabinetNumberRef.current === cabinetNumber) return;
+
     try {
       const response = await cabinetDetailInfoApi(cabinetId);
+      prevCabinetNumberRef.current = cabinetNumber;
       setSelectedCabinet({ cabinetId, cabinetNumber });
       setSelectedStatus(response.status);
       setIsMyCabinet(response.isMine);
@@ -69,5 +73,6 @@ export const useCabinet = () => {
     fetchCabinetDetailInformation,
     username,
     setUsername,
+    prevCabinetNumberRef,
   };
 };
