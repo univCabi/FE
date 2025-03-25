@@ -11,3 +11,9 @@ export interface AdminListTableType extends BuildingFloorSingleData {
   reason: string | null;
   user: { studentNumber: number; name: string } | null;
 }
+
+export interface HistoryData extends BuildingFloorSingleData {
+  cabinetNumber: number;
+  startDate: string | null;
+  endDate: string | null;
+}

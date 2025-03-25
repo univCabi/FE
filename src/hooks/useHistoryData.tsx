@@ -1,14 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { throttle } from "lodash";
-import { BuildingFloorSingleData } from "@/types/CabinetType";
+import { HistoryData } from "@/types/ListType";
 import { log } from "@/utils/logger";
 import { userHistoryDataApi } from "@/api/userHistoryDataApi";
-
-interface HistoryData extends BuildingFloorSingleData {
-  cabinetNumber: number;
-  startDate: string | null;
-  endDate: string | null;
-}
 
 export const useHistoryData = () => {
   const [userHistoryData, setUserHistoryData] = useState<HistoryData[]>([]);

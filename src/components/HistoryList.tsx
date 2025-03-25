@@ -1,16 +1,8 @@
+import { HistoryData } from "@/types/ListType";
 import ListTableComponent from "./ListTableComponent";
 
-interface UserHistoryData {
-  building: string;
-  floor: number;
-  section: string;
-  cabinetNumber: number;
-  startDate: string | null;
-  endDate: string | null;
-}
-
 interface HistoryListProp {
-  userHistoryData: UserHistoryData[];
+  userHistoryData: HistoryData[];
   setObserverRef: (node: HTMLTableRowElement) => void;
   scrollLoading: boolean;
 }
