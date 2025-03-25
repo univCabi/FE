@@ -1,12 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { throttle } from "lodash";
+import { BuildingFloorSingleData } from "@/types/CabinetType";
 import { log } from "@/utils/logger";
 import { userHistoryDataApi } from "@/api/userHistoryDataApi";
 
-interface HistoryData {
-  building: string;
-  floor: number;
-  section: string;
+interface HistoryData extends BuildingFloorSingleData {
   cabinetNumber: number;
   startDate: string | null;
   endDate: string | null;
