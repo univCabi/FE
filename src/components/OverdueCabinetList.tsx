@@ -5,7 +5,6 @@ import { useOverdueCabinetListData } from "@/hooks/useOverdueCabinetListData";
 const OverdueCabinetList = () => {
   const { overdueCabinetData, setObserverRef, scrollLoading } =
     useOverdueCabinetListData();
-  console.log(overdueCabinetData);
   const columns = [
     {
       key: "user",
@@ -15,9 +14,9 @@ const OverdueCabinetList = () => {
       ) => {
         //studentNumber 타입을 가진 객체타입임을 명시
         if (value && typeof value === "object" && "studentNumber" in value) {
-          return value.studentNumber ?? "학번 없음";
+          return value.studentNumber ?? "학번 정보가 null 입니다";
         } else {
-          return "정보 없음";
+          return "user 정보가 없습니다";
         }
       },
     },
@@ -37,7 +36,7 @@ const OverdueCabinetList = () => {
             );
             return `${diffDate}일`;
           } else {
-            return "정보 없음";
+            return "날짜 정보가 없습니다";
           }
         }
       },
