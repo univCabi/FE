@@ -4,19 +4,23 @@ export interface BuildingData {
   section: string;
 }
 
-export interface CabinetData {
+export interface StatusData {
+  cabinetNumber: number;
+  id: number;
+  status: string;
+}
+
+export interface CabinetData extends StatusData {
   floor: number;
   section: string;
   building: string;
-  id: number;
-  cabinetNumber: number;
   cabinetXPos: number;
   cabinetYPos: number;
-  status: string;
   isVisible: boolean | null;
   username: string | null;
   isMine: boolean;
   expiredAt: string | null;
+  studentNumber: string;
 }
 
 export interface SelectedCabinet {
@@ -35,10 +39,8 @@ export interface CabinetInfo extends BuildingInfo {
 export interface SelectedCabinetInfo extends CabinetInfo {
   setSelectedCabinet: (cabinet: SelectedCabinet | null) => void;
   selectedStatus: string;
-  expiredAt: string | null;
   setSelectedStatus: (status: string) => void;
-  setExpiredAt: (expiredAt: string | null) => void;
-  setIsMyCabinet: (isMine: boolean) => void;
+  expiredAt: string | null;
 }
 
 export interface CabinetLayout extends BuildingInfo {
@@ -48,11 +50,4 @@ export interface CabinetLayout extends BuildingInfo {
     cabinetNumber: number;
   } | null;
   fetchCabinetDetailInformation: (id: number, cabientNumber: number) => void;
-}
-
-// admin 전용
-export interface SelectedMultiCabinetsData {
-  cabinetNumber: number;
-  id: number;
-  status: string;
 }

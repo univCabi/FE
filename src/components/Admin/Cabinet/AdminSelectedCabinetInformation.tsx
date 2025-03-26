@@ -1,20 +1,22 @@
-import {
-  SelectedCabinetInfo,
-  SelectedMultiCabinetsData,
-} from "@/types/CabinetType";
+import { SelectedCabinetInfo, StatusData } from "@/types/CabinetType";
+import { SelectedMultiCabinetsData } from "@/types/MultiCabinetType";
 import AdminCabinetInformationDisplay from "@/components/Admin/Cabinet/AdminCabinetInformationDisplay";
 import AdminStateManagementModal from "@/components/Admin/Cabinet/AdminStateManagementModal";
 import ConfirmModalView from "@/components/ConfirmModalView";
 import { useAdminCabinet } from "@/hooks/useAdminCabinet";
-import { useCabinetReturn } from "@/hooks/useCabinetReturn";
+import { useAdminReturn } from "@/hooks/useAdminReturn";
+import { useAdminStatus } from "@/hooks/useAdminStatus";
 import { useConfirmModalState } from "@/hooks/useConfirmModalState";
 import CabinetSVG from "@/icons/cabinet.svg?react";
 
 // 선택된 사물함 정보
-interface AdminSelectedCabinetInformationProps extends SelectedCabinetInfo {
-  selectedMultiCabinets: SelectedMultiCabinetsData[];
-  multiButtonActive: boolean;
+interface AdminSelectedCabinetInformationProps
+  extends SelectedCabinetInfo,
+    SelectedMultiCabinetsData {
   username: string | null;
+  setSelectedMultiCabinets: React.Dispatch<
+    React.SetStateAction<StatusData[] | null>
+  >;
 }
 
 const AdminSelectedCabinetInformation = ({
@@ -25,11 +27,10 @@ const AdminSelectedCabinetInformation = ({
   selectedStatus,
   setSelectedStatus,
   expiredAt,
-  setExpiredAt,
-  setIsMyCabinet,
   selectedMultiCabinets,
-  multiButtonActive,
+  isMultiButtonActive,
   username,
+  setSelectedMultiCabinets,
 }: AdminSelectedCabinetInformationProps) => {
   const { openReturnModal, setOpenReturnModal } = useConfirmModalState();
   const { openStateManagementModal, setOpenStateManagementModal } =
@@ -51,25 +52,29 @@ const AdminSelectedCabinetInformation = ({
   // 취소 버튼 -> 사물함 선택 해제
   const cancelButton = () => {
     setSelectedCabinet(null);
+    setSelectedMultiCabinets(null);
   };
 
-  // 상태관리 api 호출 함수
-  const fetchCabinetStateManage = () => {
-    console.log("상태관리 api 호출 함수");
-  };
-
-  const { fetchCabinetReturn } = useCabinetReturn({
+  const { fetchAdminCabinetReturn } = useAdminReturn({
     selectedCabinet,
+    selectedMultiCabinets,
     closeReturnModal,
+    selectedStatus,
     setSelectedStatus,
-    setExpiredAt,
-    setIsMyCabinet,
+    isMultiButtonActive,
+    setSelectedCabinet,
+    setSelectedMultiCabinets,
+  });
+  const { showsReturnButton, showsStatusManagementButton } = useAdminStatus({
+    isMultiButtonActive,
+    selectedMultiCabinets,
+    selectedStatus,
   });
 
   const cabinetNumbersSort =
-    multiButtonActive && selectedMultiCabinets.length > 0
+    isMultiButtonActive && selectedMultiCabinets?.length
       ? `\n${selectedMultiCabinets
-          .map((cabinet) => cabinet.cabinetNumber)
+          ?.map((cabinet) => cabinet.cabinetNumber)
           .sort((a, b) => a - b)
           .join(",")}번`
       : selectedCabinet?.cabinetNumber
@@ -80,14 +85,14 @@ const AdminSelectedCabinetInformation = ({
   return (
     <div className="absolute inset-y-0 right-0 w-80 pt-20 flex flex-col justify-center items-center bg-white border-l-2 border-gray-400">
       {selectedCabinet !== null &&
-      (multiButtonActive ? selectedMultiCabinets.length > 0 : true) ? (
+      (isMultiButtonActive ? selectedMultiCabinets?.length : true) ? (
         <>
           <AdminCabinetInformationDisplay
             selectedBuilding={selectedBuilding}
             selectedFloor={selectedFloor}
             selectedCabinet={selectedCabinet}
             selectedMultiCabinets={selectedMultiCabinets}
-            multiButtonActive={multiButtonActive}
+            isMultiButtonActive={isMultiButtonActive}
             clickedReturnButton={clickedReturnButton}
             clickedStateManagementButton={clickedStateManagementButton}
             cancelButton={cancelButton}
@@ -95,44 +100,31 @@ const AdminSelectedCabinetInformation = ({
             expiredAt={expiredAt}
             selectedStatus={selectedStatus}
           />
-          {selectedStatus === "USING" || selectedStatus === "OVERDUE" ? (
-            <>
-              {openReturnModal && (
-                <ConfirmModalView
-                  onClick={fetchCabinetReturn}
-                  setModalCancelState={setOpenReturnModal}
-                  title={`${
-                    multiButtonActive && selectedMultiCabinets.length > 0
-                      ? "일괄 반납 처리"
-                      : "반납 처리"
-                  }`}
-                  cabinetInfo={cabinetInformation}
-                  text={"이 사물함을 반납 처리하시겠습니까?"}
-                />
-              )}
-              {openStateManagementModal && (
-                <AdminStateManagementModal
-                  onClick={fetchCabinetStateManage}
-                  setModalCancelState={setOpenStateManagementModal}
-                  selectedStatus={selectedStatus}
-                  setSelectedStatus={setSelectedStatus}
-                  cabinetInfo={cabinetInformation}
-                />
-              )}
-            </>
-          ) : selectedStatus === "AVAILABLE" || selectedStatus === "BROKEN" ? (
-            <>
-              {openStateManagementModal && (
-                <AdminStateManagementModal
-                  onClick={fetchCabinetStateManage}
-                  setModalCancelState={setOpenStateManagementModal}
-                  selectedStatus={selectedStatus}
-                  setSelectedStatus={setSelectedStatus}
-                  cabinetInfo={cabinetInformation}
-                />
-              )}
-            </>
-          ) : null}
+          {showsReturnButton && openReturnModal && (
+            <ConfirmModalView
+              onClick={fetchAdminCabinetReturn}
+              setModalCancelState={setOpenReturnModal}
+              title={`${
+                isMultiButtonActive && selectedMultiCabinets?.length
+                  ? "일괄 반납 처리"
+                  : "반납 처리"
+              }`}
+              cabinetInfo={cabinetInformation}
+              text={"이 사물함을 반납 처리하시겠습니까?"}
+            />
+          )}
+          {(showsReturnButton || showsStatusManagementButton) &&
+            openStateManagementModal && (
+              <AdminStateManagementModal
+                setModalCancelState={setOpenStateManagementModal}
+                selectedStatus={selectedStatus}
+                setSelectedStatus={setSelectedStatus}
+                cabinetInfo={cabinetInformation}
+                selectedCabinet={selectedCabinet}
+                selectedMultiCabinets={selectedMultiCabinets}
+                isMultiButtonActive={isMultiButtonActive}
+              />
+            )}
         </>
       ) : (
         <>

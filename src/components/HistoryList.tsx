@@ -1,3 +1,4 @@
+import { formatDate } from "@/utils/formatDate";
 import ListTableComponent from "./ListTableComponent";
 
 interface UserHistoryData {
@@ -25,29 +26,13 @@ const HistoryList = ({
       key: "startDate",
       label: "대여일",
       render: (value: string | null) =>
-        value
-          ? new Date(value)
-              .toLocaleDateString("ko-kR", {
-                year: "numeric",
-                month: "2-digit",
-                day: "2-digit",
-              })
-              .replace(/\.$/, "")
-          : "날짜 정보를 불러올 수 없습니다.",
+        value ? formatDate(value) : "날짜 정보를 불러올 수 없습니다.",
     },
     {
       key: "endDate",
       label: "반납일",
       render: (value: string | null) =>
-        value
-          ? new Date(value)
-              .toLocaleDateString("ko-kR", {
-                year: "numeric",
-                month: "2-digit",
-                day: "2-digit",
-              })
-              .replace(/\.$/, "")
-          : "날짜 정보를 불러올 수 없습니다.",
+        value ? formatDate(value) : "날짜 정보를 불러올 수 없습니다.",
     },
   ];
   return (

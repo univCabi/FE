@@ -3,8 +3,9 @@ import { useCallback, useEffect } from "react";
 import {
   CabinetLayout,
   SelectedCabinet,
-  SelectedMultiCabinetsData,
+  StatusData,
 } from "@/types/CabinetType";
+import { SelectedMultiCabinetsData } from "@/types/MultiCabinetType";
 import AdminAllSelectButton from "@/components/Admin/Cabinet/AdminAllSelectButton";
 import CabinetStatusInformation from "@/components/Cabinet/CabinetStatusInformation";
 import CabinetButtonSkeleton from "@/components/Skeleton/CabinetButtonSkeleton";
@@ -13,31 +14,32 @@ import { useAdminCabinet } from "@/hooks/useAdminCabinet";
 import { useCabinet } from "@/hooks/useCabinet";
 import { useCabinetActivation } from "@/hooks/useCabinetActivation";
 
-interface AdminCabinetLayoutProps extends CabinetLayout {
-  selectedMultiCabinets: SelectedMultiCabinetsData[];
+interface AdminCabinetLayoutProps
+  extends CabinetLayout,
+    SelectedMultiCabinetsData {
+  selectedStatus: string;
   setSelectedMultiCabinets: React.Dispatch<
-    React.SetStateAction<SelectedMultiCabinetsData[]>
+    React.SetStateAction<StatusData[] | null>
   >;
-  multiButtonActive: boolean;
-  setMultiButtonActive: (value: boolean) => void;
-  selectedCabinet: SelectedCabinet | null;
+  setIsMultiButtonActive: (value: boolean) => void;
   setSelectedCabinet: (cabinet: SelectedCabinet | null) => void;
 }
 
 const AdminCabinetLayout = ({
   selectedBuilding,
   selectedFloor,
-  isMyCabinet,
   filteredCabinetDetail,
   fetchCabinetDetailInformation,
   selectedMultiCabinets,
   setSelectedMultiCabinets,
-  multiButtonActive,
-  setMultiButtonActive,
+  isMultiButtonActive,
+  setIsMultiButtonActive,
   setSelectedCabinet,
+  selectedStatus,
+  isMyCabinet,
 }: AdminCabinetLayoutProps) => {
   const { getStatusColor } = useCabinet();
-  const { cabinetData, loading } = useCabinetActivation({
+  const { cabinetData, loading, fetchCabinetData } = useCabinetActivation({
     selectedBuilding,
     selectedFloor,
     isMyCabinet,
@@ -47,42 +49,45 @@ const AdminCabinetLayout = ({
   // 복수선택기능 버튼 활성화
   const MultipleSelectButtonActive = useCallback(() => {
     {
-      multiButtonActive
-        ? setMultiButtonActive(false)
-        : setMultiButtonActive(true);
+      isMultiButtonActive
+        ? setIsMultiButtonActive(false)
+        : setIsMultiButtonActive(true);
     }
-  }, [multiButtonActive]);
+  }, [isMultiButtonActive]);
 
   const handleCabinetClick = (
     cabinetNumber: number,
     id: number,
     status: string,
   ) => {
-    const selectedMultiCabinet: SelectedMultiCabinetsData = {
+    const selectedMultiCabinet: StatusData = {
       cabinetNumber,
       id,
       status,
     };
-    if (!multiButtonActive) {
+
+    if (!isMultiButtonActive) {
       setSelectedMultiCabinets([selectedMultiCabinet]);
       return;
-    }
-    setSelectedMultiCabinets(
-      (prevSelectedCabinets) =>
-        prevSelectedCabinets.some(
+    } else {
+      setSelectedMultiCabinets((prevSelectedCabinets) => {
+        const currentSelection = prevSelectedCabinets ?? [];
+        const newSelection = currentSelection.some(
           (cabinet) => cabinet.cabinetNumber === cabinetNumber,
         )
-          ? prevSelectedCabinets.filter(
+          ? currentSelection.filter(
               (cabinet) => cabinet.cabinetNumber !== cabinetNumber,
             )
-          : [...prevSelectedCabinets, selectedMultiCabinet], // 선택되지 않은 경우 추가
-    );
+          : [...currentSelection, selectedMultiCabinet];
+        return newSelection;
+      });
+    }
   };
 
   // 전체선택
   const handleSelectAllCabinets = () => {
     if (checkedCabinet) {
-      setSelectedMultiCabinets([]);
+      setSelectedMultiCabinets(null);
     } else {
       setSelectedMultiCabinets(
         cabinetData.map((cabinet) => ({
@@ -96,12 +101,19 @@ const AdminCabinetLayout = ({
   };
 
   useEffect(() => {
-    setSelectedMultiCabinets([]); // 다중 선택 비활성화 시 초기화
+    setSelectedMultiCabinets(null);
     setSelectedCabinet(null);
-    if (!multiButtonActive) {
+    if (!isMultiButtonActive) {
       setCheckedCabinet(false);
     }
-  }, [multiButtonActive, selectedBuilding, selectedFloor]);
+  }, [isMultiButtonActive, selectedBuilding, selectedFloor]);
+
+  // Return, status 변경 시 cabinetCallApi 호출
+  useEffect(() => {
+    if (selectedBuilding !== null && selectedFloor !== null) {
+      fetchCabinetData(selectedBuilding, selectedFloor);
+    }
+  }, [selectedBuilding, selectedFloor, selectedStatus]);
 
   // 검색 결과에 해당하는 사물함이 있을 경우에만 실행
   useEffect(() => {
@@ -119,7 +131,7 @@ const AdminCabinetLayout = ({
         <SubmitAndNavigateButton
           text={"복수 선택 기능"}
           className={`flex-col mt-4 mr-3 w-28 h-8 border border-blue-600 rounded-md transition-all duration-150 z-10 ${
-            multiButtonActive
+            isMultiButtonActive
               ? "bg-blue-600 text-white"
               : "bg-white text-blue-600 hover:bg-blue-200"
           }`}
@@ -127,7 +139,7 @@ const AdminCabinetLayout = ({
         />
         <AdminAllSelectButton
           selectedMultiCabinets={selectedMultiCabinets}
-          multiButtonActive={multiButtonActive}
+          isMultiButtonActive={isMultiButtonActive}
           handleSelectAllCabinets={handleSelectAllCabinets}
           cabinetData={cabinetData}
         />
@@ -139,7 +151,7 @@ const AdminCabinetLayout = ({
         ) : (
           <div className="relative h-[30rem] overflow-scroll lg:w-[67rem] md:w-[80%] sm:w-[75%] w-[100%] z-10">
             {cabinetData.map((cabinet) => {
-              const isSelected = selectedMultiCabinets.some(
+              const isSelected = selectedMultiCabinets?.some(
                 (selected) => selected.cabinetNumber === cabinet.cabinetNumber,
               );
               return (
@@ -149,7 +161,7 @@ const AdminCabinetLayout = ({
                   ${
                     isSelected
                       ? `${getStatusColor(cabinet.status, cabinet.isMine)} opacity-100`
-                      : `${getStatusColor(cabinet.status, cabinet.isMine)} ${multiButtonActive ? "opacity-35" : ""}`
+                      : `${getStatusColor(cabinet.status, cabinet.isMine)} ${isMultiButtonActive ? "opacity-35" : ""}`
                   }
                   `}
                   style={{

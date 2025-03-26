@@ -23,17 +23,15 @@ const AdminMainPage = () => {
     selectedStatus,
     setSelectedStatus,
     expiredAt,
-    setExpiredAt,
-    isMyCabinet,
-    setIsMyCabinet,
     fetchCabinetDetailInformation,
     username,
+    isMyCabinet,
   } = useCabinet();
   const {
     selectedMultiCabinets,
     setSelectedMultiCabinets,
-    multiButtonActive,
-    setMultiButtonActive,
+    isMultiButtonActive,
+    setIsMultiButtonActive,
   } = useAdminCabinet();
 
   useEffect(() => {
@@ -74,15 +72,15 @@ const AdminMainPage = () => {
                   )?.building || null
                 }
                 selectedFloor={selectedFloor}
-                isMyCabinet={isMyCabinet as boolean}
+                selectedStatus={selectedStatus as string}
                 filteredCabinetDetail={filteredCabinetDetail}
                 fetchCabinetDetailInformation={fetchCabinetDetailInformation}
                 selectedMultiCabinets={selectedMultiCabinets}
                 setSelectedMultiCabinets={setSelectedMultiCabinets}
-                multiButtonActive={multiButtonActive}
-                setMultiButtonActive={setMultiButtonActive}
+                isMultiButtonActive={isMultiButtonActive}
+                setIsMultiButtonActive={setIsMultiButtonActive}
                 setSelectedCabinet={setSelectedCabinet}
-                selectedCabinet={selectedCabinet}
+                isMyCabinet={isMyCabinet as boolean}
               />
             </>
           )}
@@ -102,13 +100,12 @@ const AdminMainPage = () => {
               selectedCabinet={selectedCabinet}
               selectedStatus={selectedStatus as string}
               setSelectedStatus={setSelectedStatus}
-              setExpiredAt={setExpiredAt}
               setSelectedCabinet={setSelectedCabinet}
               expiredAt={expiredAt}
-              setIsMyCabinet={setIsMyCabinet}
               selectedMultiCabinets={selectedMultiCabinets}
-              multiButtonActive={multiButtonActive}
+              isMultiButtonActive={isMultiButtonActive}
               username={username}
+              setSelectedMultiCabinets={setSelectedMultiCabinets}
             />
           </div>
         )}
@@ -148,15 +145,15 @@ const AdminMainPage = () => {
                     )?.building || null
                   }
                   selectedFloor={selectedFloor}
-                  isMyCabinet={isMyCabinet as boolean}
+                  selectedStatus={selectedStatus as string}
                   filteredCabinetDetail={filteredCabinetDetail}
                   fetchCabinetDetailInformation={fetchCabinetDetailInformation}
                   selectedMultiCabinets={selectedMultiCabinets}
                   setSelectedMultiCabinets={setSelectedMultiCabinets}
-                  multiButtonActive={multiButtonActive}
-                  setMultiButtonActive={setMultiButtonActive}
+                  isMultiButtonActive={isMultiButtonActive}
+                  setIsMultiButtonActive={setIsMultiButtonActive}
                   setSelectedCabinet={setSelectedCabinet}
-                  selectedCabinet={selectedCabinet}
+                  isMyCabinet={isMyCabinet as boolean}
                 />
               </div>
             </>
@@ -176,13 +173,12 @@ const AdminMainPage = () => {
               selectedCabinet={selectedCabinet}
               selectedStatus={selectedStatus as string}
               setSelectedStatus={setSelectedStatus}
-              setExpiredAt={setExpiredAt}
               setSelectedCabinet={setSelectedCabinet}
               expiredAt={expiredAt}
-              setIsMyCabinet={setIsMyCabinet}
               selectedMultiCabinets={selectedMultiCabinets}
-              multiButtonActive={multiButtonActive}
+              isMultiButtonActive={isMultiButtonActive}
               username={username}
+              setSelectedMultiCabinets={setSelectedMultiCabinets}
             />
           </div>
         )}
