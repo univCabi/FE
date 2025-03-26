@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { SelectedMultiCabinetsData } from "@/types/MultiCabinetType";
 
-interface testProps extends SelectedMultiCabinetsData {
+interface useAdminStatusProps extends SelectedMultiCabinetsData {
   selectedStatus: string;
 }
 
@@ -9,7 +9,7 @@ export const useAdminStatus = ({
   isMultiButtonActive,
   selectedMultiCabinets,
   selectedStatus,
-}: testProps) => {
+}: useAdminStatusProps) => {
   const [selectedBrokenReason, setSelectedBrokenReason] = useState<
     string | null
   >(null); // 고장 이유 선택

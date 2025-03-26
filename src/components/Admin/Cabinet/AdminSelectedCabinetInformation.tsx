@@ -123,6 +123,8 @@ const AdminSelectedCabinetInformation = ({
                 selectedCabinet={selectedCabinet}
                 selectedMultiCabinets={selectedMultiCabinets}
                 isMultiButtonActive={isMultiButtonActive}
+                setSelectedCabinet={setSelectedCabinet}
+                setSelectedMultiCabinets={setSelectedMultiCabinets}
               />
             )}
         </>

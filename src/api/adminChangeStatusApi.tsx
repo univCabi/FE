@@ -1,14 +1,15 @@
 import api from "@/api/axiosInterceptApi";
 
 export const adminChangeStatusApi = async (
-  cabinetId: number,
+  cabinetId: number[],
   newStatus: string,
+  reason?: string | null,
 ) => {
   try {
-    // TODO: cabinetId -> array 형태로 변경 예정
     const response = await api.post("/cabinet/admin/change/status", {
       cabinetId,
       newStatus,
+      reason,
     });
     if (response.status === 200) {
       return {

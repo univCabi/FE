@@ -1,6 +1,7 @@
-import { SelectedCabinet } from "@/types/CabinetType";
+import { SelectedCabinet, StatusData } from "@/types/CabinetType";
 import { SelectedMultiCabinetsData } from "@/types/MultiCabinetType";
 import { CabinetStatus, CabinetStatusType } from "@/types/StatusEnum";
+import { log } from "@/utils/logger";
 import { adminChangeStatusApi } from "@/api/adminChangeStatusApi";
 import SubmitAndNavigateButton from "@/components/SubmitAndNavigateButton";
 import { useAdminStatus } from "@/hooks/useAdminStatus";
@@ -13,6 +14,10 @@ interface HandleModalProps extends SelectedMultiCabinetsData {
   setSelectedStatus: (status: string) => void;
   cabinetInfo?: string;
   selectedCabinet: SelectedCabinet;
+  setSelectedCabinet: (cabinet: SelectedCabinet | null) => void;
+  setSelectedMultiCabinets: React.Dispatch<
+    React.SetStateAction<StatusData[] | null>
+  >;
 }
 
 const AdminStateManagementModal = ({
@@ -23,6 +28,8 @@ const AdminStateManagementModal = ({
   selectedCabinet,
   isMultiButtonActive,
   selectedMultiCabinets,
+  setSelectedCabinet,
+  setSelectedMultiCabinets,
 }: HandleModalProps) => {
   const { selectedBrokenReason, handleReasonClick } = useAdminStatus({
     isMultiButtonActive,
@@ -44,27 +51,44 @@ const AdminStateManagementModal = ({
 
   // 상태관리 함수
   const handleStatusChange = (status: string) => {
-    setSelectedStatus(status);
+    setSelectedStatus(status); // FIXME: 얘때문에 드롭다운 선택하자마자 cabinetData 리렌더링
     setIsDropdownOpen(false);
   };
 
   const fetchAdminChangeStatus = async (
-    cabinetId: number,
     newStatus: CabinetStatusType,
+    reason: string | null,
   ) => {
+    const cabinetIds: number[] = isMultiButtonActive
+      ? (selectedMultiCabinets?.map((cabinet) => cabinet.id) ?? [])
+      : selectedCabinet
+        ? [selectedCabinet.cabinetId]
+        : [];
     try {
-      const response = await adminChangeStatusApi(cabinetId, newStatus);
+      const response = await adminChangeStatusApi(
+        cabinetIds,
+        newStatus,
+        reason,
+      );
       if (response) {
-        setSelectedStatus(response.data.status);
-        setIsDropdownOpen(false);
-        console.log("상태 변경 성공", response);
+        setSelectedStatus(response.data.cabinets.status);
+        setSelectedMultiCabinets(null);
+        setSelectedCabinet(null);
+        setModalCancelState(false);
+        log.info(
+          `API 호출 성공: adminChangeStatusApi, ${JSON.stringify(response, null, 2)}`,
+        );
+        return response.data;
+      } else {
       }
     } catch (error) {
-      console.log(error);
+      log.error("API 호출 중 에러 발생: adminChangeStatusApi");
     }
   };
-  const handleSave = () => {
-    console.log("상태 저장");
+
+  const handleSave = (newStatus: CabinetStatusType, reason: string | null) => {
+    fetchAdminChangeStatus(newStatus, reason);
+    console.log("저장");
   };
 
   return (
@@ -110,26 +134,33 @@ const AdminStateManagementModal = ({
               </div>
             </div>
           </div>
+
           <div className="flex flex-col w-72">
             <p className="mt-5 mb-2 text-left">고장 이유</p>
             <div className="flex flex-row justify-between items-center">
+              {/* FIXME: 아래 코드 추상화 가능하면 추상화하기 (reason 추가되면 유지보수 벅참띠) */}
+
               <SubmitAndNavigateButton
                 text={"잠금"}
-                className={`w-32 h-10 border text-blue-600 border-blue-600 rounded-lg hover:bg-blue-300 ${
-                  selectedBrokenReason === "잠금"
-                    ? "bg-blue-600 text-white"
-                    : ""
-                }`}
+                className={`w-32 h-10 border rounded-lg ${
+                  selectedStatus === CabinetStatus.BROKEN
+                    ? "text-blue-600 border-blue-600 hover:bg-blue-300"
+                    : "text-gray-400 border-gray-400 disabled"
+                } ${selectedBrokenReason === "잠금" ? "bg-blue-600 text-white" : ""}
+                    `}
                 onClick={() => handleReasonClick("잠금")}
+                disabled={selectedStatus !== CabinetStatus.BROKEN}
               />
               <SubmitAndNavigateButton
                 text={"파손"}
-                className={`w-32 h-10 border text-blue-600 border-blue-600 rounded-lg hover:bg-blue-300 ${
-                  selectedBrokenReason === "파손"
-                    ? "bg-blue-600 text-white"
-                    : ""
-                }`}
+                className={`w-32 h-10 border rounded-lg ${
+                  selectedStatus === CabinetStatus.BROKEN
+                    ? "text-blue-600 border-blue-600 hover:bg-blue-300"
+                    : "text-gray-400 border-gray-400 disabled"
+                } ${selectedBrokenReason === "파손" ? "bg-blue-600 text-white" : ""}
+                    `}
                 onClick={() => handleReasonClick("파손")}
+                disabled={selectedStatus !== CabinetStatus.BROKEN}
               />
             </div>
           </div>
@@ -137,7 +168,12 @@ const AdminStateManagementModal = ({
         <div className="mt-5 flex justify-center">
           <button
             className="mr-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-500"
-            onClick={handleSave}
+            onClick={() =>
+              fetchAdminChangeStatus(
+                selectedStatus as CabinetStatusType,
+                selectedBrokenReason,
+              )
+            }
           >
             저장
           </button>
