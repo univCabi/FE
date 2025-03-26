@@ -14,12 +14,18 @@ const AdminInfoChart = () => {
 
       <div className="flex justify-center gap-32 w-full">
         {/* 연체 사물함 */}
-        <div className="w-1/2 p-4">
-          <OverdueCabinetList></OverdueCabinetList>
+        <div className="w-2/5 p-4">
+          <p className="font-bold text-2xl">연체 사물함</p>
+          <div className=" border-collapse bg-gray-100 mt-3 border rounded-xl overflow-y-auto hidden-scrollbar shadow-lg">
+            <OverdueCabinetList></OverdueCabinetList>
+          </div>
         </div>
         {/* 고장 사물함 */}
-        <div className="w-1/2 p-4">
-          <BrokenCabinetList></BrokenCabinetList>
+        <div className="w-2/5 p-4">
+          <p className="font-bold text-2xl">고장 사물함</p>
+          <div className=" border-collapse bg-gray-100 mt-3 border rounded-xl overflow-y-auto hidden-scrollbar shadow-lg">
+            <BrokenCabinetList></BrokenCabinetList>
+          </div>
         </div>
       </div>
     </div>
