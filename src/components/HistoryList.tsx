@@ -1,5 +1,5 @@
 import { HistoryData } from "@/types/ListType";
-import ListTableComponent from "./ListTableComponent";
+import ListTableComponent from "@/components/ListTableComponent";
 
 interface HistoryListProp {
   userHistoryData: HistoryData[];
@@ -16,7 +16,7 @@ const HistoryList = ({
     {
       key: "startDate",
       label: "대여일",
-      render: (value: string | null) =>
+      render: (value: HistoryData[keyof HistoryData]) =>
         value
           ? new Date(value)
               .toLocaleDateString("ko-kR", {
@@ -30,7 +30,7 @@ const HistoryList = ({
     {
       key: "endDate",
       label: "반납일",
-      render: (value: string | null) =>
+      render: (value: HistoryData[keyof HistoryData]) =>
         value
           ? new Date(value)
               .toLocaleDateString("ko-kR", {
