@@ -1,7 +1,11 @@
 // 사물함 배열 관련
-import { useCallback, useEffect, useMemo, useRef } from "react";
-import { MultiCabinet, SelectedMultiCabinetsData } from "@/types/AdminType";
-import { CabinetLayout, SelectedCabinet } from "@/types/CabinetType";
+import { useCallback, useEffect } from "react";
+import {
+  CabinetLayout,
+  SelectedCabinet,
+  StatusData,
+} from "@/types/CabinetType";
+import { SelectedMultiCabinetsData } from "@/types/MultiCabinetType";
 import AdminAllSelectButton from "@/components/Admin/Cabinet/AdminAllSelectButton";
 import CabinetStatusInformation from "@/components/Cabinet/CabinetStatusInformation";
 import CabinetButtonSkeleton from "@/components/Skeleton/CabinetButtonSkeleton";
@@ -10,10 +14,12 @@ import { useAdminCabinet } from "@/hooks/useAdminCabinet";
 import { useCabinet } from "@/hooks/useCabinet";
 import { useCabinetActivation } from "@/hooks/useCabinetActivation";
 
-interface AdminCabinetLayoutProps extends CabinetLayout, MultiCabinet {
+interface AdminCabinetLayoutProps
+  extends CabinetLayout,
+    SelectedMultiCabinetsData {
   selectedStatus: string;
   setSelectedMultiCabinets: React.Dispatch<
-    React.SetStateAction<SelectedMultiCabinetsData[] | null>
+    React.SetStateAction<StatusData[] | null>
   >;
   setIsMultiButtonActive: (value: boolean) => void;
   setSelectedCabinet: (cabinet: SelectedCabinet | null) => void;
@@ -38,9 +44,7 @@ const AdminCabinetLayout = ({
     selectedFloor,
     isMyCabinet,
   });
-  const { checkedCabinet, setCheckedCabinet } = useAdminCabinet({
-    selectedStatus,
-  });
+  const { checkedCabinet, setCheckedCabinet } = useAdminCabinet();
 
   // 복수선택기능 버튼 활성화
   const MultipleSelectButtonActive = useCallback(() => {
@@ -56,7 +60,7 @@ const AdminCabinetLayout = ({
     id: number,
     status: string,
   ) => {
-    const selectedMultiCabinet: SelectedMultiCabinetsData = {
+    const selectedMultiCabinet: StatusData = {
       cabinetNumber,
       id,
       status,

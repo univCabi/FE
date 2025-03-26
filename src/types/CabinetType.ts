@@ -4,15 +4,18 @@ export interface BuildingData {
   section: string;
 }
 
-export interface CabinetData {
+export interface StatusData {
+  cabinetNumber: number;
+  id: number;
+  status: string;
+}
+
+export interface CabinetData extends StatusData {
   floor: number;
   section: string;
   building: string;
-  id: number;
-  cabinetNumber: number;
   cabinetXPos: number;
   cabinetYPos: number;
-  status: string;
   isVisible: boolean | null;
   username: string | null;
   isMine: boolean;
@@ -36,8 +39,8 @@ export interface CabinetInfo extends BuildingInfo {
 export interface SelectedCabinetInfo extends CabinetInfo {
   setSelectedCabinet: (cabinet: SelectedCabinet | null) => void;
   selectedStatus: string;
-  expiredAt: string | null;
   setSelectedStatus: (status: string) => void;
+  expiredAt: string | null;
 }
 
 export interface CabinetLayout extends BuildingInfo {

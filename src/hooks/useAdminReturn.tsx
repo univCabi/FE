@@ -1,17 +1,17 @@
 // Admin Return API 호출
-import { MultiCabinet, SelectedMultiCabinetsData } from "@/types/AdminType";
-import { SelectedCabinet } from "@/types/CabinetType";
+import { SelectedCabinet, StatusData } from "@/types/CabinetType";
+import { SelectedMultiCabinetsData } from "@/types/MultiCabinetType";
 import { log } from "@/utils/logger";
 import { adminReturnApi } from "@/api/adminReturnApi";
 
-interface AdminReturnProps extends MultiCabinet {
+interface AdminReturnProps extends SelectedMultiCabinetsData {
   closeReturnModal: () => void;
   selectedStatus: string;
   setSelectedStatus: (status: string) => void;
   selectedCabinet: SelectedCabinet | null;
   setSelectedCabinet: (cabinet: SelectedCabinet | null) => void;
   setSelectedMultiCabinets: React.Dispatch<
-    React.SetStateAction<SelectedMultiCabinetsData[] | null>
+    React.SetStateAction<StatusData[] | null>
   >;
 }
 

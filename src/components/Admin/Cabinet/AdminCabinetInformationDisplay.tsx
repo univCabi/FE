@@ -1,19 +1,19 @@
-import { MultiCabinet } from "@/types/AdminType";
 import { CabinetInfo } from "@/types/CabinetType";
+import { SelectedMultiCabinetsData } from "@/types/MultiCabinetType";
 import { formatDate } from "@/utils/formatDate";
 import CabinetActionButtons from "@/components/Cabinet/CabinetActionButtons";
+import { useAdminStatus } from "@/hooks/useAdminStatus";
 import CabinetSVG from "@/icons/cabinet.svg?react";
 
 interface AdminCabinetInformationDisplayProps
   extends CabinetInfo,
-    MultiCabinet {
+    SelectedMultiCabinetsData {
   username: string | null;
   clickedReturnButton: () => void;
   clickedStateManagementButton: () => void;
   cancelButton: () => void;
   expiredAt: string | null;
-  hasUsingOrOverdue: boolean;
-  hasAvailableOrBroken: boolean;
+  selectedStatus: string;
 }
 
 const AdminCabinetInformationDisplay = ({
@@ -27,9 +27,13 @@ const AdminCabinetInformationDisplay = ({
   clickedReturnButton,
   clickedStateManagementButton,
   cancelButton,
-  hasUsingOrOverdue,
-  hasAvailableOrBroken,
+  selectedStatus,
 }: AdminCabinetInformationDisplayProps) => {
+  const { showsReturnButton, showsStatusManagementButton } = useAdminStatus({
+    isMultiButtonActive,
+    selectedMultiCabinets,
+    selectedStatus,
+  });
   return (
     <>
       <div className="text-center w-[17rem]">
@@ -54,7 +58,7 @@ const AdminCabinetInformationDisplay = ({
       </div>
 
       {/* selectedMultCabinets 배열에 데이터에서 using or overude가 있고, available or broken이 하나라도 없다면 반납 버튼 활성화 */}
-      {hasUsingOrOverdue && !hasAvailableOrBroken && (
+      {showsReturnButton && !showsStatusManagementButton && (
         <>
           <CabinetActionButtons
             onReturnClick={clickedReturnButton}
@@ -79,7 +83,7 @@ const AdminCabinetInformationDisplay = ({
       )}
 
       {/* selectedMultCabinets 배열에 데이터에서 available or broken이 하나라도 있으면 상태관리 버튼만 활성화 */}
-      {hasAvailableOrBroken && (
+      {showsStatusManagementButton && (
         <CabinetActionButtons
           onStateManagementClick={clickedStateManagementButton}
           onCancelClick={cancelButton}

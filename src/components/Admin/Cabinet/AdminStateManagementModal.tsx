@@ -1,22 +1,18 @@
 import { SelectedCabinet } from "@/types/CabinetType";
+import { SelectedMultiCabinetsData } from "@/types/MultiCabinetType";
+import { CabinetStatus, CabinetStatusType } from "@/types/StatusEnum";
 import { adminChangeStatusApi } from "@/api/adminChangeStatusApi";
 import SubmitAndNavigateButton from "@/components/SubmitAndNavigateButton";
-import { useAdminCabinet } from "@/hooks/useAdminCabinet";
+import { useAdminStatus } from "@/hooks/useAdminStatus";
 import { useBuildingState } from "@/hooks/useBuildingState";
 import AngleDownSVG from "@/icons/angleDown.svg?react";
 
-interface HandleModalProps {
+interface HandleModalProps extends SelectedMultiCabinetsData {
   setModalCancelState: React.Dispatch<React.SetStateAction<boolean>>;
   selectedStatus: string;
   setSelectedStatus: (status: string) => void;
   cabinetInfo?: string;
   selectedCabinet: SelectedCabinet;
-}
-export enum CabinetStatus {
-  AVAILABLE = "AVAILABLE",
-  USING = "USING",
-  BROKEN = "BROKEN",
-  OVERDUE = "OVERDUE",
 }
 
 const AdminStateManagementModal = ({
@@ -25,10 +21,15 @@ const AdminStateManagementModal = ({
   setSelectedStatus,
   cabinetInfo,
   selectedCabinet,
+  isMultiButtonActive,
+  selectedMultiCabinets,
 }: HandleModalProps) => {
-  const { selectedBrokenReason, handleReasonClick } = useAdminCabinet({
+  const { selectedBrokenReason, handleReasonClick } = useAdminStatus({
+    isMultiButtonActive,
+    selectedMultiCabinets,
     selectedStatus,
   });
+
   const { isDropdownOpen, setIsDropdownOpen, dropdownOutsideRef } =
     useBuildingState();
 
@@ -49,7 +50,7 @@ const AdminStateManagementModal = ({
 
   const fetchAdminChangeStatus = async (
     cabinetId: number,
-    newStatus: CabinetStatus,
+    newStatus: CabinetStatusType,
   ) => {
     try {
       const response = await adminChangeStatusApi(cabinetId, newStatus);

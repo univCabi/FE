@@ -1,9 +1,9 @@
 // 전체선택 checkbox 컴포넌트
 import React from "react";
-import { MultiCabinet } from "@/types/AdminType";
 import { CabinetData } from "@/types/CabinetType";
+import { SelectedMultiCabinetsData } from "@/types/MultiCabinetType";
 
-interface AdminAllSelectButtonProps extends MultiCabinet {
+interface AdminAllSelectButtonProps extends SelectedMultiCabinetsData {
   handleSelectAllCabinets: () => void;
   cabinetData: CabinetData[];
 }

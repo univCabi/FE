@@ -32,9 +32,7 @@ const AdminMainPage = () => {
     setSelectedMultiCabinets,
     isMultiButtonActive,
     setIsMultiButtonActive,
-    hasUsingOrOverdue,
-    hasAvailableOrBroken,
-  } = useAdminCabinet({ selectedStatus });
+  } = useAdminCabinet();
 
   useEffect(() => {
     if (location.state?.selectedBuilding) {
@@ -108,8 +106,6 @@ const AdminMainPage = () => {
               isMultiButtonActive={isMultiButtonActive}
               username={username}
               setSelectedMultiCabinets={setSelectedMultiCabinets}
-              hasUsingOrOverdue={hasUsingOrOverdue}
-              hasAvailableOrBroken={hasAvailableOrBroken}
             />
           </div>
         )}
@@ -183,8 +179,6 @@ const AdminMainPage = () => {
               isMultiButtonActive={isMultiButtonActive}
               username={username}
               setSelectedMultiCabinets={setSelectedMultiCabinets}
-              hasUsingOrOverdue={hasUsingOrOverdue}
-              hasAvailableOrBroken={hasAvailableOrBroken}
             />
           </div>
         )}
