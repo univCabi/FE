@@ -1,6 +1,6 @@
-import BrokenCabinetList from "../BrokenCabinetList";
-import OverdueCabinetList from "../OverdueCabinetList";
-import CabinetBarChart from "./CabinetBarChart";
+import CabinetBarChart from "@/components/Admin/CabinetBarChart";
+import BrokenCabinetList from "@/components/Admin/List/BrokenCabinetList";
+import OverdueCabinetList from "@/components/Admin/List/OverdueCabinetList";
 
 const AdminInfoChart = () => {
   return (

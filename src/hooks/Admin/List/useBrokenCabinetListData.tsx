@@ -14,7 +14,7 @@ export const useBrokenCabinetListData = () => {
   const [lastElement, setLastElement] = useState<HTMLTableRowElement | null>(
     null,
   );
-  const [scrollLoading, setScrollLoading] = useState<boolean>(false);
+  const [isScrollLoading, setIsScrollLoading] = useState<boolean>(false);
   const status: CabinetStatusType = "BROKEN";
   const pageSize: number = 5;
   const scrollPendingTime: number = 800;
@@ -42,7 +42,7 @@ export const useBrokenCabinetListData = () => {
       } catch (error) {
         log.error("API 호출 중 에러 발생: adminCabinetStatusListApi");
       } finally {
-        setScrollLoading(false);
+        setIsScrollLoading(false);
       }
     };
     if (hasMoreResults) fetchOverdueCabinetData();
@@ -52,7 +52,7 @@ export const useBrokenCabinetListData = () => {
     if (!lastElement) return;
     const observer = new IntersectionObserver(
       throttle((entries) => {
-        setScrollLoading(true);
+        setIsScrollLoading(true);
         if (entries[0].isIntersecting && hasMoreResults) {
           setPage((prev) => prev + 1);
         }
@@ -67,5 +67,5 @@ export const useBrokenCabinetListData = () => {
     setLastElement(node);
   }, []);
 
-  return { brokenCabinetData, setObserverRef, scrollLoading };
+  return { brokenCabinetData, setObserverRef, isScrollLoading };
 };

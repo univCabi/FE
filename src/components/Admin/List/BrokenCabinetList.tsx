@@ -1,15 +1,15 @@
-import { AdminListTableType } from "@/types/ListType";
+import { AdminListTableTypeValue } from "@/types/ListType";
 import ListTableComponent from "@/components/ListTableComponent";
-import { useBrokenCabinetListData } from "@/hooks/useBrokenCabinetListData";
+import { useBrokenCabinetListData } from "@/hooks/Admin/List/useBrokenCabinetListData";
 
 const BrokenCabinetList = () => {
-  const { brokenCabinetData, setObserverRef, scrollLoading } =
+  const { brokenCabinetData, setObserverRef, isScrollLoading } =
     useBrokenCabinetListData();
   const columns = [
     {
       key: "brokenDate",
       label: "고장일",
-      render: (value: AdminListTableType[keyof AdminListTableType]) =>
+      render: (value: AdminListTableTypeValue) =>
         value
           ? new Date(value as string | number)
               .toLocaleDateString("ko-kR", {
@@ -23,7 +23,7 @@ const BrokenCabinetList = () => {
     {
       key: "reason",
       label: "고장 원인",
-      render: (value: AdminListTableType[keyof AdminListTableType]) => {
+      render: (value: AdminListTableTypeValue) => {
         return value ? (value as string) : "고장 정보가 없습니다";
       },
     },
@@ -33,7 +33,7 @@ const BrokenCabinetList = () => {
       columns={columns}
       data={brokenCabinetData}
       setObserverRef={setObserverRef}
-      scrollLoading={scrollLoading}
+      isScrollLoading={isScrollLoading}
       theadClassName="text-xl"
       thClassName="p-5"
       tdClassName="p-5"

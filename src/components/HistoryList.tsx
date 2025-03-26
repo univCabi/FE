@@ -4,13 +4,13 @@ import ListTableComponent from "@/components/ListTableComponent";
 interface HistoryListProp {
   userHistoryData: HistoryData[];
   setObserverRef: (node: HTMLTableRowElement) => void;
-  scrollLoading: boolean;
+  isScrollLoading: boolean;
 }
 
 const HistoryList = ({
   userHistoryData,
   setObserverRef,
-  scrollLoading,
+  isScrollLoading,
 }: HistoryListProp) => {
   const columns = [
     {
@@ -47,7 +47,7 @@ const HistoryList = ({
       columns={columns}
       data={userHistoryData}
       setObserverRef={setObserverRef}
-      scrollLoading={scrollLoading}
+      isScrollLoading={isScrollLoading}
       theadClassName="text-xl"
       thClassName="p-5"
       tdClassName="p-5"

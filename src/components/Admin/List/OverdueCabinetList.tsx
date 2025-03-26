@@ -1,16 +1,16 @@
-import { AdminListTableType } from "@/types/ListType";
+import { AdminListTableTypeValue } from "@/types/ListType";
 import ListTableComponent from "@/components/ListTableComponent";
-import { useOverdueCabinetListData } from "@/hooks/useOverdueCabinetListData";
+import { useOverdueCabinetListData } from "@/hooks/Admin/List/useOverdueCabinetListData";
 
 const OverdueCabinetList = () => {
-  const { overdueCabinetData, setObserverRef, scrollLoading } =
+  const { overdueCabinetData, setObserverRef, isScrollLoading } =
     useOverdueCabinetListData();
   const columns = [
     {
       key: "user",
       label: "사용자 학번",
       render: (
-        value: AdminListTableType[keyof AdminListTableType], //모든 타입을 유니온으로 묶음
+        value: AdminListTableTypeValue, //모든 타입을 유니온으로 묶음
       ) => {
         //studentNumber 타입을 가진 객체타입임을 명시
         if (value && typeof value === "object" && "studentNumber" in value) {
@@ -23,7 +23,7 @@ const OverdueCabinetList = () => {
     {
       key: "overDate",
       label: "연체일",
-      render: (value: AdminListTableType[keyof AdminListTableType]) => {
+      render: (value: AdminListTableTypeValue) => {
         {
           if (
             value &&
@@ -47,7 +47,7 @@ const OverdueCabinetList = () => {
       columns={columns}
       data={overdueCabinetData}
       setObserverRef={setObserverRef}
-      scrollLoading={scrollLoading}
+      isScrollLoading={isScrollLoading}
       theadClassName="text-xl"
       thClassName="p-5"
       tdClassName="p-5"

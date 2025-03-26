@@ -17,7 +17,7 @@ interface ListTableProps<T> {
   columns: Column<T>[];
   data: T[];
   setObserverRef: (node: HTMLTableRowElement) => void;
-  scrollLoading: boolean;
+  isScrollLoading: boolean;
   theadClassName: string;
   thClassName: string;
   tdClassName: string;
@@ -27,7 +27,7 @@ const ListTableComponent = <T,>({
   columns,
   data,
   setObserverRef,
-  scrollLoading,
+  isScrollLoading,
   theadClassName,
   thClassName,
   tdClassName,
@@ -69,7 +69,7 @@ const ListTableComponent = <T,>({
             ))}
           </tr>
         ))}
-        {scrollLoading && (
+        {isScrollLoading && (
           <div className="flex justify-center bg-white items-center">
             <LogoSVG className="animate-spin" />
           </div>

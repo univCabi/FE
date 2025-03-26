@@ -15,6 +15,9 @@ export interface AdminListTableType extends BuildingFloorSingleData {
   brokenDate?: string | null;
 }
 
+export type AdminListTableTypeValue =
+  AdminListTableType[keyof AdminListTableType];
+
 export interface HistoryData extends BuildingFloorSingleData {
   cabinetNumber: number;
   startDate: string | null;

@@ -3,7 +3,7 @@ import HistoryList from "@/components/HistoryList";
 import { useHistoryData } from "@/hooks/useHistoryData";
 
 const HistoryPage = () => {
-  const { userHistoryData, setObserverRef, scrollLoading } = useHistoryData();
+  const { userHistoryData, setObserverRef, isScrollLoading } = useHistoryData();
 
   return (
     <div className="relative h-screen flex flex-col">
@@ -28,7 +28,7 @@ const HistoryPage = () => {
             <HistoryList
               userHistoryData={userHistoryData}
               setObserverRef={setObserverRef}
-              scrollLoading={scrollLoading}
+              isScrollLoading={isScrollLoading}
             />
           </div>
         </main>
