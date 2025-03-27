@@ -1,4 +1,5 @@
 import { AdminListTableTypeValue } from "@/types/ListType";
+import { formatDate } from "@/utils/formatDate";
 import ListTableComponent from "@/components/ListTableComponent";
 import { useBrokenCabinetListData } from "@/hooks/Admin/List/useBrokenCabinetListData";
 
@@ -10,15 +11,7 @@ const BrokenCabinetList = () => {
       key: "brokenDate",
       label: "고장일",
       render: (value: AdminListTableTypeValue) =>
-        value
-          ? new Date(value as string | number)
-              .toLocaleDateString("ko-kR", {
-                year: "numeric",
-                month: "2-digit",
-                day: "2-digit",
-              })
-              .replace(/\.$/, "")
-          : "날짜 정보가 없습니다",
+        value ? formatDate(value as string) : "날짜 정보가 없습니다",
     },
     {
       key: "reason",

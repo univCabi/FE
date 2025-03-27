@@ -1,15 +1,6 @@
+import { CabinetStatusType } from "@/types/StatusEnum";
 import axios from "@/api/axiosInterceptApi";
 
-// 나중에 주희님 타입으로 고쳐야함
-const CabinetStatus = {
-  AVAILABLE: "AVAILABLE",
-  USING: "USING",
-  BROKEN: "BROKEN",
-  OVERDUE: "OVERDUE",
-} as const;
-// 이것도
-export type CabinetStatusType =
-  (typeof CabinetStatus)[keyof typeof CabinetStatus];
 export const adminCabinetStatusListApi = async (
   status: CabinetStatusType,
   page: number,

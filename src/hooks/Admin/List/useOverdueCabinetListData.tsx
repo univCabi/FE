@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import { throttle } from "lodash";
 import { AdminListTableType } from "@/types/ListType";
+import { CabinetStatusType } from "@/types/StatusEnum";
 import { log } from "@/utils/logger";
 import { adminCabinetStatusListApi } from "@/api/adminCabinetStatusListApi";
-import { CabinetStatusType } from "@/api/adminCabinetStatusListApi";
 
 export const useOverdueCabinetListData = () => {
   const [overdueCabinetData, setOverdueCabinetData] = useState<

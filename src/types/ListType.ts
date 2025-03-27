@@ -1,4 +1,5 @@
 import { BuildingFloorSingleData } from "@/types/CabinetType";
+import { CabinetStatusType } from "@/types/StatusEnum";
 
 export interface AdminListTableType extends BuildingFloorSingleData {
   id: number;
@@ -7,7 +8,7 @@ export interface AdminListTableType extends BuildingFloorSingleData {
     y: number;
   };
   cabinetNumber: number;
-  status: "AVAILABLE" | "OVERDUE" | "USING" | "BROKEN"; // 이것도 바꿔야 함!!
+  status: CabinetStatusType;
   reason: string | null;
   user: { studentNumber: number; name: string } | null;
   rentalStartDate?: string | null;
@@ -17,6 +18,8 @@ export interface AdminListTableType extends BuildingFloorSingleData {
 
 export type AdminListTableTypeValue =
   AdminListTableType[keyof AdminListTableType];
+
+export type HistoryDataTypeValue = HistoryData[keyof HistoryData];
 
 export interface HistoryData extends BuildingFloorSingleData {
   cabinetNumber: number;
