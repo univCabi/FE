@@ -1,25 +1,18 @@
-import { formatDate } from "@/utils/formatDate";
-import ListTableComponent from "./ListTableComponent";
 
-interface UserHistoryData {
-  building: string;
-  floor: number;
-  section: string;
-  cabinetNumber: number;
-  startDate: string | null;
-  endDate: string | null;
-}
+import { HistoryData } from "@/types/ListType";
+import ListTableComponent from "@/components/ListTableComponent";
+import { formatDate } from "@/utils/formatDate";
 
 interface HistoryListProp {
-  userHistoryData: UserHistoryData[];
+  userHistoryData: HistoryData[];
   setObserverRef: (node: HTMLTableRowElement) => void;
-  scrollLoading: boolean;
+  isScrollLoading: boolean;
 }
 
 const HistoryList = ({
   userHistoryData,
   setObserverRef,
-  scrollLoading,
+  isScrollLoading,
 }: HistoryListProp) => {
   const columns = [
     {
@@ -40,7 +33,7 @@ const HistoryList = ({
       columns={columns}
       data={userHistoryData}
       setObserverRef={setObserverRef}
-      scrollLoading={scrollLoading}
+      isScrollLoading={isScrollLoading}
       theadClassName="text-xl"
       thClassName="p-5"
       tdClassName="p-5"

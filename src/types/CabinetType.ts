@@ -4,23 +4,26 @@ export interface BuildingData {
   section: string;
 }
 
+export interface BuildingFloorSingleData extends Omit<BuildingData, "floor"> {
+  floor: number;
+}
+
 export interface StatusData {
   cabinetNumber: number;
   id: number;
   status: string;
 }
 
-export interface CabinetData extends StatusData {
-  floor: number;
-  section: string;
-  building: string;
+export interface CabinetData extends BuildingFloorSingleData {
+  id: number;
+  cabinetNumber: number;
   cabinetXPos: number;
   cabinetYPos: number;
+  status: string;
   isVisible: boolean | null;
   username: string | null;
   isMine: boolean;
   expiredAt: string | null;
-  studentNumber: string;
 }
 
 export interface SelectedCabinet {
@@ -43,7 +46,7 @@ export interface SelectedCabinetInfo extends CabinetInfo {
   expiredAt: string | null;
 }
 
-export interface CabinetLayout extends BuildingInfo {
+export interface CabinetButtonLayoutProps extends BuildingInfo {
   isMyCabinet: boolean;
   filteredCabinetDetail: {
     id: number;

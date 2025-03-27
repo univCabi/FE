@@ -1,9 +1,9 @@
 import LogoSVG from "@/icons/cabiLogo.svg?react";
 
-interface Column {
+interface Column<T, K extends keyof T = keyof T> {
   key: string;
   label: string;
-  render: (value: string | null) => JSX.Element | string;
+  render: (value: T[K]) => JSX.Element | string | number;
 }
 
 interface CabinetLoactionType {
@@ -14,10 +14,10 @@ interface CabinetLoactionType {
 }
 
 interface ListTableProps<T> {
-  columns: Column[];
+  columns: Column<T>[];
   data: T[];
   setObserverRef: (node: HTMLTableRowElement) => void;
-  scrollLoading: boolean;
+  isScrollLoading: boolean;
   theadClassName: string;
   thClassName: string;
   tdClassName: string;
@@ -27,7 +27,7 @@ const ListTableComponent = <T,>({
   columns,
   data,
   setObserverRef,
-  scrollLoading,
+  isScrollLoading,
   theadClassName,
   thClassName,
   tdClassName,
@@ -64,12 +64,12 @@ const ListTableComponent = <T,>({
                 key={column.key}
                 className={`w-1/3 table-cell text-center ${tdClassName}`}
               >
-                {column.render!(item[column.key as keyof T] as string | null)}
+                {column.render!(item[column.key as keyof T])}
               </td>
             ))}
           </tr>
         ))}
-        {scrollLoading && (
+        {isScrollLoading && (
           <div className="flex justify-center bg-white items-center">
             <LogoSVG className="animate-spin" />
           </div>

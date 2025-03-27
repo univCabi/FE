@@ -1,16 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { throttle } from "lodash";
+import { HistoryData } from "@/types/ListType";
 import { log } from "@/utils/logger";
 import { userHistoryDataApi } from "@/api/userHistoryDataApi";
-
-interface HistoryData {
-  building: string;
-  floor: number;
-  section: string;
-  cabinetNumber: number;
-  startDate: string | null;
-  endDate: string | null;
-}
 
 export const useHistoryData = () => {
   const [userHistoryData, setUserHistoryData] = useState<HistoryData[]>([]);
@@ -19,7 +11,7 @@ export const useHistoryData = () => {
   const [lastElement, setLastElement] = useState<HTMLTableRowElement | null>(
     null,
   );
-  const [scrollLoading, setScrollLoading] = useState<boolean>(false);
+  const [isScrollLoading, setIsScrollLoading] = useState<boolean>(false);
   const pageSize: number = 10;
   const scrollPendingTime: number = 800;
   useEffect(() => {
@@ -41,7 +33,7 @@ export const useHistoryData = () => {
       } catch (error) {
         log.error("API 호출 중 에러 발생: userHistoryDataApi");
       } finally {
-        setScrollLoading(false);
+        setIsScrollLoading(false);
       }
     };
     if (hasMoreResults) fetchHistoryData();
@@ -51,7 +43,7 @@ export const useHistoryData = () => {
     if (!lastElement) return;
     const observer = new IntersectionObserver(
       throttle((entries) => {
-        setScrollLoading(true);
+        setIsScrollLoading(true);
         if (entries[0].isIntersecting && hasMoreResults) {
           setPage((prev) => prev + 1);
         }
@@ -66,5 +58,5 @@ export const useHistoryData = () => {
     setLastElement(node); // 해당 <tr> 요소를 관찰 대상으로 지정정
   }, []);
 
-  return { userHistoryData, setObserverRef, scrollLoading };
+  return { userHistoryData, setObserverRef, isScrollLoading };
 };
