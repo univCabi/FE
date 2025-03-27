@@ -1,5 +1,7 @@
+
 import { HistoryData } from "@/types/ListType";
 import ListTableComponent from "@/components/ListTableComponent";
+import { formatDate } from "@/utils/formatDate";
 
 interface HistoryListProp {
   userHistoryData: HistoryData[];
@@ -16,30 +18,14 @@ const HistoryList = ({
     {
       key: "startDate",
       label: "대여일",
-      render: (value: HistoryData[keyof HistoryData]) =>
-        value
-          ? new Date(value)
-              .toLocaleDateString("ko-kR", {
-                year: "numeric",
-                month: "2-digit",
-                day: "2-digit",
-              })
-              .replace(/\.$/, "")
-          : "날짜 정보를 불러올 수 없습니다.",
+      render: (value: string | null) =>
+        value ? formatDate(value) : "날짜 정보를 불러올 수 없습니다.",
     },
     {
       key: "endDate",
       label: "반납일",
-      render: (value: HistoryData[keyof HistoryData]) =>
-        value
-          ? new Date(value)
-              .toLocaleDateString("ko-kR", {
-                year: "numeric",
-                month: "2-digit",
-                day: "2-digit",
-              })
-              .replace(/\.$/, "")
-          : "날짜 정보를 불러올 수 없습니다.",
+      render: (value: string | null) =>
+        value ? formatDate(value) : "날짜 정보를 불러올 수 없습니다.",
     },
   ];
   return (

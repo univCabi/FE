@@ -8,6 +8,12 @@ export interface BuildingFloorSingleData extends Omit<BuildingData, "floor"> {
   floor: number;
 }
 
+export interface StatusData {
+  cabinetNumber: number;
+  id: number;
+  status: string;
+}
+
 export interface CabinetData extends BuildingFloorSingleData {
   id: number;
   cabinetNumber: number;
@@ -36,10 +42,8 @@ export interface CabinetInfo extends BuildingInfo {
 export interface SelectedCabinetInfo extends CabinetInfo {
   setSelectedCabinet: (cabinet: SelectedCabinet | null) => void;
   selectedStatus: string;
-  expiredAt: string | null;
   setSelectedStatus: (status: string) => void;
-  setExpiredAt: (expiredAt: string | null) => void;
-  setIsMyCabinet: (isMine: boolean) => void;
+  expiredAt: string | null;
 }
 
 export interface CabinetButtonLayoutProps extends BuildingInfo {
@@ -49,11 +53,4 @@ export interface CabinetButtonLayoutProps extends BuildingInfo {
     cabinetNumber: number;
   } | null;
   fetchCabinetDetailInformation: (id: number, cabientNumber: number) => void;
-}
-
-// admin 전용
-export interface SelectedMultiCabinetsData {
-  cabinetNumber: number;
-  id: number;
-  status: string;
 }

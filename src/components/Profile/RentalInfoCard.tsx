@@ -1,4 +1,5 @@
 import { RentCabinetInfo } from "@/types/UserType";
+import { formatDate } from "@/utils/formatDate";
 
 interface RentalInfoCardProp {
   rentCabinetInfo: RentCabinetInfo;
@@ -34,13 +35,7 @@ const RentalInfoCard = ({ rentCabinetInfo }: RentalInfoCardProp) => {
             <div>시작일</div>
             <div className="font-bold">{`${
               rentCabinetInfo.startDate
-                ? new Date(rentCabinetInfo.startDate)
-                    .toLocaleDateString("ko-KR", {
-                      year: "numeric",
-                      month: "2-digit",
-                      day: "2-digit",
-                    })
-                    .replace(/\.$/, "")
+                ? formatDate(rentCabinetInfo.endDate)
                 : "대여 정보가 없습니다."
             }`}</div>
           </div>
@@ -66,13 +61,7 @@ const RentalInfoCard = ({ rentCabinetInfo }: RentalInfoCardProp) => {
             <div>종료 일자</div>
             <div className="font-bold ">{`${
               rentCabinetInfo.endDate
-                ? new Date(rentCabinetInfo.endDate)
-                    .toLocaleDateString("ko-KR", {
-                      year: "numeric",
-                      month: "2-digit",
-                      day: "2-digit",
-                    })
-                    .replace(/\.$/, "")
+                ? formatDate(rentCabinetInfo.endDate)
                 : "대여 정보가 없습니다."
             }`}</div>
           </div>
