@@ -15,6 +15,7 @@ interface useAdminStatusProps extends SelectedMultiCabinetsData {
     React.SetStateAction<StatusData[] | null>
   >;
   closeReturnModal: () => void;
+  setModalCancelState: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const useAdminStatus = ({
@@ -26,6 +27,7 @@ export const useAdminStatus = ({
   setSelectedCabinet,
   setSelectedMultiCabinets,
   closeReturnModal,
+  setModalCancelState,
 }: useAdminStatusProps) => {
   const [selectedBrokenReason, setSelectedBrokenReason] = useState<
     string | null
@@ -43,7 +45,7 @@ export const useAdminStatus = ({
     setSelectedMultiCabinets,
   });
 
-  // 반납, 상태관리 버튼과 관련된 조건
+  // 반납, 상태관리 버튼과 관련된 조건 //
   // status 추가 시 아래 STATUS_CATEGORIES에 추가
   const STATUS_CATEGORIES = {
     returnable: [CabinetStatus.USING, CabinetStatus.OVERDUE],
@@ -53,31 +55,33 @@ export const useAdminStatus = ({
       CabinetStatus.USING,
       CabinetStatus.OVERDUE,
     ],
-    breakable: [CabinetStatus.BROKEN],
   };
-
+  // MultiCabinets 관련
   const hasStatus = (category: string[]) =>
     isMultiButtonActive
       ? selectedMultiCabinets?.some((cabinet) =>
           category.includes(cabinet.status),
         )
       : category.includes(selectedStatus);
-
   const showsReturnButton = hasStatus(STATUS_CATEGORIES.returnable);
   const showsStatusManagementButton = hasStatus(STATUS_CATEGORIES.manageable);
   const hasAvailable = hasStatus(STATUS_CATEGORIES.available);
-  const hasBroken = hasStatus(STATUS_CATEGORIES.breakable);
 
+  // BROKEN -> 기존 대여 중인 사물함 반납 처리 위한 조건
+  const isReturnable =
+    selectedStatus === CabinetStatus.USING ||
+    selectedStatus === CabinetStatus.OVERDUE;
   // 사용 가능, 사용 불가 버튼과 관련된 조건
-  const isBroken = selectedStatus === CabinetStatus.BROKEN;
-  const isAvailable = selectedStatus === CabinetStatus.AVAILABLE;
-  // 아 마지막에 선택된 사물함이 using이 아니라서 실행이 안되는 거엿음! -> 수정하기
-  const isUsing = selectedStatus === CabinetStatus.USING;
-  const isOverdue = selectedStatus === CabinetStatus.OVERDUE;
+  const isManageable =
+    selectedStatus === CabinetStatus.BROKEN ||
+    selectedStatus === CabinetStatus.AVAILABLE;
+
+  const isAllStatus = isManageable || isReturnable;
+
+  // 선택할 수 있는 드롭다운 항목이 2개(AVAILABLE, BROKEN)
   const isNewStatusBroken = newStatus === CabinetStatus.BROKEN;
   const isNewStatusAvailable = newStatus === CabinetStatus.AVAILABLE;
-
-  // Reason 버튼 활성화 조건 (사용 가능 -> 비활성화, 사용 불가 -> 활성화)
+  // reason 버튼 관련 조건
   const canSelectedReasonButton =
     (!hasAvailable && isNewStatusBroken) || isNewStatusBroken;
 
@@ -91,15 +95,11 @@ export const useAdminStatus = ({
       : selectedCabinet
         ? [selectedCabinet.cabinetId]
         : [];
-
-    const test = hasStatus(STATUS_CATEGORIES.returnable);
-
-    if (test) {
-      await fetchAdminCabinetReturn();
-      console.log("너 뭐야", test);
+    if (isNewStatusBroken) {
+      if (isReturnable || showsReturnButton) {
+        await fetchAdminCabinetReturn();
+      }
     }
-
-    // using -> 나머지: 실행 XXXXX
     setNewStatus(selectedStatus);
     try {
       const response = await adminChangeStatusApi(
@@ -112,11 +112,10 @@ export const useAdminStatus = ({
         setSelectedBrokenReason(response.data.cabinets.reason);
         setSelectedMultiCabinets(null);
         setSelectedCabinet(null);
-        console.log(response.data);
+        setModalCancelState(false);
         log.info(
           `API 호출 성공: adminChangeStatusApi, ${JSON.stringify(response, null, 2)}`,
         );
-
         return response.data;
       }
     } catch (error) {
@@ -135,7 +134,7 @@ export const useAdminStatus = ({
       if (isNewStatusAvailable) return "사용 가능";
       if (isNewStatusBroken) return "사용 불가";
     }
-    if (isAvailable || isBroken || isUsing || isOverdue) return "상태 선택";
+    if (isAllStatus) return "상태 선택";
   };
 
   // 고장 이유 선택
@@ -153,14 +152,13 @@ export const useAdminStatus = ({
 
   useEffect(() => {
     if (newStatus !== CabinetStatus.BROKEN) {
-      setSelectedBrokenReason(null); // 선택 취소
+      setSelectedBrokenReason(null);
     }
-  }, [newStatus]); // newStatus 변경될 때 실행
+  }, [newStatus]);
 
   return {
     showsReturnButton,
     showsStatusManagementButton,
-    isBroken,
     isNewStatusAvailable,
     isNewStatusBroken,
     canSelectedReasonButton,

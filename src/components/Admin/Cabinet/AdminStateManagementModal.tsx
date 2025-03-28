@@ -37,14 +37,14 @@ const AdminStateManagementModal = ({
   closeReturnModal,
 }: HandleModalProps) => {
   const {
+    canSelectedReasonButton,
     selectedBrokenReason,
     newStatus,
     setNewStatus,
     getStatusLabel,
     getMultiCabinetStatusLabel,
+    handleStatusSave,
     handleReasonClick,
-    fetchAdminChangeStatus,
-    canSelectedReasonButton,
   } = useAdminStatus({
     selectedStatus,
     setSelectedStatus,
@@ -54,6 +54,7 @@ const AdminStateManagementModal = ({
     setSelectedCabinet,
     setSelectedMultiCabinets,
     closeReturnModal,
+    setModalCancelState,
   });
   const { isDropdownOpen, setIsDropdownOpen, dropdownOutsideRef } =
     useBuildingState();
@@ -65,21 +66,8 @@ const AdminStateManagementModal = ({
 
   // 상태관리 함수
   const handleMultiStatusChange = (status: CabinetStatusType) => {
-    setSelectedMultiCabinets(
-      (prevSelectedCabinets) =>
-        prevSelectedCabinets?.map((cabinet) => ({ ...cabinet, status })) ?? [],
-    );
     setNewStatus(status);
     setIsDropdownOpen(false);
-  };
-
-  // 상태 저장
-  const handleStatusSave = (
-    newStatus: CabinetStatusType,
-    reason: string | null,
-  ) => {
-    fetchAdminChangeStatus(newStatus, reason);
-    setModalCancelState(false); // fetch 함수로 이동해야 함
   };
 
   return (
@@ -103,7 +91,6 @@ const AdminStateManagementModal = ({
                     : !newStatus
                       ? getMultiCabinetStatusLabel()
                       : getStatusLabel(newStatus)}
-
                   <AngleDownSVG className="ml-[70%]" fill="#2563eb" />
                 </button>
 
@@ -174,7 +161,6 @@ const AdminStateManagementModal = ({
             className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-100"
             onClick={() => {
               setModalCancelState(false);
-              getMultiCabinetStatusLabel();
             }}
           >
             취소

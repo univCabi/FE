@@ -15,7 +15,7 @@ const CabinetButtonLayout = ({
   fetchCabinetDetailInformation,
 }: CabinetButtonLayoutProps) => {
   const { getStatusColor } = useCabinet();
-  const { cabinetData, loading } = useCabinetActivation({
+  const { cabinetData, isLoading } = useCabinetActivation({
     selectedBuilding,
     selectedFloor,
     isMyCabinet,
@@ -32,7 +32,7 @@ const CabinetButtonLayout = ({
 
   return (
     <div className="w-full h-[80%] flex items-center justify-center">
-      {loading ? (
+      {isLoading ? (
         <CabinetButtonSkeleton />
       ) : (
         <div className="relative h-[30rem] overflow-scroll lg:w-[67rem] md:w-[80%] sm:w-[75%] w-[100%]">

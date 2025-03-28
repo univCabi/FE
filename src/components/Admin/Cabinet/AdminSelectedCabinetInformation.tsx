@@ -1,9 +1,4 @@
-import { SetStateAction } from "react";
-import {
-  SelectedCabinet,
-  SelectedCabinetInfo,
-  StatusData,
-} from "@/types/CabinetType";
+import { SelectedCabinetInfo, StatusData } from "@/types/CabinetType";
 import { SelectedMultiCabinetsData } from "@/types/MultiCabinetType";
 import AdminCabinetInformationDisplay from "@/components/Admin/Cabinet/AdminCabinetInformationDisplay";
 import AdminStateManagementModal from "@/components/Admin/Cabinet/AdminStateManagementModal";
@@ -22,6 +17,7 @@ interface AdminSelectedCabinetInformationProps
   setSelectedMultiCabinets: React.Dispatch<
     React.SetStateAction<StatusData[] | null>
   >;
+  setModalCancelState: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const AdminSelectedCabinetInformation = ({
@@ -36,6 +32,7 @@ const AdminSelectedCabinetInformation = ({
   isMultiButtonActive,
   username,
   setSelectedMultiCabinets,
+  setModalCancelState,
 }: AdminSelectedCabinetInformationProps) => {
   const { openReturnModal, setOpenReturnModal } = useConfirmModalState();
   const { openStateManagementModal, setOpenStateManagementModal } =
@@ -79,6 +76,7 @@ const AdminSelectedCabinetInformation = ({
     setSelectedCabinet,
     setSelectedMultiCabinets,
     closeReturnModal,
+    setModalCancelState,
   });
 
   const cabinetNumbersSort =
@@ -113,6 +111,7 @@ const AdminSelectedCabinetInformation = ({
             setSelectedStatus={setSelectedStatus}
             setSelectedCabinet={setSelectedCabinet}
             setSelectedMultiCabinets={setSelectedMultiCabinets}
+            setModalCancelState={setOpenStateManagementModal}
           />
           {showsReturnButton && openReturnModal && (
             <ConfirmModalView

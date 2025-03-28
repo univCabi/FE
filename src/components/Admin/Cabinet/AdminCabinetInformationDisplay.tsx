@@ -1,4 +1,8 @@
-import { CabinetInfo, SelectedCabinet, StatusData } from "@/types/CabinetType";
+import {
+  SelectedCabinet,
+  SelectedCabinetInfo,
+  StatusData,
+} from "@/types/CabinetType";
 import { SelectedMultiCabinetsData } from "@/types/MultiCabinetType";
 import { formatDate } from "@/utils/formatDate";
 import CabinetActionButtons from "@/components/Cabinet/CabinetActionButtons";
@@ -6,21 +10,18 @@ import { useAdminStatus } from "@/hooks/useAdminStatus";
 import CabinetSVG from "@/icons/cabinet.svg?react";
 
 interface AdminCabinetInformationDisplayProps
-  extends CabinetInfo,
+  extends SelectedCabinetInfo,
     SelectedMultiCabinetsData {
   username: string | null;
   clickedReturnButton: () => void;
   clickedStateManagementButton: () => void;
   cancelButton: () => void;
-  expiredAt: string | null;
-  selectedStatus: string;
-  setSelectedStatus: (status: string) => void;
   selectedCabinet: SelectedCabinet | null;
-  setSelectedCabinet: (cabinet: SelectedCabinet | null) => void;
   setSelectedMultiCabinets: React.Dispatch<
     React.SetStateAction<StatusData[] | null>
   >;
   closeReturnModal: () => void;
+  setModalCancelState: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const AdminCabinetInformationDisplay = ({
@@ -39,6 +40,7 @@ const AdminCabinetInformationDisplay = ({
   setSelectedStatus,
   setSelectedMultiCabinets,
   closeReturnModal,
+  setModalCancelState,
 }: AdminCabinetInformationDisplayProps) => {
   const { showsReturnButton, showsStatusManagementButton } = useAdminStatus({
     selectedStatus,
@@ -49,7 +51,9 @@ const AdminCabinetInformationDisplay = ({
     setSelectedCabinet,
     setSelectedMultiCabinets,
     closeReturnModal,
+    setModalCancelState,
   });
+
   return (
     <>
       <div className="text-center w-[17rem]">
