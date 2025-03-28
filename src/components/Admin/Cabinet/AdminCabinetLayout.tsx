@@ -65,7 +65,6 @@ const AdminCabinetLayout = ({
       id,
       status,
     };
-
     if (!isMultiButtonActive) {
       setSelectedMultiCabinets([selectedMultiCabinet]);
       return;
@@ -110,8 +109,10 @@ const AdminCabinetLayout = ({
 
   // Return, status 변경 시 cabinetCallApi 호출
   useEffect(() => {
-    if (selectedBuilding !== null && selectedFloor !== null) {
-      fetchCabinetData(selectedBuilding, selectedFloor);
+    if (location.pathname.startsWith("/admin")) {
+      if (selectedBuilding !== null && selectedFloor !== null) {
+        fetchCabinetData(selectedBuilding, selectedFloor);
+      }
     }
   }, [selectedBuilding, selectedFloor, selectedStatus]);
 

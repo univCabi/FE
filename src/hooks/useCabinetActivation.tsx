@@ -33,8 +33,10 @@ export const useCabinetActivation = ({
     }
   };
   useEffect(() => {
-    if (selectedBuilding !== null && selectedFloor !== null) {
-      fetchCabinetData(selectedBuilding, selectedFloor);
+    if (location.pathname.startsWith("/main")) {
+      if (selectedBuilding !== null && selectedFloor !== null) {
+        fetchCabinetData(selectedBuilding, selectedFloor);
+      }
     }
   }, [selectedBuilding, selectedFloor, isMyCabinet]);
 

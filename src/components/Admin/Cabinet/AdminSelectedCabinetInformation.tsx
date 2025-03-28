@@ -1,4 +1,9 @@
-import { SelectedCabinetInfo, StatusData } from "@/types/CabinetType";
+import { SetStateAction } from "react";
+import {
+  SelectedCabinet,
+  SelectedCabinetInfo,
+  StatusData,
+} from "@/types/CabinetType";
 import { SelectedMultiCabinetsData } from "@/types/MultiCabinetType";
 import AdminCabinetInformationDisplay from "@/components/Admin/Cabinet/AdminCabinetInformationDisplay";
 import AdminStateManagementModal from "@/components/Admin/Cabinet/AdminStateManagementModal";
@@ -66,9 +71,14 @@ const AdminSelectedCabinetInformation = ({
     setSelectedMultiCabinets,
   });
   const { showsReturnButton, showsStatusManagementButton } = useAdminStatus({
+    selectedStatus,
+    setSelectedStatus,
+    selectedCabinet,
     isMultiButtonActive,
     selectedMultiCabinets,
-    selectedStatus,
+    setSelectedCabinet,
+    setSelectedMultiCabinets,
+    closeReturnModal,
   });
 
   const cabinetNumbersSort =
@@ -99,6 +109,10 @@ const AdminSelectedCabinetInformation = ({
             username={username}
             expiredAt={expiredAt}
             selectedStatus={selectedStatus}
+            closeReturnModal={closeReturnModal}
+            setSelectedStatus={setSelectedStatus}
+            setSelectedCabinet={setSelectedCabinet}
+            setSelectedMultiCabinets={setSelectedMultiCabinets}
           />
           {showsReturnButton && openReturnModal && (
             <ConfirmModalView
@@ -125,6 +139,7 @@ const AdminSelectedCabinetInformation = ({
                 isMultiButtonActive={isMultiButtonActive}
                 setSelectedCabinet={setSelectedCabinet}
                 setSelectedMultiCabinets={setSelectedMultiCabinets}
+                closeReturnModal={closeReturnModal}
               />
             )}
         </>

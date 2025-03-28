@@ -1,4 +1,4 @@
-import { CabinetInfo } from "@/types/CabinetType";
+import { CabinetInfo, SelectedCabinet, StatusData } from "@/types/CabinetType";
 import { SelectedMultiCabinetsData } from "@/types/MultiCabinetType";
 import { formatDate } from "@/utils/formatDate";
 import CabinetActionButtons from "@/components/Cabinet/CabinetActionButtons";
@@ -14,6 +14,13 @@ interface AdminCabinetInformationDisplayProps
   cancelButton: () => void;
   expiredAt: string | null;
   selectedStatus: string;
+  setSelectedStatus: (status: string) => void;
+  selectedCabinet: SelectedCabinet | null;
+  setSelectedCabinet: (cabinet: SelectedCabinet | null) => void;
+  setSelectedMultiCabinets: React.Dispatch<
+    React.SetStateAction<StatusData[] | null>
+  >;
+  closeReturnModal: () => void;
 }
 
 const AdminCabinetInformationDisplay = ({
@@ -28,11 +35,20 @@ const AdminCabinetInformationDisplay = ({
   clickedStateManagementButton,
   cancelButton,
   selectedStatus,
+  setSelectedCabinet,
+  setSelectedStatus,
+  setSelectedMultiCabinets,
+  closeReturnModal,
 }: AdminCabinetInformationDisplayProps) => {
   const { showsReturnButton, showsStatusManagementButton } = useAdminStatus({
+    selectedStatus,
+    setSelectedStatus,
+    selectedCabinet,
     isMultiButtonActive,
     selectedMultiCabinets,
-    selectedStatus,
+    setSelectedCabinet,
+    setSelectedMultiCabinets,
+    closeReturnModal,
   });
   return (
     <>
