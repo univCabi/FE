@@ -1,13 +1,13 @@
 import api from "@/api/axiosInterceptApi";
 
 export const adminChangeStatusApi = async (
-  cabinetId: number[],
+  cabinetIds: number[],
   newStatus: string,
   reason: string | null,
 ) => {
   try {
     const response = await api.post("/cabinet/admin/change/status", {
-      cabinetId,
+      cabinetIds,
       newStatus,
       reason,
     });
