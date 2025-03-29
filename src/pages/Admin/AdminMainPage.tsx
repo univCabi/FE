@@ -32,6 +32,7 @@ const AdminMainPage = () => {
     setSelectedMultiCabinets,
     isMultiButtonActive,
     setIsMultiButtonActive,
+    setOpenStateManagementModal,
   } = useAdminCabinet();
 
   useEffect(() => {
@@ -106,6 +107,7 @@ const AdminMainPage = () => {
               isMultiButtonActive={isMultiButtonActive}
               username={username}
               setSelectedMultiCabinets={setSelectedMultiCabinets}
+              setModalCancelState={setOpenStateManagementModal}
             />
           </div>
         )}
@@ -179,6 +181,7 @@ const AdminMainPage = () => {
               isMultiButtonActive={isMultiButtonActive}
               username={username}
               setSelectedMultiCabinets={setSelectedMultiCabinets}
+              setModalCancelState={setOpenStateManagementModal}
             />
           </div>
         )}

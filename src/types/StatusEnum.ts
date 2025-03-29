@@ -7,3 +7,9 @@ export const CabinetStatus = {
 
 export type CabinetStatusType =
   (typeof CabinetStatus)[keyof typeof CabinetStatus];
+
+export const BrokenReason = {
+  잠금: "잠금",
+  파손: "파손",
+} as const;
+export type BrokenReasonType = (typeof BrokenReason)[keyof typeof BrokenReason];

@@ -17,6 +17,7 @@ interface AdminSelectedCabinetInformationProps
   setSelectedMultiCabinets: React.Dispatch<
     React.SetStateAction<StatusData[] | null>
   >;
+  setModalCancelState: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const AdminSelectedCabinetInformation = ({
@@ -31,6 +32,7 @@ const AdminSelectedCabinetInformation = ({
   isMultiButtonActive,
   username,
   setSelectedMultiCabinets,
+  setModalCancelState,
 }: AdminSelectedCabinetInformationProps) => {
   const { openReturnModal, setOpenReturnModal } = useConfirmModalState();
   const { openStateManagementModal, setOpenStateManagementModal } =
@@ -66,9 +68,15 @@ const AdminSelectedCabinetInformation = ({
     setSelectedMultiCabinets,
   });
   const { showsReturnButton, showsStatusManagementButton } = useAdminStatus({
+    selectedStatus,
+    setSelectedStatus,
+    selectedCabinet,
     isMultiButtonActive,
     selectedMultiCabinets,
-    selectedStatus,
+    setSelectedCabinet,
+    setSelectedMultiCabinets,
+    closeReturnModal,
+    setModalCancelState,
   });
 
   const cabinetNumbersSort =
@@ -99,6 +107,11 @@ const AdminSelectedCabinetInformation = ({
             username={username}
             expiredAt={expiredAt}
             selectedStatus={selectedStatus}
+            closeReturnModal={closeReturnModal}
+            setSelectedStatus={setSelectedStatus}
+            setSelectedCabinet={setSelectedCabinet}
+            setSelectedMultiCabinets={setSelectedMultiCabinets}
+            setModalCancelState={setOpenStateManagementModal}
           />
           {showsReturnButton && openReturnModal && (
             <ConfirmModalView
@@ -123,6 +136,9 @@ const AdminSelectedCabinetInformation = ({
                 selectedCabinet={selectedCabinet}
                 selectedMultiCabinets={selectedMultiCabinets}
                 isMultiButtonActive={isMultiButtonActive}
+                setSelectedCabinet={setSelectedCabinet}
+                setSelectedMultiCabinets={setSelectedMultiCabinets}
+                closeReturnModal={closeReturnModal}
               />
             )}
         </>

@@ -1,5 +1,4 @@
 import { useRef, useState } from "react";
-
 import { SelectedCabinet } from "@/types/CabinetType";
 import { log } from "@/utils/logger";
 import { cabinetDetailInfoApi } from "@/api/cabinetDetailInfoApi";
@@ -18,8 +17,9 @@ export const useCabinet = () => {
     cabinetId: number,
     cabinetNumber: number,
   ) => {
-    if (prevCabinetNumberRef.current === cabinetNumber) return;
-
+    if (selectedCabinet !== null) {
+      if (prevCabinetNumberRef.current === cabinetNumber) return;
+    }
     try {
       const response = await cabinetDetailInfoApi(cabinetId);
       prevCabinetNumberRef.current = cabinetNumber;

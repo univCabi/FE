@@ -130,7 +130,8 @@ const SelectedCabinetInformation = ({
               />
             )}
           </>
-        ) : selectedStatus === "USING" && isMyCabinet === false ? (
+        ) : (selectedStatus === "USING" && isMyCabinet === false) ||
+          selectedStatus === "OVERDUE" ? (
           // 상태가 USING이고 타인의 사물함일 경우
           <CabinetInformationDisplay
             selectedBuilding={selectedBuilding}
@@ -138,7 +139,7 @@ const SelectedCabinetInformation = ({
             selectedCabinet={selectedCabinet}
             statusMessage="이미 대여중인 사물함입니다."
           />
-        ) : selectedStatus === "BROKEN" || selectedStatus === "OVERDUE" ? (
+        ) : selectedStatus === "BROKEN" ? (
           <CabinetInformationDisplay
             selectedBuilding={selectedBuilding}
             selectedFloor={selectedFloor}
