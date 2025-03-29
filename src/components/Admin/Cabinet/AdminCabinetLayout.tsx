@@ -1,7 +1,7 @@
 // 사물함 배열 관련
 import { useCallback, useEffect } from "react";
 import {
-  CabinetLayout,
+  CabinetButtonLayoutProps,
   SelectedCabinet,
   StatusData,
 } from "@/types/CabinetType";
@@ -15,7 +15,7 @@ import { useCabinet } from "@/hooks/useCabinet";
 import { useCabinetActivation } from "@/hooks/useCabinetActivation";
 
 interface AdminCabinetLayoutProps
-  extends CabinetLayout,
+  extends CabinetButtonLayoutProps,
     SelectedMultiCabinetsData {
   selectedStatus: string;
   setSelectedMultiCabinets: React.Dispatch<
