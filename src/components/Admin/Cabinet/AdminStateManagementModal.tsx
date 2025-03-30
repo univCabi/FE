@@ -16,7 +16,7 @@ interface HandleModalProps extends SelectedMultiCabinetsData {
   selectedStatus: string;
   setSelectedStatus: (status: string) => void;
   cabinetInfo?: string;
-  selectedCabinet: SelectedCabinet;
+  selectedCabinet: SelectedCabinet | null;
   setSelectedCabinet: (cabinet: SelectedCabinet | null) => void;
   setSelectedMultiCabinets: React.Dispatch<
     React.SetStateAction<StatusData[] | null>

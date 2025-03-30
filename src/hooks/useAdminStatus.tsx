@@ -134,7 +134,8 @@ export const useAdminStatus = ({
       if (isNewStatusAvailable) return "사용 가능";
       if (isNewStatusBroken) return "사용 불가";
     }
-    if (isAllStatus) return "상태 선택";
+    if (isAllStatus || selectedMultiCabinets?.length !== null)
+      return "상태 선택";
   };
 
   // 고장 이유 선택
