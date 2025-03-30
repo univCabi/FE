@@ -1,7 +1,7 @@
 // 사물함 배열 관련
 import { useCallback, useEffect } from "react";
 import {
-  CabinetButtonLayoutProps,
+  CabinetDetailInfo,
   SelectedCabinet,
   StatusData,
 } from "@/types/CabinetType";
@@ -15,7 +15,7 @@ import { useCabinet } from "@/hooks/useCabinet";
 import { useCabinetActivation } from "@/hooks/useCabinetActivation";
 
 interface AdminCabinetLayoutProps
-  extends CabinetButtonLayoutProps,
+  extends CabinetDetailInfo,
     SelectedMultiCabinetsData {
   selectedStatus: string;
   setSelectedMultiCabinets: React.Dispatch<
@@ -173,10 +173,10 @@ const AdminCabinetLayout = ({
               return (
                 <button
                   key={cabinet.cabinetNumber}
-                  className={`absolute w-16 h-20 rounded-md hover:bg-opacity-80 flex items-end text-sm p-2
+                  className={`absolute w-16 h-20 rounded-md hover:bg-opacity-80 flex items-end text-sm p-2 
                   ${
                     isSelected
-                      ? `${getStatusColor(cabinet.status, cabinet.isMine)} opacity-100`
+                      ? `${getStatusColor(cabinet.status, cabinet.isMine)} opacity-100 shadow-md`
                       : `${getStatusColor(cabinet.status, cabinet.isMine)} ${isMultiButtonActive ? "opacity-35" : ""}`
                   }
                   `}

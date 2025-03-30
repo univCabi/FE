@@ -1,9 +1,11 @@
 // 사물함 배열 관련
 import { useEffect } from "react";
-import { CabinetButtonLayoutProps } from "@/types/CabinetType";
+import { CabinetDetailInfo, CabinetInfo } from "@/types/CabinetType";
 import CabinetButtonSkeleton from "@/components/Skeleton/CabinetButtonSkeleton";
 import { useCabinet } from "@/hooks/useCabinet";
 import { useCabinetActivation } from "@/hooks/useCabinetActivation";
+
+interface CabinetButtonLayoutProps extends CabinetDetailInfo, CabinetInfo {}
 
 const CabinetButtonLayout = ({
   selectedBuilding,
@@ -11,6 +13,7 @@ const CabinetButtonLayout = ({
   isMyCabinet,
   filteredCabinetDetail,
   fetchCabinetDetailInformation,
+  selectedCabinet,
 }: CabinetButtonLayoutProps) => {
   const { getStatusColor } = useCabinet();
   const { cabinetData, isLoading } = useCabinetActivation({
@@ -35,12 +38,14 @@ const CabinetButtonLayout = ({
       ) : (
         <div className="relative h-[30rem] overflow-scroll lg:w-[67rem] md:w-[80%] sm:w-[75%] w-[100%]">
           {cabinetData.map((cabinet) => {
+            const isSelected =
+              selectedCabinet?.cabinetNumber === cabinet.cabinetNumber;
             return (
               <button
                 key={cabinet.cabinetNumber}
-                className={`absolute w-16 h-20 rounded-md hover:bg-opacity-80 flex items-end text-sm p-2
-                ${getStatusColor(cabinet.status, cabinet.isMine)} 
-                
+                className={`absolute w-16 h-20 rounded-md hover:bg-opacity-80 flex items-end text-sm p-2 
+                  ${getStatusColor(cabinet.status, cabinet.isMine)} 
+                  ${isSelected ? "shadow-md" : ""}
               `}
                 style={{
                   top: `${350 - cabinet.cabinetYPos * 100}px`, // API에서 받은 yPos 사용

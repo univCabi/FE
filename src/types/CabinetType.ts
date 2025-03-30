@@ -46,7 +46,7 @@ export interface SelectedCabinetInfo extends CabinetInfo {
   expiredAt: string | null;
 }
 
-export interface CabinetButtonLayoutProps extends BuildingInfo {
+export interface CabinetDetailInfo extends BuildingInfo {
   isMyCabinet: boolean;
   filteredCabinetDetail: {
     id: number;
