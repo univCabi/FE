@@ -1,7 +1,7 @@
 // 사물함 배열 관련
 import { useCallback, useEffect } from "react";
 import {
-  CabinetLayout,
+  CabinetButtonLayoutProps,
   SelectedCabinet,
   StatusData,
 } from "@/types/CabinetType";
@@ -15,7 +15,7 @@ import { useCabinet } from "@/hooks/useCabinet";
 import { useCabinetActivation } from "@/hooks/useCabinetActivation";
 
 interface AdminCabinetLayoutProps
-  extends CabinetLayout,
+  extends CabinetButtonLayoutProps,
     SelectedMultiCabinetsData {
   selectedStatus: string;
   setSelectedMultiCabinets: React.Dispatch<
@@ -23,6 +23,7 @@ interface AdminCabinetLayoutProps
   >;
   setIsMultiButtonActive: (value: boolean) => void;
   setSelectedCabinet: (cabinet: SelectedCabinet | null) => void;
+  setIsAdminCabinetInfoVisible: (value: boolean) => void;
 }
 
 const AdminCabinetLayout = ({
@@ -37,6 +38,7 @@ const AdminCabinetLayout = ({
   setSelectedCabinet,
   selectedStatus,
   isMyCabinet,
+  setIsAdminCabinetInfoVisible,
 }: AdminCabinetLayoutProps) => {
   const { getStatusColor } = useCabinet();
   const { cabinetData, isLoading, fetchCabinetData } = useCabinetActivation({
@@ -45,6 +47,7 @@ const AdminCabinetLayout = ({
     isMyCabinet,
   });
   const { checkedCabinet, setCheckedCabinet } = useAdminCabinet();
+  const MAX_CABINETS = 47; // Cabinet 배열의 최대 길이
 
   // 복수선택기능 버튼 활성화
   const MultipleSelectButtonActive = useCallback(() => {
@@ -87,6 +90,7 @@ const AdminCabinetLayout = ({
   const handleSelectAllCabinets = () => {
     if (checkedCabinet) {
       setSelectedMultiCabinets(null);
+      setIsAdminCabinetInfoVisible(false); // 전체 해제 시 사물함 정보 숨김
     } else {
       setSelectedMultiCabinets(
         cabinetData.map((cabinet) => ({
@@ -95,12 +99,13 @@ const AdminCabinetLayout = ({
           status: cabinet.status,
         })),
       );
+      setIsAdminCabinetInfoVisible(true); // 전체 선택 시 사물함 정보 표시
     }
     setCheckedCabinet(!checkedCabinet);
   };
 
   useEffect(() => {
-    setSelectedMultiCabinets(null);
+    setSelectedMultiCabinets([]);
     setSelectedCabinet(null);
     if (!isMultiButtonActive) {
       setCheckedCabinet(false);
@@ -113,8 +118,18 @@ const AdminCabinetLayout = ({
       if (selectedBuilding !== null && selectedFloor !== null) {
         fetchCabinetData(selectedBuilding, selectedFloor);
       }
+      if (selectedMultiCabinets === null) {
+        setCheckedCabinet(false); // 전체 선택 해제
+      }
     }
-  }, [selectedBuilding, selectedFloor, selectedStatus]);
+  }, [
+    selectedBuilding,
+    selectedFloor,
+    selectedStatus,
+    checkedCabinet &&
+      selectedMultiCabinets &&
+      selectedMultiCabinets.length === MAX_CABINETS, // 전체선택
+  ]);
 
   // 검색 결과에 해당하는 사물함이 있을 경우에만 실행
   useEffect(() => {

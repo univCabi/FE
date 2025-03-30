@@ -10,6 +10,8 @@ export const useAdminCabinet = () => {
   const [openStateManagementModal, setOpenStateManagementModal] =
     useState(false); // 상태관리 모달
   const [checkedCabinet, setCheckedCabinet] = useState(false); // 전체선택 여부 나타내는 변수
+  const [isAdminCabinetInfoVisible, setIsAdminCabinetInfoVisible] =
+    useState(false); // 전체 선택 시 사물함 정보 바로 보이게 하는 변수
 
   return {
     selectedMultiCabinets,
@@ -20,5 +22,7 @@ export const useAdminCabinet = () => {
     setOpenStateManagementModal,
     checkedCabinet,
     setCheckedCabinet,
+    isAdminCabinetInfoVisible,
+    setIsAdminCabinetInfoVisible,
   };
 };

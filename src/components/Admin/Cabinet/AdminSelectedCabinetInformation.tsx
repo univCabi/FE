@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { SelectedCabinetInfo, StatusData } from "@/types/CabinetType";
 import { SelectedMultiCabinetsData } from "@/types/MultiCabinetType";
 import AdminCabinetInformationDisplay from "@/components/Admin/Cabinet/AdminCabinetInformationDisplay";
@@ -18,6 +19,9 @@ interface AdminSelectedCabinetInformationProps
     React.SetStateAction<StatusData[] | null>
   >;
   setModalCancelState: React.Dispatch<React.SetStateAction<boolean>>;
+  isAdminCabinetInfoVisible: boolean;
+  setIsAdminCabinetInfoVisible: (value: boolean) => void;
+  setCheckedCabinet: (value: boolean) => void;
 }
 
 const AdminSelectedCabinetInformation = ({
@@ -33,11 +37,13 @@ const AdminSelectedCabinetInformation = ({
   username,
   setSelectedMultiCabinets,
   setModalCancelState,
+  isAdminCabinetInfoVisible,
+  setIsAdminCabinetInfoVisible,
+  setCheckedCabinet,
 }: AdminSelectedCabinetInformationProps) => {
   const { openReturnModal, setOpenReturnModal } = useConfirmModalState();
   const { openStateManagementModal, setOpenStateManagementModal } =
     useAdminCabinet();
-
   // 반납 버튼 클릭 -> 반납 모달창 생성
   const clickedReturnButton = () => {
     setOpenReturnModal(true);
@@ -55,6 +61,8 @@ const AdminSelectedCabinetInformation = ({
   const cancelButton = () => {
     setSelectedCabinet(null);
     setSelectedMultiCabinets(null);
+    setCheckedCabinet(false);
+    setIsAdminCabinetInfoVisible(false);
   };
 
   const { fetchAdminCabinetReturn } = useAdminReturn({
@@ -92,8 +100,19 @@ const AdminSelectedCabinetInformation = ({
 
   return (
     <div className="absolute inset-y-0 right-0 w-80 pt-20 flex flex-col justify-center items-center bg-white border-l-2 border-gray-400">
-      {selectedCabinet !== null &&
-      (isMultiButtonActive ? selectedMultiCabinets?.length : true) ? (
+      {(!isMultiButtonActive && selectedCabinet === null) ||
+      (isMultiButtonActive && selectedMultiCabinets?.length === 0) ||
+      selectedMultiCabinets === null ? (
+        <>
+          <div className="flex justify-center pb-5">
+            <CabinetSVG />
+          </div>
+          사물함을
+          <br />
+          선택해주세요
+        </>
+      ) : (isMultiButtonActive && isAdminCabinetInfoVisible) ||
+        selectedCabinet !== null ? (
         <>
           <AdminCabinetInformationDisplay
             selectedBuilding={selectedBuilding}
@@ -142,16 +161,7 @@ const AdminSelectedCabinetInformation = ({
               />
             )}
         </>
-      ) : (
-        <>
-          <div className="flex justify-center pb-5">
-            <CabinetSVG />
-          </div>
-          사물함을
-          <br />
-          선택해주세요
-        </>
-      )}
+      ) : null}
     </div>
   );
 };

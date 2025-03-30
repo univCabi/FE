@@ -33,6 +33,9 @@ const AdminMainPage = () => {
     isMultiButtonActive,
     setIsMultiButtonActive,
     setOpenStateManagementModal,
+    isAdminCabinetInfoVisible,
+    setIsAdminCabinetInfoVisible,
+    setCheckedCabinet,
   } = useAdminCabinet();
 
   useEffect(() => {
@@ -82,6 +85,7 @@ const AdminMainPage = () => {
                 setIsMultiButtonActive={setIsMultiButtonActive}
                 setSelectedCabinet={setSelectedCabinet}
                 isMyCabinet={isMyCabinet as boolean}
+                setIsAdminCabinetInfoVisible={setIsAdminCabinetInfoVisible}
               />
             </>
           )}
@@ -108,6 +112,9 @@ const AdminMainPage = () => {
               username={username}
               setSelectedMultiCabinets={setSelectedMultiCabinets}
               setModalCancelState={setOpenStateManagementModal}
+              isAdminCabinetInfoVisible={isAdminCabinetInfoVisible}
+              setIsAdminCabinetInfoVisible={setIsAdminCabinetInfoVisible}
+              setCheckedCabinet={setCheckedCabinet}
             />
           </div>
         )}
@@ -156,6 +163,7 @@ const AdminMainPage = () => {
                   setIsMultiButtonActive={setIsMultiButtonActive}
                   setSelectedCabinet={setSelectedCabinet}
                   isMyCabinet={isMyCabinet as boolean}
+                  setIsAdminCabinetInfoVisible={setIsAdminCabinetInfoVisible}
                 />
               </div>
             </>
@@ -182,6 +190,9 @@ const AdminMainPage = () => {
               username={username}
               setSelectedMultiCabinets={setSelectedMultiCabinets}
               setModalCancelState={setOpenStateManagementModal}
+              isAdminCabinetInfoVisible={isAdminCabinetInfoVisible}
+              setIsAdminCabinetInfoVisible={setIsAdminCabinetInfoVisible}
+              setCheckedCabinet={setCheckedCabinet}
             />
           </div>
         )}

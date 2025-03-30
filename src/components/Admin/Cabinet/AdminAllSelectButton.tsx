@@ -26,7 +26,7 @@ const AdminAllSelectButton = React.memo(
           className={`flex-row mr-1 w-4 h-4 appearance-none border rounded-sm bg-no-repeat bg-center
             ${
               isMultiButtonActive
-                ? `border-blue-600 checked:bg-blue-600 checked:border-0 ${
+                ? `border-blue-600 ${
                     selectedMultiCabinets?.length === cabinetData.length
                       ? "bg-[url('./icons/check.svg')] bg-blue-600"
                       : selectedMultiCabinets?.length &&
