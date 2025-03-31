@@ -6,7 +6,7 @@ import {
 import { SelectedMultiCabinetsData } from "@/types/MultiCabinetType";
 import { formatDate } from "@/utils/formatDate";
 import CabinetActionButtons from "@/components/Cabinet/CabinetActionButtons";
-import { useAdminStatus } from "@/hooks/useAdminStatus";
+import { useAdminStatus } from "@/hooks/Admin/useAdminStatus";
 import CabinetSVG from "@/icons/cabinet.svg?react";
 
 interface AdminCabinetInformationDisplayProps

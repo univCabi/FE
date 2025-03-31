@@ -10,7 +10,7 @@ import AdminAllSelectButton from "@/components/Admin/Cabinet/AdminAllSelectButto
 import CabinetStatusInformation from "@/components/Cabinet/CabinetStatusInformation";
 import CabinetButtonSkeleton from "@/components/Skeleton/CabinetButtonSkeleton";
 import SubmitAndNavigateButton from "@/components/SubmitAndNavigateButton";
-import { useAdminCabinet } from "@/hooks/useAdminCabinet";
+import { useAdminCabinet } from "@/hooks/Admin/useAdminCabinet";
 import { useCabinet } from "@/hooks/useCabinet";
 import { useCabinetActivation } from "@/hooks/useCabinetActivation";
 

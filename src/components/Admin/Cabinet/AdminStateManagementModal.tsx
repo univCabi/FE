@@ -7,7 +7,7 @@ import {
   CabinetStatusType,
 } from "@/types/StatusEnum";
 import SubmitAndNavigateButton from "@/components/SubmitAndNavigateButton";
-import { useAdminStatus } from "@/hooks/useAdminStatus";
+import { useAdminStatus } from "@/hooks/Admin/useAdminStatus";
 import { useBuildingState } from "@/hooks/useBuildingState";
 import AngleDownSVG from "@/icons/angleDown.svg?react";
 

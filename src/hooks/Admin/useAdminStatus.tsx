@@ -33,6 +33,7 @@ export const useAdminStatus = ({
     string | null
   >(null);
   const [newStatus, setNewStatus] = useState<string>();
+  const [brokenDate, setBrokenDate] = useState<string | null>(null);
 
   const { fetchAdminCabinetReturn } = useAdminReturn({
     selectedCabinet,
@@ -109,7 +110,14 @@ export const useAdminStatus = ({
       );
       if (response) {
         setSelectedStatus(response.data.cabinets.status);
+
         setSelectedBrokenReason(response.data.cabinets.reason);
+        // if (selectedStatus === CabinetStatus.BROKEN){
+        // setBrokenDate(response.data.cabinets.setBrokenDate); // FIXME: brokenDate 추가 시
+        // }
+        // if (selectedStatus === CabinetStatus.AVAILABLE) {
+        //   setBrokenDate(null)
+        // }
         setSelectedMultiCabinets(null);
         setSelectedCabinet(null);
         setModalCancelState(false);
