@@ -2,7 +2,7 @@ import React from "react";
 import { useLocation, useNavigate } from "react-router";
 import SubmitAndNavigateButton from "@/components/SubmitAndNavigateButton";
 import { useLogout } from "@/hooks/useLogout";
-import LockSVG from "@/icons/lock.svg?react";
+import AvailableSVG from "@/icons/available.svg?react";
 import HistorySVG from "@/icons/log.svg?react";
 import LogoutSVG from "@/icons/logout.svg?react";
 
@@ -26,7 +26,12 @@ const CabinetFooterMenuButton = React.memo(() => {
                 : "button-side-icon-before"
             }`}
             text={"Available"}
-            svgComponent={<LockSVG className="mb-1 inline-block text-center" />} // svg 바꾸기
+            svgComponent={
+              <AvailableSVG
+                className="mb-1.5 inline-block text-center"
+                width={25}
+              />
+            }
           />
           <SubmitAndNavigateButton
             onClick={() => navigate("/history")}

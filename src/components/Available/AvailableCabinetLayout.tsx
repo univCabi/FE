@@ -54,9 +54,9 @@ const AvailableCabinetLayout = ({
     }
   }, [selectedBuilding, availableFloors]);
 
+  // 학과에 해당하는 건물 및 층 정보 찾기
   useEffect(() => {
     setSaveAffiliation(userData.affiliation);
-    // 학과에 해당하는 건물 및 층 정보 찾기
     const affiliationData = affiliationBuildingData.find(
       (item) => item.affiliation === userData.affiliation,
     );
