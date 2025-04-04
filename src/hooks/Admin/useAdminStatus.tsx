@@ -110,14 +110,12 @@ export const useAdminStatus = ({
       );
       if (response) {
         setSelectedStatus(response.data.cabinets.status);
-
-        setSelectedBrokenReason(response.data.cabinets.reason);
-        // if (selectedStatus === CabinetStatus.BROKEN){
-        // setBrokenDate(response.data.cabinets.setBrokenDate); // FIXME: brokenDate 추가 시
+        // if (newStatus === CabinetStatus.AVAILABLE) {
+        //   setSelectedBrokenReason(null);
         // }
-        // if (selectedStatus === CabinetStatus.AVAILABLE) {
-        //   setBrokenDate(null)
-        // }
+        setSelectedBrokenReason(selectedBrokenReason);
+        console.log(selectedBrokenReason);
+        setBrokenDate(response.data.brokenDate);
         setSelectedMultiCabinets(null);
         setSelectedCabinet(null);
         setModalCancelState(false);
@@ -152,18 +150,22 @@ export const useAdminStatus = ({
   };
 
   // 상태 저장
-  const handleStatusSave = (
-    newStatus: CabinetStatusType,
-    reason: string | null,
-  ) => {
+  const handleStatusSave = (newStatus: CabinetStatusType, reason: string) => {
     fetchAdminChangeStatus(newStatus, reason);
   };
 
-  useEffect(() => {
-    if (newStatus !== CabinetStatus.BROKEN) {
-      setSelectedBrokenReason(null);
-    }
-  }, [newStatus]);
+  // FIXME: 지금 reason에 null이 자꾸 들어감 ;;
+  // useEffect(() => {
+  //   if (newStatus !== CabinetStatus.BROKEN && selectedBrokenReason) {
+  //     setSelectedBrokenReason(null);
+  //   }
+  // }, [newStatus]);
+
+  // useEffect(() => {
+  //   if (newStatus !== CabinetStatus.BROKEN) {
+  //     setSelectedBrokenReason(null);
+  //   }
+  // }, [newStatus]);
 
   return {
     showsReturnButton,

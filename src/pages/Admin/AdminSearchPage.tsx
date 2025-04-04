@@ -27,6 +27,9 @@ const AdminSearchPage = () => {
     setExpiredAt,
     isMyCabinet,
     setIsMyCabinet,
+    setIsRentAvailable,
+    isRentAvailable,
+    setUsername,
   } = useCabinet();
   const { fetchClickResultButton } = useSearchResultButton();
   const {
@@ -119,6 +122,9 @@ const AdminSearchPage = () => {
           expiredAt={expiredAt}
           isMyCabinet={isMyCabinet as boolean}
           setIsMyCabinet={setIsMyCabinet}
+          setUsername={setUsername}
+          isRentAvailable={isRentAvailable as boolean}
+          setIsRentAvailable={setIsRentAvailable}
         />
       </div>
     </>

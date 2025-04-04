@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { SelectedCabinetInfo, StatusData } from "@/types/CabinetType";
 import { SelectedMultiCabinetsData } from "@/types/MultiCabinetType";
 import AdminCabinetInformationDisplay from "@/components/Admin/Cabinet/AdminCabinetInformationDisplay";
