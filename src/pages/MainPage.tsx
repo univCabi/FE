@@ -6,6 +6,7 @@ import CabinetButtonLayout from "@/components/Cabinet/CabinetButtonLayout";
 import CabinetStatusInformation from "@/components/Cabinet/CabinetStatusInformation";
 import SelectedCabinetInformation from "@/components/Cabinet/SelectedCabinetInformation";
 import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
+import { useAvailableCabinet } from "@/hooks/useAvailableCabinet";
 import { useBuildingState } from "@/hooks/useBuildingState";
 import { useCabinet } from "@/hooks/useCabinet";
 
@@ -26,7 +27,12 @@ const MainPage = () => {
     isMyCabinet,
     setIsMyCabinet,
     fetchCabinetDetailInformation,
+    setUsername,
+    isRentAvailable,
+    setIsRentAvailable,
   } = useCabinet();
+
+  const { setCabinetDataByFloor } = useAvailableCabinet();
 
   useEffect(() => {
     if (location.state?.selectedBuilding) {
@@ -70,6 +76,9 @@ const MainPage = () => {
                 isMyCabinet={isMyCabinet as boolean}
                 filteredCabinetDetail={filteredCabinetDetail}
                 fetchCabinetDetailInformation={fetchCabinetDetailInformation}
+                selectedCabinet={selectedCabinet}
+                selectedStatus={selectedStatus}
+                setCabinetDataByFloor={setCabinetDataByFloor}
               />
               <CabinetStatusInformation />
             </>
@@ -88,6 +97,9 @@ const MainPage = () => {
             expiredAt={expiredAt}
             isMyCabinet={isMyCabinet as boolean}
             setIsMyCabinet={setIsMyCabinet}
+            setUsername={setUsername}
+            isRentAvailable={isRentAvailable as boolean}
+            setIsRentAvailable={setIsRentAvailable}
           />
         </div>
       </div>
@@ -129,6 +141,9 @@ const MainPage = () => {
                   isMyCabinet={isMyCabinet as boolean}
                   filteredCabinetDetail={filteredCabinetDetail}
                   fetchCabinetDetailInformation={fetchCabinetDetailInformation}
+                  selectedCabinet={selectedCabinet}
+                  selectedStatus={selectedStatus}
+                  setCabinetDataByFloor={setCabinetDataByFloor}
                 />
               </div>
               {/* 화면 크기 = 768px 이하일 때 사물함 정보 숨김 */}
@@ -153,6 +168,9 @@ const MainPage = () => {
               expiredAt={expiredAt}
               isMyCabinet={isMyCabinet as boolean}
               setIsMyCabinet={setIsMyCabinet}
+              setUsername={setUsername}
+              isRentAvailable={isRentAvailable as boolean}
+              setIsRentAvailable={setIsRentAvailable}
             />
           </div>
         )}

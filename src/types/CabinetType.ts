@@ -15,6 +15,7 @@ export interface StatusData {
 }
 
 export interface CabinetData extends BuildingFloorSingleData {
+  floor: number;
   id: number;
   cabinetNumber: number;
   cabinetXPos: number;
@@ -24,6 +25,7 @@ export interface CabinetData extends BuildingFloorSingleData {
   username: string | null;
   isMine: boolean;
   expiredAt: string | null;
+  isRentAvailable: boolean;
 }
 
 export interface SelectedCabinet {

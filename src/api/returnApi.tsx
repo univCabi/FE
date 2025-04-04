@@ -8,6 +8,7 @@ export const returnApi = async (cabinetId: number) => {
       return {
         message: "반납 성공",
         data: response.data,
+        state: response.status,
       };
     }
   } catch (error) {

@@ -6,7 +6,7 @@ import AdminCabinetLayout from "@/components/Admin/Cabinet/AdminCabinetLayout";
 import AdminSelectedCabinetInformation from "@/components/Admin/Cabinet/AdminSelectedCabinetInformation";
 import BuildingSelectButton from "@/components/BuildingSelectButton";
 import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
-import { useAdminCabinet } from "@/hooks/useAdminCabinet";
+import { useAdminCabinet } from "@/hooks/Admin/useAdminCabinet";
 import { useBuildingState } from "@/hooks/useBuildingState";
 import { useCabinet } from "@/hooks/useCabinet";
 

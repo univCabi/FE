@@ -6,22 +6,27 @@ import { cabinetCallApi } from "@/api/cabinetCallApi";
 
 interface UseCabinetActivationProps extends BuildingInfo {
   isMyCabinet: boolean;
+  setCabinetDataByFloor: React.Dispatch<
+    React.SetStateAction<Record<string, CabinetData[]>>
+  >;
 }
 
 export const useCabinetActivation = ({
   selectedBuilding,
   selectedFloor,
   isMyCabinet,
+  setCabinetDataByFloor,
 }: UseCabinetActivationProps) => {
   const [cabinetData, setCabinetData] = useState<CabinetData[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   // 사물함 API 호출
+  // Main Page
   const fetchCabinetData = async (building: string, floor: number) => {
     try {
       setIsLoading(true);
       const response = await cabinetCallApi(building, floor);
-      setCabinetData(response.cabinets);
+      setCabinetData(response);
       log.info(
         `API 호출 성공: cabinetCallApi, ${JSON.stringify(response, null, 2)}`,
       );
@@ -32,6 +37,32 @@ export const useCabinetActivation = ({
       setIsLoading(false);
     }
   };
+
+  // Available Page
+  const fetchAvailableCabinetData = async (
+    building: string,
+    floors: number[],
+  ) => {
+    try {
+      setIsLoading(true);
+      const fetchFloorDataPromises = floors.map(async (floor) => {
+        const response = await cabinetCallApi(building, [floor]); // 각 층을 개별 호출
+        return { floor, data: response };
+      });
+      const results = await Promise.all(fetchFloorDataPromises);
+      // 층별 데이터를 객체로 저장 (예: { 2: data, 7: data })
+      const newData: Record<string, CabinetData[]> = {};
+      results.forEach(({ floor, data }) => {
+        newData[floor] = data;
+      });
+      setCabinetDataByFloor(newData);
+    } catch (error) {
+      log.error("API 호출 중 에러 발생: cabinetCallApi");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (location.pathname.startsWith("/main")) {
       if (selectedBuilding !== null && selectedFloor !== null) {
@@ -45,5 +76,6 @@ export const useCabinetActivation = ({
     setCabinetData,
     fetchCabinetData,
     isLoading,
+    fetchAvailableCabinetData,
   };
 };

@@ -1,4 +1,5 @@
 import { useLocation } from "react-router-dom";
+import { CabinetStatus } from "@/types/StatusEnum";
 
 interface CabinetActionButtonsProps {
   onRentalClick?: () => void;
@@ -7,6 +8,8 @@ interface CabinetActionButtonsProps {
   onCancelClick: () => void;
   text?: string;
   stateManagementText?: string;
+  isRentAvailble?: boolean;
+  selectedStatus?: string;
 }
 
 const CabinetActionButtons = ({
@@ -16,6 +19,8 @@ const CabinetActionButtons = ({
   onStateManagementClick,
   text,
   stateManagementText,
+  isRentAvailble,
+  selectedStatus,
 }: CabinetActionButtonsProps) => {
   const location = useLocation();
   const isAdminPage = location.pathname.startsWith("/admin"); // Admin일 경우, 상태관리/취소 버튼 -> 다른 CSS 적용
@@ -26,7 +31,7 @@ const CabinetActionButtons = ({
       {onRentalClick && (
         <button
           onClick={onRentalClick}
-          className="p-4 w-60 button-cabinet-action"
+          className={`${isRentAvailble ? "p-4 w-60 button-cabinet-action" : "disabled pointer-events-none text-opacity-50  p-4 w-60 bg-[#304F92] text-white border  border-blue-600 rounded-lg transition-all duration-150;"}`}
         >
           {text}
         </button>
@@ -55,13 +60,20 @@ const CabinetActionButtons = ({
       )}
       <button
         onClick={onCancelClick}
-        className={`mt-4 p-4 w-60 border rounded-lg transition-all duration-150 ${
-          isAdminPage
-            ? hasReturnButton
-              ? "bg-white text-gray-500 border-gray-500 hover:bg-gray-200"
+        className={`mt-4 p-4 w-60 border rounded-lg transition-all duration-150
+          ${
+            selectedStatus === CabinetStatus.AVAILABLE && !isRentAvailble
+              ? "bg-[#BAB9B9] text-opacity-50 hover:bg-[#BAB9B9] hover:text-opacity-50 "
               : "button-cabinet-cancel"
-            : "button-cabinet-cancel"
-        }`}
+          }
+          ${
+            isAdminPage
+              ? hasReturnButton
+                ? "bg-white text-gray-500 border-gray-500 hover:bg-gray-200"
+                : "button-cabinet-cancel"
+              : "button-cabinet-cancel"
+          }
+        `}
       >
         취소
       </button>

@@ -61,7 +61,7 @@ const BuildingSelectButton = ({
                       setSelectedCabinet(null);
                       setSearchParams({
                         building: buildingData.building,
-                        floor: floor.toString(),
+                        floors: floor.toString(),
                       });
                     }}
                   >
