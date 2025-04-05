@@ -7,7 +7,9 @@ import { useBuildingState } from "@/hooks/useBuildingState";
 const MainLayout = () => {
   const { buildingList, selectedBuilding, setSelectedBuilding } =
     useBuildingState();
-  useAuthRedirect();
+  const { isLoading } = useAuthRedirect();
+
+  if (isLoading) return <></>;
   return (
     <>
       <SideNavigationLayoutContext.Provider
