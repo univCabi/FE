@@ -24,6 +24,7 @@ api.interceptors.request.use(
     return response;
   },
   (error) => {
+    log.error(`요청 인터셉터 에러 ${error}`);
     return Promise.reject(error);
   },
 );
@@ -46,9 +47,10 @@ api.interceptors.response.use(
         const newAccessToken = response.data.accessToken;
 
         setCookie("accessToken", newAccessToken);
+        log.info("accessToken 재발급 성공");
         return api(Request);
       } catch (refreshError) {
-        console.error("refresh 토큰 만료", refreshError);
+        log.warn("refresh 토큰 만료");
         removeCookie("accessToken");
         window.location.href = "/login";
         return Promise.reject(refreshError);
@@ -57,13 +59,13 @@ api.interceptors.response.use(
       objectErrorStatus === 401 &&
       objectErrorTokenClass === `"RefreshToken"`
     ) {
-      console.error("refresh 토큰 만료", error);
+      log.warn("refresh 토큰 만료");
       removeCookie("accessToken");
       window.location.href = "/login";
       return Promise.reject(error);
     }
     if (objectErrorStatus === 500) {
-      console.error("500에러", error);
+      log.error("서버 에러 500");
       removeCookie("accessToken");
       window.location.href = "/login";
       return Promise.reject(error);
