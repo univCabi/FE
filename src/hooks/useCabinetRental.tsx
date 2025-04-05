@@ -35,7 +35,6 @@ export const useCabinetRental = ({
           setIsMyCabinet(response.data.isMine);
           setUsername(response.data.username);
           setIsRentAvailable(response.data.isRentAvailable);
-
           closeRentalModal();
         }
         log.info(
@@ -43,6 +42,8 @@ export const useCabinetRental = ({
         );
       } catch (error) {
         log.error("API 호출 중 에러 발생: rentApi");
+        alert("현재 대여 중인 사물함이 있습니다.");
+        closeRentalModal();
       }
     }
   };

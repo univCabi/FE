@@ -21,7 +21,6 @@ interface AvailableCabinetLayoutProps extends CabinetInfo {
   setAvailableFloors: (floors: number[] | null) => void;
   setSaveAffiliation: (affiliation: string | null) => void;
 }
-
 const AvailableCabinetLayout = ({
   availableFloors,
   selectedBuilding,
@@ -45,7 +44,6 @@ const AvailableCabinetLayout = ({
     isMyCabinet,
     setCabinetDataByFloor,
   });
-
   useEffect(() => {
     if (location.pathname.startsWith("/available")) {
       if (selectedBuilding !== null && availableFloors !== null) {
@@ -53,7 +51,6 @@ const AvailableCabinetLayout = ({
       }
     }
   }, [selectedBuilding, availableFloors]);
-
   // 학과에 해당하는 건물 및 층 정보 찾기
   useEffect(() => {
     setSaveAffiliation(userData.affiliation);
@@ -65,7 +62,6 @@ const AvailableCabinetLayout = ({
       setAvailableFloors(affiliationData.floors);
     }
   }, [userData.affiliation]);
-
   return (
     <>
       {availableFloors?.map((floors) => {
@@ -78,43 +74,50 @@ const AvailableCabinetLayout = ({
             <div className="text-2xl text-left text-gray-600 font-bold mx-24">
               {selectedBuilding} {floors}F
             </div>
-            <div className="mt-3 border border-b-1 border-x-0 border-t-0 border-gray-400 mx-24" />
-            <div className="relative w-full flex items-center justify-center overflow-scroll">
-              <div className="relative w-full max-w-[80%] h-[30rem] flex flex-wrap items-center justify-center mt-3">
-                {filteredCabinetData.map((cabinet, index) => {
-                  const row = Math.floor(index / rowsPerCol);
-                  const col = index % rowsPerCol;
-                  const isSelected = selectedCabinet?.cabinetId === cabinet.id;
-                  return (
-                    <button
-                      key={cabinet.id}
-                      className={`absolute w-16 h-20 rounded-md hover:bg-opacity-80 flex items-end text-sm p-2 mt-12
-                                  ${getStatusColor(cabinet.status, cabinet.isMine)} 
-                                  ${isSelected ? "shadow-md" : ""}
-                                `}
-                      style={{
-                        top: `${col * 100}px`,
-                        left: `${row * 90}px`,
-                        transform: "translate(-50%, -50%)", // FIXME: 위치 배열 다시
-                      }}
-                      onClick={() => {
-                        setSelectedFloor(floors);
-                        fetchCabinetDetailInformation(
-                          cabinet.id,
-                          cabinet.cabinetNumber,
-                        );
-                      }}
-                    >
-                      {cabinet.cabinetNumber}
-                      {cabinet.status === CabinetStatus.AVAILABLE &&
-                        !cabinet.isRentAvailable && (
-                          <div className="absolute top-6 right-4">
-                            <LockSVG className="h-7 items-center justify-center" />
-                          </div>
-                        )}
-                    </button>
-                  );
-                })}
+            {/* 선 */}
+            <div className="mt-3 border border-b-1 border-x-0 border-t-0 border-gray-400 mx-20" />
+            <div className="relative w-full flex items-center justify-center overflow-y-auto ">
+              <div className="relative h-[30rem] overflow-scroll lg:w-[67rem] md:w-[80%] sm:w-[75%] w-[100%] ml-5">
+                {filteredCabinetData.length === 0 ? (
+                  <div className="text-left text-gray-500 text-xl mt-5">
+                    현재 사용 가능한 사물함이 없습니다.
+                  </div>
+                ) : (
+                  filteredCabinetData.map((cabinet, index) => {
+                    const row = Math.floor(index / rowsPerCol);
+                    const col = index % rowsPerCol;
+                    const isSelected =
+                      selectedCabinet?.cabinetId === cabinet.id;
+                    return (
+                      <button
+                        key={cabinet.id}
+                        className={`absolute w-16 h-20 rounded-md hover:bg-opacity-80 flex items-end text-sm p-2 mt-7
+                          ${getStatusColor(cabinet.status, cabinet.isMine)}
+                          ${isSelected ? "shadow-md" : ""}
+                        `}
+                        style={{
+                          top: `${col * 100}px`,
+                          left: `${row * 90}px`,
+                        }}
+                        onClick={() => {
+                          setSelectedFloor(floors);
+                          fetchCabinetDetailInformation(
+                            cabinet.id,
+                            cabinet.cabinetNumber,
+                          );
+                        }}
+                      >
+                        {cabinet.cabinetNumber}
+                        {cabinet.status === CabinetStatus.AVAILABLE &&
+                          !cabinet.isRentAvailable && (
+                            <div className="absolute top-6 right-4">
+                              <LockSVG className="h-7 items-center justify-center" />
+                            </div>
+                          )}
+                      </button>
+                    );
+                  })
+                )}
               </div>
             </div>
           </div>

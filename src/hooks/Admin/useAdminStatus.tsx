@@ -110,11 +110,7 @@ export const useAdminStatus = ({
       );
       if (response) {
         setSelectedStatus(response.data.cabinets.status);
-        // if (newStatus === CabinetStatus.AVAILABLE) {
-        //   setSelectedBrokenReason(null);
-        // }
         setSelectedBrokenReason(selectedBrokenReason);
-        console.log(selectedBrokenReason);
         setBrokenDate(response.data.brokenDate);
         setSelectedMultiCabinets(null);
         setSelectedCabinet(null);

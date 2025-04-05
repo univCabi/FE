@@ -81,7 +81,7 @@ const SelectedCabinetInformation = ({
     setIsRentAvailable,
   });
   return (
-    <div className="absolute inset-y-0 right-0 w-80 pt-20 flex flex-col justify-center items-center bg-white border-l-2 border-gray-400">
+    <div className="absolute inset-y-0 right-0 w-80 pt-20 flex flex-col justify-center items-center bg-white border-l-2 border-gray-400 ">
       {selectedCabinet !== null ? (
         selectedStatus === CabinetStatus.AVAILABLE ? (
           isRentAvailable === true ? (

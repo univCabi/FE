@@ -27,6 +27,9 @@ const SearchPage = () => {
     setExpiredAt,
     isMyCabinet,
     setIsMyCabinet,
+    setUsername,
+    isRentAvailable,
+    setIsRentAvailable,
   } = useCabinet();
   const { fetchClickResultButton } = useSearchResultButton();
   const {
@@ -119,6 +122,9 @@ const SearchPage = () => {
           expiredAt={expiredAt}
           isMyCabinet={isMyCabinet as boolean}
           setIsMyCabinet={setIsMyCabinet}
+          setUsername={setUsername}
+          isRentAvailable={isRentAvailable}
+          setIsRentAvailable={setIsRentAvailable}
         />
       </div>
     </>

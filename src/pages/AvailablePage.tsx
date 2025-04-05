@@ -41,13 +41,12 @@ const AvailablePage = () => {
     <>
       <div className="relative h-screen flex flex-col">
         {/* 좌측 사이드바 */}
-        <div className="absolute inset-y-0 left-0 w-40 border-r-2 border-gray-400 flex-col pt-20">
+        <div className="absolute inset-y-0 left-0 w-40 border-r-2 border-gray-400 flex-col pt-20 hidden sm:flex">
           {/* 하단 메뉴(좌측) */}
           <CabinetFooterMenuButton />
         </div>
         {/* 메인 콘텐츠 */}
-        {/* <div className="absolute inset-y-0 left-0 right-0 md:left-40 md:right-80 border-gray-400 pt-16 hidden md:flex flex-col "> */}
-        <div className="absolute inset-y-0 left-40 right-80 border-gray-400 pt-16 flex-col ">
+        <div className="absolute inset-y-0 left-0 right-0 md:left-40 md:right-80 sm:left-[7rem] border-gray-400 pt-16 sm:flex flex-col overflow-y-auto">
           <AvailableCountdown />
           <AvailableCabinetLayout
             availableFloors={availableFloors}
@@ -63,12 +62,13 @@ const AvailablePage = () => {
             setAvailableFloors={setAvailableFloors}
             setSaveAffiliation={setSaveAffiliation}
             userData={userData}
-          />{" "}
+          />
         </div>
       </div>
 
+      {/* 화면 크기 = 768px 이상일 때 */}
       {/* 선택한 사물함 정보(우측) */}
-      <div className="absolute inset-y-0 right-0 w-80 border-gray-400 border-l-2 pt-20 hidden md:flex">
+      <div className="absolute inset-y-0 right-0 w-80 border-gray-400 border-l-2 pt-20 md:flex hidden">
         <SelectedCabinetInformation
           selectedBuilding={selectedBuilding}
           selectedFloor={selectedFloor}
@@ -85,6 +85,26 @@ const AvailablePage = () => {
           setIsRentAvailable={setIsRentAvailable}
         />
       </div>
+      {/* 화면 크기 = 768px 이하일 때 */}
+      {selectedCabinet && (
+        <div className="absolute inset-y-0 right-0 border-gray-400 border-l-2 pt-20">
+          <SelectedCabinetInformation
+            selectedBuilding={selectedBuilding}
+            selectedFloor={selectedFloor}
+            selectedCabinet={selectedCabinet}
+            selectedStatus={selectedStatus as string}
+            setSelectedStatus={setSelectedStatus}
+            setExpiredAt={setExpiredAt}
+            setSelectedCabinet={setSelectedCabinet}
+            expiredAt={expiredAt}
+            isMyCabinet={isMyCabinet as boolean}
+            setIsMyCabinet={setIsMyCabinet}
+            setUsername={setUsername}
+            isRentAvailable={isRentAvailable as boolean}
+            setIsRentAvailable={setIsRentAvailable}
+          />
+        </div>
+      )}
     </>
   );
 };

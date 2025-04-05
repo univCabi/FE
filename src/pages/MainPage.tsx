@@ -61,6 +61,14 @@ const MainPage = () => {
           <CabinetFooterMenuButton />
         </div>
 
+        <>
+          {selectedBuilding === null && (
+            <div className="absolute inset-y-0 left-40 right-80 items-center flex justify-center text-md">
+              나중에 사용법 들어가면 좋을 것 같아서 추후에 추가하겠습니다
+            </div>
+          )}
+        </>
+
         {/* 사물함 위치(중앙) */}
         <div className="absolute inset-y-0 left-0 right-0 md:left-64 md:right-80 border-gray-400 pt-16 hidden md:flex">
           {/* 건물 선택 후, 층수 선택을 둘 다 해야 사물함 컴포넌트가 보임 */}
