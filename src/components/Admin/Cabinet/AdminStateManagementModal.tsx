@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { SelectedCabinet, StatusData } from "@/types/CabinetType";
 import { SelectedMultiCabinetsData } from "@/types/MultiCabinetType";
 import {
@@ -7,7 +8,7 @@ import {
   CabinetStatusType,
 } from "@/types/StatusEnum";
 import SubmitAndNavigateButton from "@/components/SubmitAndNavigateButton";
-import { useAdminStatus } from "@/hooks/useAdminStatus";
+import { useAdminStatus } from "@/hooks/Admin/useAdminStatus";
 import { useBuildingState } from "@/hooks/useBuildingState";
 import AngleDownSVG from "@/icons/angleDown.svg?react";
 
@@ -43,6 +44,7 @@ const AdminStateManagementModal = ({
     setNewStatus,
     getStatusLabel,
     getMultiCabinetStatusLabel,
+    setSelectedBrokenReason,
     handleStatusSave,
     handleReasonClick,
   } = useAdminStatus({
@@ -69,6 +71,10 @@ const AdminStateManagementModal = ({
     setNewStatus(status);
     setIsDropdownOpen(false);
   };
+
+  useEffect(() => {
+    setSelectedBrokenReason(selectedBrokenReason);
+  }, [selectedBrokenReason]);
 
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">

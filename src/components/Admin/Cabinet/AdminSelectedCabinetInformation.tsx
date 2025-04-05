@@ -1,12 +1,11 @@
-import { useEffect } from "react";
 import { SelectedCabinetInfo, StatusData } from "@/types/CabinetType";
 import { SelectedMultiCabinetsData } from "@/types/MultiCabinetType";
 import AdminCabinetInformationDisplay from "@/components/Admin/Cabinet/AdminCabinetInformationDisplay";
 import AdminStateManagementModal from "@/components/Admin/Cabinet/AdminStateManagementModal";
 import ConfirmModalView from "@/components/ConfirmModalView";
-import { useAdminCabinet } from "@/hooks/useAdminCabinet";
-import { useAdminReturn } from "@/hooks/useAdminReturn";
-import { useAdminStatus } from "@/hooks/useAdminStatus";
+import { useAdminCabinet } from "@/hooks/Admin/useAdminCabinet";
+import { useAdminReturn } from "@/hooks/Admin/useAdminReturn";
+import { useAdminStatus } from "@/hooks/Admin/useAdminStatus";
 import { useConfirmModalState } from "@/hooks/useConfirmModalState";
 import CabinetSVG from "@/icons/cabinet.svg?react";
 

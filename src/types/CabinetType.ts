@@ -1,3 +1,5 @@
+import { UserData } from "@/types/UserType";
+
 export interface BuildingData {
   building: string;
   floor: number[];
@@ -15,6 +17,7 @@ export interface StatusData {
 }
 
 export interface CabinetData extends BuildingFloorSingleData {
+  floor: number;
   id: number;
   cabinetNumber: number;
   cabinetXPos: number;
@@ -24,6 +27,7 @@ export interface CabinetData extends BuildingFloorSingleData {
   username: string | null;
   isMine: boolean;
   expiredAt: string | null;
+  isRentAvailable: boolean;
 }
 
 export interface SelectedCabinet {
@@ -46,11 +50,16 @@ export interface SelectedCabinetInfo extends CabinetInfo {
   expiredAt: string | null;
 }
 
-export interface CabinetButtonLayoutProps extends BuildingInfo {
+export interface CabinetDetailInfo extends BuildingInfo {
   isMyCabinet: boolean;
   filteredCabinetDetail: {
     id: number;
     cabinetNumber: number;
   } | null;
   fetchCabinetDetailInformation: (id: number, cabientNumber: number) => void;
+}
+
+export interface AvailableFloorInfo {
+  setSelectedBuilding: (building: string | null) => void;
+  userData: UserData;
 }

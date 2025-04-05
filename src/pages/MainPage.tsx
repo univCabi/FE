@@ -6,8 +6,10 @@ import CabinetButtonLayout from "@/components/Cabinet/CabinetButtonLayout";
 import CabinetStatusInformation from "@/components/Cabinet/CabinetStatusInformation";
 import SelectedCabinetInformation from "@/components/Cabinet/SelectedCabinetInformation";
 import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
+import { useAvailableCabinet } from "@/hooks/useAvailableCabinet";
 import { useBuildingState } from "@/hooks/useBuildingState";
 import { useCabinet } from "@/hooks/useCabinet";
+import { useUserData } from "@/hooks/useUserData";
 
 const MainPage = () => {
   const { buildingList, selectedBuilding, setSelectedBuilding } = useContext(
@@ -26,7 +28,15 @@ const MainPage = () => {
     isMyCabinet,
     setIsMyCabinet,
     fetchCabinetDetailInformation,
+    setUsername,
+    isRentAvailable,
+    setIsRentAvailable,
   } = useCabinet();
+  const { userData } = useUserData();
+  const { setCabinetDataByFloor, availableFloors } = useAvailableCabinet({
+    setSelectedBuilding,
+    userData,
+  });
 
   useEffect(() => {
     if (location.state?.selectedBuilding) {
@@ -55,6 +65,14 @@ const MainPage = () => {
           <CabinetFooterMenuButton />
         </div>
 
+        <>
+          {selectedBuilding === null && (
+            <div className="absolute inset-y-0 left-40 right-80 items-center flex justify-center text-md">
+              나중에 사용법 들어가면 좋을 것 같아서 추후에 추가하겠습니다
+            </div>
+          )}
+        </>
+
         {/* 사물함 위치(중앙) */}
         <div className="absolute inset-y-0 left-0 right-0 md:left-64 md:right-80 border-gray-400 pt-16 hidden md:flex">
           {/* 건물 선택 후, 층수 선택을 둘 다 해야 사물함 컴포넌트가 보임 */}
@@ -70,6 +88,10 @@ const MainPage = () => {
                 isMyCabinet={isMyCabinet as boolean}
                 filteredCabinetDetail={filteredCabinetDetail}
                 fetchCabinetDetailInformation={fetchCabinetDetailInformation}
+                selectedCabinet={selectedCabinet}
+                selectedStatus={selectedStatus}
+                setCabinetDataByFloor={setCabinetDataByFloor}
+                availableFloors={availableFloors}
               />
               <CabinetStatusInformation />
             </>
@@ -88,6 +110,9 @@ const MainPage = () => {
             expiredAt={expiredAt}
             isMyCabinet={isMyCabinet as boolean}
             setIsMyCabinet={setIsMyCabinet}
+            setUsername={setUsername}
+            isRentAvailable={isRentAvailable as boolean}
+            setIsRentAvailable={setIsRentAvailable}
           />
         </div>
       </div>
@@ -129,6 +154,10 @@ const MainPage = () => {
                   isMyCabinet={isMyCabinet as boolean}
                   filteredCabinetDetail={filteredCabinetDetail}
                   fetchCabinetDetailInformation={fetchCabinetDetailInformation}
+                  selectedCabinet={selectedCabinet}
+                  selectedStatus={selectedStatus}
+                  setCabinetDataByFloor={setCabinetDataByFloor}
+                  availableFloors={availableFloors}
                 />
               </div>
               {/* 화면 크기 = 768px 이하일 때 사물함 정보 숨김 */}
@@ -153,6 +182,9 @@ const MainPage = () => {
               expiredAt={expiredAt}
               isMyCabinet={isMyCabinet as boolean}
               setIsMyCabinet={setIsMyCabinet}
+              setUsername={setUsername}
+              isRentAvailable={isRentAvailable as boolean}
+              setIsRentAvailable={setIsRentAvailable}
             />
           </div>
         )}

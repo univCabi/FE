@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { SelectedCabinet } from "@/types/CabinetType";
 import { log } from "@/utils/logger";
 import { returnApi } from "@/api/returnApi";
@@ -8,6 +9,8 @@ interface UseCabinetReturnProps {
   setSelectedStatus: (status: string) => void;
   setExpiredAt: (expiredAt: string | null) => void;
   setIsMyCabinet: (isMine: boolean) => void;
+  setUsername: (username: string | null) => void;
+  setIsRentAvailable: (isRentAvailable: boolean) => void;
 }
 
 export const useCabinetReturn = ({
@@ -16,16 +19,21 @@ export const useCabinetReturn = ({
   setSelectedStatus,
   setExpiredAt,
   setIsMyCabinet,
+  setUsername,
+  setIsRentAvailable,
 }: UseCabinetReturnProps) => {
   const fetchCabinetReturn = async () => {
     if (!selectedCabinet) return;
     try {
       const response = await returnApi(selectedCabinet.cabinetId);
+
       if (response) {
         setSelectedStatus(response.data.status);
         setIsMyCabinet(response.data.isMine);
+        setIsRentAvailable(response.data.isRentAvailable);
+        setUsername(null);
+        setExpiredAt(null);
         closeReturnModal();
-        setExpiredAt(null); // 반납 기간 초기화
         log.info(
           `API 호출 성공: returnApi, ${JSON.stringify(response, null, 2)}`,
         );

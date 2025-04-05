@@ -7,6 +7,7 @@ import { cabinetCallApi } from "@/api/cabinetCallApi";
 interface filteredCabinetDetailProps {
   building: string;
   floor: number;
+  cabinetNumber: number;
 }
 
 export const useSearchResultButton = () => {
@@ -23,18 +24,19 @@ export const useSearchResultButton = () => {
   ) => {
     try {
       const response = await cabinetCallApi(building, floor);
-      // keyword와 cabinetNumber 비교하여 일치하는 데이터 찾기
-      const matchedCabinet = response.cabinets.find(
-        (cabinet: { cabinetNumber: number }) =>
-          cabinet.cabinetNumber === keyword,
-      );
-      if (matchedCabinet) {
-        // 상태 업데이트
-        setFilteredCabinetDetail({
-          ...matchedCabinet,
-          building,
-          floor,
-        });
+      if (response) {
+        const matchedCabinet = response.find(
+          (cabinet: { cabinetNumber: number }) =>
+            cabinet.cabinetNumber === keyword,
+        );
+
+        if (matchedCabinet) {
+          setFilteredCabinetDetail({
+            ...matchedCabinet,
+            building,
+            floor,
+          });
+        }
       }
       log.info(
         `API 호출 성공: cabinetCallApi, ${JSON.stringify(response, null, 2)}`,
@@ -50,9 +52,10 @@ export const useSearchResultButton = () => {
       const basePath = location.pathname.startsWith("/admin")
         ? "/admin/main"
         : "/main";
-      const searchResultPath = `${basePath}?building=${filteredCabinetDetail.building}&floor=${filteredCabinetDetail.floor}`;
+      const searchResultPath = `${basePath}?building=${filteredCabinetDetail.building}&floors=${filteredCabinetDetail.floor}`;
       navigate(searchResultPath, { state: { filteredCabinetDetail } });
     }
+    console.log(filteredCabinetDetail);
   }, [filteredCabinetDetail]);
 
   return {

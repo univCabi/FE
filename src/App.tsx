@@ -3,6 +3,7 @@ import "@/App.css";
 import AdminLoginPage from "@/pages/Admin/AdminLoginPage";
 import AdminMainPage from "@/pages/Admin/AdminMainPage";
 import AdminSearchPage from "@/pages/Admin/AdminSearchPage";
+import AvailablePage from "@/pages/AvailablePage";
 import ErrorPage from "@/pages/ErrorPage";
 import HistoryPage from "@/pages/HistoryPage";
 import LoginPage from "@/pages/LoginPage";
@@ -24,6 +25,7 @@ function App() {
             <Route path="/search" element={<SearchPage />} />
             <Route path="/history" element={<HistoryPage />} />
             <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/available" element={<AvailablePage />} />
           </Route>
           <Route path="*" element={<ErrorPage />} />
 

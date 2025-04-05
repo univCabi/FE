@@ -1,7 +1,7 @@
 // 사물함 배열 관련
 import { useCallback, useEffect } from "react";
 import {
-  CabinetButtonLayoutProps,
+  CabinetDetailInfo,
   SelectedCabinet,
   StatusData,
 } from "@/types/CabinetType";
@@ -10,12 +10,14 @@ import AdminAllSelectButton from "@/components/Admin/Cabinet/AdminAllSelectButto
 import CabinetStatusInformation from "@/components/Cabinet/CabinetStatusInformation";
 import CabinetButtonSkeleton from "@/components/Skeleton/CabinetButtonSkeleton";
 import SubmitAndNavigateButton from "@/components/SubmitAndNavigateButton";
-import { useAdminCabinet } from "@/hooks/useAdminCabinet";
+import { useAdminCabinet } from "@/hooks/Admin/useAdminCabinet";
+import { useAvailableCabinet } from "@/hooks/useAvailableCabinet";
 import { useCabinet } from "@/hooks/useCabinet";
 import { useCabinetActivation } from "@/hooks/useCabinetActivation";
+import { useUserData } from "@/hooks/useUserData";
 
 interface AdminCabinetLayoutProps
-  extends CabinetButtonLayoutProps,
+  extends CabinetDetailInfo,
     SelectedMultiCabinetsData {
   selectedStatus: string;
   setSelectedMultiCabinets: React.Dispatch<
@@ -24,6 +26,7 @@ interface AdminCabinetLayoutProps
   setIsMultiButtonActive: (value: boolean) => void;
   setSelectedCabinet: (cabinet: SelectedCabinet | null) => void;
   setIsAdminCabinetInfoVisible: (value: boolean) => void;
+  setSelectedBuilding: (building: string | null) => void;
 }
 
 const AdminCabinetLayout = ({
@@ -39,12 +42,20 @@ const AdminCabinetLayout = ({
   selectedStatus,
   isMyCabinet,
   setIsAdminCabinetInfoVisible,
+  setSelectedBuilding,
 }: AdminCabinetLayoutProps) => {
+  const { userData } = useUserData();
   const { getStatusColor } = useCabinet();
+  const { setCabinetDataByFloor, availableFloors } = useAvailableCabinet({
+    setSelectedBuilding,
+    userData,
+  });
   const { cabinetData, isLoading, fetchCabinetData } = useCabinetActivation({
     selectedBuilding,
     selectedFloor,
     isMyCabinet,
+    setCabinetDataByFloor,
+    availableFloors,
   });
   const { checkedCabinet, setCheckedCabinet } = useAdminCabinet();
   const MAX_CABINETS = 47; // Cabinet 배열의 최대 길이
@@ -168,15 +179,15 @@ const AdminCabinetLayout = ({
           <div className="relative h-[30rem] overflow-scroll lg:w-[67rem] md:w-[80%] sm:w-[75%] w-[100%] z-10">
             {cabinetData.map((cabinet) => {
               const isSelected = selectedMultiCabinets?.some(
-                (selected) => selected.cabinetNumber === cabinet.cabinetNumber,
+                (selected) => selected.id === cabinet.id,
               );
               return (
                 <button
                   key={cabinet.cabinetNumber}
-                  className={`absolute w-16 h-20 rounded-md hover:bg-opacity-80 flex items-end text-sm p-2
+                  className={`absolute w-16 h-20 rounded-md hover:bg-opacity-80 flex items-end text-sm p-2 
                   ${
                     isSelected
-                      ? `${getStatusColor(cabinet.status, cabinet.isMine)} opacity-100`
+                      ? `${getStatusColor(cabinet.status, cabinet.isMine)} opacity-100 shadow-md`
                       : `${getStatusColor(cabinet.status, cabinet.isMine)} ${isMultiButtonActive ? "opacity-35" : ""}`
                   }
                   `}

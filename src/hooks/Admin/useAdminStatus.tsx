@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { SelectedCabinet, StatusData } from "@/types/CabinetType";
 import { SelectedMultiCabinetsData } from "@/types/MultiCabinetType";
 import { CabinetStatus, CabinetStatusType } from "@/types/StatusEnum";
@@ -33,6 +33,7 @@ export const useAdminStatus = ({
     string | null
   >(null);
   const [newStatus, setNewStatus] = useState<string>();
+  const [brokenDate, setBrokenDate] = useState<string | null>(null);
 
   const { fetchAdminCabinetReturn } = useAdminReturn({
     selectedCabinet,
@@ -109,7 +110,8 @@ export const useAdminStatus = ({
       );
       if (response) {
         setSelectedStatus(response.data.cabinets.status);
-        setSelectedBrokenReason(response.data.cabinets.reason);
+        setSelectedBrokenReason(selectedBrokenReason);
+        setBrokenDate(response.data.brokenDate);
         setSelectedMultiCabinets(null);
         setSelectedCabinet(null);
         setModalCancelState(false);
@@ -144,18 +146,9 @@ export const useAdminStatus = ({
   };
 
   // 상태 저장
-  const handleStatusSave = (
-    newStatus: CabinetStatusType,
-    reason: string | null,
-  ) => {
+  const handleStatusSave = (newStatus: CabinetStatusType, reason: string) => {
     fetchAdminChangeStatus(newStatus, reason);
   };
-
-  useEffect(() => {
-    if (newStatus !== CabinetStatus.BROKEN) {
-      setSelectedBrokenReason(null);
-    }
-  }, [newStatus]);
 
   return {
     showsReturnButton,

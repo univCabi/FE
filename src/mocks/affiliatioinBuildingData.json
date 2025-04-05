@@ -1,0 +1,22 @@
+[
+  {
+    "affiliation": "기술데이터공학전공",
+    "building": "가온관",
+    "floors": [2, 7]
+  },
+  {
+    "affiliation": "나노융합공학전공",
+    "building": "공학1관",
+    "floors": [3, 5, 6]
+  },
+  {
+    "affiliation": "컴퓨터공학전공",
+    "building": "건축관",
+    "floors": [1]
+  },
+  {
+    "affiliation": "전자공학전공",
+    "building": "건축관",
+    "floors": [3]
+  }
+]
