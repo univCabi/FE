@@ -9,6 +9,7 @@ interface UseCabinetActivationProps extends BuildingInfo {
   setCabinetDataByFloor: React.Dispatch<
     React.SetStateAction<Record<string, CabinetData[]>>
   >;
+  availableFloors: number[] | null;
 }
 
 export const useCabinetActivation = ({
@@ -16,6 +17,7 @@ export const useCabinetActivation = ({
   selectedFloor,
   isMyCabinet,
   setCabinetDataByFloor,
+  availableFloors,
 }: UseCabinetActivationProps) => {
   const [cabinetData, setCabinetData] = useState<CabinetData[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -70,6 +72,14 @@ export const useCabinetActivation = ({
       }
     }
   }, [selectedBuilding, selectedFloor, isMyCabinet]);
+
+  useEffect(() => {
+    if (location.pathname.startsWith("/available")) {
+      if (selectedBuilding !== null && availableFloors !== null) {
+        fetchAvailableCabinetData(selectedBuilding, availableFloors);
+      }
+    }
+  }, [selectedBuilding, availableFloors]);
 
   return {
     cabinetData,

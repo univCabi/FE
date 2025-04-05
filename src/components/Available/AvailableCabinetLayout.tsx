@@ -1,14 +1,10 @@
-import { useEffect } from "react";
 import { CabinetData, CabinetInfo } from "@/types/CabinetType";
 import { CabinetStatus } from "@/types/StatusEnum";
-import { UserData } from "@/types/UserType";
 import { useCabinet } from "@/hooks/useCabinet";
 import { useCabinetActivation } from "@/hooks/useCabinetActivation";
 import LockSVG from "@/icons/lock.svg?react";
-import affiliationBuildingData from "@/mocks/affiliatioinBuildingData.json";
 
 interface AvailableCabinetLayoutProps extends CabinetInfo {
-  setSelectedBuilding: (building: string | null) => void;
   setSelectedFloor: (floor: number | null) => void;
   isMyCabinet: boolean;
   fetchCabinetDetailInformation: (id: number, cabientNumber: number) => void;
@@ -16,10 +12,7 @@ interface AvailableCabinetLayoutProps extends CabinetInfo {
   setCabinetDataByFloor: React.Dispatch<
     React.SetStateAction<Record<string, CabinetData[]>>
   >;
-  userData: UserData;
   availableFloors: number[] | null;
-  setAvailableFloors: (floors: number[] | null) => void;
-  setSaveAffiliation: (affiliation: string | null) => void;
 }
 const AvailableCabinetLayout = ({
   availableFloors,
@@ -31,37 +24,17 @@ const AvailableCabinetLayout = ({
   fetchCabinetDetailInformation,
   cabinetDataByFloor,
   setCabinetDataByFloor,
-  setSelectedBuilding,
-  userData,
-  setAvailableFloors,
-  setSaveAffiliation,
 }: AvailableCabinetLayoutProps) => {
   const { getStatusColor } = useCabinet();
-  const rowsPerCol = 4; // 총 몇 줄의 사물함을 배치할 것인지 설정
   const { fetchAvailableCabinetData } = useCabinetActivation({
     selectedBuilding,
     selectedFloor,
     isMyCabinet,
     setCabinetDataByFloor,
+    availableFloors,
   });
-  useEffect(() => {
-    if (location.pathname.startsWith("/available")) {
-      if (selectedBuilding !== null && availableFloors !== null) {
-        fetchAvailableCabinetData(selectedBuilding, availableFloors);
-      }
-    }
-  }, [selectedBuilding, availableFloors]);
-  // 학과에 해당하는 건물 및 층 정보 찾기
-  useEffect(() => {
-    setSaveAffiliation(userData.affiliation);
-    const affiliationData = affiliationBuildingData.find(
-      (item) => item.affiliation === userData.affiliation,
-    );
-    if (affiliationData) {
-      setSelectedBuilding(affiliationData.building);
-      setAvailableFloors(affiliationData.floors);
-    }
-  }, [userData.affiliation]);
+  const rowsPerCol = 4; // 총 몇 줄의 사물함을 배치할 것인지 설정
+
   return (
     <>
       {availableFloors?.map((floors) => {

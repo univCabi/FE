@@ -28,14 +28,9 @@ const AvailablePage = () => {
     isRentAvailable,
     setIsRentAvailable,
   } = useCabinet();
-  const {
-    availableFloors,
-    setAvailableFloors,
-    setSaveAffiliation,
-    cabinetDataByFloor,
-    setCabinetDataByFloor,
-  } = useAvailableCabinet();
   const { userData } = useUserData();
+  const { availableFloors, cabinetDataByFloor, setCabinetDataByFloor } =
+    useAvailableCabinet({ setSelectedBuilding, userData });
 
   return (
     <>
@@ -47,7 +42,10 @@ const AvailablePage = () => {
         </div>
         {/* 메인 콘텐츠 */}
         <div className="absolute inset-y-0 left-0 right-0 md:left-40 md:right-80 sm:left-[7rem] border-gray-400 pt-16 sm:flex flex-col overflow-y-auto">
-          <AvailableCountdown />
+          <AvailableCountdown
+            setSelectedBuilding={setSelectedBuilding}
+            userData={userData}
+          />
           <AvailableCabinetLayout
             availableFloors={availableFloors}
             selectedBuilding={selectedBuilding}
@@ -58,10 +56,6 @@ const AvailablePage = () => {
             fetchCabinetDetailInformation={fetchCabinetDetailInformation}
             cabinetDataByFloor={cabinetDataByFloor}
             setCabinetDataByFloor={setCabinetDataByFloor}
-            setSelectedBuilding={setSelectedBuilding}
-            setAvailableFloors={setAvailableFloors}
-            setSaveAffiliation={setSaveAffiliation}
-            userData={userData}
           />
         </div>
       </div>

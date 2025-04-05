@@ -16,6 +16,7 @@ interface CabinetButtonLayoutProps extends CabinetDetailInfo, CabinetInfo {
   setCabinetDataByFloor: React.Dispatch<
     React.SetStateAction<Record<string, CabinetData[]>>
   >;
+  availableFloors: number[] | null;
 }
 
 const CabinetButtonLayout = ({
@@ -27,13 +28,16 @@ const CabinetButtonLayout = ({
   selectedCabinet,
   selectedStatus,
   setCabinetDataByFloor,
+  availableFloors,
 }: CabinetButtonLayoutProps) => {
   const { getStatusColor } = useCabinet();
+
   const { cabinetData, isLoading } = useCabinetActivation({
     selectedBuilding,
     selectedFloor,
     isMyCabinet,
     setCabinetDataByFloor,
+    availableFloors,
   });
   // 검색 결과에 해당하는 사물함이 있을 경우에만 실행
   useEffect(() => {

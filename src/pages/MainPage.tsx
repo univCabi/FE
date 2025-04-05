@@ -9,6 +9,7 @@ import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
 import { useAvailableCabinet } from "@/hooks/useAvailableCabinet";
 import { useBuildingState } from "@/hooks/useBuildingState";
 import { useCabinet } from "@/hooks/useCabinet";
+import { useUserData } from "@/hooks/useUserData";
 
 const MainPage = () => {
   const { buildingList, selectedBuilding, setSelectedBuilding } = useContext(
@@ -31,8 +32,11 @@ const MainPage = () => {
     isRentAvailable,
     setIsRentAvailable,
   } = useCabinet();
-
-  const { setCabinetDataByFloor } = useAvailableCabinet();
+  const { userData } = useUserData();
+  const { setCabinetDataByFloor, availableFloors } = useAvailableCabinet({
+    setSelectedBuilding,
+    userData,
+  });
 
   useEffect(() => {
     if (location.state?.selectedBuilding) {
@@ -87,6 +91,7 @@ const MainPage = () => {
                 selectedCabinet={selectedCabinet}
                 selectedStatus={selectedStatus}
                 setCabinetDataByFloor={setCabinetDataByFloor}
+                availableFloors={availableFloors}
               />
               <CabinetStatusInformation />
             </>
@@ -152,6 +157,7 @@ const MainPage = () => {
                   selectedCabinet={selectedCabinet}
                   selectedStatus={selectedStatus}
                   setCabinetDataByFloor={setCabinetDataByFloor}
+                  availableFloors={availableFloors}
                 />
               </div>
               {/* 화면 크기 = 768px 이하일 때 사물함 정보 숨김 */}

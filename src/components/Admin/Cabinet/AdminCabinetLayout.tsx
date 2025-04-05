@@ -14,6 +14,7 @@ import { useAdminCabinet } from "@/hooks/Admin/useAdminCabinet";
 import { useAvailableCabinet } from "@/hooks/useAvailableCabinet";
 import { useCabinet } from "@/hooks/useCabinet";
 import { useCabinetActivation } from "@/hooks/useCabinetActivation";
+import { useUserData } from "@/hooks/useUserData";
 
 interface AdminCabinetLayoutProps
   extends CabinetDetailInfo,
@@ -25,6 +26,7 @@ interface AdminCabinetLayoutProps
   setIsMultiButtonActive: (value: boolean) => void;
   setSelectedCabinet: (cabinet: SelectedCabinet | null) => void;
   setIsAdminCabinetInfoVisible: (value: boolean) => void;
+  setSelectedBuilding: (building: string | null) => void;
 }
 
 const AdminCabinetLayout = ({
@@ -40,14 +42,20 @@ const AdminCabinetLayout = ({
   selectedStatus,
   isMyCabinet,
   setIsAdminCabinetInfoVisible,
+  setSelectedBuilding,
 }: AdminCabinetLayoutProps) => {
+  const { userData } = useUserData();
   const { getStatusColor } = useCabinet();
-  const { setCabinetDataByFloor } = useAvailableCabinet();
+  const { setCabinetDataByFloor, availableFloors } = useAvailableCabinet({
+    setSelectedBuilding,
+    userData,
+  });
   const { cabinetData, isLoading, fetchCabinetData } = useCabinetActivation({
     selectedBuilding,
     selectedFloor,
     isMyCabinet,
     setCabinetDataByFloor,
+    availableFloors,
   });
   const { checkedCabinet, setCheckedCabinet } = useAdminCabinet();
   const MAX_CABINETS = 47; // Cabinet 배열의 최대 길이

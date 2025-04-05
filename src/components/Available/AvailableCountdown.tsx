@@ -1,11 +1,20 @@
 import { useEffect } from "react";
+import { AvailableFloorInfo } from "@/types/CabinetType";
 import { getRemainingTime } from "@/utils/formatDate";
 import SubmitAndNavigateButton from "@/components/SubmitAndNavigateButton";
 import { useAvailableCabinet } from "@/hooks/useAvailableCabinet";
 import ReloadSVG from "@/icons/reload.svg?react";
 
-const AvailableCountdown = () => {
-  const { setLeftTime } = useAvailableCabinet();
+interface AvailableCountdownProps extends AvailableFloorInfo {}
+
+const AvailableCountdown = ({
+  setSelectedBuilding,
+  userData,
+}: AvailableCountdownProps) => {
+  const { setLeftTime } = useAvailableCabinet({
+    setSelectedBuilding,
+    userData,
+  });
   const reloadAvailableCabinet = () => {
     window.location.reload();
   };

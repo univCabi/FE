@@ -74,8 +74,8 @@ const AdminStateManagementModal = ({
 
   useEffect(() => {
     setSelectedBrokenReason(selectedBrokenReason);
-    console.log("선택된 고장 사유:", selectedBrokenReason);
   }, [selectedBrokenReason]);
+
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-white p-6 rounded-lg shadow-xl w-96">

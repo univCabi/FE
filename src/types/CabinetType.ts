@@ -1,3 +1,5 @@
+import { UserData } from "@/types/UserType";
+
 export interface BuildingData {
   building: string;
   floor: number[];
@@ -55,4 +57,9 @@ export interface CabinetDetailInfo extends BuildingInfo {
     cabinetNumber: number;
   } | null;
   fetchCabinetDetailInformation: (id: number, cabientNumber: number) => void;
+}
+
+export interface AvailableFloorInfo {
+  setSelectedBuilding: (building: string | null) => void;
+  userData: UserData;
 }
