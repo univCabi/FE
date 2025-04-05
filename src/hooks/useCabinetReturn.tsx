@@ -22,11 +22,6 @@ export const useCabinetReturn = ({
   setUsername,
   setIsRentAvailable,
 }: UseCabinetReturnProps) => {
-  // 반납 후 5분 이내 기록을 저장할 상태
-  const [cabinetReturnTimes, setCabinetReturnTimes] = useState<{
-    [key: number]: number;
-  }>({});
-
   const fetchCabinetReturn = async () => {
     if (!selectedCabinet) return;
     try {
@@ -54,7 +49,5 @@ export const useCabinetReturn = ({
 
   return {
     fetchCabinetReturn,
-    cabinetReturnTimes,
-    setCabinetReturnTimes,
   };
 };

@@ -150,19 +150,6 @@ export const useAdminStatus = ({
     fetchAdminChangeStatus(newStatus, reason);
   };
 
-  // FIXME: 지금 reason에 null이 자꾸 들어감 ;;
-  // useEffect(() => {
-  //   if (newStatus !== CabinetStatus.BROKEN && selectedBrokenReason) {
-  //     setSelectedBrokenReason(null);
-  //   }
-  // }, [newStatus]);
-
-  // useEffect(() => {
-  //   if (newStatus !== CabinetStatus.BROKEN) {
-  //     setSelectedBrokenReason(null);
-  //   }
-  // }, [newStatus]);
-
   return {
     showsReturnButton,
     showsStatusManagementButton,
