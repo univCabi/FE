@@ -1,22 +1,20 @@
 import { Outlet } from "react-router";
 import { SideNavigationLayoutContext } from "@/contexts/SideNavigationLayoutContext";
 import SideNavigationLayout from "@/pages/SideNavigationLayout";
+import { useAuthRedirect } from "@/hooks/useAuthRedirect";
 import { useBuildingState } from "@/hooks/useBuildingState";
 
 const MainLayout = () => {
-  const {
-    buildingList,
-    selectedBuilding,
-    setSelectedBuilding,
-  } = useBuildingState();
-
+  const { buildingList, selectedBuilding, setSelectedBuilding } =
+    useBuildingState();
+  useAuthRedirect();
   return (
     <>
-      <SideNavigationLayoutContext.Provider 
-        value={{     
-          buildingList, 
-          selectedBuilding, 
-          setSelectedBuilding
+      <SideNavigationLayoutContext.Provider
+        value={{
+          buildingList,
+          selectedBuilding,
+          setSelectedBuilding,
         }}
       >
         {/* 상단 네비게이션 바 */}
