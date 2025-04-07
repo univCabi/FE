@@ -28,6 +28,7 @@ export interface CabinetData extends BuildingFloorSingleData {
   isMine: boolean;
   expiredAt: string | null;
   isRentAvailable: boolean;
+  isFree: boolean;
 }
 
 export interface SelectedCabinet {

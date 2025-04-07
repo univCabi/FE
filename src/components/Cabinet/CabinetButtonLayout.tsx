@@ -9,7 +9,9 @@ import { CabinetStatus } from "@/types/StatusEnum";
 import CabinetButtonSkeleton from "@/components/Skeleton/CabinetButtonSkeleton";
 import { useCabinet } from "@/hooks/useCabinet";
 import { useCabinetActivation } from "@/hooks/useCabinetActivation";
+import BookmarkSVG from "@/icons/bookmark.svg?react";
 import LockSVG from "@/icons/lock.svg?react";
+import PayableSVG from "@/icons/payable.svg?react";
 
 interface CabinetButtonLayoutProps extends CabinetDetailInfo, CabinetInfo {
   selectedStatus: string;
@@ -54,7 +56,7 @@ const CabinetButtonLayout = ({
       {isLoading ? (
         <CabinetButtonSkeleton />
       ) : (
-        <div className="relative h-[30rem] overflow-scroll lg:w-[67rem] md:w-[80%] sm:w-[75%] w-[100%]">
+        <div className="relative h-[30rem] overflow-scroll lg:w-[67rem] md:w-[80%] sm:w-[75%] w-[90%]">
           {cabinetData ? (
             cabinetData.map((cabinet) => {
               const isSelected = selectedCabinet?.cabinetId === cabinet.id;
@@ -77,6 +79,16 @@ const CabinetButtonLayout = ({
                   }}
                 >
                   {cabinet.cabinetNumber}
+                  {/* TODO: bookmark */}
+                  <div className="absolute -top-1 left-1">
+                    <BookmarkSVG width={13} />
+                  </div>
+
+                  {cabinet.isFree === true && (
+                    <div className="absolute -top-1 right-1">
+                      <PayableSVG width={16} />
+                    </div>
+                  )}
                   {cabinet.status === CabinetStatus.AVAILABLE &&
                     cabinet.isRentAvailable === false && (
                       <div className="absolute top-6 right-4">
