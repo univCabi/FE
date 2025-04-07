@@ -45,7 +45,7 @@ export const useAdminReturn = ({
         closeReturnModal();
       }
     } catch (error) {
-      log.error("API 호출 중 에러 발생: adminReturnApi");
+      log.error(`API 호출 중 에러 발생: adminReturnApi ${error}`);
       closeReturnModal();
     }
   };

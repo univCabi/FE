@@ -40,7 +40,7 @@ export const useBrokenCabinetListData = () => {
           )}`,
         );
       } catch (error) {
-        log.error("API 호출 중 에러 발생: adminCabinetStatusListApi");
+        log.error(`API 호출 중 에러 발생: adminCabinetStatusListApi ${error}`);
       } finally {
         setIsScrollLoading(false);
       }

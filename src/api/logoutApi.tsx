@@ -6,6 +6,7 @@ export const logoutApi = async () => {
     document.cookie = `accessToken=; path=/; Expires=Thu, 01 Jan 1970 00:00:00 UTC;`; // accessToken 만료로 삭제
     return { status: response.status, data: response.data };
   } catch (error) {
-    return { status: error.response.status, data: error.response.data };
+    console.log(error);
+    throw error;
   }
 };

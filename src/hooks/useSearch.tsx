@@ -2,6 +2,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { debounce, throttle } from "lodash";
 import { useSearchParams } from "react-router-dom";
+import { SearchResult } from "@/types/SearchType";
 import { log } from "@/utils/logger";
 import { searchKeywordApi } from "@/api/searchKeywordApi";
 import { searchResultsApi } from "@/api/searchResultsApi";
@@ -9,13 +10,7 @@ import { searchResultsApi } from "@/api/searchResultsApi";
 export const useSearch = () => {
   const [searchInput, setSearchInput] = useState("");
   const [searchParams, setSearchParams] = useSearchParams(); // searchInput 값에 대한 쿼리스트링
-  const [searchResults, setSearchResults] = useState<
-    {
-      building: string;
-      floor: number;
-      cabinetNumber: number;
-    }[]
-  >([]); // 검색 결과 저장
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([]); // 검색 결과 저장
   const [showGridResults, setShowGridResults] = useState(false); // 검색 결과 그리드 표시 여부
   const inputRef = useRef<HTMLInputElement | null>(null); // input focus에 대한 참조
 
@@ -61,7 +56,7 @@ export const useSearch = () => {
           )}`,
         );
       } catch (error) {
-        log.error("API 호출 중 에러 발생: searchKeywordApi");
+        log.error(`API 호출 중 에러 발생: searchKeywordApi ${error}`);
       }
     }
   };
@@ -94,7 +89,7 @@ export const useSearch = () => {
         `API 호출 성공: searchResultsApi, ${JSON.stringify(data, null, 2)}`,
       );
     } catch (error) {
-      log.error("API 호출 중 에러 발생: searchResultsApi");
+      log.error(`API 호출 중 에러 발생: searchResultsApi ${error}`);
     } finally {
       setTimeout(() => setIsLoading(false), 1000); // 로딩 상태 해제
     }

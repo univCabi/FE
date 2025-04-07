@@ -16,9 +16,7 @@ export const useProfileSave = (userIsVisible: boolean, saveState: boolean) => {
           )}`,
         );
       } catch (error) {
-        // console.error(error);
-        // console.log(error.response?.status || "오류를 알 수 없습니다.");
-        log.error("API 호출 중 에러 발생: userProfileInfoUpdateApi");
+        log.error(`API 호출 중 에러 발생: userProfileInfoUpdateApi ${error}`);
       }
     }
   };

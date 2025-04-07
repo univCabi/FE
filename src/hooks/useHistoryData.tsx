@@ -31,7 +31,7 @@ export const useHistoryData = () => {
           )}`,
         );
       } catch (error) {
-        log.error("API 호출 중 에러 발생: userHistoryDataApi");
+        log.error(`API 호출 중 에러 발생: userHistoryDataApi ${error}`);
       } finally {
         setIsScrollLoading(false);
       }

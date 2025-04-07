@@ -34,7 +34,7 @@ export const useCabinetActivation = ({
       );
       return response;
     } catch (error) {
-      log.error("API 호출 중 에러 발생: cabinetCallApi");
+      log.error(`API 호출 중 에러 발생: cabinetCallApi ${error}`);
     } finally {
       setIsLoading(false);
     }
@@ -59,7 +59,7 @@ export const useCabinetActivation = ({
       });
       setCabinetDataByFloor(newData);
     } catch (error) {
-      log.error("API 호출 중 에러 발생: cabinetCallApi");
+      log.error(`API 호출 중 에러 발생: cabinetCallApi ${error}`);
     } finally {
       setIsLoading(false);
     }

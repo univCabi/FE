@@ -7,6 +7,6 @@ export const userProfileInfoUpdateApi = async (userIsVisible: boolean) => {
     });
     return { status: response.status, data: response.data };
   } catch (error) {
-    return { status: error.response.status, data: error.response.data };
+    throw error;
   }
 };
