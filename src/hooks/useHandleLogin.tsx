@@ -25,7 +25,7 @@ export const useHandleLogin = () => {
       setLoginSuccess(true); // 로그인 성공
       log.info(`API 호출 성공: loginApi, ${JSON.stringify(response, null, 2)}`);
     } catch (error) {
-      log.error("API 호출 중 에러 발생: loginApi");
+      log.error(`API 호출 중 에러 발생: loginApi ${error}`);
       setLoginSuccess(false); // 로그인 실패
     } finally {
       setLoading(false);

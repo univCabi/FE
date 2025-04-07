@@ -41,11 +41,7 @@ export const useUserData = () => {
           `API 호출 성공: userDataApi, ${JSON.stringify(response, null, 2)}`,
         );
       } catch (error) {
-        if (error.response?.status === 401) {
-          navigate("/login");
-        }
-        log.error("API 호출 중 에러 발생: userDataApi");
-        log.error("로그인 중 오류가 발생했습니다:");
+        log.error(`API 호출 중 에러 발생: userDataApi ${error}`);
       } finally {
         setLoding(false);
       }

@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { SelectedCabinet } from "@/types/CabinetType";
 import { log } from "@/utils/logger";
 import { returnApi } from "@/api/returnApi";
@@ -42,7 +41,7 @@ export const useCabinetReturn = ({
         closeReturnModal();
       }
     } catch (error) {
-      log.error("API 호출 중 에러 발생: returnApi");
+      log.error(`API 호출 중 에러 발생: returnApi ${error}`);
       closeReturnModal();
     }
   };

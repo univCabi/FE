@@ -70,6 +70,7 @@ const AdminMainPage = () => {
           {selectedBuilding !== null && selectedFloor !== null && (
             <>
               <AdminCabinetLayout
+                setSelectedBuilding={setSelectedBuilding}
                 selectedBuilding={
                   buildingList.find(
                     (data) => data.building === selectedBuilding,
@@ -148,6 +149,7 @@ const AdminMainPage = () => {
             <>
               <div className="absolute inset-y-0 left-12 right-8 pt-16">
                 <AdminCabinetLayout
+                  setSelectedBuilding={setSelectedBuilding}
                   selectedBuilding={
                     buildingList.find(
                       (data) => data.building === selectedBuilding,

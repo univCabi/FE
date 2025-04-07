@@ -41,7 +41,7 @@ export const useCabinetRental = ({
           `API 호출 성공: rentApi, ${JSON.stringify(response, null, 2)}`,
         );
       } catch (error) {
-        log.error("API 호출 중 에러 발생: rentApi");
+        log.error(`API 호출 중 에러 발생: rentApi ${error}`);
         alert("현재 대여 중인 사물함이 있습니다.");
         closeRentalModal();
       }

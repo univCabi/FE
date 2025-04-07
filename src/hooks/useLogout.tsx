@@ -11,15 +11,12 @@ export const useLogout = () => {
       const redirectPath = location.pathname.startsWith("/admin")
         ? "/admin/"
         : loginUrl;
-      // navigate(loginUrl);
       navigate(redirectPath);
       log.info(
         `API 호출 성공: logoutApi, ${JSON.stringify(response, null, 2)}`,
       );
     } catch (error) {
-      // console.error("로그아웃 중 오류가 발생했습니다:", error);
-      // console.log(error.response?.status || "오류를 알 수 없습니다.");
-      log.error("API 호출 중 에러 발생: logoutApi");
+      log.error(`API 호출 중 에러 발생: logoutApi ${error}`);
     }
   };
   return { handleLogout };

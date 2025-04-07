@@ -39,7 +39,7 @@ export const useCabinet = () => {
       );
       return response;
     } catch (error) {
-      log.error("API 호출 중 에러 발생: cabinetDetailInfoApi");
+      log.error(`API 호출 중 에러 발생: cabinetDetailInfoApi ${error}`);
     }
   };
 
