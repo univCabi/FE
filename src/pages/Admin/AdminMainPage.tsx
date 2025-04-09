@@ -74,7 +74,6 @@ const AdminMainPage = () => {
           {selectedBuilding !== null && selectedFloor !== null && (
             <>
               <AdminCabinetLayout
-                setSelectedBuilding={setSelectedBuilding}
                 selectedBuilding={
                   buildingList.find(
                     (data) => data.building === selectedBuilding,
