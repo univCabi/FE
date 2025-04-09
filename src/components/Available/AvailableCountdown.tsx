@@ -1,8 +1,9 @@
-import { getRemainingTime } from "@/utils/formatDate";
 import SubmitAndNavigateButton from "@/components/SubmitAndNavigateButton";
+import { useAvailableLeftTime } from "@/hooks/useAvailableLeftTime";
 import ReloadSVG from "@/icons/reload.svg?react";
 
 const AvailableCountdown = () => {
+  const remainingTime = useAvailableLeftTime();
   const reloadAvailableCabinet = () => {
     window.location.reload();
   };
@@ -20,7 +21,7 @@ const AvailableCountdown = () => {
         <SubmitAndNavigateButton
           onClick={reloadAvailableCabinet}
           className={`button-cabinet-action w-52 h-10 sm:w-60 mt-4 flex items-center justify-center`}
-          text={`${getRemainingTime()}`}
+          text={remainingTime}
           svgComponent={<ReloadSVG className="w-5 mr-2" />}
         />
       </div>
