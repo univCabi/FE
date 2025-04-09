@@ -4,7 +4,7 @@ import { SelectedMultiCabinetsData } from "@/types/MultiCabinetType";
 import { CabinetStatus, CabinetStatusType } from "@/types/StatusEnum";
 import { log } from "@/utils/logger";
 import { adminChangeStatusApi } from "@/api/adminChangeStatusApi";
-import { useAdminReturn } from "./useAdminReturn";
+import { useAdminReturn } from "@/hooks/Admin/useAdminReturn";
 
 interface useAdminStatusProps extends SelectedMultiCabinetsData {
   selectedStatus: string;
@@ -89,7 +89,8 @@ export const useAdminStatus = ({
   // 상태관리 API 호출
   const fetchAdminChangeStatus = async (
     newStatus: CabinetStatusType,
-    reason: string | null,
+    reason?: string,
+    studentNumber?: string,
   ) => {
     const cabinetIds: number[] = isMultiButtonActive
       ? (selectedMultiCabinets?.map((cabinet) => cabinet.id) ?? [])
@@ -106,12 +107,13 @@ export const useAdminStatus = ({
       const response = await adminChangeStatusApi(
         cabinetIds,
         newStatus,
+        studentNumber,
         reason,
       );
       if (response) {
         setSelectedStatus(response.data.cabinets.status);
-        setSelectedBrokenReason(selectedBrokenReason);
-        setBrokenDate(response.data.brokenDate);
+        setSelectedBrokenReason(response.data.cabinets.reason);
+        setBrokenDate(response.data.cabinets.brokenDate);
         setSelectedMultiCabinets(null);
         setSelectedCabinet(null);
         setModalCancelState(false);
@@ -165,5 +167,6 @@ export const useAdminStatus = ({
     getMultiCabinetStatusLabel,
     handleStatusSave,
     handleReasonClick,
+    brokenDate,
   };
 };

@@ -14,7 +14,7 @@ import { useAdminCabinet } from "@/hooks/Admin/useAdminCabinet";
 import { useAvailableCabinet } from "@/hooks/useAvailableCabinet";
 import { useCabinet } from "@/hooks/useCabinet";
 import { useCabinetActivation } from "@/hooks/useCabinetActivation";
-import { useUserData } from "@/hooks/useUserData";
+import PayableSVG from "@/icons/payable.svg?react";
 
 interface AdminCabinetLayoutProps
   extends CabinetDetailInfo,
@@ -26,7 +26,6 @@ interface AdminCabinetLayoutProps
   setIsMultiButtonActive: (value: boolean) => void;
   setSelectedCabinet: (cabinet: SelectedCabinet | null) => void;
   setIsAdminCabinetInfoVisible: (value: boolean) => void;
-  setSelectedBuilding: (building: string | null) => void;
 }
 
 const AdminCabinetLayout = ({
@@ -42,20 +41,16 @@ const AdminCabinetLayout = ({
   selectedStatus,
   isMyCabinet,
   setIsAdminCabinetInfoVisible,
-  setSelectedBuilding,
 }: AdminCabinetLayoutProps) => {
-  const { userData } = useUserData();
   const { getStatusColor } = useCabinet();
-  const { setCabinetDataByFloor, availableFloors } = useAvailableCabinet({
-    setSelectedBuilding,
-    userData,
-  });
+  const { setCabinetDataByFloor, availableFloors } = useAvailableCabinet();
   const { cabinetData, isLoading, fetchCabinetData } = useCabinetActivation({
     selectedBuilding,
     selectedFloor,
     isMyCabinet,
     setCabinetDataByFloor,
     availableFloors,
+    selectedStatus,
   });
   const { checkedCabinet, setCheckedCabinet } = useAdminCabinet();
   const MAX_CABINETS = 47; // Cabinet 배열의 최대 길이
@@ -176,7 +171,7 @@ const AdminCabinetLayout = ({
         {isLoading ? (
           <CabinetButtonSkeleton />
         ) : (
-          <div className="relative h-[30rem] overflow-scroll lg:w-[67rem] md:w-[80%] sm:w-[75%] w-[100%] z-10">
+          <div className="relative h-[30rem] overflow-scroll lg:w-[67rem] md:w-[80%] sm:w-[75%] w-[90%] z-10">
             {cabinetData.map((cabinet) => {
               const isSelected = selectedMultiCabinets?.some(
                 (selected) => selected.id === cabinet.id,
@@ -208,6 +203,11 @@ const AdminCabinetLayout = ({
                   }}
                 >
                   {cabinet.cabinetNumber}
+                  {cabinet.isFree === false && (
+                    <div className="absolute -top-1 right-1">
+                      <PayableSVG width={16} />
+                    </div>
+                  )}
                 </button>
               );
             })}

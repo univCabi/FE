@@ -1,32 +1,11 @@
-import { useEffect } from "react";
-import { AvailableFloorInfo } from "@/types/CabinetType";
 import { getRemainingTime } from "@/utils/formatDate";
 import SubmitAndNavigateButton from "@/components/SubmitAndNavigateButton";
-import { useAvailableCabinet } from "@/hooks/useAvailableCabinet";
 import ReloadSVG from "@/icons/reload.svg?react";
 
-interface AvailableCountdownProps extends AvailableFloorInfo {}
-
-const AvailableCountdown = ({
-  setSelectedBuilding,
-  userData,
-}: AvailableCountdownProps) => {
-  const { setLeftTime } = useAvailableCabinet({
-    setSelectedBuilding,
-    userData,
-  });
+const AvailableCountdown = () => {
   const reloadAvailableCabinet = () => {
     window.location.reload();
   };
-
-  // 실시간 시간 바뀜
-  useEffect(() => {
-    setLeftTime(getRemainingTime()); // 초기값 설정
-    const timer = setInterval(() => {
-      setLeftTime(getRemainingTime());
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
 
   return (
     <>

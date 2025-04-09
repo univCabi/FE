@@ -59,8 +59,3 @@ export interface CabinetDetailInfo extends BuildingInfo {
   } | null;
   fetchCabinetDetailInformation: (id: number, cabientNumber: number) => void;
 }
-
-export interface AvailableFloorInfo {
-  setSelectedBuilding: (building: string | null) => void;
-  userData: UserData;
-}

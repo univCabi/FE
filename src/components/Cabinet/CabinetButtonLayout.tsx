@@ -9,7 +9,7 @@ import { CabinetStatus } from "@/types/StatusEnum";
 import CabinetButtonSkeleton from "@/components/Skeleton/CabinetButtonSkeleton";
 import { useCabinet } from "@/hooks/useCabinet";
 import { useCabinetActivation } from "@/hooks/useCabinetActivation";
-import BookmarkSVG from "@/icons/bookmark.svg?react";
+import BookmarkAddSVG from "@/icons/bookmarkAdd.svg?react";
 import LockSVG from "@/icons/lock.svg?react";
 import PayableSVG from "@/icons/payable.svg?react";
 
@@ -19,6 +19,9 @@ interface CabinetButtonLayoutProps extends CabinetDetailInfo, CabinetInfo {
     React.SetStateAction<Record<string, CabinetData[]>>
   >;
   availableFloors: number[] | null;
+  isBookmark: boolean;
+  bookmarkIds: number[];
+  setIsBookmark: (isBookmarked: boolean) => void;
 }
 
 const CabinetButtonLayout = ({
@@ -31,6 +34,7 @@ const CabinetButtonLayout = ({
   selectedStatus,
   setCabinetDataByFloor,
   availableFloors,
+  bookmarkIds,
 }: CabinetButtonLayoutProps) => {
   const { getStatusColor } = useCabinet();
 
@@ -40,7 +44,9 @@ const CabinetButtonLayout = ({
     isMyCabinet,
     setCabinetDataByFloor,
     availableFloors,
+    selectedStatus,
   });
+
   // 검색 결과에 해당하는 사물함이 있을 경우에만 실행
   useEffect(() => {
     if (filteredCabinetDetail) {
@@ -64,9 +70,9 @@ const CabinetButtonLayout = ({
                 <button
                   key={cabinet.cabinetNumber}
                   className={`absolute w-16 h-20 rounded-md hover:bg-opacity-80 flex items-end text-sm p-2 
-                    ${getStatusColor(cabinet.status, cabinet.isMine)} 
-                    ${isSelected ? "shadow-md" : ""}
-                `}
+                      ${getStatusColor(cabinet.status, cabinet.isMine)} 
+                      ${isSelected ? "shadow-md" : ""}
+                  `}
                   style={{
                     top: `${350 - cabinet.cabinetYPos * 100}px`,
                     left: `${cabinet.cabinetXPos * 90}px`,
@@ -79,12 +85,12 @@ const CabinetButtonLayout = ({
                   }}
                 >
                   {cabinet.cabinetNumber}
-                  {/* TODO: bookmark */}
-                  <div className="absolute -top-1 left-1">
-                    <BookmarkSVG width={13} />
-                  </div>
-
-                  {cabinet.isFree === true && (
+                  {bookmarkIds.includes(cabinet.id) && (
+                    <div className="absolute -top-1 left-1">
+                      <BookmarkAddSVG width={13} />
+                    </div>
+                  )}
+                  {cabinet.isFree === false && (
                     <div className="absolute -top-1 right-1">
                       <PayableSVG width={16} />
                     </div>

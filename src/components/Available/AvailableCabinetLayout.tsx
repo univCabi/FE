@@ -1,10 +1,16 @@
+import { useEffect } from "react";
 import { CabinetData, CabinetInfo } from "@/types/CabinetType";
 import { CabinetStatus } from "@/types/StatusEnum";
+import { UserData } from "@/types/UserType";
 import { useCabinet } from "@/hooks/useCabinet";
 import { useCabinetActivation } from "@/hooks/useCabinetActivation";
+import BookmarkAddSVG from "@/icons/bookmarkAdd.svg?react";
 import LockSVG from "@/icons/lock.svg?react";
+import PayableSVG from "@/icons/payable.svg?react";
+import affiliationBuildingData from "@/mocks/affiliatioinBuildingData.json";
 
 interface AvailableCabinetLayoutProps extends CabinetInfo {
+  setSelectedBuilding: (building: string | null) => void;
   setSelectedFloor: (floor: number | null) => void;
   isMyCabinet: boolean;
   fetchCabinetDetailInformation: (id: number, cabientNumber: number) => void;
@@ -12,7 +18,12 @@ interface AvailableCabinetLayoutProps extends CabinetInfo {
   setCabinetDataByFloor: React.Dispatch<
     React.SetStateAction<Record<string, CabinetData[]>>
   >;
+  userData: UserData;
   availableFloors: number[] | null;
+  setAvailableFloors: (floors: number[] | null) => void;
+  setSaveAffiliation: (affiliation: string | null) => void;
+  bookmarkIds: number[];
+  selectedStatus: string;
 }
 const AvailableCabinetLayout = ({
   availableFloors,
@@ -24,16 +35,34 @@ const AvailableCabinetLayout = ({
   fetchCabinetDetailInformation,
   cabinetDataByFloor,
   setCabinetDataByFloor,
+  setSelectedBuilding,
+  userData,
+  setAvailableFloors,
+  setSaveAffiliation,
+  bookmarkIds,
+  selectedStatus,
 }: AvailableCabinetLayoutProps) => {
   const { getStatusColor } = useCabinet();
-  const { fetchAvailableCabinetData } = useCabinetActivation({
+  const rowsPerCol = 4; // 총 몇 줄의 사물함을 배치할 것인지 설정
+  const { isLoading } = useCabinetActivation({
     selectedBuilding,
     selectedFloor,
     isMyCabinet,
     setCabinetDataByFloor,
     availableFloors,
+    selectedStatus,
   });
-  const rowsPerCol = 4; // 총 몇 줄의 사물함을 배치할 것인지 설정
+
+  useEffect(() => {
+    setSaveAffiliation(userData.affiliation);
+    const affiliationData = affiliationBuildingData.find(
+      (item) => item.affiliation === userData.affiliation,
+    );
+    if (affiliationData) {
+      setSelectedBuilding(affiliationData.building);
+      setAvailableFloors(affiliationData.floors);
+    }
+  }, [userData.affiliation]);
 
   return (
     <>
@@ -81,6 +110,16 @@ const AvailableCabinetLayout = ({
                         }}
                       >
                         {cabinet.cabinetNumber}
+                        {bookmarkIds.includes(cabinet.id) && (
+                          <div className="absolute -top-1 left-1">
+                            <BookmarkAddSVG width={13} />
+                          </div>
+                        )}
+                        {cabinet.isFree === false && (
+                          <div className="absolute -top-1 right-1">
+                            <PayableSVG width={16} />
+                          </div>
+                        )}
                         {cabinet.status === CabinetStatus.AVAILABLE &&
                           !cabinet.isRentAvailable && (
                             <div className="absolute top-6 right-4">
