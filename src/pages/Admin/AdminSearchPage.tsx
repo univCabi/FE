@@ -4,6 +4,7 @@ import DefaultSearchLayout from "@/components/Search/DefaultSearchLayout";
 import SearchInputComponent from "@/components/Search/SearchInputComponent";
 import SearchResultDropdownButton from "@/components/Search/SearchResultDropdownButton";
 import SearchResultGridButton from "@/components/Search/SearchResultGridButton";
+import { useBookmark } from "@/hooks/useBookmark";
 import { useBuildingState } from "@/hooks/useBuildingState";
 import { useCabinet } from "@/hooks/useCabinet";
 import { useSearch } from "@/hooks/useSearch";
@@ -54,6 +55,9 @@ const AdminSearchPage = () => {
     setSearchInput,
     debouncedSearchKeywordApi,
     setIsDropdownOpen,
+  });
+  const { isBookmark, setIsBookmark } = useBookmark({
+    selectedCabinet,
   });
 
   return (
@@ -125,6 +129,8 @@ const AdminSearchPage = () => {
           setUsername={setUsername}
           isRentAvailable={isRentAvailable as boolean}
           setIsRentAvailable={setIsRentAvailable}
+          isBookmark={isBookmark as boolean}
+          setIsBookmark={setIsBookmark}
         />
       </div>
     </>

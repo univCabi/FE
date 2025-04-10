@@ -1,32 +1,12 @@
-import { useEffect } from "react";
-import { AvailableFloorInfo } from "@/types/CabinetType";
-import { getRemainingTime } from "@/utils/formatDate";
 import SubmitAndNavigateButton from "@/components/SubmitAndNavigateButton";
-import { useAvailableCabinet } from "@/hooks/useAvailableCabinet";
+import { useAvailableLeftTime } from "@/hooks/useAvailableLeftTime";
 import ReloadSVG from "@/icons/reload.svg?react";
 
-interface AvailableCountdownProps extends AvailableFloorInfo {}
-
-const AvailableCountdown = ({
-  setSelectedBuilding,
-  userData,
-}: AvailableCountdownProps) => {
-  const { setLeftTime } = useAvailableCabinet({
-    setSelectedBuilding,
-    userData,
-  });
+const AvailableCountdown = () => {
+  const remainingTime = useAvailableLeftTime();
   const reloadAvailableCabinet = () => {
     window.location.reload();
   };
-
-  // 실시간 시간 바뀜
-  useEffect(() => {
-    setLeftTime(getRemainingTime()); // 초기값 설정
-    const timer = setInterval(() => {
-      setLeftTime(getRemainingTime());
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
 
   return (
     <>
@@ -41,7 +21,7 @@ const AvailableCountdown = ({
         <SubmitAndNavigateButton
           onClick={reloadAvailableCabinet}
           className={`button-cabinet-action w-52 h-10 sm:w-60 mt-4 flex items-center justify-center`}
-          text={`${getRemainingTime()}`}
+          text={remainingTime}
           svgComponent={<ReloadSVG className="w-5 mr-2" />}
         />
       </div>

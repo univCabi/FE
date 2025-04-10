@@ -1,38 +1,27 @@
 import { CabinetData, CabinetInfo } from "@/types/CabinetType";
 import { CabinetStatus } from "@/types/StatusEnum";
 import { useCabinet } from "@/hooks/useCabinet";
-import { useCabinetActivation } from "@/hooks/useCabinetActivation";
+import BookmarkAddSVG from "@/icons/bookmarkAdd.svg?react";
 import LockSVG from "@/icons/lock.svg?react";
+import PayableSVG from "@/icons/payable.svg?react";
 
 interface AvailableCabinetLayoutProps extends CabinetInfo {
   setSelectedFloor: (floor: number | null) => void;
-  isMyCabinet: boolean;
   fetchCabinetDetailInformation: (id: number, cabientNumber: number) => void;
   cabinetDataByFloor: Record<number, CabinetData[]>;
-  setCabinetDataByFloor: React.Dispatch<
-    React.SetStateAction<Record<string, CabinetData[]>>
-  >;
   availableFloors: number[] | null;
+  bookmarkIds: number[];
 }
 const AvailableCabinetLayout = ({
   availableFloors,
   selectedBuilding,
   selectedCabinet,
-  selectedFloor,
   setSelectedFloor,
-  isMyCabinet,
   fetchCabinetDetailInformation,
   cabinetDataByFloor,
-  setCabinetDataByFloor,
+  bookmarkIds,
 }: AvailableCabinetLayoutProps) => {
   const { getStatusColor } = useCabinet();
-  const { fetchAvailableCabinetData } = useCabinetActivation({
-    selectedBuilding,
-    selectedFloor,
-    isMyCabinet,
-    setCabinetDataByFloor,
-    availableFloors,
-  });
   const rowsPerCol = 4; // 총 몇 줄의 사물함을 배치할 것인지 설정
 
   return (
@@ -47,7 +36,6 @@ const AvailableCabinetLayout = ({
             <div className="text-2xl text-left text-gray-600 font-bold mx-24">
               {selectedBuilding} {floors}F
             </div>
-            {/* 선 */}
             <div className="mt-3 border border-b-1 border-x-0 border-t-0 border-gray-400 mx-20" />
             <div className="relative w-full flex items-center justify-center overflow-y-auto ">
               <div className="relative h-[30rem] overflow-scroll lg:w-[67rem] md:w-[80%] sm:w-[75%] w-[100%] ml-5">
@@ -81,6 +69,16 @@ const AvailableCabinetLayout = ({
                         }}
                       >
                         {cabinet.cabinetNumber}
+                        {bookmarkIds.includes(cabinet.id) && (
+                          <div className="absolute -top-1 left-1">
+                            <BookmarkAddSVG width={13} />
+                          </div>
+                        )}
+                        {cabinet.isFree === false && (
+                          <div className="absolute -top-1 right-1">
+                            <PayableSVG width={16} />
+                          </div>
+                        )}
                         {cabinet.status === CabinetStatus.AVAILABLE &&
                           !cabinet.isRentAvailable && (
                             <div className="absolute top-6 right-4">

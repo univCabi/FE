@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { SelectedCabinet, StatusData } from "@/types/CabinetType";
 import { SelectedMultiCabinetsData } from "@/types/MultiCabinetType";
 import {
@@ -71,10 +70,6 @@ const AdminStateManagementModal = ({
     setNewStatus(status);
     setIsDropdownOpen(false);
   };
-
-  useEffect(() => {
-    setSelectedBrokenReason(selectedBrokenReason);
-  }, [selectedBrokenReason]);
 
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">

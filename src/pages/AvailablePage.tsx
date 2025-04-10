@@ -1,10 +1,11 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { SideNavigationLayoutContext } from "@/contexts/SideNavigationLayoutContext";
 import AvailableCabinetLayout from "@/components/Available/AvailableCabinetLayout";
 import AvailableCountdown from "@/components/Available/AvailableCountdown";
 import SelectedCabinetInformation from "@/components/Cabinet/SelectedCabinetInformation";
 import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
 import { useAvailableCabinet } from "@/hooks/useAvailableCabinet";
+import { useBookmark } from "@/hooks/useBookmark";
 import { useBuildingState } from "@/hooks/useBuildingState";
 import { useCabinet } from "@/hooks/useCabinet";
 import { useUserData } from "@/hooks/useUserData";
@@ -29,9 +30,15 @@ const AvailablePage = () => {
     setIsRentAvailable,
   } = useCabinet();
   const { userData } = useUserData();
-  const { availableFloors, cabinetDataByFloor, setCabinetDataByFloor } =
-    useAvailableCabinet({ setSelectedBuilding, userData });
-
+  const { availableFloors, cabinetDataByFloor } = useAvailableCabinet({
+    userData,
+    setSelectedBuilding,
+    selectedBuilding,
+    selectedStatus,
+  });
+  const { isBookmark, setIsBookmark, bookmarkIds } = useBookmark({
+    selectedCabinet,
+  });
   return (
     <>
       <div className="relative h-screen flex flex-col">
@@ -42,20 +49,16 @@ const AvailablePage = () => {
         </div>
         {/* 메인 콘텐츠 */}
         <div className="absolute inset-y-0 left-0 right-0 md:left-40 md:right-80 sm:left-[7rem] border-gray-400 pt-16 sm:flex flex-col overflow-y-auto">
-          <AvailableCountdown
-            setSelectedBuilding={setSelectedBuilding}
-            userData={userData}
-          />
+          <AvailableCountdown />
           <AvailableCabinetLayout
             availableFloors={availableFloors}
             selectedBuilding={selectedBuilding}
             selectedFloor={selectedFloor}
             selectedCabinet={selectedCabinet}
             setSelectedFloor={setSelectedFloor}
-            isMyCabinet={isMyCabinet as boolean}
             fetchCabinetDetailInformation={fetchCabinetDetailInformation}
             cabinetDataByFloor={cabinetDataByFloor}
-            setCabinetDataByFloor={setCabinetDataByFloor}
+            bookmarkIds={bookmarkIds}
           />
         </div>
       </div>
@@ -77,6 +80,8 @@ const AvailablePage = () => {
           setUsername={setUsername}
           isRentAvailable={isRentAvailable}
           setIsRentAvailable={setIsRentAvailable}
+          isBookmark={isBookmark as boolean}
+          setIsBookmark={setIsBookmark}
         />
       </div>
       {/* 화면 크기 = 768px 이하일 때 */}
@@ -96,6 +101,8 @@ const AvailablePage = () => {
             setUsername={setUsername}
             isRentAvailable={isRentAvailable as boolean}
             setIsRentAvailable={setIsRentAvailable}
+            isBookmark={isBookmark as boolean}
+            setIsBookmark={setIsBookmark}
           />
         </div>
       )}

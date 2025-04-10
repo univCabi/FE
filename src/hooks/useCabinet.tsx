@@ -11,6 +11,7 @@ export const useCabinet = () => {
   const [isMyCabinet, setIsMyCabinet] = useState<boolean>(false); // 본인 사물함 여부
   const [username, setUsername] = useState<string | null>(null);
   const [isRentAvailable, setIsRentAvailable] = useState<boolean>(false);
+  const [isFree, setIsFree] = useState<boolean>(false);
   const prevCabinetNumberRef = useRef<number | null>(null);
 
   // 사물함 세부 정보 API 호출
@@ -30,6 +31,7 @@ export const useCabinet = () => {
       setUsername(response.username);
       setExpiredAt(response.expiredAt);
       setIsRentAvailable(response.isRentAvailable);
+      setIsFree(response.isFree);
       log.info(
         `API 호출 성공: cabinetDetailInfoApi, ${JSON.stringify(
           response,

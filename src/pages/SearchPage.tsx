@@ -4,6 +4,7 @@ import DefaultSearchLayout from "@/components/Search/DefaultSearchLayout";
 import SearchInputComponent from "@/components/Search/SearchInputComponent";
 import SearchResultDropdownButton from "@/components/Search/SearchResultDropdownButton";
 import SearchResultGridButton from "@/components/Search/SearchResultGridButton";
+import { useBookmark } from "@/hooks/useBookmark";
 import { useBuildingState } from "@/hooks/useBuildingState";
 import { useCabinet } from "@/hooks/useCabinet";
 import { useSearch } from "@/hooks/useSearch";
@@ -44,7 +45,6 @@ const SearchPage = () => {
     hasMoreResults,
     scrollContainerRef,
   } = useSearch();
-
   const {
     slicedSearchResults,
     handleInputRelatedSearch,
@@ -54,6 +54,9 @@ const SearchPage = () => {
     setSearchInput,
     debouncedSearchKeywordApi,
     setIsDropdownOpen,
+  });
+  const { isBookmark, setIsBookmark } = useBookmark({
+    selectedCabinet,
   });
 
   return (
@@ -125,6 +128,8 @@ const SearchPage = () => {
           setUsername={setUsername}
           isRentAvailable={isRentAvailable}
           setIsRentAvailable={setIsRentAvailable}
+          isBookmark={isBookmark}
+          setIsBookmark={setIsBookmark}
         />
       </div>
     </>

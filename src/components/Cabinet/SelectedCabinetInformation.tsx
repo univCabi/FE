@@ -4,9 +4,12 @@ import { formatDate } from "@/utils/formatDate";
 import CabinetActionButtons from "@/components/Cabinet/CabinetActionButtons";
 import CabinetInformationDisplay from "@/components/Cabinet/CabinetInformationDisplay";
 import ConfirmModalView from "@/components/ConfirmModalView";
+import { useBookmark } from "@/hooks/useBookmark";
 import { useCabinetRental } from "@/hooks/useCabinetRental";
 import { useCabinetReturn } from "@/hooks/useCabinetReturn";
 import { useConfirmModalState } from "@/hooks/useConfirmModalState";
+import BookmarkAddSVG from "@/icons/bookmarkAdd.svg?react";
+import BookmarkRemoveSVG from "@/icons/bookmarkRemove.svg?react";
 import CabinetSVG from "@/icons/cabinet.svg?react";
 
 // 선택된 사물함 정보
@@ -17,6 +20,8 @@ interface SelectedCabinetInformationProps extends SelectedCabinetInfo {
   setUsername: (username: string | null) => void;
   isRentAvailable: boolean;
   setIsRentAvailable: (isRentAvailable: boolean) => void;
+  isBookmark: boolean;
+  setIsBookmark: (isBookmarked: boolean) => void;
 }
 
 const SelectedCabinetInformation = ({
@@ -33,6 +38,8 @@ const SelectedCabinetInformation = ({
   setUsername,
   isRentAvailable,
   setIsRentAvailable,
+  isBookmark,
+  setIsBookmark,
 }: SelectedCabinetInformationProps) => {
   const {
     openRentalModal,
@@ -80,12 +87,79 @@ const SelectedCabinetInformation = ({
     isRentAvailable,
     setIsRentAvailable,
   });
+  const { fetchBookmarkAdd, fetchBookmarkRemove } = useBookmark({
+    selectedCabinet,
+  });
+
+  const toggleBookmark = () => {
+    setIsBookmark(!isBookmark);
+    if (isBookmark) {
+      fetchBookmarkRemove();
+    } else {
+      fetchBookmarkAdd();
+    }
+  };
+
   return (
-    <div className="absolute inset-y-0 right-0 w-80 pt-20 flex flex-col justify-center items-center bg-white border-l-2 border-gray-400 ">
+    <div className="absolute inset-y-0 right-0 w-80 pt-20 flex flex-col justify-center items-center bg-white border-l-2 border-gray-400">
       {selectedCabinet !== null ? (
-        selectedStatus === CabinetStatus.AVAILABLE ? (
-          isRentAvailable === true ? (
-            // 상태가 AVAILABLE이고, 대여가 가능할 경우
+        <>
+          <button onClick={toggleBookmark}>
+            {isBookmark === false ? (
+              <BookmarkRemoveSVG
+                className="absolute -top-2 right-2  flex-col transition-all duration-150 mt-20"
+                width={25}
+              />
+            ) : (
+              <BookmarkAddSVG
+                className="absolute -top-2 right-2  flex-col transition-all duration-150 mt-20"
+                width={25}
+              />
+            )}
+          </button>
+          {selectedStatus === CabinetStatus.AVAILABLE ? (
+            isRentAvailable === true ? (
+              <>
+                <CabinetInformationDisplay
+                  selectedBuilding={selectedBuilding}
+                  selectedFloor={selectedFloor}
+                  selectedCabinet={selectedCabinet}
+                  statusMessage=""
+                />
+                <CabinetActionButtons
+                  onRentalClick={clickedRentalButton}
+                  onCancelClick={cancelButton}
+                  isRentAvailble={isRentAvailable}
+                  selectedStatus={selectedStatus}
+                  text="대여"
+                />
+                {openRentalModal && (
+                  <ConfirmModalView
+                    onClick={fetchCabinetRental}
+                    setModalCancelState={setOpenRentalModal}
+                    title={"대여 확인"}
+                    cabinetInfo={`${selectedBuilding} ${selectedFloor}F ${selectedCabinet?.cabinetNumber}번 사물함`}
+                    text={"이 사물함을 대여하시겠습니까?"}
+                  />
+                )}
+              </>
+            ) : (
+              <>
+                <CabinetInformationDisplay
+                  selectedBuilding={selectedBuilding}
+                  selectedFloor={selectedFloor}
+                  selectedCabinet={selectedCabinet}
+                  statusMessage="오후 1시 오픈 예정입니다."
+                />
+                <CabinetActionButtons
+                  onRentalClick={clickedRentalButton}
+                  onCancelClick={cancelButton}
+                  selectedStatus={selectedStatus}
+                  text="대여"
+                />
+              </>
+            )
+          ) : selectedStatus === CabinetStatus.USING && isMyCabinet ? (
             <>
               <CabinetInformationDisplay
                 selectedBuilding={selectedBuilding}
@@ -94,87 +168,43 @@ const SelectedCabinetInformation = ({
                 statusMessage=""
               />
               <CabinetActionButtons
-                onRentalClick={clickedRentalButton}
+                onReturnClick={clickedReturnButton}
                 onCancelClick={cancelButton}
-                isRentAvailble={isRentAvailable}
                 selectedStatus={selectedStatus}
-                text="대여"
+                text="반납"
               />
-              {openRentalModal && (
+              <div className="text-lg">
+                <p>
+                  반납 기한: <br />
+                  <strong>{formatDate(expiredAt)}</strong>
+                </p>
+              </div>
+              {openReturnModal && (
                 <ConfirmModalView
-                  onClick={fetchCabinetRental}
-                  setModalCancelState={setOpenRentalModal}
-                  title={"대여 확인"}
-                  cabinetInfo={`${selectedBuilding} ${selectedFloor}F ${selectedCabinet?.cabinetNumber}번 사물함`}
-                  text={"이 사물함을 대여하시겠습니까?"}
+                  onClick={fetchCabinetReturn}
+                  setModalCancelState={setOpenReturnModal}
+                  title={"반납 확인"}
+                  text={"이 사물함을 반납하시겠습니까?"}
                 />
               )}
             </>
-          ) : (
-            <>
-              {/* // 상태가 AVAILABLE이지만 대여가 불가능한 경우 */}
-              <CabinetInformationDisplay
-                selectedBuilding={selectedBuilding}
-                selectedFloor={selectedFloor}
-                selectedCabinet={selectedCabinet}
-                statusMessage="오후 1시 오픈 예정입니다."
-              />
-              <CabinetActionButtons
-                onRentalClick={clickedRentalButton}
-                onCancelClick={cancelButton}
-                selectedStatus={selectedStatus}
-                text="대여"
-              />
-            </>
-          )
-        ) : selectedStatus === CabinetStatus.USING && isMyCabinet ? (
-          // 상태가 USING이고 본인의 사물함일 경우
-          <>
+          ) : (selectedStatus === CabinetStatus.USING && !isMyCabinet) ||
+            selectedStatus === CabinetStatus.OVERDUE ? (
             <CabinetInformationDisplay
               selectedBuilding={selectedBuilding}
               selectedFloor={selectedFloor}
               selectedCabinet={selectedCabinet}
-              statusMessage=""
+              statusMessage="이미 대여중인 사물함입니다."
             />
-            <CabinetActionButtons
-              onReturnClick={clickedReturnButton}
-              onCancelClick={cancelButton}
-              selectedStatus={selectedStatus}
-              text="반납"
+          ) : selectedStatus === CabinetStatus.BROKEN ? (
+            <CabinetInformationDisplay
+              selectedBuilding={selectedBuilding}
+              selectedFloor={selectedFloor}
+              selectedCabinet={selectedCabinet}
+              statusMessage="사용이 불가능한 사물함입니다."
             />
-            <div className="text-lg">
-              <p>
-                반납 기한: <br />
-                <strong>{formatDate(expiredAt)}</strong>
-              </p>
-            </div>
-            {openReturnModal && (
-              <ConfirmModalView
-                onClick={fetchCabinetReturn}
-                setModalCancelState={setOpenReturnModal}
-                title={"반납 확인"}
-                text={"이 사물함을 반납하시겠습니까?"}
-              />
-            )}
-          </>
-        ) : (selectedStatus === CabinetStatus.USING && !isMyCabinet) ||
-          selectedStatus === CabinetStatus.OVERDUE ? (
-          // 상태가 USING이고 타인의 사물함일 경우
-          <CabinetInformationDisplay
-            selectedBuilding={selectedBuilding}
-            selectedFloor={selectedFloor}
-            selectedCabinet={selectedCabinet}
-            statusMessage="이미 대여중인 사물함입니다."
-          />
-        ) : selectedStatus === CabinetStatus.BROKEN ? (
-          // 상태가 BROKEN일 경우
-          <CabinetInformationDisplay
-            selectedBuilding={selectedBuilding}
-            selectedFloor={selectedFloor}
-            selectedCabinet={selectedCabinet}
-            statusMessage="사용이 불가능한 사물함입니다."
-          />
-        ) : null
+          ) : null}
+        </>
       ) : (
         <>
           <div className="flex justify-center pb-5">

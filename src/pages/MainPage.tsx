@@ -6,10 +6,9 @@ import CabinetButtonLayout from "@/components/Cabinet/CabinetButtonLayout";
 import CabinetStatusInformation from "@/components/Cabinet/CabinetStatusInformation";
 import SelectedCabinetInformation from "@/components/Cabinet/SelectedCabinetInformation";
 import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
-import { useAvailableCabinet } from "@/hooks/useAvailableCabinet";
+import { useBookmark } from "@/hooks/useBookmark";
 import { useBuildingState } from "@/hooks/useBuildingState";
 import { useCabinet } from "@/hooks/useCabinet";
-import { useUserData } from "@/hooks/useUserData";
 
 const MainPage = () => {
   const { buildingList, selectedBuilding, setSelectedBuilding } = useContext(
@@ -32,10 +31,8 @@ const MainPage = () => {
     isRentAvailable,
     setIsRentAvailable,
   } = useCabinet();
-  const { userData } = useUserData();
-  const { setCabinetDataByFloor, availableFloors } = useAvailableCabinet({
-    setSelectedBuilding,
-    userData,
+  const { isBookmark, bookmarkIds, setIsBookmark } = useBookmark({
+    selectedCabinet,
   });
 
   useEffect(() => {
@@ -51,7 +48,11 @@ const MainPage = () => {
       {/* 화면 크기 = 768px 이상일 때 */}
       <div className="md:flex">
         {/* 건물 정보(좌측) */}
-        <div className="absolute inset-y-0 left-0 w-40 border-r-2 border-gray-400 hidden md:flex">
+        <div
+          className={`absolute inset-y-0 left-0 w-40 border-r-2 border-gray-400 
+            ${selectedFloor === null ? "flex z-10" : "hidden"} 
+            md:flex`}
+        >
           <BuildingSelectButton
             buildingList={buildingList}
             selectedBuilding={selectedBuilding}
@@ -60,21 +61,19 @@ const MainPage = () => {
             setSelectedFloor={setSelectedFloor}
             setSelectedCabinet={setSelectedCabinet}
           />
-
-          {/* 하단 메뉴(좌측) */}
           <CabinetFooterMenuButton />
         </div>
 
         <>
           {selectedBuilding === null && (
             <div className="absolute inset-y-0 left-40 right-80 items-center flex justify-center text-md">
-              나중에 사용법 들어가면 좋을 것 같아서 추후에 추가하겠습니다
+              {/* TODO: 나중에 사용법 추가하기 */}
             </div>
           )}
         </>
 
         {/* 사물함 위치(중앙) */}
-        <div className="absolute inset-y-0 left-0 right-0 md:left-64 md:right-80 border-gray-400 pt-16 hidden md:flex">
+        <div className="absolute inset-y-0 left-0 right-0 md:left-64 md:right-80 border-gray-400 pt-16 md:flex">
           {/* 건물 선택 후, 층수 선택을 둘 다 해야 사물함 컴포넌트가 보임 */}
           {selectedBuilding !== null && selectedFloor !== null && (
             <>
@@ -89,88 +88,18 @@ const MainPage = () => {
                 filteredCabinetDetail={filteredCabinetDetail}
                 fetchCabinetDetailInformation={fetchCabinetDetailInformation}
                 selectedCabinet={selectedCabinet}
-                selectedStatus={selectedStatus}
-                setCabinetDataByFloor={setCabinetDataByFloor}
-                availableFloors={availableFloors}
+                bookmarkIds={bookmarkIds}
               />
-              <CabinetStatusInformation />
-            </>
-          )}
-        </div>
-        {/* 선택한 사물함 정보(우측) */}
-        <div className="absolute inset-y-0 right-0 w-80 border-gray-400 border-l-2 pt-20 hidden md:flex">
-          <SelectedCabinetInformation
-            selectedBuilding={selectedBuilding}
-            selectedFloor={selectedFloor}
-            selectedCabinet={selectedCabinet}
-            selectedStatus={selectedStatus as string}
-            setSelectedStatus={setSelectedStatus}
-            setExpiredAt={setExpiredAt}
-            setSelectedCabinet={setSelectedCabinet}
-            expiredAt={expiredAt}
-            isMyCabinet={isMyCabinet as boolean}
-            setIsMyCabinet={setIsMyCabinet}
-            setUsername={setUsername}
-            isRentAvailable={isRentAvailable as boolean}
-            setIsRentAvailable={setIsRentAvailable}
-          />
-        </div>
-      </div>
-
-      {/* 화면 크기 = 768px 이하일 때 */}
-      <div className="md:hidden">
-        {/* 건물 & 층 선택 안했을 때 -> 건물 & 층 선택하는 컴포넌트만 표시 */}
-        {selectedFloor === null && (
-          <div className="absolute inset-y-0 left-0 w-40 border-r-2 border-gray-400 flex">
-            <BuildingSelectButton
-              buildingList={buildingList}
-              selectedBuilding={selectedBuilding}
-              setSelectedBuilding={setSelectedBuilding}
-              selectedFloor={selectedFloor}
-              setSelectedFloor={setSelectedFloor}
-              setSelectedCabinet={setSelectedCabinet}
-            />
-            {/* 하단 메뉴(좌측) */}
-            <CabinetFooterMenuButton />
-          </div>
-        )}
-
-        {/* 건물&층 선택 완료 -> 사물함 컴포넌트 표시 */}
-        {selectedBuilding !== null && selectedFloor !== null && (
-          <div
-            className={`absolute inset-y-0 left-0 right-0 border-gray-400 pt-16 flex ${
-              selectedCabinet ? "w-8/12" : "w-full"
-            }`}
-          >
-            <>
-              <div className="absolute inset-y-0 left-12 right-8 pt-16">
-                <CabinetButtonLayout
-                  selectedBuilding={
-                    buildingList.find(
-                      (data) => data.building === selectedBuilding,
-                    )?.building || null
-                  }
-                  selectedFloor={selectedFloor}
-                  isMyCabinet={isMyCabinet as boolean}
-                  filteredCabinetDetail={filteredCabinetDetail}
-                  fetchCabinetDetailInformation={fetchCabinetDetailInformation}
-                  selectedCabinet={selectedCabinet}
-                  selectedStatus={selectedStatus}
-                  setCabinetDataByFloor={setCabinetDataByFloor}
-                  availableFloors={availableFloors}
-                />
-              </div>
-              {/* 화면 크기 = 768px 이하일 때 사물함 정보 숨김 */}
               <div className="hidden sl:flex">
                 <CabinetStatusInformation />
               </div>
             </>
-          </div>
-        )}
+          )}
+        </div>
 
-        {/* 사물함 선택 완료 -> cabinetRental 컴포넌트 표시 */}
-        {selectedCabinet && (
-          <div className="absolute inset-y-0 right-0 w-80 border-gray-400 border-l-2 pt-20 flex">
+        {/* 선택한 사물함 정보(우측) */}
+        {selectedCabinet ? (
+          <div className="absolute inset-y-0 right-0 border-gray-400 border-l-2 pt-20">
             <SelectedCabinetInformation
               selectedBuilding={selectedBuilding}
               selectedFloor={selectedFloor}
@@ -185,6 +114,28 @@ const MainPage = () => {
               setUsername={setUsername}
               isRentAvailable={isRentAvailable as boolean}
               setIsRentAvailable={setIsRentAvailable}
+              isBookmark={isBookmark as boolean}
+              setIsBookmark={setIsBookmark}
+            />
+          </div>
+        ) : (
+          <div className="absolute inset-y-0 right-0 w-80 border-gray-400 border-l-2 pt-20 hidden md:flex">
+            <SelectedCabinetInformation
+              selectedBuilding={selectedBuilding}
+              selectedFloor={selectedFloor}
+              selectedCabinet={selectedCabinet}
+              selectedStatus={selectedStatus as string}
+              setSelectedStatus={setSelectedStatus}
+              setExpiredAt={setExpiredAt}
+              setSelectedCabinet={setSelectedCabinet}
+              expiredAt={expiredAt}
+              isMyCabinet={isMyCabinet as boolean}
+              setIsMyCabinet={setIsMyCabinet}
+              setUsername={setUsername}
+              isRentAvailable={isRentAvailable}
+              setIsRentAvailable={setIsRentAvailable}
+              isBookmark={isBookmark as boolean}
+              setIsBookmark={setIsBookmark}
             />
           </div>
         )}

@@ -1,9 +1,9 @@
 import api from "@/api/axiosInterceptApi";
 
-export const adminReturnApi = async (cabinetId: number[]) => {
+export const adminReturnApi = async (cabinetIds: number[]) => {
   try {
     const response = await api.post("/cabinet/admin/return", {
-      cabinetId,
+      cabinetIds,
     });
 
     if (response.status === 200) {
