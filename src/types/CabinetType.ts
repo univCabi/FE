@@ -1,5 +1,3 @@
-import { UserData } from "@/types/UserType";
-
 export interface BuildingData {
   building: string;
   floor: number[];

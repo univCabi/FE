@@ -6,7 +6,6 @@ import CabinetButtonLayout from "@/components/Cabinet/CabinetButtonLayout";
 import CabinetStatusInformation from "@/components/Cabinet/CabinetStatusInformation";
 import SelectedCabinetInformation from "@/components/Cabinet/SelectedCabinetInformation";
 import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
-import { useAvailableCabinet } from "@/hooks/useAvailableCabinet";
 import { useBookmark } from "@/hooks/useBookmark";
 import { useBuildingState } from "@/hooks/useBuildingState";
 import { useCabinet } from "@/hooks/useCabinet";
@@ -32,7 +31,6 @@ const MainPage = () => {
     isRentAvailable,
     setIsRentAvailable,
   } = useCabinet();
-  const { setCabinetDataByFloor, availableFloors } = useAvailableCabinet();
   const { isBookmark, bookmarkIds, setIsBookmark } = useBookmark({
     selectedCabinet,
   });
@@ -90,12 +88,7 @@ const MainPage = () => {
                 filteredCabinetDetail={filteredCabinetDetail}
                 fetchCabinetDetailInformation={fetchCabinetDetailInformation}
                 selectedCabinet={selectedCabinet}
-                selectedStatus={selectedStatus}
-                setCabinetDataByFloor={setCabinetDataByFloor}
-                availableFloors={availableFloors}
-                isBookmark={isBookmark as boolean}
                 bookmarkIds={bookmarkIds}
-                setIsBookmark={setIsBookmark}
               />
               <div className="hidden sl:flex">
                 <CabinetStatusInformation />

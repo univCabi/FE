@@ -14,14 +14,7 @@ import LockSVG from "@/icons/lock.svg?react";
 import PayableSVG from "@/icons/payable.svg?react";
 
 interface CabinetButtonLayoutProps extends CabinetDetailInfo, CabinetInfo {
-  selectedStatus: string;
-  setCabinetDataByFloor: React.Dispatch<
-    React.SetStateAction<Record<string, CabinetData[]>>
-  >;
-  availableFloors: number[] | null;
-  isBookmark: boolean;
   bookmarkIds: number[];
-  setIsBookmark: (isBookmarked: boolean) => void;
 }
 
 const CabinetButtonLayout = ({
@@ -31,9 +24,6 @@ const CabinetButtonLayout = ({
   filteredCabinetDetail,
   fetchCabinetDetailInformation,
   selectedCabinet,
-  selectedStatus,
-  setCabinetDataByFloor,
-  availableFloors,
   bookmarkIds,
 }: CabinetButtonLayoutProps) => {
   const { getStatusColor } = useCabinet();
@@ -42,9 +32,6 @@ const CabinetButtonLayout = ({
     selectedBuilding,
     selectedFloor,
     isMyCabinet,
-    setCabinetDataByFloor,
-    availableFloors,
-    selectedStatus,
   });
 
   // 검색 결과에 해당하는 사물함이 있을 경우에만 실행

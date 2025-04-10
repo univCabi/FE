@@ -30,13 +30,12 @@ const AvailablePage = () => {
     setIsRentAvailable,
   } = useCabinet();
   const { userData } = useUserData();
-  const {
-    availableFloors,
-    cabinetDataByFloor,
-    setCabinetDataByFloor,
-    setAvailableFloors,
-    setSaveAffiliation,
-  } = useAvailableCabinet();
+  const { availableFloors, cabinetDataByFloor } = useAvailableCabinet({
+    userData,
+    setSelectedBuilding,
+    selectedBuilding,
+    selectedStatus,
+  });
   const { isBookmark, setIsBookmark, bookmarkIds } = useBookmark({
     selectedCabinet,
   });
@@ -57,16 +56,9 @@ const AvailablePage = () => {
             selectedFloor={selectedFloor}
             selectedCabinet={selectedCabinet}
             setSelectedFloor={setSelectedFloor}
-            isMyCabinet={isMyCabinet as boolean}
             fetchCabinetDetailInformation={fetchCabinetDetailInformation}
             cabinetDataByFloor={cabinetDataByFloor}
-            setCabinetDataByFloor={setCabinetDataByFloor}
-            setSelectedBuilding={setSelectedBuilding}
-            userData={userData}
-            setAvailableFloors={setAvailableFloors}
-            setSaveAffiliation={setSaveAffiliation}
             bookmarkIds={bookmarkIds}
-            selectedStatus={selectedStatus}
           />
         </div>
       </div>

@@ -11,7 +11,6 @@ import CabinetStatusInformation from "@/components/Cabinet/CabinetStatusInformat
 import CabinetButtonSkeleton from "@/components/Skeleton/CabinetButtonSkeleton";
 import SubmitAndNavigateButton from "@/components/SubmitAndNavigateButton";
 import { useAdminCabinet } from "@/hooks/Admin/useAdminCabinet";
-import { useAvailableCabinet } from "@/hooks/useAvailableCabinet";
 import { useCabinet } from "@/hooks/useCabinet";
 import { useCabinetActivation } from "@/hooks/useCabinetActivation";
 import PayableSVG from "@/icons/payable.svg?react";
@@ -43,14 +42,10 @@ const AdminCabinetLayout = ({
   setIsAdminCabinetInfoVisible,
 }: AdminCabinetLayoutProps) => {
   const { getStatusColor } = useCabinet();
-  const { setCabinetDataByFloor, availableFloors } = useAvailableCabinet();
   const { cabinetData, isLoading, fetchCabinetData } = useCabinetActivation({
     selectedBuilding,
     selectedFloor,
     isMyCabinet,
-    setCabinetDataByFloor,
-    availableFloors,
-    selectedStatus,
   });
   const { checkedCabinet, setCheckedCabinet } = useAdminCabinet();
   const MAX_CABINETS = 47; // Cabinet 배열의 최대 길이
