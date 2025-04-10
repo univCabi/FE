@@ -5,7 +5,7 @@ import { log } from "@/utils/logger";
 import { cabinetCallApi } from "@/api/cabinetCallApi";
 import affiliationBuildingData from "@/mocks/affiliatioinBuildingData.json";
 
-interface testProps {
+interface UseAvailableCabinetProps {
   userData: UserData;
   setSelectedBuilding: (building: string | null) => void;
   selectedBuilding: string | null;
@@ -17,7 +17,7 @@ export const useAvailableCabinet = ({
   setSelectedBuilding,
   selectedBuilding,
   selectedStatus,
-}: testProps) => {
+}: UseAvailableCabinetProps) => {
   const [availableFloors, setAvailableFloors] = useState<number[] | null>(null);
   const [cabinetDataByFloor, setCabinetDataByFloor] = useState<
     Record<number, CabinetData[]>
