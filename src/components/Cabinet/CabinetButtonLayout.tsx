@@ -1,10 +1,6 @@
 // 사물함 배열 관련
 import { useEffect } from "react";
-import {
-  CabinetData,
-  CabinetDetailInfo,
-  CabinetInfo,
-} from "@/types/CabinetType";
+import { CabinetDetailInfo, CabinetInfo } from "@/types/CabinetType";
 import { CabinetStatus } from "@/types/StatusEnum";
 import CabinetButtonSkeleton from "@/components/Skeleton/CabinetButtonSkeleton";
 import { useCabinet } from "@/hooks/useCabinet";

@@ -6,7 +6,6 @@ export const barChartDataApi = async () => {
     const response = await axios.get("/cabinet/admin/dashboard");
     return response.data;
   } catch (error) {
-    console.log(error);
     throw error;
   }
 };

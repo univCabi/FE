@@ -4,6 +4,7 @@ import { formatDate } from "@/utils/formatDate";
 import CabinetActionButtons from "@/components/Cabinet/CabinetActionButtons";
 import CabinetInformationDisplay from "@/components/Cabinet/CabinetInformationDisplay";
 import ConfirmModalView from "@/components/ConfirmModalView";
+import ErrorModalView from "@/components/ErrorModalView";
 import { useBookmark } from "@/hooks/useBookmark";
 import { useCabinetRental } from "@/hooks/useCabinetRental";
 import { useCabinetReturn } from "@/hooks/useCabinetReturn";
@@ -77,20 +78,20 @@ const SelectedCabinetInformation = ({
     setUsername,
     setIsRentAvailable,
   });
-  const { fetchCabinetRental } = useCabinetRental({
-    selectedCabinet,
-    closeRentalModal,
-    setSelectedStatus,
-    setExpiredAt,
-    setIsMyCabinet,
-    setUsername,
-    isRentAvailable,
-    setIsRentAvailable,
-  });
+  const { fetchCabinetRental, openRentalErrorModal, setOpenRentalErrorModal } =
+    useCabinetRental({
+      selectedCabinet,
+      closeRentalModal,
+      setSelectedStatus,
+      setExpiredAt,
+      setIsMyCabinet,
+      setUsername,
+      isRentAvailable,
+      setIsRentAvailable,
+    });
   const { fetchBookmarkAdd, fetchBookmarkRemove } = useBookmark({
     selectedCabinet,
   });
-
   const toggleBookmark = () => {
     setIsBookmark(!isBookmark);
     if (isBookmark) {
@@ -117,6 +118,13 @@ const SelectedCabinetInformation = ({
               />
             )}
           </button>
+          {openRentalErrorModal && (
+            <ErrorModalView
+              setModalCancelState={setOpenRentalErrorModal}
+              title={"대여 실패"}
+              text={"현재 이용 중인 사물함이 있습니다."}
+            />
+          )}
           {selectedStatus === CabinetStatus.AVAILABLE ? (
             isRentAvailable === true ? (
               <>

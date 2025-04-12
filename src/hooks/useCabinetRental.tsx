@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { SelectedCabinet } from "@/types/CabinetType";
 import { log } from "@/utils/logger";
 import { rentApi } from "@/api/rentApi";
@@ -22,6 +23,9 @@ export const useCabinetRental = ({
   isRentAvailable,
   setIsRentAvailable,
 }: UseCabinetRentalProps) => {
+  const [openRentalErrorModal, setOpenRentalErrorModal] =
+    useState<boolean>(false);
+
   const fetchCabinetRental = async () => {
     if (!selectedCabinet) return;
     if (isRentAvailable === false) {
@@ -42,12 +46,15 @@ export const useCabinetRental = ({
         );
       } catch (error) {
         log.error(`API 호출 중 에러 발생: rentApi ${error}`);
-        alert("현재 대여 중인 사물함이 있습니다.");
+        setOpenRentalErrorModal(true);
         closeRentalModal();
       }
     }
   };
+
   return {
     fetchCabinetRental,
+    openRentalErrorModal,
+    setOpenRentalErrorModal,
   };
 };
