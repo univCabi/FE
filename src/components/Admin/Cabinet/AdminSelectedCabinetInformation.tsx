@@ -2,7 +2,7 @@ import { SelectedCabinetInfo, StatusData } from "@/types/CabinetType";
 import { SelectedMultiCabinetsData } from "@/types/MultiCabinetType";
 import AdminCabinetInformationDisplay from "@/components/Admin/Cabinet/AdminCabinetInformationDisplay";
 import AdminStateManagementModal from "@/components/Admin/Cabinet/AdminStateManagementModal";
-import ConfirmModalView from "@/components/ConfirmModalView";
+import ConfirmModalView from "@/components/Modal/ConfirmModalView";
 import { useAdminCabinet } from "@/hooks/Admin/useAdminCabinet";
 import { useAdminReturn } from "@/hooks/Admin/useAdminReturn";
 import { useAdminStatus } from "@/hooks/Admin/useAdminStatus";

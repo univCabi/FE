@@ -1,10 +1,8 @@
+import { Modal } from "@/types/ModalType";
+
 //Modal을 관리하는 컴포넌트
-interface HandleModalProps {
+interface ConfirmModalProps extends Modal {
   onClick: () => Promise<void>;
-  setModalCancelState: React.Dispatch<React.SetStateAction<boolean>>;
-  title?: string;
-  cabinetInfo?: string;
-  text?: string;
 }
 
 const ConfirmModalView = ({
@@ -13,7 +11,7 @@ const ConfirmModalView = ({
   title,
   cabinetInfo,
   text,
-}: HandleModalProps) => {
+}: ConfirmModalProps) => {
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-white p-6 rounded-lg shadow-xl w-96">

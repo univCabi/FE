@@ -1,5 +1,5 @@
 import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
-import ConfirmModalView from "@/components/ConfirmModalView";
+import ConfirmModalView from "@/components/Modal/ConfirmModalView";
 import ProfileInfoCard from "@/components/Profile/ProfileInfoCard";
 import RentalInfoCard from "@/components/Profile/RentalInfoCard";
 import ProfileSkeleton from "@/components/Skeleton/ProfileSkeleton";

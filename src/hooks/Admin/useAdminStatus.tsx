@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { SelectedCabinet, StatusData } from "@/types/CabinetType";
 import { SelectedMultiCabinetsData } from "@/types/MultiCabinetType";
-import { CabinetStatus, CabinetStatusType } from "@/types/StatusEnum";
+import {
+  BrokenReasonType,
+  CabinetStatus,
+  CabinetStatusType,
+} from "@/types/StatusEnum";
 import { log } from "@/utils/logger";
 import { adminChangeStatusApi } from "@/api/adminChangeStatusApi";
 import { useAdminReturn } from "@/hooks/Admin/useAdminReturn";
@@ -89,7 +93,7 @@ export const useAdminStatus = ({
   // 상태관리 API 호출
   const fetchAdminChangeStatus = async (
     newStatus: CabinetStatusType,
-    reason?: string,
+    reason?: BrokenReasonType,
     studentNumber?: string,
   ) => {
     const cabinetIds: number[] = isMultiButtonActive
@@ -104,12 +108,29 @@ export const useAdminStatus = ({
     }
     setNewStatus(selectedStatus);
     try {
-      const response = await adminChangeStatusApi(
-        cabinetIds,
-        newStatus,
-        studentNumber,
-        reason,
-      );
+      let response;
+
+      if (newStatus === CabinetStatus.BROKEN) {
+        response = await adminChangeStatusApi({
+          cabinetIds,
+          newStatus: CabinetStatus.BROKEN,
+          reason: reason!, // 반드시 필요
+        });
+      } else if (
+        newStatus === CabinetStatus.USING ||
+        newStatus === CabinetStatus.OVERDUE
+      ) {
+        response = await adminChangeStatusApi({
+          cabinetIds,
+          newStatus,
+          studentNumber: studentNumber!, // 반드시 필요
+        });
+      } else if (newStatus === CabinetStatus.AVAILABLE) {
+        response = await adminChangeStatusApi({
+          cabinetIds,
+          newStatus: CabinetStatus.AVAILABLE,
+        });
+      }
       if (response) {
         setSelectedStatus(response.data.cabinets.status);
         setSelectedBrokenReason(response.data.cabinets.reason);
@@ -123,7 +144,7 @@ export const useAdminStatus = ({
         return response.data;
       }
     } catch (error) {
-      log.error("API 호출 중 에러 발생: adminChangeStatusApi");
+      log.error(`API 호출 중 에러 발생: adminChangeStatusApi ${error}`);
     }
   };
 
@@ -148,7 +169,10 @@ export const useAdminStatus = ({
   };
 
   // 상태 저장
-  const handleStatusSave = (newStatus: CabinetStatusType, reason: string) => {
+  const handleStatusSave = (
+    newStatus: CabinetStatusType,
+    reason: BrokenReasonType,
+  ) => {
     fetchAdminChangeStatus(newStatus, reason);
   };
 

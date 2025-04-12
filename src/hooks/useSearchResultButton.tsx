@@ -42,7 +42,7 @@ export const useSearchResultButton = () => {
         `API 호출 성공: cabinetCallApi, ${JSON.stringify(response, null, 2)}`,
       );
     } catch (error) {
-      log.error("API 호출 중 에러 발생: cabinetCallApi");
+      log.error(`API 호출 중 에러 발생: cabinetCallApi ${error}`);
     }
   };
 
@@ -55,7 +55,6 @@ export const useSearchResultButton = () => {
       const searchResultPath = `${basePath}?building=${filteredCabinetDetail.building}&floors=${filteredCabinetDetail.floor}`;
       navigate(searchResultPath, { state: { filteredCabinetDetail } });
     }
-    console.log(filteredCabinetDetail);
   }, [filteredCabinetDetail]);
 
   return {
