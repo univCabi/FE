@@ -1,18 +1,20 @@
 import { Modal } from "@/types/ModalType";
-import ErrorSVG from "@/icons/error.svg?react";
 
-interface ErrorModalProps extends Modal {}
+interface AlertModalProps extends Modal {
+  svgComponent?: React.ReactNode;
+}
 
-const ErrorModalView = ({
+const AlertModalView = ({
   setModalCancelState,
   title,
   text,
-}: ErrorModalProps) => {
+  svgComponent,
+}: AlertModalProps) => {
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-white p-6 rounded-lg shadow-xl w-96">
         <div className="flex justify-center pb-3">
-          <ErrorSVG />
+          {svgComponent && <div>{svgComponent}</div>}
         </div>
         <h2 className="text-2xl font-bold mb-5">{title}</h2>
         <div className="text-lg w-full break-all">
@@ -31,4 +33,4 @@ const ErrorModalView = ({
   );
 };
 
-export default ErrorModalView;
+export default AlertModalView;

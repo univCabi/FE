@@ -1,44 +1,30 @@
-import {
-  BrokenReasonType,
-  CabinetStatus,
-  CabinetStatusType,
-} from "@/types/StatusEnum";
+import { BrokenReasonType, CabinetStatus } from "@/types/StatusEnum";
 import api from "@/api/axiosInterceptApi";
 
-interface AdminChangeStatusParams {
-  cabinetIds: number[];
-  newStatus: CabinetStatusType;
-  reason?: BrokenReasonType;
-  studentNumber?: string;
-}
+// 상태별로 타입 분기
+type AdminChangeStatusParams =
+  | {
+      cabinetIds: number[];
+      newStatus: typeof CabinetStatus.BROKEN;
+      reason: BrokenReasonType;
+      studentNumber?: string;
+    }
+  | {
+      cabinetIds: number[];
+      newStatus: typeof CabinetStatus.USING | typeof CabinetStatus.OVERDUE;
+      reason?: BrokenReasonType;
+      studentNumber: string;
+    }
+  | {
+      cabinetIds: number[];
+      newStatus: typeof CabinetStatus.AVAILABLE;
+      reason?: BrokenReasonType;
+      studentNumber?: string;
+    };
 
-export const adminChangeStatusApi = async ({
-  cabinetIds,
-  newStatus,
-  reason,
-  studentNumber,
-}: AdminChangeStatusParams) => {
-  if (newStatus === CabinetStatus.BROKEN && !reason) {
-    throw new Error("BROKEN 상태일 경우 reason이 필요합니다.");
-  }
-
-  if (
-    (newStatus === CabinetStatus.USING ||
-      newStatus === CabinetStatus.OVERDUE) &&
-    !studentNumber
-  ) {
-    throw new Error(
-      "USING 또는 OVERDUE 상태일 경우 studentNumber가 필요합니다.",
-    );
-  }
-
+export const adminChangeStatusApi = async (params: AdminChangeStatusParams) => {
   try {
-    const response = await api.post("/cabinet/admin/change/status", {
-      cabinetIds,
-      newStatus,
-      reason,
-      studentNumber,
-    });
+    const response = await api.post("/cabinet/admin/change/status", params);
 
     if (response.status === 200) {
       return {

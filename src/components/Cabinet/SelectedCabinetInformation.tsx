@@ -3,8 +3,8 @@ import { CabinetStatus } from "@/types/StatusEnum";
 import { formatDate } from "@/utils/formatDate";
 import CabinetActionButtons from "@/components/Cabinet/CabinetActionButtons";
 import CabinetInformationDisplay from "@/components/Cabinet/CabinetInformationDisplay";
-import ConfirmModalView from "@/components/ConfirmModalView";
-import ErrorModalView from "@/components/ErrorModalView";
+import AlertModalView from "@/components/Modal/AlertModalView";
+import ConfirmModalView from "@/components/Modal/ConfirmModalView";
 import { useBookmark } from "@/hooks/useBookmark";
 import { useCabinetRental } from "@/hooks/useCabinetRental";
 import { useCabinetReturn } from "@/hooks/useCabinetReturn";
@@ -12,6 +12,7 @@ import { useConfirmModalState } from "@/hooks/useConfirmModalState";
 import BookmarkAddSVG from "@/icons/bookmarkAdd.svg?react";
 import BookmarkRemoveSVG from "@/icons/bookmarkRemove.svg?react";
 import CabinetSVG from "@/icons/cabinet.svg?react";
+import ErrorSVG from "@/icons/error.svg?react";
 
 // 선택된 사물함 정보
 interface SelectedCabinetInformationProps extends SelectedCabinetInfo {
@@ -119,10 +120,11 @@ const SelectedCabinetInformation = ({
             )}
           </button>
           {openRentalErrorModal && (
-            <ErrorModalView
+            <AlertModalView
               setModalCancelState={setOpenRentalErrorModal}
               title={"대여 실패"}
               text={"현재 이용 중인 사물함이 있습니다."}
+              svgComponent={<ErrorSVG />}
             />
           )}
           {selectedStatus === CabinetStatus.AVAILABLE ? (
