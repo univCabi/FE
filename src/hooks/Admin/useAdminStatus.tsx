@@ -108,12 +108,29 @@ export const useAdminStatus = ({
     }
     setNewStatus(selectedStatus);
     try {
-      const response = await adminChangeStatusApi({
-        cabinetIds,
-        newStatus,
-        studentNumber,
-        reason,
-      });
+      let response;
+
+      if (newStatus === CabinetStatus.BROKEN) {
+        response = await adminChangeStatusApi({
+          cabinetIds,
+          newStatus: CabinetStatus.BROKEN,
+          reason: reason!, // 반드시 필요
+        });
+      } else if (
+        newStatus === CabinetStatus.USING ||
+        newStatus === CabinetStatus.OVERDUE
+      ) {
+        response = await adminChangeStatusApi({
+          cabinetIds,
+          newStatus,
+          studentNumber: studentNumber!, // 반드시 필요
+        });
+      } else if (newStatus === CabinetStatus.AVAILABLE) {
+        response = await adminChangeStatusApi({
+          cabinetIds,
+          newStatus: CabinetStatus.AVAILABLE,
+        });
+      }
       if (response) {
         setSelectedStatus(response.data.cabinets.status);
         setSelectedBrokenReason(response.data.cabinets.reason);
