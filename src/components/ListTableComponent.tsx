@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router";
 import LogoSVG from "@/icons/cabiLogo.svg?react";
 
 interface Column<T, K extends keyof T = keyof T> {
@@ -32,6 +33,7 @@ const ListTableComponent = <T,>({
   thClassName,
   tdClassName,
 }: ListTableProps<T>) => {
+  const navigate = useNavigate();
   return (
     <table className="w-full">
       <thead
@@ -54,7 +56,22 @@ const ListTableComponent = <T,>({
           <tr
             key={index}
             ref={index === data.length - 1 ? setObserverRef : null}
-            className="even:bg-white"
+            className="even:bg-white cursor-pointer hover:bg-gray-300"
+            onClick={() => {
+              navigate(
+                {
+                  pathname: "/main",
+                  // 쿼리파라미터 설정
+                  search: `?building=${encodeURIComponent((item as CabinetLoactionType).building)}&floors=${(item as CabinetLoactionType).floor}`,
+                },
+                {
+                  // useLoaction().state 로 접근 가능능
+                  state: {
+                    cabinetNumber: (item as CabinetLoactionType).cabinetNumber,
+                  },
+                },
+              );
+            }}
           >
             <td className={`w-80 table-cell text-center ${tdClassName}`}>
               {`${(item as CabinetLoactionType).building}-${(item as CabinetLoactionType).section}-${(item as CabinetLoactionType).cabinetNumber}-${(item as CabinetLoactionType).floor}F`}
