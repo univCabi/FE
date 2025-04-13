@@ -1,6 +1,5 @@
 // 사물함 배열 관련
 import { useEffect } from "react";
-import { c } from "node_modules/vite/dist/node/moduleRunnerTransport.d-CXw_Ws6P";
 import { useLocation } from "react-router";
 import { CabinetDetailInfo, CabinetInfo } from "@/types/CabinetType";
 import { CabinetStatus } from "@/types/StatusEnum";
@@ -49,7 +48,8 @@ const CabinetButtonLayout = ({
     ) {
       // List에서 보내온 cabinetNumber 정보로 해당 cabinetData의 cabinet을 찾는 로직
       const cabinet = cabinetData.find(
-        (cabinet) => cabinet.cabinetNumber === location.state.cabinetNumber,
+        (cabinet) =>
+          cabinet.cabinetNumber === Number(location.state.cabinetNumber),
       );
       // 버튼 클릭했을 때와 같은 로직
       if (cabinet) {
@@ -73,7 +73,7 @@ const CabinetButtonLayout = ({
                   key={cabinet.cabinetNumber}
                   className={`absolute w-16 h-20 rounded-md hover:bg-opacity-80 flex items-end text-sm p-2 
                       ${getStatusColor(cabinet.status, cabinet.isMine)} 
-                      ${isSelected ? "shadow-md" : ""}
+                      ${isSelected ? "shadow-md " : ""}
                   `}
                   style={{
                     top: `${350 - cabinet.cabinetYPos * 100}px`,

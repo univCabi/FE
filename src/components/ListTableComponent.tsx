@@ -34,6 +34,7 @@ const ListTableComponent = <T,>({
   tdClassName,
 }: ListTableProps<T>) => {
   const navigate = useNavigate();
+  const isAdmin = location.pathname.startsWith("/admin");
   return (
     <table className="w-full">
       <thead
@@ -60,7 +61,7 @@ const ListTableComponent = <T,>({
             onClick={() => {
               navigate(
                 {
-                  pathname: "/main",
+                  pathname: isAdmin ? "/admin/main" : "/main",
                   // 쿼리파라미터 설정
                   search: `?building=${encodeURIComponent((item as CabinetLoactionType).building)}&floors=${(item as CabinetLoactionType).floor}`,
                 },

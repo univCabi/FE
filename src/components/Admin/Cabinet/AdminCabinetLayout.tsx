@@ -1,5 +1,6 @@
 // 사물함 배열 관련
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
+import { useLocation } from "react-router";
 import {
   CabinetDetailInfo,
   SelectedCabinet,
@@ -41,6 +42,7 @@ const AdminCabinetLayout = ({
   isMyCabinet,
   setIsAdminCabinetInfoVisible,
 }: AdminCabinetLayoutProps) => {
+  const isAutoSelected = useRef<boolean>(false);
   const { getStatusColor } = useCabinet();
   const { cabinetData, isLoading, fetchCabinetData } = useCabinetActivation({
     selectedBuilding,
@@ -49,6 +51,7 @@ const AdminCabinetLayout = ({
   });
   const { checkedCabinet, setCheckedCabinet } = useAdminCabinet();
   const MAX_CABINETS = 47; // Cabinet 배열의 최대 길이
+  const location = useLocation();
 
   // 복수선택기능 버튼 활성화
   const MultipleSelectButtonActive = useCallback(() => {
@@ -140,7 +143,27 @@ const AdminCabinetLayout = ({
         filteredCabinetDetail.cabinetNumber,
       );
     }
-  }, [filteredCabinetDetail]);
+    // 만약 cabinetData 가 존재하고 location.sate.cabinetNumber 값이 존재하면 실행되는 로직
+    else if (
+      cabinetData.length > 0 &&
+      location.state?.cabinetNumber &&
+      !isAutoSelected.current
+    ) {
+      // List에서 보내온 cabinetNumber 정보로 해당 cabinetData의 cabinet을 찾는 로직
+      const cabinet = cabinetData.find(
+        (cabinet) =>
+          // 자료형 이슈 location.state.cabinetNumber 로 온 값은 string이다.
+          cabinet.cabinetNumber === Number(location.state?.cabinetNumber),
+      );
+      // 버튼 클릭했을 때와 같은 로직
+      if (cabinet) {
+        fetchCabinetDetailInformation(cabinet.id, cabinet.cabinetNumber);
+        handleCabinetClick(cabinet.cabinetNumber, cabinet.id, cabinet.status);
+        isAutoSelected.current = true;
+      }
+    }
+    // cabinetData 값이 들어오고난 후 useEffect 요청
+  }, [filteredCabinetDetail, cabinetData]);
 
   return (
     <div className="w-full">
@@ -177,7 +200,7 @@ const AdminCabinetLayout = ({
                   className={`absolute w-16 h-20 rounded-md hover:bg-opacity-80 flex items-end text-sm p-2 
                   ${
                     isSelected
-                      ? `${getStatusColor(cabinet.status, cabinet.isMine)} opacity-100 shadow-md`
+                      ? `${getStatusColor(cabinet.status, cabinet.isMine)} opacity-100 shadow-md `
                       : `${getStatusColor(cabinet.status, cabinet.isMine)} ${isMultiButtonActive ? "opacity-35" : ""}`
                   }
                   `}
