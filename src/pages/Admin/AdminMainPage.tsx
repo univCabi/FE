@@ -41,7 +41,7 @@ const AdminMainPage = () => {
   useEffect(() => {
     if (location.state?.selectedBuilding) {
       setSelectedBuilding(location.state.selectedBuilding);
-      setSelectedFloor(null);
+      setSelectedFloor(location.state.selectedFloor ?? null);
       setSelectedCabinet(null);
     }
   }, [location.state]);

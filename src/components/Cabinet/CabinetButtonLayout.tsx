@@ -1,5 +1,6 @@
 // 사물함 배열 관련
 import { useEffect } from "react";
+import { useLocation } from "react-router";
 import { CabinetDetailInfo, CabinetInfo } from "@/types/CabinetType";
 import { CabinetStatus } from "@/types/StatusEnum";
 import CabinetButtonSkeleton from "@/components/Skeleton/CabinetButtonSkeleton";
@@ -29,6 +30,7 @@ const CabinetButtonLayout = ({
     selectedFloor,
     isMyCabinet,
   });
+  const location = useLocation();
 
   // 검색 결과에 해당하는 사물함이 있을 경우에만 실행
   useEffect(() => {
@@ -38,7 +40,24 @@ const CabinetButtonLayout = ({
         filteredCabinetDetail.cabinetNumber,
       );
     }
-  }, [filteredCabinetDetail]);
+    // 만약 cabinetData 가 존재하고 location.sate.cabinetNumber 값이 존재하면 실행되는 로직
+    else if (
+      cabinetData.length > 0 &&
+      location.state?.cabinetNumber &&
+      !selectedCabinet
+    ) {
+      // List에서 보내온 cabinetNumber 정보로 해당 cabinetData의 cabinet을 찾는 로직
+      const cabinet = cabinetData.find(
+        (cabinet) =>
+          cabinet.cabinetNumber === Number(location.state.cabinetNumber),
+      );
+      // 버튼 클릭했을 때와 같은 로직
+      if (cabinet) {
+        fetchCabinetDetailInformation(cabinet.id, cabinet.cabinetNumber);
+      }
+    }
+    // cabinetData 값이 들어오고난 후 useEffect 요청
+  }, [filteredCabinetDetail, cabinetData]);
 
   return (
     <div className="w-full h-[80%] flex items-center justify-center">
@@ -54,7 +73,7 @@ const CabinetButtonLayout = ({
                   key={cabinet.cabinetNumber}
                   className={`absolute w-16 h-20 rounded-md hover:bg-opacity-80 flex items-end text-sm p-2 
                       ${getStatusColor(cabinet.status, cabinet.isMine)} 
-                      ${isSelected ? "shadow-md" : ""}
+                      ${isSelected ? "shadow-md " : ""}
                   `}
                   style={{
                     top: `${350 - cabinet.cabinetYPos * 100}px`,
