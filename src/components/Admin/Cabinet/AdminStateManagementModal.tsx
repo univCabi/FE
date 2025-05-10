@@ -43,9 +43,11 @@ const AdminStateManagementModal = ({
     setNewStatus,
     getStatusLabel,
     getMultiCabinetStatusLabel,
-    setSelectedBrokenReason,
     handleStatusSave,
     handleReasonClick,
+    isStudentNumberInputActive,
+    studentNumber,
+    setStudentNumber,
   } = useAdminStatus({
     selectedStatus,
     setSelectedStatus,
@@ -80,11 +82,11 @@ const AdminStateManagementModal = ({
         </div>
         <div className="flex flex-col justify-center items-center">
           <div className="flex flex-col w-72">
-            <p className="mt-5 mb-2 text-left ">고장 처리</p>
+            <p className="mt-5 mb-2 text-left ">상태 변경</p>
             <div>
               <div className="relative" ref={dropdownOutsideRef}>
                 <button
-                  className="p-4 w-full text-left flex flex-row bg-white text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-300"
+                  className="p-4 w-full text-left flex flex-row justify-between bg-white text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-300"
                   onClick={toggleDropdown}
                 >
                   {isMultiButtonActive
@@ -92,7 +94,7 @@ const AdminStateManagementModal = ({
                     : !newStatus
                       ? getMultiCabinetStatusLabel()
                       : getStatusLabel(newStatus)}
-                  <AngleDownSVG className="ml-[70%]" fill="#2563eb" />
+                  <AngleDownSVG fill="#2563eb" />
                 </button>
 
                 {isDropdownOpen && (
@@ -113,6 +115,22 @@ const AdminStateManagementModal = ({
                     >
                       사용 불가
                     </button>
+                    <button
+                      className="block my-1 p-4 w-full text-left hover:bg-blue-300 hover:text-white rounded-md"
+                      onClick={() =>
+                        handleMultiStatusChange(CabinetStatus.USING)
+                      }
+                    >
+                      대여
+                    </button>
+                    <button
+                      className="block my-1 p-4 w-full text-left hover:bg-blue-300 hover:text-white rounded-md"
+                      onClick={() =>
+                        handleMultiStatusChange(CabinetStatus.OVERDUE)
+                      }
+                    >
+                      연체
+                    </button>
                   </div>
                 )}
               </div>
@@ -120,7 +138,11 @@ const AdminStateManagementModal = ({
           </div>
 
           <div className="flex flex-col w-72">
-            <p className="mt-5 mb-2 text-left">고장 이유</p>
+            <p
+              className={`mt-5 mb-2 text-left ${canSelectedReasonButton ? "text-black" : "text-gray-500"}`}
+            >
+              고장 이유
+            </p>
             <div className="flex flex-row justify-between items-center">
               <SubmitAndNavigateButton
                 text="잠금"
@@ -144,17 +166,31 @@ const AdminStateManagementModal = ({
                 disabled={!canSelectedReasonButton}
               />
             </div>
+            <p
+              className={`mt-5 mb-2 text-left ${isStudentNumberInputActive ? "text-black" : "text-gray-500"}`}
+            >
+              학번 입력
+            </p>
+            <input
+              type="number"
+              value={studentNumber}
+              onChange={(e) => setStudentNumber(e.target.value)}
+              disabled={!isStudentNumberInputActive}
+              className={`border w-72 h-10 rounded-lg bg-white
+                 ${isStudentNumberInputActive ? "border-blue-600" : "border-gray-400"}`}
+            />
           </div>
         </div>
         <div className="mt-5 flex justify-center">
           <button
             className="mr-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-500"
-            onClick={() =>
+            onClick={() => {
               handleStatusSave(
                 newStatus as CabinetStatusType,
                 selectedBrokenReason as BrokenReasonType,
-              )
-            }
+                studentNumber as string,
+              );
+            }}
           >
             저장
           </button>

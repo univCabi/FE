@@ -6,6 +6,7 @@ import CabinetButtonLayout from "@/components/Cabinet/CabinetButtonLayout";
 import CabinetStatusInformation from "@/components/Cabinet/CabinetStatusInformation";
 import SelectedCabinetInformation from "@/components/Cabinet/SelectedCabinetInformation";
 import CabinetFooterMenuButton from "@/components/CabinetFooterMenuButton";
+import CabinetTutorial from "@/components/CabinetTutorial";
 import { useBookmark } from "@/hooks/useBookmark";
 import { useBuildingState } from "@/hooks/useBuildingState";
 import { useCabinet } from "@/hooks/useCabinet";
@@ -66,8 +67,8 @@ const MainPage = () => {
 
         <>
           {selectedBuilding === null && (
-            <div className="absolute inset-y-0 left-40 right-80 items-center flex justify-center text-md">
-              {/* TODO: 나중에 사용법 추가하기 */}
+            <div className="absolute inset-y-0 left-40 right-0 flex justify-center items-center">
+              <CabinetTutorial />
             </div>
           )}
         </>
@@ -98,8 +99,14 @@ const MainPage = () => {
         </div>
 
         {/* 선택한 사물함 정보(우측) */}
-        {selectedCabinet ? (
-          <div className="absolute inset-y-0 right-0 border-gray-400 border-l-2 pt-20">
+        {selectedCabinet || selectedFloor ? (
+          <div
+            className={`absolute inset-y-0 right-0 border-gray-400 border-l-2 pt-20 ${
+              selectedFloor !== null && selectedCabinet === null
+                ? "hidden md:flex"
+                : ""
+            }`}
+          >
             <SelectedCabinetInformation
               selectedBuilding={selectedBuilding}
               selectedFloor={selectedFloor}
@@ -118,27 +125,7 @@ const MainPage = () => {
               setIsBookmark={setIsBookmark}
             />
           </div>
-        ) : (
-          <div className="absolute inset-y-0 right-0 w-80 border-gray-400 border-l-2 pt-20 hidden md:flex">
-            <SelectedCabinetInformation
-              selectedBuilding={selectedBuilding}
-              selectedFloor={selectedFloor}
-              selectedCabinet={selectedCabinet}
-              selectedStatus={selectedStatus as string}
-              setSelectedStatus={setSelectedStatus}
-              setExpiredAt={setExpiredAt}
-              setSelectedCabinet={setSelectedCabinet}
-              expiredAt={expiredAt}
-              isMyCabinet={isMyCabinet as boolean}
-              setIsMyCabinet={setIsMyCabinet}
-              setUsername={setUsername}
-              isRentAvailable={isRentAvailable}
-              setIsRentAvailable={setIsRentAvailable}
-              isBookmark={isBookmark as boolean}
-              setIsBookmark={setIsBookmark}
-            />
-          </div>
-        )}
+        ) : null}
       </div>
     </>
   );

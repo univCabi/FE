@@ -41,7 +41,7 @@ const SearchResultGridButton = ({
       <div className="flex justify-center mt-3">
         {isLoading && (
           <div className="flex justify-center bg-white items-center">
-            <LogoSVG className="animate-spin" />
+            <LogoSVG className="animate-spin" width={40} height={50} />
           </div>
         )}
       </div>
