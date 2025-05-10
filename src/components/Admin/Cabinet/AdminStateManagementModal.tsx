@@ -101,9 +101,10 @@ const AdminStateManagementModal = ({
                   <div className="absolute mt-1 w-full bg-white text-black rounded-md shadow-lg z-10">
                     <button
                       className="block my-1 p-4 w-full text-left hover:bg-blue-300 hover:text-white rounded-md"
-                      onClick={() =>
-                        handleMultiStatusChange(CabinetStatus.AVAILABLE)
-                      }
+                      onClick={() => {
+                        handleMultiStatusChange(CabinetStatus.AVAILABLE);
+                        handleReasonClick(null);
+                      }}
                     >
                       사용 가능
                     </button>
@@ -117,17 +118,19 @@ const AdminStateManagementModal = ({
                     </button>
                     <button
                       className="block my-1 p-4 w-full text-left hover:bg-blue-300 hover:text-white rounded-md"
-                      onClick={() =>
-                        handleMultiStatusChange(CabinetStatus.USING)
-                      }
+                      onClick={() => {
+                        handleMultiStatusChange(CabinetStatus.USING);
+                        handleReasonClick(null);
+                      }}
                     >
                       대여
                     </button>
                     <button
                       className="block my-1 p-4 w-full text-left hover:bg-blue-300 hover:text-white rounded-md"
-                      onClick={() =>
-                        handleMultiStatusChange(CabinetStatus.OVERDUE)
-                      }
+                      onClick={() => {
+                        handleMultiStatusChange(CabinetStatus.OVERDUE);
+                        handleReasonClick(null);
+                      }}
                     >
                       연체
                     </button>
