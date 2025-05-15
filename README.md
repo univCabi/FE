@@ -80,7 +80,9 @@
   
 - **사용 가능한 사물함 대여 페이지**
   - **사용 가능한 사물함을 선착순으로 대여하는 기능** : 매일 오후 1시에 본인이 사용 가능한 사물함의 잠금이 해제됩니다.
-  
+  ![2025-05-1516 39 53-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/f623d5dd-aa52-4736-9700-0a3de49f143a)
+
+
 - **검색 페이지**
   - **사물함 검색 기능** : 찾고자 하는 사물함의 번호를 입력하면, 해당 번호가 있는 건물과 층에 대한 결과가 나타납니다.
   ![2025-05-1515 47 57-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/596a8ced-e38e-4245-8712-ddfe04c960b8)
