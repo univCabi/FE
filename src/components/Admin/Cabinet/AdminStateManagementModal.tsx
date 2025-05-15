@@ -116,24 +116,28 @@ const AdminStateManagementModal = ({
                     >
                       사용 불가
                     </button>
-                    <button
-                      className="block my-1 p-4 w-full text-left hover:bg-blue-300 hover:text-white rounded-md"
-                      onClick={() => {
-                        handleMultiStatusChange(CabinetStatus.USING);
-                        handleReasonClick(null);
-                      }}
-                    >
-                      대여
-                    </button>
-                    <button
-                      className="block my-1 p-4 w-full text-left hover:bg-blue-300 hover:text-white rounded-md"
-                      onClick={() => {
-                        handleMultiStatusChange(CabinetStatus.OVERDUE);
-                        handleReasonClick(null);
-                      }}
-                    >
-                      연체
-                    </button>
+                    {!isMultiButtonActive && (
+                      <>
+                        <button
+                          className="block my-1 p-4 w-full text-left hover:bg-blue-300 hover:text-white rounded-md"
+                          onClick={() => {
+                            handleMultiStatusChange(CabinetStatus.USING);
+                            handleReasonClick(null);
+                          }}
+                        >
+                          대여
+                        </button>
+                        <button
+                          className="block my-1 p-4 w-full text-left hover:bg-blue-300 hover:text-white rounded-md"
+                          onClick={() => {
+                            handleMultiStatusChange(CabinetStatus.OVERDUE);
+                            handleReasonClick(null);
+                          }}
+                        >
+                          연체
+                        </button>
+                      </>
+                    )}
                   </div>
                 )}
               </div>
@@ -169,19 +173,23 @@ const AdminStateManagementModal = ({
                 disabled={!canSelectedReasonButton}
               />
             </div>
-            <p
-              className={`mt-5 mb-2 text-left ${isStudentNumberInputActive ? "text-black" : "text-gray-500"}`}
-            >
-              학번 입력
-            </p>
-            <input
-              type="number"
-              value={studentNumber}
-              onChange={(e) => setStudentNumber(e.target.value)}
-              disabled={!isStudentNumberInputActive}
-              className={`border w-72 h-10 rounded-lg bg-white
+            {!isMultiButtonActive && (
+              <>
+                <p
+                  className={`mt-5 mb-2 text-left ${isStudentNumberInputActive ? "text-black" : "text-gray-500"}`}
+                >
+                  학번 입력
+                </p>
+                <input
+                  type="number"
+                  value={studentNumber}
+                  onChange={(e) => setStudentNumber(e.target.value)}
+                  disabled={!isStudentNumberInputActive}
+                  className={`border w-72 h-10 rounded-lg bg-white
                  ${isStudentNumberInputActive ? "border-blue-600" : "border-gray-400"}`}
-            />
+                />
+              </>
+            )}
           </div>
         </div>
         <div className="mt-5 flex justify-center">
