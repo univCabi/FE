@@ -36,7 +36,6 @@
         <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white"/>
         <img src="https://img.shields.io/badge/TailwindCSS-06B6D4?style=flat&logo=tailwindcss&logoColor=white"/>
         <img src="https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white"/>
-        <img src="https://img.shields.io/badge/redux-764ABC?style=flat&logo=redux&logoColor=white">
       </td>
     </tr>
     <tr>
