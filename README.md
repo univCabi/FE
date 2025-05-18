@@ -42,14 +42,18 @@
       <td>백엔드</td>
       <td>
         <img src="https://img.shields.io/badge/django-092E20?style=flat&logo=django&logoColor=white">
+        <img src="https://img.shields.io/badge/Django%20REST%20Framework-FF1709?style=flat&logo=django&logoColor=white">
         <img src="https://img.shields.io/badge/spring-6DB33F?style=flat&logo=spring&logoColor=white">
         <img src="https://img.shields.io/badge/python-3776AB?style=flat&logo=python&logoColor=white"> 
+        <img src="https://img.shields.io/badge/Java-007396?style=flat&logo=java&logoColor=white">
       </td>
     </tr>
     <tr>
       <td>데이터베이스</td>
       <td>
         <img src="https://img.shields.io/badge/sqlite3-003B57?style=flat&logo=sqlite&logoColor=white">
+        <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=mysql&logoColor=white">
+        <img src="https://img.shields.io/badge/Redis-DC382D?style=flat&logo=redis&logoColor=white">
       </td>
     </tr>
     <tr>
@@ -57,10 +61,13 @@
       <td>
          <img src="https://img.shields.io/badge/docker-2496ED?style=flat&logo=docker&logoColor=white">
         <img src="https://img.shields.io/badge/netlify-00C7B7?style=flat&logo=netlify&logoColor=white">
+        <img src="https://img.shields.io/badge/Kafka-231F20?style=flat&logo=apache-kafka&logoColor=white">
+        <img src="https://img.shields.io/badge/Celery-37814A?style=flat&logo=celery&logoColor=white">
       </td>
     </tr>
   </tbody>
 </table>
+
 
 ## <span id="function">🌟 주요 기능</span>
 ### 유저 페이지
