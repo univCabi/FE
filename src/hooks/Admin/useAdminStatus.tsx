@@ -100,6 +100,8 @@ export const useAdminStatus = ({
       (isNewStatusUsing || isNewStatusOverdue)) ||
     isNewStatusOverdue ||
     isNewStatusUsing;
+  const isOverDateInputActive =
+    (!showsStatusManagementButton && isNewStatusOverdue) || isNewStatusOverdue;
 
   // 사용 가능, 사용 불가 눌렀을 때 학번 입력 값 초기화
   useEffect(() => {
@@ -225,5 +227,6 @@ export const useAdminStatus = ({
     isStudentNumberInputActive,
     studentNumber,
     setStudentNumber,
+    isOverDateInputActive,
   };
 };

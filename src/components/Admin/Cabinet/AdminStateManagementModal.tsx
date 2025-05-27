@@ -48,6 +48,7 @@ const AdminStateManagementModal = ({
     isStudentNumberInputActive,
     studentNumber,
     setStudentNumber,
+    isOverDateInputActive,
   } = useAdminStatus({
     selectedStatus,
     setSelectedStatus,
@@ -178,15 +179,26 @@ const AdminStateManagementModal = ({
                 <p
                   className={`mt-5 mb-2 text-left ${isStudentNumberInputActive ? "text-black" : "text-gray-500"}`}
                 >
-                  학번 입력
+                  학번 입력 (대여, 연체 시 필수)
                 </p>
                 <input
                   type="number"
                   value={studentNumber}
                   onChange={(e) => setStudentNumber(e.target.value)}
                   disabled={!isStudentNumberInputActive}
-                  className={`border w-72 h-10 rounded-lg bg-white
+                  className={`border p-3 rounded-lg bg-white
                  ${isStudentNumberInputActive ? "border-blue-600" : "border-gray-400"}`}
+                />
+                <p
+                  className={`mt-5 mb-2 text-left ${isOverDateInputActive ? "text-black" : "text-gray-500"}`}
+                >
+                  반납 예정일자 (연체 시 필수)
+                </p>
+                <input
+                  type="date"
+                  placeholder="날짜를 선택해주세요."
+                  disabled={!isOverDateInputActive}
+                  className={`p-3 rounded-lg text-left bg-white ${isOverDateInputActive ? "text-black border border-blue-600" : "text-gray-500 border border-gray-400"}`}
                 />
               </>
             )}

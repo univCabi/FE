@@ -169,7 +169,9 @@ const SelectedCabinetInformation = ({
                 />
               </>
             )
-          ) : selectedStatus === CabinetStatus.USING && isMyCabinet ? (
+          ) : isMyCabinet &&
+            (selectedStatus === CabinetStatus.USING ||
+              selectedStatus === CabinetStatus.OVERDUE) ? (
             <>
               <CabinetInformationDisplay
                 selectedBuilding={selectedBuilding}
