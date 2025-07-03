@@ -18,14 +18,6 @@ const OverdueCabinetList = () => {
         } else {
           return "user 정보가 없습니다";
         }
-        // if (value && typeof value === "object" && "studentNumber" in value) {
-        //   const studentNumber =
-        //     value.studentNumber ?? "학번 정보가 null 입니다";
-        //   const userName = value.name ?? "";
-        //   return `${studentNumber} (${userName})`;
-        // } else {
-        //   return "user 정보가 없습니다";
-        // }
       },
     },
     {
