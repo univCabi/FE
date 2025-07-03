@@ -45,10 +45,9 @@ const AdminStateManagementModal = ({
     getMultiCabinetStatusLabel,
     handleStatusSave,
     handleReasonClick,
-    isStudentNumberInputActive,
+    isOverdueInputActive,
     studentNumber,
     setStudentNumber,
-    isOverDateInputActive,
   } = useAdminStatus({
     selectedStatus,
     setSelectedStatus,
@@ -118,26 +117,15 @@ const AdminStateManagementModal = ({
                       사용 불가
                     </button>
                     {!isMultiButtonActive && (
-                      <>
-                        <button
-                          className="block my-1 p-4 w-full text-left hover:bg-blue-300 hover:text-white rounded-md"
-                          onClick={() => {
-                            handleMultiStatusChange(CabinetStatus.USING);
-                            handleReasonClick(null);
-                          }}
-                        >
-                          대여
-                        </button>
-                        <button
-                          className="block my-1 p-4 w-full text-left hover:bg-blue-300 hover:text-white rounded-md"
-                          onClick={() => {
-                            handleMultiStatusChange(CabinetStatus.OVERDUE);
-                            handleReasonClick(null);
-                          }}
-                        >
-                          연체
-                        </button>
-                      </>
+                      <button
+                        className="block my-1 p-4 w-full text-left hover:bg-blue-300 hover:text-white rounded-md"
+                        onClick={() => {
+                          handleMultiStatusChange(CabinetStatus.OVERDUE);
+                          handleReasonClick(null);
+                        }}
+                      >
+                        연체
+                      </button>
                     )}
                   </div>
                 )}
@@ -177,28 +165,28 @@ const AdminStateManagementModal = ({
             {!isMultiButtonActive && (
               <>
                 <p
-                  className={`mt-5 mb-2 text-left ${isStudentNumberInputActive ? "text-black" : "text-gray-500"}`}
+                  className={`mt-5 mb-2 text-left ${isOverdueInputActive ? "text-black" : "text-gray-500"}`}
                 >
-                  학번 입력 (대여, 연체 시 필수)
+                  학번 입력 (연체 시 필수)
                 </p>
                 <input
                   type="number"
                   value={studentNumber}
                   onChange={(e) => setStudentNumber(e.target.value)}
-                  disabled={!isStudentNumberInputActive}
+                  disabled={!isOverdueInputActive}
                   className={`border p-3 rounded-lg bg-white
-                 ${isStudentNumberInputActive ? "border-blue-600" : "border-gray-400"}`}
+                 ${isOverdueInputActive ? "border-blue-600" : "border-gray-400"}`}
                 />
                 <p
-                  className={`mt-5 mb-2 text-left ${isOverDateInputActive ? "text-black" : "text-gray-500"}`}
+                  className={`mt-5 mb-2 text-left ${isOverdueInputActive ? "text-black" : "text-gray-500"}`}
                 >
                   반납 예정일자 (연체 시 필수)
                 </p>
                 <input
                   type="date"
                   placeholder="날짜를 선택해주세요."
-                  disabled={!isOverDateInputActive}
-                  className={`p-3 rounded-lg text-left bg-white ${isOverDateInputActive ? "text-black border border-blue-600" : "text-gray-500 border border-gray-400"}`}
+                  disabled={!isOverdueInputActive}
+                  className={`p-3 rounded-lg text-left bg-white ${isOverdueInputActive ? "text-black border border-blue-600" : "text-gray-500 border border-gray-400"}`}
                 />
               </>
             )}

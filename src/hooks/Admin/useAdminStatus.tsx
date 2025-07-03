@@ -87,7 +87,6 @@ export const useAdminStatus = ({
   // 선택할 수 있는 드롭다운 항목
   const isNewStatusBroken = newStatus === CabinetStatus.BROKEN;
   const isNewStatusAvailable = newStatus === CabinetStatus.AVAILABLE;
-  const isNewStatusUsing = newStatus === CabinetStatus.USING;
   const isNewStatusOverdue = newStatus === CabinetStatus.OVERDUE;
 
   // reason 버튼 관련 조건
@@ -95,20 +94,15 @@ export const useAdminStatus = ({
     (!hasAvailable && isNewStatusBroken) || isNewStatusBroken;
 
   // studentNumber 입력 관련 조건
-  const isStudentNumberInputActive =
-    (!showsStatusManagementButton &&
-      (isNewStatusUsing || isNewStatusOverdue)) ||
-    isNewStatusOverdue ||
-    isNewStatusUsing;
-  const isOverDateInputActive =
+  const isOverdueInputActive =
     (!showsStatusManagementButton && isNewStatusOverdue) || isNewStatusOverdue;
 
   // 사용 가능, 사용 불가 눌렀을 때 학번 입력 값 초기화
   useEffect(() => {
-    if (!isStudentNumberInputActive) {
+    if (!isOverdueInputActive) {
       setStudentNumber("");
     }
-  }, [isStudentNumberInputActive]);
+  }, [isOverdueInputActive]);
 
   // 상태관리 API 호출
   const fetchAdminChangeStatus = async (
@@ -176,9 +170,6 @@ export const useAdminStatus = ({
     if (status === CabinetStatus.AVAILABLE) {
       return "사용 가능";
     }
-    if (status === CabinetStatus.USING) {
-      return "대여";
-    }
     if (status === CabinetStatus.OVERDUE) {
       return "연체";
     }
@@ -224,9 +215,8 @@ export const useAdminStatus = ({
     handleStatusSave,
     handleReasonClick,
     brokenDate,
-    isStudentNumberInputActive,
+    isOverdueInputActive,
     studentNumber,
     setStudentNumber,
-    isOverDateInputActive,
   };
 };
