@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SelectedCabinet, StatusData } from "@/types/CabinetType";
 import { SelectedMultiCabinetsData } from "@/types/MultiCabinetType";
 import {
@@ -38,6 +38,7 @@ export const useAdminStatus = ({
   >(null);
   const [newStatus, setNewStatus] = useState<string>();
   const [brokenDate, setBrokenDate] = useState<string | null>(null);
+  const [studentNumber, setStudentNumber] = useState<string>("");
 
   const { fetchAdminCabinetReturn } = useAdminReturn({
     selectedCabinet,
@@ -83,12 +84,25 @@ export const useAdminStatus = ({
 
   const isAllStatus = isManageable || isReturnable;
 
-  // 선택할 수 있는 드롭다운 항목이 2개(AVAILABLE, BROKEN)
+  // 선택할 수 있는 드롭다운 항목
   const isNewStatusBroken = newStatus === CabinetStatus.BROKEN;
   const isNewStatusAvailable = newStatus === CabinetStatus.AVAILABLE;
+  const isNewStatusOverdue = newStatus === CabinetStatus.OVERDUE;
+
   // reason 버튼 관련 조건
   const canSelectedReasonButton =
     (!hasAvailable && isNewStatusBroken) || isNewStatusBroken;
+
+  // studentNumber 입력 관련 조건
+  const isOverdueInputActive =
+    (!showsStatusManagementButton && isNewStatusOverdue) || isNewStatusOverdue;
+
+  // 사용 가능, 사용 불가 눌렀을 때 학번 입력 값 초기화
+  useEffect(() => {
+    if (!isOverdueInputActive) {
+      setStudentNumber("");
+    }
+  }, [isOverdueInputActive]);
 
   // 상태관리 API 호출
   const fetchAdminChangeStatus = async (
@@ -150,7 +164,15 @@ export const useAdminStatus = ({
 
   // 사물함 단일 선택
   const getStatusLabel = (status?: string) => {
-    return status === CabinetStatus.BROKEN ? "사용 불가" : "사용 가능";
+    if (status === CabinetStatus.BROKEN) {
+      return "사용 불가";
+    }
+    if (status === CabinetStatus.AVAILABLE) {
+      return "사용 가능";
+    }
+    if (status === CabinetStatus.OVERDUE) {
+      return "연체";
+    }
   };
 
   // 사물함 복수 선택
@@ -172,8 +194,9 @@ export const useAdminStatus = ({
   const handleStatusSave = (
     newStatus: CabinetStatusType,
     reason: BrokenReasonType,
+    studentNumber: string,
   ) => {
-    fetchAdminChangeStatus(newStatus, reason);
+    fetchAdminChangeStatus(newStatus, reason, studentNumber);
   };
 
   return {
@@ -192,5 +215,8 @@ export const useAdminStatus = ({
     handleStatusSave,
     handleReasonClick,
     brokenDate,
+    isOverdueInputActive,
+    studentNumber,
+    setStudentNumber,
   };
 };

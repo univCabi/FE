@@ -81,7 +81,7 @@ const SideNavigationLayout = () => {
         <div className="flex items-center px-5">
           {/* 로고 */}
           <button className="pr-5 py-2">
-            <LogoSVG onClick={clickedMainLogo} />
+            <LogoSVG onClick={clickedMainLogo} width={40} height={50} />
           </button>
 
           {/* 건물 목록 드롭다운 */}
@@ -138,7 +138,9 @@ const SideNavigationLayout = () => {
         <SubmitAndNavigateButton
           onClick={clickedProfileLogo}
           className={`button-top-icon-basic ${isProfilePage ? "button-top-icon-after" : "button-top-icon-before"}`}
-          svgComponent={<ProfileSVG />}
+          svgComponent={
+            <ProfileSVG stroke="white" stroke-width="1.5" opacity={0.6} />
+          }
         ></SubmitAndNavigateButton>
       </div>
     </nav>

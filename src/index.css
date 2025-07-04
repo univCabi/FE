@@ -47,7 +47,6 @@ body {
   sup,
   tt,
   var,
-  b,
   u,
   i,
   center,
@@ -112,6 +111,9 @@ body {
   nav,
   section {
     display: block;
+  }
+  b {
+    display: inline;
   }
   body {
     line-height: 1;
@@ -204,4 +206,12 @@ body {
     url("https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-ExtraLight.ttf")
       format("truetype");
   font-display: swap;
+}
+
+@layer utilities {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 }

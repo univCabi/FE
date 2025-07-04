@@ -89,7 +89,7 @@ const ListTableComponent = <T,>({
         ))}
         {isScrollLoading && (
           <div className="flex justify-center bg-white items-center">
-            <LogoSVG className="animate-spin" />
+            <LogoSVG className="animate-spin" width={40} height={50} />
           </div>
         )}
       </tbody>
